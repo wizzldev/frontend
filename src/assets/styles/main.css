@@ -1,0 +1,17 @@
+@import 'tailwind.css';
+@import 'fonts.css';
+
+.blurred {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.fontTheme {
+  font-family:
+    Fredoka One,
+    cursive !important;
+}
+
+.fontWizzl {
+  font-family: 'Mitr', sans-serif;
+}
