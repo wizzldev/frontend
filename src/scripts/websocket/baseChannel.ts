@@ -24,6 +24,9 @@ class BaseChannel {
       c.onopen = () => {
         resolve(c)
       }
+      c.onerror = () => {
+        console.log("Something went wrong:", c)
+      }
     })
 
     this.conn?.addEventListener('error', async () => {
@@ -47,7 +50,7 @@ class BaseChannel {
   public disconnect() {
     for (let i = 0; i < this.messageHandlers.length; i++) delete this.messageHandlers[i]
     this.onDisconnect = async () => {}
-    this.conn?.close()
+    console.log("Disconnecting:", this.conn?.close())
   }
 
   public async error() {

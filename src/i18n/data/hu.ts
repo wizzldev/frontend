@@ -4,5 +4,12 @@
 // your native language ;)
 // Hu: Hungarian
 export default {
-  Hi: 'Szia'
+  Hi: 'Szia',
+  Chats: 'Chatek',
+  Messages: 'Üzenetek',
+  Restricted: 'Korlátozott',
+  Blocked: 'Tiltott',
+  Search: 'Keresés',
+  You: 'Te',
+  'chat.create': '{sender} létrehozott egy chatet'
 }

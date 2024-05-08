@@ -5,7 +5,7 @@
     </div>
     <input
       class="w-full bg-secondary pl-12 pr-4 py-2 rounded-xl"
-      placeholder="Search"
+      :placeholder="$t('Search')"
     />
   </div>
 </template>

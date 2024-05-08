@@ -8,6 +8,7 @@ import setup from '@/scripts/websocket/default'
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null) as Ref<User | null>
   const token = ref({ type: '', value: '' }) as Ref<{ type: string; value: string }>
+  const checkTime = ref(minuteAgoHelper(5))
 
   async function login(u: User, t: string) {
     user.value = userHelper(u)
@@ -31,9 +32,13 @@ export const useAuthStore = defineStore('auth', () => {
     return true
   }
 
+  function needsFresh(): boolean {
+    return checkTime.value <= minuteAgoHelper(5)
+  }
+
   const isLoggedIn = computed(() => user.value != null)
 
-  return { user, token, login, logout, check, isLoggedIn }
+  return { user, token, login, logout, check, isLoggedIn, needsFresh }
 })
 
 // helpers
@@ -59,4 +64,8 @@ function tokenHelper(t: string | null = null) {
 function userHelper(u: User): User {
   u.image_url = u.image_url.replace('{cdn}', window.GLOBAL_ENV.CDN_HOST)
   return u
+}
+
+function minuteAgoHelper(m: number): Date {
+  return new Date(Date.now() - 1000 * m)
 }
