@@ -22,6 +22,8 @@ instance.interceptors.response.use(
     return Promise.resolve(res)
   },
   (err) => {
+    console.log(err.message)
+
     if (!err?.response) {
       err.response = { code: 520, data: {} }
     }

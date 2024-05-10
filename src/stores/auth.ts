@@ -13,12 +13,13 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(u: User, t: string) {
     user.value = userHelper(u)
     token.value = tokenHelper(t)
-    await setup(token.value.value[1])
+    await setup(token.value.value, true)
   }
 
   async function logout() {
     await request.get('/logout')
-    user.value = null
+    window.localStorage.removeItem(WizzlAuthToken)
+    if(user.value?.id) user.value.id = 0
   }
 
   async function check(): Promise<boolean> {
@@ -36,7 +37,7 @@ export const useAuthStore = defineStore('auth', () => {
     return checkTime.value <= minuteAgoHelper(5)
   }
 
-  const isLoggedIn = computed(() => user.value != null)
+  const isLoggedIn = computed(() => user.value != null && user.value?.id != 0)
 
   return { user, token, login, logout, check, isLoggedIn, needsFresh }
 })

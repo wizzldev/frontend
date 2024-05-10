@@ -7,8 +7,8 @@ const disconnectHandler = async (chan: BaseChannel) => {
   await chan.connect()
 }
 
-const setup = async (auth: string) => {
-  if (window.WS != undefined) return
+const setup = async (auth: string, force: boolean = false) => {
+  if (window.WS != undefined || force) return
   window.WS = new Server(window.GLOBAL_ENV.WS_ENDPOINT, auth, disconnectHandler)
   const base = window.WS.channel(WizzlDefaultChannel)
   await base.connect()

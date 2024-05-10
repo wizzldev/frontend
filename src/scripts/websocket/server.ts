@@ -32,6 +32,10 @@ class Server {
     delete this.channels[name]
     return this.channel(name)
   }
+
+  public logChannels() {
+    console.log(this.channels)
+  }
 }
 
 export default Server

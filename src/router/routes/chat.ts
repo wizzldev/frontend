@@ -1,6 +1,8 @@
 import ContactsView from '@/views/Chat/ContactsView.vue'
 import ChatView from '@/views/Chat/ChatView.vue'
 import Guard from '@/router/guard'
+import NewChatView from '@/views/Chat/NewChatView.vue'
+import type { RouteRecordRaw } from 'vue-router'
 
 const needsAuth = {
   auth: Guard.ACCESS_LOGIN
@@ -14,9 +16,15 @@ export default [
     meta: needsAuth
   },
   {
+    path: '/chat/new',
+    name: 'chat.new',
+    component: NewChatView,
+    meta: needsAuth
+  },
+  {
     path: '/chat/:id',
     name: 'chat.message',
     component: ChatView,
     meta: needsAuth
   }
-]
+] as Array<RouteRecordRaw>

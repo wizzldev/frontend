@@ -1,4 +1,5 @@
 import type Server from '@/scripts/websocket/server'
+import type TimeAgo from 'javascript-time-ago'
 
 declare global {
   interface Window {
@@ -9,6 +10,12 @@ declare global {
       CDN_HOST: string
     }
     WS: Server
+  }
+}
+
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $time: TimeAgo
   }
 }
 

@@ -3,12 +3,13 @@ import type {
   DisconnectHandler,
   MessageData,
   MessageHandler,
-  messageHandlers
+  messageHandlers, StatusChangeHandler
 } from '@/scripts/websocket/types'
 
 class BaseChannel {
   public readonly uri: string
   protected onDisconnect: DisconnectHandler
+  protected statusChange: StatusChangeHandler
   protected conn: WebSocket | null = null
   private messageHandlers: messageHandlers = []
   private _isConnected = false
@@ -16,30 +17,37 @@ class BaseChannel {
   public constructor(host: string, auth: string, resource: string, d: DisconnectHandler) {
     this.uri = `${host}/${resource.replace('.', '/')}?authorization=${auth}`
     this.onDisconnect = d
+    this.statusChange = () => {}
   }
 
   public async connect() {
     this.conn = await new Promise((resolve) => {
       const c = new WebSocket(this.uri)
       c.onopen = () => {
+        this._isConnected = true
+        this.statusChange(this, true)
         resolve(c)
       }
       c.onerror = () => {
-        console.log("Something went wrong:", c)
+        console.log('Something went wrong:', c)
+        resolve(c)
       }
     })
 
+    this.conn?.addEventListener('open', async () => {
+      this._isConnected = true
+      this.statusChange(this, true)
+    })
     this.conn?.addEventListener('error', async () => {
       await this.error()
     })
     this.conn?.addEventListener('close', async () => {
+      this.statusChange(this, false)
+      this._isConnected = false
       await this.error()
     })
     this.conn?.addEventListener('message', (e: MessageEvent<string>): void => {
       this.handle(e)
-    })
-    this.conn?.addEventListener('open', () => {
-      this._isConnected = true
     })
   }
 
@@ -48,12 +56,16 @@ class BaseChannel {
   }
 
   public disconnect() {
+    this.statusChange = () => {}
     for (let i = 0; i < this.messageHandlers.length; i++) delete this.messageHandlers[i]
-    this.onDisconnect = async () => {}
-    console.log("Disconnecting:", this.conn?.close())
+    this.onDisconnect = async () => {
+      console.log('Disconnected from ws')
+    }
+    this.conn?.close()
   }
 
   public async error() {
+    this.statusChange(this, false)
     if (!this._isConnected) {
       await this.onDisconnect(this)
     }
@@ -85,6 +97,10 @@ class BaseChannel {
     const payloadString = JSON.stringify(payload)
     console.log('[WS]: Payload sent:', payloadString)
     this.conn?.send(payloadString)
+  }
+
+  public onStatusChange(fn: StatusChangeHandler) {
+    this.statusChange = fn
   }
 }
 

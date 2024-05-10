@@ -1,16 +1,13 @@
 <template>
   <AppLayout>
-    <GuestNav/>
+    <SettingsNav />
     <main class="h-full flex flex-col space-y-3">
-      <div class="my-auto mx-3">
-        <slot />
-      </div>
+      <slot />
     </main>
   </AppLayout>
 </template>
 
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue'
-import GuestNav from '@/components/Navigation/GuestNav.vue'
+import SettingsNav from '@/components/Navigation/SettingsNav.vue'
 </script>
-

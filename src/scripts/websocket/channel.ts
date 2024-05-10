@@ -11,6 +11,7 @@ class Channel extends BaseChannel {
   }
 
   public on<T>(event: string, handle: MessageHandler<T>): DetachEventListener {
+    console.info(`ws handler ${event} registered`)
     return this.eventListenerDetach<T>(event, handle)
   }
 

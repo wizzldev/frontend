@@ -2,42 +2,54 @@
   <form v-on:submit.prevent>
     <template v-for="(field, key) in fields" :key="key">
       <div class="my-2">
-        <label :for="`for-${field.name}.${key}`">{{ $t(field.label) }}</label>
-        <input
-          :disabled="processing"
-          :placeholder="field.placeholder ? $t(field.placeholder) : ''"
-          :type="field.type || 'text'"
-          :id="`for-${field.name}.${key}`"
-          v-model.lazy="data[field.name]"
-          class="transition-colors mt-1 bg-gray-900 w-full px-4 py-2.5 rounded-lg border-2"
-        />
-        <label v-if="field.name in errors" :for="`for-${field.name}.${key}`">{{
+        <label class="text-gray-200" :for="`for-${field.name}.${key}`">{{ $t(field.label) }}</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <component :is="field.icon" class="text-gray-400"
+              :class="passwordColor(field)"
+            />
+          </div>
+          <input
+            class="w-full bg-secondary pl-12 pr-4 py-2.5 rounded-xl"
+            :disabled="processing"
+            :placeholder="field.placeholder ? $t(field.placeholder) : ''"
+            :type="field.type || 'text'"
+            :id="`for-${field.name}.${key}`"
+            v-model="data[field.name]"
+          />
+        </div>
+        <label class="text-red-400" v-if="field.name in errors" :for="`for-${field.name}.${key}`">{{
           errors[field.name]
         }}</label>
       </div>
     </template>
-    <button @click="submit" :disabled="processing">
-      {{ $t('Submit') }}
+    <button @click="submit" :disabled="processing" class="transition-colors w-full bg-purple-500 hover:bg-purple-400 focus:bg-purple-400 py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center">
+      <span>{{ $t('Submit') }}</span>
+      <Spinner v-if="processing" />
     </button>
     <p class="text-red-500" v-if="error != ''">{{ error }}</p>
   </form>
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref } from 'vue'
+import { type Component, type Ref, ref } from 'vue'
 import translateError, { type Errors } from '../../scripts/translator/errors'
 import request from '@/scripts/request/request'
+import { passwordStrength } from 'check-password-strength'
+import Spinner from '@/components/Icons/Spinner.vue'
 
 interface Field {
-  name: string
-  label: string
-  placeholder: string | undefined
-  type: string | undefined
+  icon: Component;
+  name: string;
+  label: string;
+  placeholder: string | undefined;
+  type: string | undefined;
 }
 
 const props = defineProps<{
-  fields: Array<Field>
-  resource: string
+  fields: Array<Field>;
+  resource: string;
+  passwordCheck: boolean;
 }>()
 
 const emit = defineEmits(['success'])
@@ -65,5 +77,19 @@ const submit = async () => {
   }
 
   processing.value = false
+}
+
+const passwordColor = (field: Field): string => {
+  if(!props.passwordCheck || field.type != 'password') return ''
+
+  const classMap = [
+    'text-red-400',
+    'text-red-300',
+    'text-green-300',
+    'text-green-400'
+  ]
+  const fieldValue = field.name in data.value ? data.value[field.name] : ''
+  const strength = passwordStrength(`${fieldValue}`)
+  return classMap[strength.id]
 }
 </script>

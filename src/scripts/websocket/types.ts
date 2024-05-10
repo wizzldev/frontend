@@ -15,6 +15,8 @@ export type DetachEventListener = () => void
 // handle when the socket disconnected
 export type DisconnectHandler = (chan: BaseChannel) => Promise<void>
 
+export type StatusChangeHandler = (chan: BaseChannel, connected: boolean) => void
+
 export interface channels {
   [key: string]: Channel
 }

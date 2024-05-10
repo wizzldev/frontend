@@ -1,8 +1,8 @@
 <template>
   <AppLayout>
-    <MyProfile/>
+    <MyProfile />
     <main class="h-full flex flex-col space-y-3">
-      <slot/>
+      <slot />
     </main>
   </AppLayout>
 </template>

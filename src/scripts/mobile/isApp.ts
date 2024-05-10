@@ -1,3 +1,5 @@
+import { Capacitor } from '@capacitor/core'
+
 export const isApp = (): boolean => {
-  return false
+  return Capacitor.isNativePlatform()
 }

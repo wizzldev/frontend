@@ -1,10 +1,24 @@
 <template>
   <GuestLayout>
-    <h1 class="text-2xl fontTheme">{{ $t('Login') }}</h1>
+    <h1 class="text-2xl fontTheme">{{ $t('Register') }}</h1>
     <hr class="bg-tertiary w-full border-none h-1 rounded-full my-3" />
     <AutoForm
-      resource="/login"
+      resource="/register"
       :fields="[
+        {
+          icon: Person,
+          name: 'first_name',
+          type: 'string',
+          label: 'First name',
+          placeholder: 'John',
+        },
+        {
+          icon: Person,
+          name: 'last_name',
+          type: 'string',
+          label: 'Last name',
+          placeholder: 'Doe',
+        },
         {
           icon: EmailAt,
           name: 'email',
@@ -25,7 +39,7 @@
     />
     <div>
       <p>
-        {{ $t('Don\'t have an account?') }} <router-link :to="{name: 'auth.register'}">{{ $t('Register') }}</router-link>
+        {{ $t('Already have an account?') }} <router-link :to="{name: 'auth.login'}">{{ $t('Login') }}</router-link>
       </p>
     </div>
   </GuestLayout>
@@ -39,7 +53,7 @@ import type { User } from '@/types/user'
 import { useRoute, useRouter } from 'vue-router'
 import EmailAt from '@/components/Icons/EmailAt.vue'
 import Lock from '@/components/Icons/Lock.vue'
-import { WizzlAuthToken } from '@/scripts/consts'
+import Person from '@/components/Icons/Person.vue'
 
 const authStore = useAuthStore()
 const route = useRoute()
@@ -47,7 +61,6 @@ const router = useRouter()
 
 const handleLogin = (data: object) => {
   if ('session' in data && 'user' in data) {
-    window.localStorage.setItem(WizzlAuthToken, data.session as string)
     authStore.login(data.user as User, data.session as string)
   }
   if('to' in route.query) router.push(route.query.to as string)
