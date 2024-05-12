@@ -1,20 +1,21 @@
 <template>
   <router-link
-    :to="{ name: props.toName as string, params: props.toParams as RouteParamsRaw }"
-    class="block"
+    :to="linkData"
+    class="block transition-colors"
     role="button"
     v-if="isLink && !isApp()"
   >
     <slot />
   </router-link>
-  <button @click="handle" v-else>
+  <button class="block transition-colors" @click="handle" v-else>
     <slot />
   </button>
 </template>
 
 <script setup lang="ts">
 import { isApp } from '@/scripts/mobile/isApp'
-import { type RouteParamsRaw, useRouter } from 'vue-router'
+import { type RouteLocationRaw, type RouteParamsRaw, useRouter } from 'vue-router'
+import { computed } from 'vue'
 
 const props = defineProps<{
   isLink: boolean
@@ -24,9 +25,14 @@ const props = defineProps<{
 
 const router = useRouter()
 
+const linkData = computed(
+  () =>
+    ({ name: props.toName as string, params: props.toParams as RouteParamsRaw }) as RouteLocationRaw
+)
+
 const handle = () => {
   if (props.isLink && isApp()) {
-    router.push({ name: props.toName as string, params: props.toParams as RouteParamsRaw })
+    router.push(linkData.value)
   }
 }
 </script>

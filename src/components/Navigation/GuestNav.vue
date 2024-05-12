@@ -46,7 +46,7 @@ const auth = useAuthStore()
 
 const pageTitle = computed((): string => {
   const data = (route.name as string).split('.')
-  const resource = data[data.length-1].replace('-', ' ')
+  const resource = data[data.length - 1].replace('-', ' ')
   return resource.charAt(0).toUpperCase() + resource.slice(1)
 })
 </script>

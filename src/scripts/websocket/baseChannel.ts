@@ -3,7 +3,8 @@ import type {
   DisconnectHandler,
   MessageData,
   MessageHandler,
-  messageHandlers, StatusChangeHandler
+  messageHandlers,
+  StatusChangeHandler
 } from '@/scripts/websocket/types'
 
 class BaseChannel {
@@ -13,6 +14,7 @@ class BaseChannel {
   protected conn: WebSocket | null = null
   private messageHandlers: messageHandlers = []
   private _isConnected = false
+  private jobs = [] as Array<string>
 
   public constructor(host: string, auth: string, resource: string, d: DisconnectHandler) {
     this.uri = `${host}/${resource.replace('.', '/')}?authorization=${auth}`
@@ -21,6 +23,7 @@ class BaseChannel {
   }
 
   public async connect() {
+    this.job('heartbeat', { type: 'ping', content: 'ping', data_json: '{}' }, 40000)
     this.conn = await new Promise((resolve) => {
       const c = new WebSocket(this.uri)
       c.onopen = () => {
@@ -101,6 +104,23 @@ class BaseChannel {
 
   public onStatusChange(fn: StatusChangeHandler) {
     this.statusChange = fn
+  }
+
+  public job(
+    name: string,
+    msg: { type: string; content: string; data_json: string },
+    timeout: number
+  ) {
+    if (name in this.jobs) return
+    this.jobs.push(name)
+    const finish = () =>
+      setInterval(() => {
+        this.baseSend(msg.type, msg.content, msg.data_json)
+        console.log(`[WS] ${this.uri}: Task "${name}" finished`)
+        if (!this._isConnected) return
+        setInterval(() => finish, timeout)
+      }, timeout)
+    finish()
   }
 }
 

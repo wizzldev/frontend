@@ -10,9 +10,7 @@
     </section>
     <section>
       <h3 class="mx-3 text-gray-700 text-sm font-bold">{{ $t('Your profile') }}</h3>
-      <PushButton :is-link="false">
-
-      </PushButton>
+      <PushButton :is-link="false"> </PushButton>
     </section>
   </SettingsLayout>
 </template>

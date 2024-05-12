@@ -4,7 +4,7 @@ import type { Messages } from '@/types/message'
 
 export const useChatStore = defineStore('chat', () => {
   const messages = ref({}) as Ref<Record<string, Messages>>
-  const profile = ref({}) as Ref<Record<string, { name: string; image: string; loading: boolean; }>>
+  const profile = ref({}) as Ref<Record<string, { name: string; image: string; loading: boolean }>>
 
   function push(chat: string, msg: Messages) {
     if (!Object.keys(messages.value).includes(chat)) {

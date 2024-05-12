@@ -1,46 +1,34 @@
 <template>
-  <ChatLayout :chat-profile="chat.profile[chatID] || {name:'', image: '', loading: true}">
-    <MessageList :messages="chat.messages[chatID] || []" />
-      <div class="border-t-2 border-t-secondary px-3 py-2 flex items-center space-x-2" :class="{'!border-t-red-400': !connected}">
-        <form class="w-full" v-on:submit.prevent="send">
-          <div class="bg-secondary rounded-lg w-full flex items-center justify-between">
-            <input
-              type="text"
-              class="resize-none bg-secondary rounded-lg py-2 px-3 w-full"
-              v-model="message"
-              :placeholder="$t('Message')"
-              required
-            />
-            <button class="py-2 px-3 mt-auto">
-              <Send />
-            </button>
-          </div>
-        </form>
-      </div>
+  <ChatLayout
+    :theme="theme?.dark?.top"
+    :chat-profile="chat.profile[chatID] || { name: '', image: '', loading: true }"
+    :connection="{ connected, error: connectionError }"
+  >
+    <MessageList :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
+    <SendForm :value="message" :theme="theme?.dark?.bottom" v-model.lazy="message" @send="send" @emoji="emoji" />
   </ChatLayout>
 </template>
 
 <script setup lang="ts">
 import ChatLayout from '@/layouts/ChatLayout.vue'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
 import request from '@/scripts/request/request'
 import { useRoute, useRouter } from 'vue-router'
 import type { Messages, Message as WSMessage } from '@/types/message'
-import Send from '@/components/Icons/Send.vue'
 import MessageList from '@/components/Chat/MessageList.vue'
 import { useChatStore } from '@/stores/chat'
-import { useToast } from 'vue-toastification'
-import { useI18n } from 'vue-i18n'
 import type BaseChannel from '@/scripts/websocket/baseChannel'
 import { useContactsStore } from '@/stores/contacts'
+import SendForm from '@/components/Chat/SendForm.vue'
+import type { Theme } from '@/types/chat'
 
 const router = useRouter()
 const route = useRoute()
 const chat = useChatStore()
 const contacts = useContactsStore()
-const i18n = useI18n()
-const toast = useToast()
 const connected = ref(false)
+const connectionError = ref(false)
+const theme = ref(null) as Ref<Theme | null>
 
 const message = ref('')
 
@@ -49,11 +37,15 @@ const send = () => {
   message.value = ''
 }
 
+const emoji = (emoji: string) => {
+  ws.send('message', emoji)
+}
+
 const chatID = `chat.${route.params.id as string}`
 const ws = window.WS.channel(chatID)
 
 const fetchChat = async () => {
-  if(!(chatID in chat.messages)) {
+  if (!(chatID in chat.messages)) {
     connected.value = false
     const res = await request.get(`/chat/${route.params.id as string}`)
     if (!res.data.$error) {
@@ -62,7 +54,7 @@ const fetchChat = async () => {
       chat.profile[chatID] = {
         image: data.group.image_url,
         name: data.group.name,
-        loading: false,
+        loading: false
       }
     } else return await router.push({ name: 'chat.contacts' })
   }
@@ -79,12 +71,13 @@ const fetchChat = async () => {
 
   ws.onStatusChange((chan: BaseChannel, is_connected: boolean) => {
     connected.value = is_connected
-    if(!is_connected) toast.error(i18n.t('The real-time connection is lost'))
+    connectionError.value = !is_connected
+    console.log(is_connected, connectionError.value)
   })
 
   await ws.connect()
-  if(ws.isConnected()) connected.value = true
-  else toast.warning(i18n.t('Failed to connect to our real time server\'s'))
+  connected.value = ws.isConnected()
+  connectionError.value = !ws.isConnected()
 }
 
 onMounted(fetchChat)

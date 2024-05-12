@@ -25,7 +25,8 @@
     />
     <div>
       <p>
-        {{ $t('Don\'t have an account?') }} <router-link :to="{name: 'auth.register'}">{{ $t('Register') }}</router-link>
+        {{ $t("Don't have an account?") }}
+        <router-link :to="{ name: 'auth.register' }">{{ $t('Register') }}</router-link>
       </p>
     </div>
   </GuestLayout>
@@ -50,7 +51,7 @@ const handleLogin = (data: object) => {
     window.localStorage.setItem(WizzlAuthToken, data.session as string)
     authStore.login(data.user as User, data.session as string)
   }
-  if('to' in route.query) router.push(route.query.to as string)
+  if ('to' in route.query) router.push(route.query.to as string)
   else router.push({ name: 'chat.contacts' })
 }
 </script>

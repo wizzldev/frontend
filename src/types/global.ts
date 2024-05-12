@@ -5,7 +5,7 @@ declare global {
   interface Window {
     GLOBAL_ENV: {
       API_ENDPOINT: string
-      API_VERSION: number
+      API_VERSION: string
       WS_ENDPOINT: string
       CDN_HOST: string
     }

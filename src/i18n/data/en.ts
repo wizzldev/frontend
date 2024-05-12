@@ -13,13 +13,13 @@ export default {
   'message.reply.you': 'You replied to: {to}',
 
   // Form
-  'Login': 'Login',
-  'Register': 'Register',
+  Login: 'Login',
+  Register: 'Register',
   'Email address': 'Email address',
-  'Password': 'Password',
+  Password: 'Password',
   'First name': 'First name',
   'Last name': 'Last name',
-  'Submit': 'Submit',
+  Submit: 'Submit',
   // Form errors
-  'error.required': 'This field is required',
+  'error.required': 'This field is required'
 }

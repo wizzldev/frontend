@@ -5,7 +5,7 @@ export interface Message {
   sender: User
   content: string
   type: string
-  data_json: string|null
+  data_json: string | null
   reply: Message | undefined
   created_at: string
   updated_at: string

@@ -7,10 +7,10 @@
     <title>Wizzl</title>
     <script data-wizzl="https://config.wizzl.co/scripts/global-env.js">
       window.GLOBAL_ENV = {
-        API_ENDPOINT: 'https://api.wizzl.co/api',
-        API_VERSION: 1,
-        WS_ENDPOINT: 'wss://api.wizzl.co/ws',
-        CDN_HOST: 'https://api.wizzl.co',
+        API_ENDPOINT: "%VITE_API_ENDPOINT%",
+        API_VERSION: "%VITE_API_VERSION%",
+        WS_ENDPOINT: "%VITE_WS_ENDPOINT%",
+        CDN_HOST: "%VITE_CDN_HOST%",
       }
     </script>
     <style>

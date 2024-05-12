@@ -1,7 +1,10 @@
 <template>
-  <ul class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse">
+  <ul
+    class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse"
+    :class="{ customTheme: theme }"
+  >
     <li v-for="(msg, inx) in messageGroup" :key="inx">
-      <Message :messages="msg" />
+      <Message :theme="theme" :messages="msg" />
     </li>
   </ul>
 </template>
@@ -10,9 +13,11 @@
 import Message from '@/components/Chat/Message.vue'
 import type { MessageGroupList, Messages } from '@/types/message'
 import { computed } from 'vue'
+import type { ThemeDataMain } from '@/types/chat'
 
 const props = defineProps<{
   messages: Messages
+  theme: ThemeDataMain | undefined
 }>()
 
 const messageGroup = computed((): MessageGroupList => {
@@ -35,3 +40,15 @@ const messageGroup = computed((): MessageGroupList => {
   return data
 })
 </script>
+
+<style scoped>
+.customTheme {
+  background-color: v-bind('theme?.bg') !important;
+  color: v-bind('theme?.text') !important;
+  background-image: v-bind('theme?.bgImage');
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+</style>

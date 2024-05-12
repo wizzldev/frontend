@@ -1,16 +1,30 @@
 <template>
   <ContactsLayout>
     <section class="px-5">
-      <IconInput v-model="searchInput" :icon="Magnifier" placeholder="Search" />
+      <IconInput v-model="searchInput" :icon="Magnifier as Component" placeholder="Search" />
     </section>
     <ChatNav />
-    <section class="mt-3 h-full" :class="{ 'flex items-center justify-center': !hasContact }">
-      <h2 v-if="!hasContact" class="text-gray-600 fontTheme px-2">
-        {{ $t('You currently have no active conversation') }}
-      </h2>
+    <section
+      class="mt-3 h-full w-full"
+      :class="{ 'flex items-center justify-center': !hasContact }"
+    >
+      <div v-if="!hasContact">
+        <h2 class="text-gray-600 fontTheme px-2">
+          {{ $t('You currently have no active conversation') }}
+        </h2>
+
+        <PushButton
+          :is-link="true"
+          to-name="chat.new"
+          class="w-1/3 m-auto p-1 bg-secondary rounded-full text-xs mt-2 text-center"
+        >
+          {{ $t('New chat') }}
+        </PushButton>
+      </div>
 
       <template v-for="(con, i) in contacts.contacts" :key="i">
         <PushButton
+          class="w-full"
           v-if="showSearch(con)"
           :is-link="true"
           to-name="chat.message"
@@ -20,8 +34,8 @@
         </PushButton>
       </template>
 
-      <div class="text-center px-2 mt-3 mb-2">
-        <p v-if="hasContact" class="text-sm text-gray-600 fontTheme">
+      <div class="text-center px-2 mt-3 mb-2" v-if="hasContact">
+        <p  class="text-sm text-gray-600 fontTheme">
           {{ $t('No more active conversations') }}
         </p>
         <PushButton
@@ -41,7 +55,7 @@ import ContactsLayout from '@/layouts/ContactsLayout.vue'
 import IconInput from '@/components/Elements/IconInput.vue'
 import Contact from '@/components/Contact.vue'
 import PushButton from '@/components/Elements/PushButton.vue'
-import { computed, onMounted, ref } from 'vue'
+import { type Component, computed, onMounted, ref } from 'vue'
 import request from '@/scripts/request/request'
 import ChatNav from '@/components/Chat/ChatNav.vue'
 import Magnifier from '@/components/Icons/Magnifier.vue'
@@ -55,12 +69,12 @@ const chat = useChatStore()
 const hasContact = computed(() => contacts.contacts.length)
 
 const fetchContacts = async () => {
-  if(contacts.contacts.length > 0) {
+  if (contacts.contacts.length > 0) {
     return
   }
 
   const res = await request.get('/chat/contacts')
-  if (!res.data.$error) {
+  if (!res.data.$error && !res.data?.nullValue) {
     contacts.push(res.data)
   }
 

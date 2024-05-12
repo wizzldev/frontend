@@ -10,14 +10,14 @@
           name: 'first_name',
           type: 'string',
           label: 'First name',
-          placeholder: 'John',
+          placeholder: 'John'
         },
         {
           icon: Person,
           name: 'last_name',
           type: 'string',
           label: 'Last name',
-          placeholder: 'Doe',
+          placeholder: 'Doe'
         },
         {
           icon: EmailAt,
@@ -39,7 +39,8 @@
     />
     <div>
       <p>
-        {{ $t('Already have an account?') }} <router-link :to="{name: 'auth.login'}">{{ $t('Login') }}</router-link>
+        {{ $t('Already have an account?') }}
+        <router-link :to="{ name: 'auth.login' }">{{ $t('Login') }}</router-link>
       </p>
     </div>
   </GuestLayout>
@@ -63,7 +64,7 @@ const handleLogin = (data: object) => {
   if ('session' in data && 'user' in data) {
     authStore.login(data.user as User, data.session as string)
   }
-  if('to' in route.query) router.push(route.query.to as string)
+  if ('to' in route.query) router.push(route.query.to as string)
   else router.push({ name: 'chat.contacts' })
 }
 </script>

@@ -18,13 +18,13 @@ export default {
   'message.reply.you': 'Válaszoltál neki: {to}',
 
   // Form
-  'Login': 'Bejelentkezés',
-  'Register': 'Regisztráció',
+  Login: 'Bejelentkezés',
+  Register: 'Regisztráció',
   'Email address': 'Email cím',
-  'Password': 'Jelszó',
+  Password: 'Jelszó',
   'First name': 'Keresztnév',
   'Last name': 'Vezetéknév',
-  'Submit': 'Küldés',
+  Submit: 'Küldés',
   // Form errors
-  'error.required': 'Ezt a mezőt nem hagyhatja üresen',
+  'error.required': 'Ezt a mezőt nem hagyhatja üresen'
 }

@@ -5,9 +5,7 @@
         <label class="text-gray-200" :for="`for-${field.name}.${key}`">{{ $t(field.label) }}</label>
         <div class="relative">
           <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <component :is="field.icon" class="text-gray-400"
-              :class="passwordColor(field)"
-            />
+            <component :is="field.icon" class="text-gray-400" :class="passwordColor(field)" />
           </div>
           <input
             class="w-full bg-secondary pl-12 pr-4 py-2.5 rounded-xl"
@@ -23,7 +21,11 @@
         }}</label>
       </div>
     </template>
-    <button @click="submit" :disabled="processing" class="transition-colors w-full bg-purple-500 hover:bg-purple-400 focus:bg-purple-400 py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center">
+    <button
+      @click="submit"
+      :disabled="processing"
+      class="transition-colors w-full bg-purple-500 hover:bg-purple-400 focus:bg-purple-400 py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+    >
       <span>{{ $t('Submit') }}</span>
       <Spinner v-if="processing" />
     </button>
@@ -39,17 +41,17 @@ import { passwordStrength } from 'check-password-strength'
 import Spinner from '@/components/Icons/Spinner.vue'
 
 interface Field {
-  icon: Component;
-  name: string;
-  label: string;
-  placeholder: string | undefined;
-  type: string | undefined;
+  icon: Component
+  name: string
+  label: string
+  placeholder: string | undefined
+  type: string | undefined
 }
 
 const props = defineProps<{
-  fields: Array<Field>;
-  resource: string;
-  passwordCheck: boolean;
+  fields: Array<Field>
+  resource: string
+  passwordCheck: boolean
 }>()
 
 const emit = defineEmits(['success'])
@@ -80,14 +82,9 @@ const submit = async () => {
 }
 
 const passwordColor = (field: Field): string => {
-  if(!props.passwordCheck || field.type != 'password') return ''
+  if (!props.passwordCheck || field.type != 'password') return ''
 
-  const classMap = [
-    'text-red-400',
-    'text-red-300',
-    'text-green-300',
-    'text-green-400'
-  ]
+  const classMap = ['text-red-400', 'text-red-300', 'text-green-300', 'text-green-400']
   const fieldValue = field.name in data.value ? data.value[field.name] : ''
   const strength = passwordStrength(`${fieldValue}`)
   return classMap[strength.id]

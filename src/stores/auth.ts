@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     await request.get('/logout')
     window.localStorage.removeItem(WizzlAuthToken)
-    if(user.value?.id) user.value.id = 0
+    if (user.value?.id) user.value.id = 0
   }
 
   async function check(): Promise<boolean> {

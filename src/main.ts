@@ -9,7 +9,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import i18n from '@/i18n'
-import Toast, { useToast } from "vue-toastification"
+import Toast, { useToast } from 'vue-toastification'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 TimeAgo.addDefaultLocale(en)

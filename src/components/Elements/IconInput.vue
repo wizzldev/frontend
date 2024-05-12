@@ -7,6 +7,8 @@
       class="w-full bg-secondary pl-12 pr-4 py-2 rounded-xl"
       :placeholder="$t(placeholder)"
       @change="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+      :disabled="disabled || false"
+      :value="value || ''"
     />
   </div>
 </template>
@@ -17,5 +19,7 @@ import type { Component } from 'vue'
 defineProps<{
   icon: Component
   placeholder: string
+  disabled?: boolean
+  value?: string
 }>()
 </script>

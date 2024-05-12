@@ -1,34 +1,51 @@
 <template>
-  <header class="px-5 py-4 flex items-center justify-between border-b border-secondary">
-    <div class="flex items-center space-x-2">
-      <PushButton
-        :is-link="true"
-        to-name="chat.contacts"
-        class="bg-secondary rounded-full p-2 flex items-center justify-center text-gray-400"
-      >
-        <BackArrow />
-      </PushButton>
-      <img
-        v-if="loading"
-        class="w-8 h-8 rounded-full animate-spin"
-        src="../../assets/vectors/loading.svg"
-        alt="Loading image"
-      />
-      <img v-else class="w-8 h-8 rounded-full" :src="image" :alt="`${name}'s chat image`" />
-      <h2
-        class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
-      >
-        {{ loading ? $t('Loading') : name }}
-      </h2>
+  <header class="border-b border-secondary" :class="{ customTheme: theme }">
+    <div class="flex items-center justify-between px-5 py-4">
+      <div class="flex items-center space-x-2">
+        <PushButton
+          :is-link="true"
+          to-name="chat.contacts"
+          class="bg-secondary rounded-full p-2 flex items-center justify-center text-gray-400"
+        >
+          <BackArrow />
+        </PushButton>
+        <img
+          v-if="loading"
+          class="w-8 h-8 rounded-full animate-spin"
+          src="../../assets/vectors/loading.svg"
+          alt="Loading image"
+        />
+        <img v-else class="w-8 h-8 rounded-full" :src="image" :alt="`${name}'s chat image`" />
+        <h2
+          class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
+        >
+          {{ loading ? $t('Loading') : name }}
+        </h2>
+      </div>
+      <div class="flex items-center space-x-2">
+        <PushButton
+          :disabled="loading"
+          class="bg-secondary text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
+          :is-link="false"
+        >
+          <Settings />
+        </PushButton>
+      </div>
     </div>
-    <div class="flex items-center space-x-2">
-      <PushButton
-        :disabled="loading"
-        class="bg-secondary text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
-        :is-link="false"
-      >
-        <Settings />
-      </PushButton>
+    <div
+      v-if="!connection.connected"
+      class="bg-purple-400 px-2 py-0.5 flex items-center justify-center space-x-1"
+      :class="{ '!bg-amber-400': connection.error }"
+    >
+      <Error class="!w-3 !h-3" v-if="connection.error" />
+      <Cloud class="!w-3 !h-3" v-else />
+      <p class="text-xs">
+        {{
+          connection.error
+            ? $t('Failed to connect to our real-time servers')
+            : $t('Connecting to our servers') + '...'
+        }}
+      </p>
     </div>
   </header>
 </template>
@@ -37,10 +54,41 @@
 import PushButton from '@/components/Elements/PushButton.vue'
 import Settings from '@/components/Icons/Settings.vue'
 import BackArrow from '@/components/Icons/BackArrow.vue'
+import Error from '@/components/Icons/Error.vue'
+import Cloud from '@/components/Icons/Cloud.vue'
+import type { ThemeDataTop } from '@/types/chat'
 
 defineProps<{
   image: string
   name: string
   loading: boolean
+  connection: { connected: boolean; error: boolean }
+  theme: ThemeDataTop | undefined
 }>()
 </script>
+
+<style scoped>
+.customTheme {
+  background: v-bind('theme?.bg') !important;
+  color: v-bind('theme?.text') !important;
+  border-color: v-bind('theme?.border') !important;
+}
+
+.customTheme button,
+.customTheme a {
+  background: v-bind('theme?.button.bg.default') !important;
+  color: v-bind('theme?.button.text.default') !important;
+}
+
+.customTheme button:hover,
+.customTheme a:hover {
+  background: v-bind('theme?.button.bg.hover') !important;
+  color: v-bind('theme?.button.text.hover') !important;
+}
+
+.customTheme button:focus,
+.customTheme a:focus {
+  background: v-bind('theme?.button.bg.focus') !important;
+  color: v-bind('theme?.button.text.focus') !important;
+}
+</style>
