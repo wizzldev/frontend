@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
 import setup from '@/scripts/mobile/setup'
 
-setup()
+const router = useRouter()
+
+setup(router)
 </script>
 
 <template>

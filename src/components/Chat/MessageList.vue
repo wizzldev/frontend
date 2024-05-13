@@ -1,11 +1,10 @@
 <template>
   <ul
-    class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse"
-    :class="{ customTheme: theme }"
-  >
+      class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse"
+      :class="{ customTheme: theme }"
+    >
     <li v-for="(msg, inx) in messageGroup" :key="inx">
-      <Message :theme="theme" :messages="msg" />
-    </li>
+      <Message @like="(id: number) => $emit('like', id)" :theme="theme" :messages="msg" /></li>
   </ul>
 </template>
 
@@ -51,4 +50,5 @@ const messageGroup = computed((): MessageGroupList => {
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
+
 </style>

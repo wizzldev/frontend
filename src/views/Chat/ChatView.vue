@@ -4,7 +4,7 @@
     :chat-profile="chat.profile[chatID] || { name: '', image: '', loading: true }"
     :connection="{ connected, error: connectionError }"
   >
-    <MessageList :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
+    <MessageList @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
     <SendForm :value="message" :theme="theme?.dark?.bottom" v-model.lazy="message" @send="send" @emoji="emoji" />
   </ChatLayout>
 </template>
@@ -14,13 +14,15 @@ import ChatLayout from '@/layouts/ChatLayout.vue'
 import { onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
 import request from '@/scripts/request/request'
 import { useRoute, useRouter } from 'vue-router'
-import type { Messages, Message as WSMessage } from '@/types/message'
+import type { Like, Message as WSMessage, Messages } from '@/types/message'
 import MessageList from '@/components/Chat/MessageList.vue'
 import { useChatStore } from '@/stores/chat'
 import type BaseChannel from '@/scripts/websocket/baseChannel'
 import { useContactsStore } from '@/stores/contacts'
 import SendForm from '@/components/Chat/SendForm.vue'
 import type { Theme } from '@/types/chat'
+import { Haptics, ImpactStyle } from '@capacitor/haptics'
+import { isApp } from '@/scripts/mobile/isApp'
 
 const router = useRouter()
 const route = useRoute()
@@ -39,6 +41,11 @@ const send = () => {
 
 const emoji = (emoji: string) => {
   ws.send('message', emoji)
+}
+
+const like = async (id: number) => {
+  ws.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
+  if(isApp()) await Haptics.impact({ style: ImpactStyle.Light })
 }
 
 const chatID = `chat.${route.params.id as string}`
@@ -67,6 +74,15 @@ const fetchChat = async () => {
     console.log(m)
     chat.push(chatID, [m])
     contacts.update(parseInt(route.params.id as string), m)
+  })
+
+  ws.on<Like>('message.like', (l) => {
+    console.log(l)
+    chat.pushLike(chatID, l?.message_id || 0, l)
+  })
+
+  ws.on<Like>('message.like.remove', (l) => {
+    chat.removeLike(chatID, l?.message_id || 0, l)
   })
 
   ws.onStatusChange((chan: BaseChannel, is_connected: boolean) => {

@@ -9,6 +9,14 @@ export interface Message {
   reply: Message | undefined
   created_at: string
   updated_at: string
+  likes: Array<Like>
+}
+
+export interface Like {
+  id: number
+  emoji: string
+  sender: User
+  message_id: number | undefined
 }
 
 export type Messages = Array<Message>

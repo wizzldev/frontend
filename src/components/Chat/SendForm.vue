@@ -15,7 +15,7 @@
             :placeholder="$t('Message')"
             required
           />
-          <button class="py-2 px-3 mt-auto flex items-center justify-center">
+          <button class="py-2 px-3 flex items-center justify-center">
             <Send />
           </button>
         </div>

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { type Ref, ref } from 'vue'
-import type { Messages } from '@/types/message'
+import type { Like, Messages } from '@/types/message'
 
 export const useChatStore = defineStore('chat', () => {
   const messages = ref({}) as Ref<Record<string, Messages>>
@@ -23,5 +23,29 @@ export const useChatStore = defineStore('chat', () => {
     console.log(messages.value)
   }
 
-  return { push, messages, profile }
+  function pushLike(chat: string, mId: number, l: Like) {
+    if (!Object.keys(messages.value).includes(chat)) return
+    messages.value[chat].forEach(m => {
+      if(m.id != mId) return
+      if(!m.likes) m.likes = []
+      m.likes.push(l)
+    })
+  }
+
+  function removeLike(chat: string, mId: number, l: Like) {
+    if (!Object.keys(messages.value).includes(chat)) return
+    messages.value[chat].forEach(m => {
+      if(m.id != mId) return
+      if(!m.likes) return
+      let inx = -1
+      m.likes.forEach((like, i) => {
+        if(like.id == l.id) {
+          inx = i
+        }
+      })
+      if(inx > -1) m.likes.splice(inx, 1)
+    })
+  }
+
+  return { push, pushLike, removeLike, messages, profile }
 })
