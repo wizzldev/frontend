@@ -28,7 +28,7 @@
           class="bg-secondary-all text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
           :is-link="true"
           to-name="chat.settings"
-          :to-params="[$route.params.id as string]"
+          :to-params="{id: $route.params.id} as RouteParamsRaw"
         >
           <Settings />
         </PushButton>
@@ -59,6 +59,7 @@ import BackArrow from '@/components/Icons/BackArrow.vue'
 import Error from '@/components/Icons/Error.vue'
 import Cloud from '@/components/Icons/Cloud.vue'
 import type { ThemeDataTop } from '@/types/chat'
+import type { RouteParamsRaw } from 'vue-router'
 
 defineProps<{
   image: string
