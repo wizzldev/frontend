@@ -4,6 +4,7 @@ import chat from '@/router/routes/chat'
 import { useAuthStore } from '@/stores/auth'
 import Guard from '@/router/guard'
 import main from '@/router/routes/main'
+import { useRouteLoaderStore } from '@/stores/routeLoader'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,10 +12,18 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+  const loader = useRouteLoaderStore()
   const auth = useAuthStore()
 
-  if (auth.needsFresh()) await auth.check()
-  if (!to?.meta?.auth) return next()
+  if (auth.needsFresh()) {
+    loader.isLoaded = false
+    await auth.check()
+  }
+
+  loader.isLoaded = true
+  if (!to?.meta?.auth) {
+    return next()
+  }
 
   if (auth.isLoggedIn) {
     if (to.meta.auth == Guard.ACCESS_LOGIN || to.meta.auth == Guard.ACCESS_ALL) return next()

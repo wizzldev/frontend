@@ -1,18 +1,18 @@
 <template>
-  <header class="px-5 py-4 flex items-center justify-between">
+  <header class="px-5 py-4 flex items-center justify-between border-b-secondary z-10">
     <div class="flex items-center space-x-2">
       <img class="w-8 h-8 rounded-full" :src="auth.user?.image_url" :alt="userImageAlt" />
       <h2 class="text-lg font-bold fontTheme">{{ $t('Chats') }}</h2>
     </div>
     <div class="flex items-center space-x-2">
       <PushButton
-        class="bg-secondary text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
+        class="bg-secondary-all text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
         :is-link="false"
       >
         <Support />
       </PushButton>
       <PushButton
-        class="bg-secondary text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
+        class="bg-secondary-all text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
         :is-link="true"
         to-name="settings.default"
       >

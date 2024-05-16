@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "co.wizzl.chat"
+    namespace "co.wizzl.app"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "co.wizzl.chat"
+        applicationId "co.wizzl.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

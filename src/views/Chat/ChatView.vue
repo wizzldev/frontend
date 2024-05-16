@@ -23,7 +23,9 @@ import SendForm from '@/components/Chat/SendForm.vue'
 import type { Theme } from '@/types/chat'
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { isApp } from '@/scripts/mobile/isApp'
+import { useRouteLoaderStore } from '@/stores/routeLoader'
 
+const loader = useRouteLoaderStore()
 const router = useRouter()
 const route = useRoute()
 const chat = useChatStore()
@@ -54,7 +56,9 @@ const ws = window.WS.channel(chatID)
 const fetchChat = async () => {
   if (!(chatID in chat.messages)) {
     connected.value = false
+    loader.isLoaded = false
     const res = await request.get(`/chat/${route.params.id as string}`)
+    loader.isLoaded = true
     if (!res.data.$error) {
       const data = res.data as { group: { name: string; image_url: string }; messages: Messages }
       chat.push(chatID, data.messages)

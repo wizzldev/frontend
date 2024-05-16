@@ -1,17 +1,16 @@
 <template>
-  <li
-
-    :data-theme="`message-${sentByMe ? 'you' : 'other'}`"
-    class="relative cursor-pointer px-4 py-1.5 w-max max-w-full mt-1 rounded-xl break-words first:rounded-t-3xl last:rounded-b-3xl"
-    :class="{
+    <li data-message
+      :data-theme="`message-${sentByMe ? 'you' : 'other'}`"
+      class="relative cursor-pointer px-4 py-1.5 w-max max-w-full mt-1 rounded-xl break-words first:rounded-t-3xl last:rounded-b-3xl"
+      :class="{
               'ml-auto bg-secondary rounded-l-3xl z-0': sentByMe,
               'bg-tertiary rounded-r-3xl': !sentByMe
             }"
-    :style="getStyle(message)"
-    @dblclick="$emit('like', message.id)"
-  >
-    {{ message.content }}
-  </li>
+      :style="getStyle(message)"
+      @dblclick="$emit('like', message.id)"
+    >
+      {{ message.content }}
+    </li>
 </template>
 
 <script setup lang="ts">

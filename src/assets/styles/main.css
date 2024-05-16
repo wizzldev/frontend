@@ -27,3 +27,11 @@ body {
 *:focus {
   outline: none !important;
 }
+
+.bg-secondary-all {
+  @apply transition-colors bg-secondary hover:bg-secondary-hover focus:bg-secondary-focus;
+}
+
+.bg-tertiary-all {
+  @apply transition-colors bg-tertiary hover:bg-tertiary-hover focus:bg-tertiary-focus;
+}

@@ -1,11 +1,11 @@
 <template>
-  <header class="border-b border-secondary" :class="{ customTheme: theme }">
-    <div class="flex items-center justify-between px-5 py-4">
+  <header :class="{ customTheme: theme }">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-secondary">
       <div class="flex items-center space-x-2">
         <PushButton
           :is-link="true"
           to-name="chat.contacts"
-          class="bg-secondary rounded-full p-2 flex items-center justify-center text-gray-400"
+          class="bg-secondary-all rounded-full p-2 flex items-center justify-center text-gray-400"
         >
           <BackArrow />
         </PushButton>
@@ -25,8 +25,10 @@
       <div class="flex items-center space-x-2">
         <PushButton
           :disabled="loading"
-          class="bg-secondary text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
-          :is-link="false"
+          class="bg-secondary-all text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
+          :is-link="true"
+          to-name="chat.settings"
+          :to-params="[$route.params.id as string]"
         >
           <Settings />
         </PushButton>
@@ -71,6 +73,9 @@ defineProps<{
 .customTheme {
   background: v-bind('theme?.bg') !important;
   color: v-bind('theme?.text') !important;
+}
+
+.customTheme div {
   border-color: v-bind('theme?.border') !important;
 }
 

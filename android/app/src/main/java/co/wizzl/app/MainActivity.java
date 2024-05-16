@@ -1,4 +1,4 @@
-package co.wizzl.chat;
+package co.wizzl.app;
 
 import com.getcapacitor.BridgeActivity;
 

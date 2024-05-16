@@ -8,6 +8,7 @@ declare global {
       API_VERSION: string
       WS_ENDPOINT: string
       CDN_HOST: string
+      SUPPORT_HOST: string
     }
     WS: Server
   }

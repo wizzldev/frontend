@@ -4,13 +4,31 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wizzl</title>
-    <script data-wizzl="https://config.wizzl.co/scripts/global-env.js">
+    <title>Wizzl - A Realtime Chat Application</title>
+    <!-- Facebook Meta Tags -->
+    <meta name="og:site_name" content="Wizzl">
+    <meta name="og:title" content="Wizzl - Fast, secure and reliable chat">
+    <meta name="og:type" content="website">
+    <meta name="theme-color" content="#cb99fa">
+    <meta name="og:url" content="https://%VITE_SITE_DOMAIN%">
+    <meta name="og:description" content="Modern, real-time chat application for web and mobile platforms. Interactive interface, multiple theme options, and mobile-friendly design.">
+    <meta name="og:keywords" content="Wizzl,Chat,Communication,Free Application,Free Chat Application">
+    <meta name="og:image" content="https://%VITE_SITE_DOMAIN%/static/thumbnail.webp">
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:domain" content="%VITE_SITE_DOMAIN%">
+    <meta name="twitter:url" content="https://%VITE_SITE_DOMAIN%">
+    <meta name="twitter:title" content="Wizzl - Fast, secure and reliable chat">
+    <meta name="twitter:description" content="Modern, real-time chat application for web and mobile platforms. Interactive interface, multiple theme options, and mobile-friendly design.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://%VITE_SITE_DOMAIN%/static/thumbnail.webp">
+    <!---->
+    <script data-wizzl="https://%VITE_SITE_DOMAIN%/scripts/global-env.js">
       window.GLOBAL_ENV = {
         API_ENDPOINT: "%VITE_API_ENDPOINT%",
         API_VERSION: "%VITE_API_VERSION%",
         WS_ENDPOINT: "%VITE_WS_ENDPOINT%",
         CDN_HOST: "%VITE_CDN_HOST%",
+        SUPPORT_HOST: '%VITE_SUPPORT_HOST%'
       }
     </script>
     <style>

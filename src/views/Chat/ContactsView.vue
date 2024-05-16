@@ -16,7 +16,7 @@
         <PushButton
           :is-link="true"
           to-name="chat.new"
-          class="w-1/3 m-auto p-1 bg-secondary rounded-full text-xs mt-2 text-center"
+          class="w-1/3 m-auto p-1 bg-secondary-all rounded-full text-xs mt-2 text-center"
         >
           {{ $t('New chat') }}
         </PushButton>
@@ -41,7 +41,7 @@
         <PushButton
           :is-link="true"
           to-name="chat.new"
-          class="w-1/3 m-auto p-1 bg-secondary rounded-full text-xs mt-2"
+          class="w-1/3 m-auto p-1 bg-secondary-all rounded-full text-xs mt-2"
         >
           {{ $t('New chat') }}
         </PushButton>
@@ -63,13 +63,16 @@ import { useChatStore } from '@/stores/chat'
 import type { Messages } from '@/types/message'
 import type { Contact as TContact } from '@/types/contact'
 import { useContactsStore } from '@/stores/contacts'
+import { useRouteLoaderStore } from '@/stores/routeLoader'
 
+const loader = useRouteLoaderStore()
 const contacts = useContactsStore()
 const chat = useChatStore()
 const hasContact = computed(() => contacts.contacts.length)
 
 const fetchContacts = async () => {
   if (contacts.contacts.length > 0) {
+    loader.isLoaded = true
     return
   }
 
@@ -77,6 +80,7 @@ const fetchContacts = async () => {
   if (!res.data.$error && !res.data?.nullValue) {
     contacts.push(res.data)
   }
+  loader.isLoaded = true
 
   window.WS.channel().on<{ resource: string; group_id: number }>('should_fetch', async (r) => {
     const res = await request.get(`/${r.resource.replace('.', '/')}`)

@@ -3,5 +3,6 @@ const p = (s: string): string => {
 }
 
 export const WizzlAuthToken = p('token')
+export const WizzlGroupMakeSave = p('groupMake')
 
 export const WizzlDefaultChannel = ''

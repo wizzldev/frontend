@@ -3,6 +3,7 @@ import ChatView from '@/views/Chat/ChatView.vue'
 import Guard from '@/router/guard'
 import NewChatView from '@/views/Chat/NewChatView.vue'
 import type { RouteRecordRaw } from 'vue-router'
+import ChatSettings from '@/views/Chat/ChatSettings.vue'
 
 const needsAuth = {
   auth: Guard.ACCESS_LOGIN
@@ -26,5 +27,11 @@ export default [
     name: 'chat.message',
     component: ChatView,
     meta: needsAuth
+  },
+  {
+    path: '/chat/:id/settings',
+    name: 'chat.settings',
+    component: ChatSettings,
+    meta: needsAuth,
   }
 ] as Array<RouteRecordRaw>
