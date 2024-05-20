@@ -19,7 +19,7 @@ setup(router)
       </div>
     </transition>
   </RouterView>
-  <AppLayout v-else class="!flex-1 items-center justify-center">
+  <AppLayout v-show="!loader.isLoaded" class="!flex-1 items-center justify-center">
     <InfiniteLoader/>
   </AppLayout>
 </template>

@@ -5,13 +5,13 @@
     :connection="{ connected, error: connectionError }"
   >
     <MessageList @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
-    <SendForm :value="message" :theme="theme?.dark?.bottom" v-model.lazy="message" @send="send" @emoji="emoji" />
+    <SendForm :allowed="sendMessagePermission" :value="message" :theme="theme?.dark?.bottom" v-model.lazy="message" @send="send" @emoji="emoji" />
   </ChatLayout>
 </template>
 
 <script setup lang="ts">
 import ChatLayout from '@/layouts/ChatLayout.vue'
-import { onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
 import request from '@/scripts/request/request'
 import { useRoute, useRouter } from 'vue-router'
 import type { Like, Message as WSMessage, Messages } from '@/types/message'
@@ -24,6 +24,7 @@ import type { Theme } from '@/types/chat'
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { isApp } from '@/scripts/mobile/isApp'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
+import type Channel from '@/scripts/websocket/channel'
 
 const loader = useRouteLoaderStore()
 const router = useRouter()
@@ -33,45 +34,35 @@ const contacts = useContactsStore()
 const connected = ref(false)
 const connectionError = ref(false)
 const theme = ref(null) as Ref<Theme | null>
-
 const message = ref('')
+const init = ref(false)
+let ws: Channel|undefined
 
 const send = () => {
-  ws.send('message', message.value)
+  ws?.send('message', message.value)
   message.value = ''
 }
 
 const emoji = (emoji: string) => {
-  ws.send('message', emoji)
+  ws?.send('message', emoji)
 }
 
+const sendMessagePermission = computed(() => (!chat.roles[chatID] || chat.roles[chatID]?.includes('SEND_MESSAGE')) as boolean)
+
 const like = async (id: number) => {
-  ws.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
+  ws?.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
   if(isApp()) await Haptics.impact({ style: ImpactStyle.Light })
 }
 
 const chatID = `chat.${route.params.id as string}`
-const ws = window.WS.channel(chatID)
 
-const fetchChat = async () => {
-  if (!(chatID in chat.messages)) {
-    connected.value = false
-    loader.isLoaded = false
-    const res = await request.get(`/chat/${route.params.id as string}`)
-    loader.isLoaded = true
-    if (!res.data.$error) {
-      const data = res.data as { group: { name: string; image_url: string }; messages: Messages }
-      chat.push(chatID, data.messages)
-      chat.profile[chatID] = {
-        image: data.group.image_url,
-        name: data.group.name,
-        loading: false
-      }
-    } else return await router.push({ name: 'chat.contacts' })
-  }
+const initWebsocket = async () => {
+  if(init.value) return
+  init.value = true
+  ws = window.WS.channel(chatID)
 
   ws.on<string>('connection', (data) => {
-    console.info(`connection [${ws.uri}]:`, data)
+    console.info(`chat connection [${ws?.uri}]:`, data)
   })
 
   ws.on<WSMessage>('message', (m) => {
@@ -92,16 +83,40 @@ const fetchChat = async () => {
   ws.onStatusChange((chan: BaseChannel, is_connected: boolean) => {
     connected.value = is_connected
     connectionError.value = !is_connected
-    console.log(is_connected, connectionError.value)
   })
 
   await ws.connect()
-  connected.value = ws.isConnected()
+  connected.value = ws?.isConnected()
   connectionError.value = !ws.isConnected()
 }
 
-onMounted(fetchChat)
+const fetchChat = async () => {
+  if (chat.shouldFetch(chatID)) {
+    connected.value = false
+    loader.isLoaded = false
+    const res = await request.get(`/chat/${route.params.id as string}`)
+    if (!res.data.$error) {
+      const data = res.data as { user_roles: Array<string>; group: { name: string; image_url: string }; messages: Messages;  }
+      chat.isPM[chatID] = true
+      chat.push(chatID, data.messages)
+      chat.setRoles(chatID, data.user_roles)
+      chat.profile[chatID] = {
+        image: data.group.image_url,
+        name: data.group.name,
+        loading: false
+      }
+      loader.isLoaded = true
+    } else return await router.push({ name: 'chat.contacts' })
+  }
+}
+
+onMounted(async () => {
+  await fetchChat()
+  await initWebsocket()
+})
+
 onBeforeUnmount(() => {
-  ws.disconnect()
+  if(ws) ws.disconnect()
+  ws = undefined
 })
 </script>

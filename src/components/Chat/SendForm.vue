@@ -1,6 +1,6 @@
 <template>
   <div class="border-t-2 border-t-secondary px-3 py-2" :class="{ customTheme: theme }">
-    <div class="flex items-center space-x-2">
+    <div class="flex items-center space-x-2" v-if="allowed">
       <form class="w-full" v-on:submit.prevent="$emit('send')">
         <div
           data-theme="input-form"
@@ -27,17 +27,22 @@
         {{ theme?.emoji || '🌟' }}
       </button>
     </div>
+    <h2 v-else class="fontTheme text-gray-400 text-center px-3">{{ $t('You are not allowed to send a message') }}</h2>
   </div>
 </template>
 
 <script setup lang="ts">
 import Send from '@/components/Icons/Send.vue'
 import type { ThemeDataBottom } from '@/types/chat'
+import { onMounted } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   theme: ThemeDataBottom | undefined
   value: string
+  allowed: boolean
 }>()
+
+onMounted(() => console.info("PROPS:", props))
 </script>
 
 <style scoped>

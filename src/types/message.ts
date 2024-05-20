@@ -1,4 +1,5 @@
 import type { User } from '@/types/user'
+import type { Roles } from '@/types/roles'
 
 export interface Message {
   id: number
@@ -21,5 +22,5 @@ export interface Like {
 
 export type Messages = Array<Message>
 
-export type MessageGroup = { type: string; sender: User; messages: Messages }
+export type MessageGroup = { type: string; sender: User; messages: Messages; roles?: Roles }
 export type MessageGroupList = Array<MessageGroup>

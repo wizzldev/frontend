@@ -20,12 +20,16 @@ class Server {
   }
 
   public channel(name: string = ''): Channel {
+    console.log("channels:", name, this.channels, Object.keys(this.channels).includes(name))
     if (Object.keys(this.channels).includes(name)) {
       return this.channels[name]
     }
-    const chan = new Channel(this.host, this.auth, name, this.onDisconnect)
-    this.channels[name] = chan
-    return chan
+    this.channels[name] = new Channel(this.host, this.auth, name, this.onDisconnect)
+    return this.channels[name]
+  }
+
+  public allChannel(): Array<Channel> {
+    return Object.values(this.channels)
   }
 
   public resetChannel(name: string): Channel {
@@ -35,6 +39,10 @@ class Server {
 
   public logChannels() {
     console.log(this.channels)
+  }
+
+  public detach(name: string) {
+    delete this.channels[name]
   }
 }
 

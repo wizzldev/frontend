@@ -1,5 +1,5 @@
 <template>
-  <section class="grid grid-cols-2 gap-2 mx-5 text-center">
+  <section class="grid grid-cols-2 gap-2 mx-5 text-center py-3">
     <PushButton
       :is-link="true"
       to-name="chat.contacts"

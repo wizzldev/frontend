@@ -9,24 +9,36 @@ import type {
 
 class BaseChannel {
   public readonly uri: string
+  public readonly name: string
   protected onDisconnect: DisconnectHandler
   protected statusChange: StatusChangeHandler
   protected conn: WebSocket | null = null
   private messageHandlers: messageHandlers = []
+  private connectionInProgress = false
   private _isConnected = false
   private jobs = [] as Array<string>
+  private terminated = false
 
   public constructor(host: string, auth: string, resource: string, d: DisconnectHandler) {
+    this.name = resource
     this.uri = `${host}/${resource.replace('.', '/')}?authorization=${auth}`
     this.onDisconnect = d
     this.statusChange = () => {}
   }
 
+  public connecting() {
+    return this.connectionInProgress
+  }
+
   public async connect() {
-    this.job('heartbeat', { type: 'ping', content: 'ping', data_json: '{}' }, 40000)
+    if(window.WS.channel(this.name).connecting() || this.connectionInProgress) return
+    if(window.WS.channel(this.name).isConnected() || this._isConnected) return
+    if(this.terminated) return
+    this.connectionInProgress = true
     this.conn = await new Promise((resolve) => {
       const c = new WebSocket(this.uri)
       c.onopen = () => {
+        this.connectionInProgress = false
         this._isConnected = true
         this.statusChange(this, true)
         resolve(c)
@@ -58,13 +70,25 @@ class BaseChannel {
     return this._isConnected
   }
 
+  public log(...data: Array<unknown>) {
+    console.info(`WS [${this.name}] - ${data.join(', ')}`)
+  }
+
   public disconnect() {
-    this.statusChange = () => {}
-    for (let i = 0; i < this.messageHandlers.length; i++) delete this.messageHandlers[i]
     this.onDisconnect = async () => {
       console.log('Disconnected from ws')
+      this._isConnected = false
     }
-    this.conn?.close()
+    this.messageHandlers.forEach((h, id) => {
+      delete this.messageHandlers[id]
+      this.log(`Handler ${h.event} detached`)
+    })
+    this.statusChange = () => {}
+    for (let i = 0; i < this.messageHandlers.length; i++) delete this.messageHandlers[i]
+    if(this.conn) this.conn.onclose = () => {}
+    this.baseSend('close', 'close', null)
+    if(this.conn?.readyState == WebSocket.OPEN) this.conn?.close()
+    window.WS.detach(this.name)
   }
 
   public async error() {
@@ -121,6 +145,11 @@ class BaseChannel {
         setInterval(() => finish, timeout)
       }, timeout)
     finish()
+  }
+
+  public terminate() {
+    this.terminated = true
+    this.disconnect()
   }
 }
 

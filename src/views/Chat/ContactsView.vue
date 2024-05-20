@@ -5,14 +5,13 @@
     </section>
     <ChatNav />
     <section
-      class="mt-3 h-full w-full"
-      :class="{ 'flex items-center justify-center': !hasContact }"
+      class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll pt-4"
+      :class="{'flex items-center justify-center': !hasContact}"
     >
       <div v-if="!hasContact">
         <h2 class="text-gray-600 fontTheme px-2">
           {{ $t('You currently have no active conversation') }}
         </h2>
-
         <PushButton
           :is-link="true"
           to-name="chat.new"
@@ -21,30 +20,31 @@
           {{ $t('New chat') }}
         </PushButton>
       </div>
+      <div>
+        <template v-for="(con, i) in contacts.contacts" :key="i">
+          <PushButton
+            class="w-full"
+            v-if="showSearch(con)"
+            :is-link="true"
+            to-name="chat.message"
+            :to-params="{ id: con.id }"
+          >
+            <Contact :title="con.name" :image="con.image" :message="con.last_message" />
+          </PushButton>
+        </template>
 
-      <template v-for="(con, i) in contacts.contacts" :key="i">
-        <PushButton
-          class="w-full"
-          v-if="showSearch(con)"
-          :is-link="true"
-          to-name="chat.message"
-          :to-params="{ id: con.id }"
-        >
-          <Contact :title="con.name" :image="con.image" :message="con.last_message" />
-        </PushButton>
-      </template>
-
-      <div class="text-center px-2 mt-3 mb-2" v-if="hasContact">
-        <p  class="text-sm text-gray-600 fontTheme">
-          {{ $t('No more active conversations') }}
-        </p>
-        <PushButton
-          :is-link="true"
-          to-name="chat.new"
-          class="w-1/3 m-auto p-1 bg-secondary-all rounded-full text-xs mt-2"
-        >
-          {{ $t('New chat') }}
-        </PushButton>
+        <div class="text-center px-2 mt-3 mb-2" v-if="hasContact">
+          <p  class="text-sm text-gray-600 fontTheme">
+            {{ $t('No more active conversations') }}
+          </p>
+          <PushButton
+            :is-link="true"
+            to-name="chat.new"
+            class="w-1/3 m-auto p-1 bg-secondary-all rounded-full text-xs mt-2"
+          >
+            {{ $t('New chat') }}
+          </PushButton>
+        </div>
       </div>
     </section>
   </ContactsLayout>

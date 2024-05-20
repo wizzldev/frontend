@@ -2,8 +2,8 @@
   <div class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll pt-4">
       <form v-on:submit.prevent class="px-4 w-full">
         <div>
-          <label class="text-gray-200" for="chatName">{{ $t('Chat\'s name') }}</label>
-          <IconInput v-model.lazy="chatName" :value="chatName" id="chatName" :icon="MagicWand" placeholder="Chat's name" />
+          <label class="text-gray-200" for="chatName">{{ $t('Group name') }}</label>
+          <IconInput v-model.lazy="chatName" :value="chatName" id="chatName" :icon="MagicWand" placeholder="Group name" />
         </div>
         <div class="mt-2">
           <label class="text-gray-200">{{ $t('Roles') }}</label>

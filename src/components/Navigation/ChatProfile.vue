@@ -15,7 +15,7 @@
           src="../../assets/vectors/loading.svg"
           alt="Loading image"
         />
-        <img v-else class="w-8 h-8 rounded-full" :src="image" :alt="`${name}'s chat image`" />
+        <LazyImage v-else class="w-8 h-8 rounded-full" :src="image" :alt="`${name}'s chat image`" />
         <h2
           class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
         >
@@ -60,6 +60,7 @@ import Error from '@/components/Icons/Error.vue'
 import Cloud from '@/components/Icons/Cloud.vue'
 import type { ThemeDataTop } from '@/types/chat'
 import type { RouteParamsRaw } from 'vue-router'
+import LazyImage from '@/components/Loaders/LazyImage.vue'
 
 defineProps<{
   image: string

@@ -24,7 +24,7 @@
       @success="handleLogin"
     />
     <div>
-      <p>
+      <p class="mt-2 text-gray-400 text-sm">
         {{ $t("Don't have an account?") }}
         <router-link :to="{ name: 'auth.register' }">{{ $t('Register') }}</router-link>
       </p>

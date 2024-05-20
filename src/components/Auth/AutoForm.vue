@@ -8,7 +8,7 @@
             <component :is="field.icon" class="text-gray-400" :class="passwordColor(field)" />
           </div>
           <input
-            class="w-full bg-secondary pl-12 pr-4 py-2.5 rounded-xl"
+            class="w-full bg-secondary-all pl-12 pr-4 py-2.5 rounded-xl"
             :disabled="processing"
             :placeholder="field.placeholder ? $t(field.placeholder) : ''"
             :type="field.type || 'text'"

@@ -42,7 +42,6 @@ defineProps<{
 }>()
 
 const route = useRoute()
-const auth = useAuthStore()
 
 const pageTitle = computed((): string => {
   const data = (route.name as string).split('.')

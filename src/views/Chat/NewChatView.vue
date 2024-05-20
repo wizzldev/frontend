@@ -1,11 +1,11 @@
 <template>
   <AppLayout>
-    <MyProfile :class="{'border-b': groupSettings}" />
+    <MyProfile :class="{'border-b': groupSettings}" :backButton="groupSettings ? {route: 'chat.new'} : undefined" />
     <main v-if="!groupSettings" class="h-full flex flex-col space-y-3">
       <form v-on:submit.prevent="add" class="px-5">
         <IconInput :disabled="loading" :value="input" v-model.lazy="input" placeholder="Enter email" :icon="EmailAt" />
       </form>
-      <ChatNav />
+      <ChatNav class="!py-0" />
       <div class="px-4 mt-3">
         <ul>
           <li
@@ -35,12 +35,12 @@
 import ChatNav from '@/components/Chat/ChatNav.vue'
 import IconInput from '@/components/Elements/IconInput.vue'
 import EmailAt from '@/components/Icons/EmailAt.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import type { User } from '@/types/user'
 import request from '@/scripts/request/request'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import GroupCreateConfig from '@/components/Group/GroupCreateConfig.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import MyProfile from '@/components/Navigation/MyProfile.vue'
@@ -53,6 +53,7 @@ const toast = useToast()
 const input = ref('')
 const loading = ref(false)
 const groupSettings = ref(false)
+const route = useRoute()
 
 const add = async () => {
   loading.value = true
@@ -77,7 +78,10 @@ const rm = (e: User) => {
 
 const submit = async () => {
   if(groupMake.users.length == 1) await addPM()
-  else groupSettings.value = true
+  else {
+    window.location.hash = "group"
+    groupSettings.value = true
+  }
 }
 
 const addPM = async () => {
@@ -105,5 +109,11 @@ const addGroup = async (name: string, roles: Array<string>) => {
   }
 }
 
-onMounted(() => groupMake.initialize())
+onMounted(() => {
+  groupMake.initialize()
+  console.log(window.location.hash)
+  groupSettings.value = window.location.hash == "#group"
+})
+
+watch(route, () => groupSettings.value = route.hash == "#group")
 </script>

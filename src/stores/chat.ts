@@ -3,7 +3,9 @@ import { type Ref, ref } from 'vue'
 import type { Like, Messages } from '@/types/message'
 
 export const useChatStore = defineStore('chat', () => {
+  const isPM = ref({}) as Ref<Record<string, boolean>>
   const messages = ref({}) as Ref<Record<string, Messages>>
+  const roles = ref({}) as Ref<Record<string, Array<string>|null>>
   const profile = ref({}) as Ref<Record<string, { name: string; image: string; loading: boolean }>>
 
   function push(chat: string, msg: Messages) {
@@ -19,8 +21,13 @@ export const useChatStore = defineStore('chat', () => {
       else break
     }
     messages.value[chat] = [...sorted, ...messages.value[chat]]
+  }
 
-    console.log(messages.value)
+  function setRoles(chat: string, roleList: Array<string>) {
+    if (!Object.keys(roles.value).includes(chat)) {
+      roles.value[chat] = []
+    }
+    roles.value[chat] = roleList
   }
 
   function pushLike(chat: string, mId: number, l: Like) {
@@ -47,5 +54,11 @@ export const useChatStore = defineStore('chat', () => {
     })
   }
 
-  return { push, pushLike, removeLike, messages, profile }
+  function shouldFetch(chatID: string): boolean {
+    if(!(chatID in messages.value)) return true
+    if(isPM.value?.[chatID]) return false
+    return Object.keys(roles.value).includes(chatID) && (roles.value[chatID] || []).length > 0
+  }
+
+  return { push, pushLike, removeLike, setRoles, shouldFetch, roles, messages, profile, isPM }
 })

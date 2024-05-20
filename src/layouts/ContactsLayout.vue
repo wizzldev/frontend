@@ -1,9 +1,7 @@
 <template>
   <AppLayout>
     <MyProfile />
-    <main class="h-full flex flex-col space-y-3">
-      <slot />
-    </main>
+    <slot />
   </AppLayout>
 </template>
 

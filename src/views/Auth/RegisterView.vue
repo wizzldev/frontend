@@ -38,7 +38,7 @@
       @success="handleLogin"
     />
     <div>
-      <p>
+      <p class="mt-2 text-gray-400 text-sm">
         {{ $t('Already have an account?') }}
         <router-link :to="{ name: 'auth.login' }">{{ $t('Login') }}</router-link>
       </p>

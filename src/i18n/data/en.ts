@@ -8,6 +8,7 @@ export default {
   Search: 'Search',
   You: 'You',
   'chat.create': '{sender} created a new chat',
+  'chat.create.you': 'You\'ve created a new chat',
 
   'message.reply': '{who} replied to: {to}',
   'message.reply.you': 'You replied to: {to}',
