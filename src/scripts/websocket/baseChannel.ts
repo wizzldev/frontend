@@ -151,6 +151,10 @@ class BaseChannel {
     this.terminated = true
     this.disconnect()
   }
+
+  public WS(): WebSocket|null {
+    return this.conn
+  }
 }
 
 export default BaseChannel

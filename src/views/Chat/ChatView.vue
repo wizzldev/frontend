@@ -35,7 +35,6 @@ const connected = ref(false)
 const connectionError = ref(false)
 const theme = ref(null) as Ref<Theme | null>
 const message = ref('')
-const init = ref(false)
 let ws: Channel|undefined
 
 const send = () => {
@@ -57,9 +56,9 @@ const like = async (id: number) => {
 const chatID = `chat.${route.params.id as string}`
 
 const initWebsocket = async () => {
-  if(init.value) return
-  init.value = true
   ws = window.WS.channel(chatID)
+
+  if(ws.isConnected() || ws.WS()?.readyState == WebSocket.OPEN || ws.WS()?.readyState == WebSocket.CONNECTING) return
 
   ws.on<string>('connection', (data) => {
     console.info(`chat connection [${ws?.uri}]:`, data)
