@@ -20,7 +20,7 @@
           {{ $t('New chat') }}
         </PushButton>
       </div>
-      <div>
+      <div class="w-full">
         <template v-for="(con, i) in contacts.contacts" :key="i">
           <PushButton
             class="w-full"
