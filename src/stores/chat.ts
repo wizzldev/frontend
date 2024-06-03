@@ -8,15 +8,23 @@ export const useChatStore = defineStore('chat', () => {
   const roles = ref({}) as Ref<Record<string, Array<string>|null>>
   const profile = ref({}) as Ref<Record<string, { name: string; image: string; loading: boolean }>>
 
-  function push(chat: string, msg: Messages) {
+  function push(chat: string, msg: Messages, hookID: string|null = null) {
+    if(hookID) console.log("PUSHING CHAT WITH HOOKID:", hookID)
     if (!Object.keys(messages.value).includes(chat)) {
       messages.value[chat] = []
     }
 
     const sorted = [] as Messages
+
     for (let i = 0; i < msg.length; i++) {
       const m = msg[i]
-      const j = messages.value[chat].find((k) => k.id == m.id)
+      const j = messages.value[chat].find((k) => k.id == m.id || (hookID != null && k.hookId == hookID))
+      console.log("PUSHING", hookID, j)
+      if(j && j.underSending && j.hookId == hookID) {
+        const rmInx = messages.value[chat].indexOf(j)
+        if(rmInx !== -1) messages.value[chat].splice(rmInx, 1)
+      }
+
       if (!j) sorted.push(m)
       else break
     }
@@ -35,7 +43,7 @@ export const useChatStore = defineStore('chat', () => {
     messages.value[chat].forEach(m => {
       if(m.id != mId) return
       if(!m.likes) m.likes = []
-      m.likes.push(l)
+      if(!m.likes.includes(l)) m.likes.push(l)
     })
   }
 

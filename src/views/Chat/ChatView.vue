@@ -5,7 +5,7 @@
     :connection="{ connected, error: connectionError }"
   >
     <MessageList @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
-    <SendForm :allowed="sendMessagePermission" :value="message" :theme="theme?.dark?.bottom" v-model.lazy="message" @send="send" @emoji="emoji" />
+    <SendForm :allowed="sendMessagePermission" :value="message" :theme="theme?.dark?.bottom" v-model="message" @send="send" @emoji="emoji" />
   </ChatLayout>
 </template>
 
@@ -25,7 +25,11 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { isApp } from '@/scripts/mobile/isApp'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
 import type Channel from '@/scripts/websocket/channel'
+import { SpaceChatTheme } from '@/scripts/themes/space'
+import { resetTheme, setTheme } from '@/scripts/mobile/theme'
+import { useAuthStore } from '@/stores/auth'
 
+const auth = useAuthStore()
 const loader = useRouteLoaderStore()
 const router = useRouter()
 const route = useRoute()
@@ -33,17 +37,36 @@ const chat = useChatStore()
 const contacts = useContactsStore()
 const connected = ref(false)
 const connectionError = ref(false)
-const theme = ref(null) as Ref<Theme | null>
+const theme = ref(SpaceChatTheme) as Ref<Theme | null>
 const message = ref('')
 let ws: Channel|undefined
 
 const send = () => {
-  ws?.send('message', message.value)
+  const hookID = ws?.send('message', message.value)
+  console.log("PUSHING UNSENT MESSAGES WITH HOOK ID:", hookID)
+  chat.push(chatID, [{
+    id: 0,
+    sender: auth.user,
+    content: message.value,
+    type: 'message',
+    data_json: '{}',
+    underSending: true,
+    hookId: hookID,
+  } as WSMessage])
   message.value = ''
 }
 
 const emoji = (emoji: string) => {
-  ws?.send('message', emoji)
+  const hookID = ws?.send('message', emoji)
+  chat.push(chatID, [{
+    id: 0,
+    sender: auth.user,
+    content: emoji,
+    type: 'message',
+    data_json: '{}',
+    underSending: true,
+    hookId: hookID,
+  } as WSMessage])
 }
 
 const sendMessagePermission = computed(() => (!chat.roles[chatID] || chat.roles[chatID]?.includes('SEND_MESSAGE')) as boolean)
@@ -64,14 +87,14 @@ const initWebsocket = async () => {
     console.info(`chat connection [${ws?.uri}]:`, data)
   })
 
-  ws.on<WSMessage>('message', (m) => {
-    console.log(m)
-    chat.push(chatID, [m])
+  ws.on<WSMessage>('message', (m, hookID) => {
+    console.log(m, hookID)
+    chat.push(chatID, [m], hookID)
     contacts.update(parseInt(route.params.id as string), m)
   })
 
   ws.on<Like>('message.like', (l) => {
-    console.log(l)
+    console.log("LIKE:", l)
     chat.pushLike(chatID, l?.message_id || 0, l)
   })
 
@@ -112,10 +135,11 @@ const fetchChat = async () => {
 onMounted(async () => {
   await fetchChat()
   await initWebsocket()
+  if(theme.value != null) await setTheme(theme.value?.dark?.top.bg || '', theme.value?.dark?.bottom.bg || '')
 })
 
-onBeforeUnmount(() => {
+onBeforeUnmount(async () => {
   if(ws) ws.disconnect()
-  ws = undefined
+  await resetTheme()
 })
 </script>

@@ -5,9 +5,10 @@ import type BaseChannel from '@/scripts/websocket/baseChannel'
 export type MessageData<T> = {
   event: string
   data: T
+  hook_id: string
 }
 
-export type MessageHandler<T> = (data: T) => void
+export type MessageHandler<T> = (data: T, hookID: string) => void
 
 // removes an event listener
 export type DetachEventListener = () => void

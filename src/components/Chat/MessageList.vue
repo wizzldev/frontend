@@ -49,9 +49,14 @@ const messageGroup = computed((): MessageGroupList => {
   color: v-bind('theme?.text') !important;
   background-image: v-bind('theme?.bgImage');
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
 
+@media only screen and (max-width: 600px) {
+  .customTheme {
+    background-size: cover;
+  }
+}
 </style>

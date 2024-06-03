@@ -30,6 +30,7 @@ export interface ThemeDataMain {
 export interface ThemeDataBottom {
   bg: string
   text: string
+  icons: string
   border: string
   emoji: string
   button: ThemeDataButton

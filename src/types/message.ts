@@ -11,6 +11,8 @@ export interface Message {
   created_at: string
   updated_at: string
   likes: Array<Like>
+  underSending: boolean
+  hookId: string
 }
 
 export interface Like {

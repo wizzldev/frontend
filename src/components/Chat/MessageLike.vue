@@ -5,7 +5,7 @@
       :class="{'ml-auto mr-2': sentByMe, 'ml-2': !sentByMe}"
   >
       <button  class="px-2 py-0.5 rounded-3xl w-max" :class="{'bg-tertiary': sentByMe, 'bg-secondary': !sentByMe}">
-        {{ message.likes.map(l => l.emoji).join(' ') }}
+        <span :data-likeIds="message.likes.map(l => l.id).join('.')">{{ message.likes.map(l => l.emoji).join(' ') }}</span>
       </button>
   </div>
   </Transition>

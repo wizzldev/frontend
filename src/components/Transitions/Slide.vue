@@ -4,13 +4,23 @@
   </Transition>
 </template>
 
+<script setup lang="ts">
+import { computed } from 'vue'
+
+const props = defineProps<{
+  duration?: number
+}>()
+
+const getDuration = computed(() => props?.duration ? `${props.duration}s` : `0.8s`)
+</script>
+
 <style>
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }
 
 .slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all v-bind('getDuration') cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .slide-fade-enter-from,

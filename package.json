@@ -25,11 +25,13 @@
     "axios": "^1.6.8",
     "check-password-strength": "^2.0.10",
     "javascript-time-ago": "^2.5.10",
+    "js-xxhash": "^4.0.0",
     "pinia": "^2.1.7",
     "serve": "^14.2.3",
     "vue": "^3.4.21",
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.3.0",
+    "vue-tippy": "^6.4.1",
     "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {

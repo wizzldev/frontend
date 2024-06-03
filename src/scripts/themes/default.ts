@@ -38,6 +38,7 @@ export const SummerChatTheme = {
     bottom: {
       bg: '#19506e',
       text: '#ffffff',
+      icons: '#ffffff',
       border: '#ffffff',
       emoji: '🏖️',
       button: {

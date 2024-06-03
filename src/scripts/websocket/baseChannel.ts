@@ -6,6 +6,7 @@ import type {
   messageHandlers,
   StatusChangeHandler
 } from '@/scripts/websocket/types'
+import { xxHash32 } from 'js-xxhash'
 
 class BaseChannel {
   public readonly uri: string
@@ -109,21 +110,28 @@ class BaseChannel {
     const data = JSON.parse(e.data) as MessageData<T>
     this.messageHandlers.forEach((h) => {
       if (h.event == data.event) {
-        h.handler(data.data)
+        h.handler(data.data, data.hook_id)
       }
     })
   }
 
-  protected baseSend<T>(type: string, content: string, data_json: T | object | null) {
+  protected baseSend<T>(type: string, content: string, data_json: T | object | null): string {
     if (data_json === null) data_json = {}
-    const payload: { type: string; content: string; data_json: string } = {
+    const hook = this.newHookID(content)
+    const payload: { type: string; content: string; data_json: string, hook_id: string } = {
       type,
       content,
-      data_json: JSON.stringify(data_json)
+      data_json: JSON.stringify(data_json),
+      hook_id: hook,
     }
     const payloadString = JSON.stringify(payload)
     console.log('[WS]: Payload sent:', payloadString)
     this.conn?.send(payloadString)
+    return hook
+  }
+
+  protected newHookID(s: string) {
+    return xxHash32(s + Math.random().toString(16), Date.now()).toString(16)
   }
 
   public onStatusChange(fn: StatusChangeHandler) {

@@ -15,8 +15,8 @@ class Channel extends BaseChannel {
     return this.eventListenerDetach<T>(event, handle)
   }
 
-  public send<T>(type: string, content: string, dataJSON: T | null = null) {
-    this.baseSend<T>(type, content, dataJSON)
+  public send<T>(type: string, content: string, dataJSON: T | null = null): string {
+    return this.baseSend<T>(type, content, dataJSON)
   }
 }
 

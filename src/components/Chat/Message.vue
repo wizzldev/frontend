@@ -11,11 +11,18 @@
       </div>
       <ul class="max-w-[18rem]">
         <template v-for="msg in messages.messages" :key="msg.id">
-          <MessageReply v-if="msg.reply" :message="msg.reply" :sent-by-me="sentByMe" :sender-first-name="messages.sender.first_name" />
-          <MessageBox @like="(id: number) => $emit('like', id)" v-if="!isEmoji(msg.content)" :sent-by-me="sentByMe" :message="msg"  />
+          <MessageEmoji v-if="msg.content == ':wizzl-star:'" :sent-by-me="sentByMe" :message="msg" />
+          <MessageReply v-else-if="msg.reply" :message="msg.reply" :sent-by-me="sentByMe" :sender-first-name="messages.sender.first_name" />
+          <MessageBox @like="(id: number) => $emit('like', id)" v-else-if="!isEmoji(msg.content)" :sent-by-me="sentByMe" :message="msg"  />
           <MessageEmoji @like="(id: number) => $emit('like', id)" v-else :sent-by-me="sentByMe" :message="msg" />
           <MessageLike :sent-by-me="sentByMe" :message="msg" />
+          <li class="text-right text-xs" v-if="msg.underSending">
+            <Circle class="text-gray-500" />
+          </li>
         </template>
+        <li class="text-right text-xs" v-if="isLastMessageSentByMe">
+          <CircleTick class="text-gray-500" />
+        </li>
       </ul>
     </div>
   </div>
@@ -33,6 +40,8 @@ import MessageBox from '@/components/Chat/MessageBox.vue'
 import MessageEmoji from '@/components/Chat/MessageEmoji.vue'
 import MessageLike from '@/components/Chat/MessageLike.vue'
 import InfoMessages from '@/components/Chat/InfoMessages.vue'
+import Circle from '@/components/Icons/Circle.vue'
+import CircleTick from '@/components/Icons/CircleTick.vue'
 
 const auth = useAuthStore()
 
@@ -47,6 +56,10 @@ const isEmoji = (content: string) => {
   const pattern = /^(?:(?:\p{RI}\p{RI}|\p{Emoji}(?:\p{Emoji_Modifier}|\u{FE0F}\u{20E3}?|[\u{E0020}-\u{E007E}]+\u{E007F})?(?:\u{200D}\p{Emoji}(?:\p{Emoji_Modifier}|\u{FE0F}\u{20E3}?|[\u{E0020}-\u{E007E}]+\u{E007F})?)*)|[\u{1f900}-\u{1f9ff}\u{2600}-\u{26ff}\u{2700}-\u{27bf}])+$/u;
   return pattern.test(content) && Array.from(content).length <= 15
 }
+
+const isLastMessageSentByMe = computed((): boolean => {
+  return false
+})
 </script>
 
 <style scoped>
