@@ -4,7 +4,7 @@
     :class="{'ml-auto': sentByMe}"
     @dblclick="$emit('like', message.id)"
   >
-    <p>
+    <p v-once>
       <template v-for="emoji in emojis">
         <img v-if="emoji.isImage" class="w-8 h-8 inline-block" :alt="emoji.emoji" :title="emoji.emoji" :src="emoji?.src" />
         <template v-else>

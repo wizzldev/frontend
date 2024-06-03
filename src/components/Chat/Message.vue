@@ -11,10 +11,10 @@
       </div>
       <ul class="max-w-[18rem]">
         <template v-for="msg in messages.messages" :key="msg.id">
-          <MessageEmoji v-once v-if="msg.content == ':wizzl-star:'" :sent-by-me="sentByMe" :message="msg" />
-          <MessageReply v-once v-else-if="msg.reply" :message="msg.reply" :sent-by-me="sentByMe" :sender-first-name="messages.sender.first_name" />
-          <MessageBox v-once @like="(id: number) => $emit('like', id)" v-else-if="!isEmoji(msg.content)" :sent-by-me="sentByMe" :message="msg"  />
-          <MessageEmoji v-once @like="(id: number) => $emit('like', id)" v-else :sent-by-me="sentByMe" :message="msg" />
+          <MessageEmoji v-if="msg.content == ':wizzl-star:'" :sent-by-me="sentByMe" :message="msg" />
+          <MessageReply v-else-if="msg.reply" :message="msg.reply" :sent-by-me="sentByMe" :sender-first-name="messages.sender.first_name" />
+          <MessageBox @like="(id: number) => $emit('like', id)" v-else-if="!isEmoji(msg.content)" :sent-by-me="sentByMe" :message="msg"  />
+          <MessageEmoji @like="(id: number) => $emit('like', id)" v-else :sent-by-me="sentByMe" :message="msg" />
           <MessageLike :sent-by-me="sentByMe" :message="msg" />
           <li class="text-right text-xs" v-if="msg.underSending">
             <Circle class="text-gray-500" />
