@@ -1,51 +1,51 @@
 import type { Theme } from '@/types/chat'
 
-export const SpaceChatTheme = {
-  id: 3,
+export const NightChatTheme = {
+  id: 11,
   dark: {
     top: {
-      bg: '#121c26',
+      bg: '#262835',
       text: '#ffffff',
-      border: '#121c26',
+      border: '#262835',
       button: {
         bg: {
-          default: '#182532',
-          hover: '#1f303f',
-          focus: '#1f303f'
+          default: '#2b2e3c',
+          hover: '#323646',
+          focus: '#323646'
         },
         text: {
-          default: '#7b7078',
-          hover: '#e6b899',
-          focus: '#e6b899'
+          default: '#593471',
+          hover: '#623a7b',
+          focus: '#623a7b'
         }
       }
     },
     main: {
-      bg: '#111111',
-      bgImage: 'url(/themes/space.jpg)',
-      text: '#ffffff',
+      bg: '#5e5499',
+      bgImage: 'url(/themes/night.jpg)',
+      text: '#e969ba',
       message: {
         you: {
-          bg: '#1e2e3f',
+          bg: '#6a3e61',
           text: '#ffffff'
         },
         other: {
-          bg: '#283c51',
+          bg: '#a1333a',
           text: '#ffffff'
         }
       }
     },
     bottom: {
-      bg: '#121c26',
+      bg: '#1b2725',
       text: '#ffffff',
-      icons: '#e6b899',
-      border: '#121c26',
-      emoji: '🚀',
+      icons: '#efd0d5',
+      border: '#1b2725',
+      emoji: '🌃',
       button: {
         bg: {
-          default: '#182532',
-          hover: '#1f303f',
-          focus: '#1f303f'
+          default: '#402f43',
+          hover: '#48354c',
+          focus: '#48354c'
         },
         text: {
           default: '#ffffff',
@@ -55,9 +55,9 @@ export const SpaceChatTheme = {
       },
       input: {
         bg: {
-          default: '#182532',
-          hover: '#1f303f',
-          focus: '#1f303f'
+          default: '#402f43',
+          hover: '#48354c',
+          focus: '#48354c'
         },
         text: {
           default: '#ffffff',

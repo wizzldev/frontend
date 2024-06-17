@@ -4,8 +4,8 @@
     :chat-profile="chat.profile[chatID] || { name: '', image: '', loading: true }"
     :connection="{ connected, error: connectionError }"
   >
-    <MessageList @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
-    <SendForm :allowed="sendMessagePermission" :value="message" :theme="theme?.dark?.bottom" v-model="message" @send="send" @emoji="emoji" />
+    <MessageList @modal="(msg: WSMessage) => modalMessage = msg" @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
+    <SendForm :reply="replyMessage" @noReply="replyMessage = null" :allowed="sendMessagePermission" :value="message" :theme="theme?.dark?.bottom" v-model="message" @send="send" @emoji="emoji" />
   </ChatLayout>
 </template>
 
@@ -25,9 +25,9 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { isApp } from '@/scripts/mobile/isApp'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
 import type Channel from '@/scripts/websocket/channel'
-import { SpaceChatTheme } from '@/scripts/themes/space'
 import { resetTheme, setTheme } from '@/scripts/mobile/theme'
 import { useAuthStore } from '@/stores/auth'
+import { NightChatTheme } from '@/scripts/themes/night'
 
 const auth = useAuthStore()
 const loader = useRouteLoaderStore()
@@ -37,9 +37,11 @@ const chat = useChatStore()
 const contacts = useContactsStore()
 const connected = ref(false)
 const connectionError = ref(false)
-const theme = ref(SpaceChatTheme) as Ref<Theme | null>
+const theme = ref(NightChatTheme) as Ref<Theme | null>
 const message = ref('')
 let ws: Channel|undefined
+const modalMessage = ref(null) as Ref<null | WSMessage>
+const replyMessage = ref(null) as Ref<null | WSMessage>
 
 const send = () => {
   const hookID = ws?.send('message', message.value)

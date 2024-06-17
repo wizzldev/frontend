@@ -29,7 +29,7 @@
             to-name="chat.message"
             :to-params="{ id: con.id }"
           >
-            <Contact :title="con.name" :image="con.image" :message="con.last_message" />
+            <Contact :title="con.name" :image="cdnImage(con.image, 256)" :message="con.last_message" />
           </PushButton>
         </template>
 
@@ -64,6 +64,7 @@ import type { Messages } from '@/types/message'
 import type { Contact as TContact } from '@/types/contact'
 import { useContactsStore } from '@/stores/contacts'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
+import { cdnImage } from '@/scripts/image'
 
 const loader = useRouteLoaderStore()
 const contacts = useContactsStore()

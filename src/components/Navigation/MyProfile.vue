@@ -11,7 +11,7 @@
           <BackArrow />
         </PushButton>
       </Slide>
-      <LazyImage class="w-8 h-8 rounded-full" :src="auth.user?.image_url" :alt="userImageAlt" />
+      <LazyImage class="w-8 h-8 rounded-full" :src="cdnImage(auth.user?.image_url || '', 128)" :alt="userImageAlt" />
       <h2 class="text-lg font-bold fontTheme">{{ $t('Chats') }}</h2>
     </div>
     <div class="flex items-center space-x-2">
@@ -42,6 +42,7 @@ import type { RouteParamsRaw } from 'vue-router'
 import BackArrow from '@/components/Icons/BackArrow.vue'
 import Slide from '@/components/Transitions/Slide.vue'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
+import { cdnImage } from '@/scripts/image'
 
 defineProps<{
   backButton?: { route: string; params?: RouteParamsRaw }

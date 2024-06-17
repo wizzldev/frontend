@@ -1,5 +1,15 @@
 <template>
   <ChatLayout :chat-profile="chatProfile" :connection="{ connected: true, error: false }" :theme="undefined">
+    <header class="px-4 my-4">
+      <img :alt="chatProfile.name" :src="chatProfile.image" class="w-14 h-14 rounded-lg mx-auto" />
+      <h2 class="text-center fontTheme">{{ chatProfile.name }}</h2>
+    </header>
+    <main class="px-4 my-2 text-gray-500">
+      <h4 class="text-sm font-bold">{{ $t('Customize') }}</h4>
+      <div>
+
+      </div>
+    </main>
   </ChatLayout>
 </template>
 

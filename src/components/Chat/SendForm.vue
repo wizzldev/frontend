@@ -3,7 +3,7 @@
     <div class="flex items-center space-x-2" v-if="allowed">
       <Slide :duration="0.3">
         <div class="flex items-center space-x-1.5" v-show="showIcons">
-          <button v-tippy="{content: 'Upload a file'}" class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary" data-theme="icons">
+          <button @click="($refs['fileUploadInput'] as HTMLInputElement).click()" v-tippy="{content: 'Upload a file'}" class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary" data-theme="icons">
             <File />
           </button>
           <button v-tippy="{content: 'Upload an image'}" class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary" data-theme="icons">
@@ -47,6 +47,9 @@
     </div>
     <h2 v-else class="fontTheme text-gray-400 text-center px-3">{{ $t('You are not allowed to send a message') }}</h2>
   </div>
+  <form ref="fileUploadForm" class="hidden" enctype="multipart/form-data">
+    <input name="file" type="file" ref="fileUploadInput" @change="($event) => uploadFile($event)" />
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -58,12 +61,32 @@ import File from '@/components/Icons/File.vue'
 import StarEmoji from '@/components/Icons/StarEmoji.vue'
 import Bounce from '@/components/Transitions/Bounce.vue'
 import Slide from '@/components/Transitions/Slide.vue'
+import request from '@/scripts/request/request'
+import { useRoute } from 'vue-router'
 
 const props = defineProps<{
   theme: ThemeDataBottom | undefined
   value: string
   allowed: boolean
 }>()
+
+const route = useRoute()
+
+const fileUploadForm = ref<HTMLFormElement | null>(null)
+
+const uploadFile = async (event: Event) => {
+  const input = event.target as HTMLInputElement
+  const files = input.files
+  if(!files || files.length < 1) {
+    return
+  }
+  const data = new FormData()
+  data.append('file', files[0])
+  const res = await request.post(`/chat/${route.params.id as string}/file`, data)
+  if(res.data.$error) {
+    console.log("fail")
+  }
+}
 
 onMounted(() => console.info("PROPS:", props))
 

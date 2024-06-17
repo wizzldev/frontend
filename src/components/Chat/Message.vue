@@ -11,14 +11,12 @@
       </div>
       <ul class="max-w-[18rem]">
         <template v-for="msg in messages.messages" :key="msg.id">
-          <MessageEmoji v-if="msg.content == ':wizzl-star:'" :sent-by-me="sentByMe" :message="msg" />
-          <MessageReply v-else-if="msg.reply" :message="msg.reply" :sent-by-me="sentByMe" :sender-first-name="messages.sender.first_name" />
-          <MessageBox @like="(id: number) => $emit('like', id)" v-else-if="!isEmoji(msg.content)" :sent-by-me="sentByMe" :message="msg"  />
-          <MessageEmoji @like="(id: number) => $emit('like', id)" v-else :sent-by-me="sentByMe" :message="msg" />
-          <MessageLike :sent-by-me="sentByMe" :message="msg" />
-          <li class="text-right text-xs" v-if="msg.underSending">
-            <Circle class="text-gray-500" />
-          </li>
+            <MessageFile v-if="msg.type.split(':')[0] == 'file'" :sent-by-me="sentByMe" :message="msg" />
+            <MessageEmoji v-else-if="msg.content == ':wizzl-star:'" :sent-by-me="sentByMe" :message="msg" />
+            <MessageReply v-else-if="msg.reply" :message="msg.reply" :sent-by-me="sentByMe" :sender-first-name="messages.sender.first_name" />
+            <MessageBox @like="(id: number) => $emit('like', id)" v-else-if="!isEmoji(msg.content)" :sent-by-me="sentByMe" :message="msg"  />
+            <MessageEmoji @like="(id: number) => $emit('like', id)" v-else :sent-by-me="sentByMe" :message="msg" />
+            <MessageLike :sent-by-me="sentByMe" :message="msg" />
         </template>
         <li class="text-right text-xs" v-if="isLastMessageSentByMe">
           <CircleTick class="text-gray-500" />
@@ -42,6 +40,7 @@ import MessageLike from '@/components/Chat/MessageLike.vue'
 import InfoMessages from '@/components/Chat/InfoMessages.vue'
 import Circle from '@/components/Icons/Circle.vue'
 import CircleTick from '@/components/Icons/CircleTick.vue'
+import MessageFile from '@/components/Chat/MessageFile.vue'
 
 const auth = useAuthStore()
 

@@ -27,10 +27,10 @@ const messageGroup = computed((): MessageGroupList => {
   for (let i = 0; i < props.messages.length; i++) {
     const msg = props.messages[i]
 
-    if (msg.type == 'message') {
+    if (['message', 'file:file', 'file:image'].includes(msg.type)) {
       if (
         data.length == 0 ||
-        (data.length > 0 && (data[data.length - 1].sender.id != msg.sender.id || data[data.length - 1].type != 'message'))
+        (data.length > 0 && (data[data.length - 1].sender.id != msg.sender.id || ['message', 'file:file', 'file:image'].includes(data[data.length - 1].type)))
       ) {
         data.push({ type: 'message', sender: msg.sender, messages: [msg] })
       } else data[data.length - 1].messages = [msg, ...data[data.length - 1].messages]

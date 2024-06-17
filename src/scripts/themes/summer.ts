@@ -22,7 +22,7 @@ export const SummerChatTheme = {
     },
     main: {
       bg: '#68819f',
-      bgImage: 'url(/summer.jpg)',
+      bgImage: 'url(/themes/summer.jpg)',
       text: '#888888',
       message: {
         you: {
