@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import ChatNav from '@/components/Chat/ChatNav.vue'
+import ChatNav from '@/components/ChatV1/ChatNav.vue'
 import IconInput from '@/components/Elements/IconInput.vue'
 import EmailAt from '@/components/Icons/EmailAt.vue'
 import { onMounted, ref, watch } from 'vue'

@@ -3,25 +3,31 @@
     <div class="flex items-center space-x-2" v-if="allowed">
       <Slide :duration="0.3">
         <div class="flex items-center space-x-1.5" v-show="showIcons">
-          <button @click="($refs['fileUploadInput'] as HTMLInputElement).click()" v-tippy="{content: 'Upload a file'}" class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary" data-theme="icons">
+          <button v-show="!recording" @click="($refs['fileUploadInput'] as HTMLInputElement).click()" v-tippy="{content: 'Upload file'}" class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary" data-theme="icons">
             <File />
           </button>
-          <button v-tippy="{content: 'Upload an image'}" class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary" data-theme="icons">
-            <Image />
+          <button
+            @click="record" v-tippy="{content: 'Record audio'}"
+            class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary"
+            data-theme="icons"
+            :class="{'w-auto px-4 space-x-2': recording}"
+          >
+            <span v-if="recording">2</span>
+            <span><Mic /></span>
           </button>
         </div>
       </Slide>
       <form class="w-full" v-on:submit.prevent="$emit('send')">
         <div
           data-theme="input-form"
-          class="transition-all ease-in-out duration-300 bg-secondary rounded-3xl w-full flex items-center space-x-2"
+          class="bg-secondary rounded-3xl w-full flex items-center space-x-2 transition-[width] duration-300 ease-in-out"
           @focusin="showIcons = false"
           @focusout="showIcons = true"
         >
           <input
             data-theme="input-form"
             type="text"
-            class="transition-all ease-in-out duration-300 resize-none bg-secondary rounded-3xl py-2 px-3 pl-5 w-full"
+            class=" bg-secondary rounded-3xl py-2 px-3 pl-5 w-full"
             @change="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
             :value="value"
             :placeholder="$t('Message')"
@@ -63,6 +69,7 @@ import Bounce from '@/components/Transitions/Bounce.vue'
 import Slide from '@/components/Transitions/Slide.vue'
 import request from '@/scripts/request/request'
 import { useRoute } from 'vue-router'
+import Mic from '@/components/Icons/Mic.vue'
 
 const props = defineProps<{
   theme: ThemeDataBottom | undefined
@@ -73,6 +80,7 @@ const props = defineProps<{
 const route = useRoute()
 
 const fileUploadForm = ref<HTMLFormElement | null>(null)
+const recording = ref(false)
 
 const uploadFile = async (event: Event) => {
   const input = event.target as HTMLInputElement
@@ -86,6 +94,10 @@ const uploadFile = async (event: Event) => {
   if(res.data.$error) {
     console.log("fail")
   }
+}
+
+const record = () => {
+  recording.value = true
 }
 
 onMounted(() => console.info("PROPS:", props))

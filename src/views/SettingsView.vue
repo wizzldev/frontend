@@ -1,10 +1,10 @@
 <template>
   <SettingsLayout>
     <section class="mx-2 my-4 text-center">
-      <img
-        :src="auth.user?.image_url"
+      <LazyImage
+        class="w-14 h-14 rounded-lg mx-auto"
         :alt="auth.user?.first_name + '\'s profile image'"
-        class="w-12 h-12 rounded-full mx-auto"
+        :src="cdnImage(auth.user?.image_url || '')"
       />
       <h2 class="mt-1 fontTheme">{{ auth.user?.first_name }} {{ auth.user?.last_name }}</h2>
     </section>
@@ -21,6 +21,8 @@
 import SettingsLayout from '@/layouts/SettingsLayout.vue'
 import { useAuthStore } from '@/stores/auth'
 import PushButton from '@/components/Elements/PushButton.vue'
+import { cdnImage } from '@/scripts/image'
+import LazyImage from '@/components/Loaders/LazyImage.vue'
 
 const auth = useAuthStore()
 </script>

@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import Message from '@/components/Chat/Message.vue'
+import Message from '@/components/ChatV1/Message.vue'
 import type { MessageGroupList, Messages } from '@/types/message'
 import { computed } from 'vue'
 import type { ThemeDataMain } from '@/types/chat'

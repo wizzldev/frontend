@@ -15,7 +15,7 @@
           src="../../assets/vectors/loading.svg"
           alt="Loading image"
         />
-        <LazyImage v-else class="w-8 h-8 rounded-full" :src="cdnImage(image)" :alt="`${name}'s chat image`" />
+        <LazyImage v-else class="w-8 h-8 rounded-full" :src="cdnImage(image, 128)" :alt="`${name}'s chat image`" />
         <h2
           class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
         >

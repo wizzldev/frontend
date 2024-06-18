@@ -4,7 +4,7 @@
     :chat-profile="chat.profile[chatID] || { name: '', image: '', loading: true }"
     :connection="{ connected, error: connectionError }"
   >
-    <MessageList @modal="(msg: WSMessage) => modalMessage = msg" @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
+    <MessageLayout @modal="(msg: WSMessage) => modalMessage = msg" @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
     <SendForm :reply="replyMessage" @noReply="replyMessage = null" :allowed="sendMessagePermission" :value="message" :theme="theme?.dark?.bottom" v-model="message" @send="send" @emoji="emoji" />
   </ChatLayout>
 </template>
@@ -15,7 +15,6 @@ import { computed, onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
 import request from '@/scripts/request/request'
 import { useRoute, useRouter } from 'vue-router'
 import type { Like, Message as WSMessage, Messages } from '@/types/message'
-import MessageList from '@/components/ChatV1/MessageList.vue'
 import { useChatStore } from '@/stores/chat'
 import type BaseChannel from '@/scripts/websocket/baseChannel'
 import { useContactsStore } from '@/stores/contacts'
@@ -27,7 +26,7 @@ import { useRouteLoaderStore } from '@/stores/routeLoader'
 import type Channel from '@/scripts/websocket/channel'
 import { resetTheme, setTheme } from '@/scripts/mobile/theme'
 import { useAuthStore } from '@/stores/auth'
-//import { NightChatTheme } from '@/scripts/themes/night'
+import MessageLayout from '@/components/Chat/MessageLayout.vue'
 
 const auth = useAuthStore()
 const loader = useRouteLoaderStore()

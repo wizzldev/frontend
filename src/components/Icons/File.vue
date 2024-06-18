@@ -1,3 +1,3 @@
 <template>
-  <svg class="inline-block w-5 h-5" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z" fill="currentColor" class="fill-000000"></path></svg>
+  <svg class="inline-block w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 21.5A7 7 0 0 1 4.05 9.59L9.7 4a5 5 0 0 1 7.06 0 5 5 0 0 1 0 7.05l-5.65 5.63a3 3 0 0 1-4.23 0A3 3 0 0 1 6 14.53a3 3 0 0 1 .87-2.12l5.65-5.63a1 1 0 0 1 1.42 0 1 1 0 0 1 0 1.41l-5.65 5.63a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l5.65-5.64a3 3 0 0 0 0-4.21 3 3 0 0 0-4.24 0L5.46 11a5 5 0 0 0 0 7 5 5 0 0 0 7.06 0l7.77-7.74a1 1 0 0 1 1.42 0 1 1 0 0 1 0 1.41l-7.77 7.75A7 7 0 0 1 9 21.5Z" fill="currentColor" class="fill-464646"></path></svg>
 </template>
