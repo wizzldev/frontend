@@ -1,17 +1,17 @@
 <template>
   <img class="rounded-t-xl w-full" v-if="file && file.content_type.startsWith('image/')" :src="chatImage(fileInfo.fetchFrom + `?access_token=${fileInfo.accessToken}`)" :alt="file.name" />
-  <div class="px-4 py-2 w-max max-w-full flex space-x-3 items-center justify-between">
+  <div class="px-4 py-2 w-full ">
     <Spinner v-if="file == null" />
-    <template v-else>
+    <div v-else class="flex space-x-3 items-center justify-between">
       <button @click="download" :disabled="downloading" class="transition w-7 h-7 min-w-7 min-h-7 bg-tertiary hover:bg-tertiary-hover rounded-full flex items-center justify-center ">
         <Download v-if="!downloading" />
         <Spinner v-else />
       </button>
-      <div class="ml-2">
-        <h1 class="font-bold text-ellipsis text-nowrap overflow-hidden line-clamp-1">{{ (file as FileInfo).name }}</h1>
+      <div class="ml-2 px-2">
+        <h1 class="max-w-full">{{ (file as FileInfo).name }}</h1>
         <p class="text-gray-600">{{ prettyBytes((file as FileInfo).size) }}</p>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
