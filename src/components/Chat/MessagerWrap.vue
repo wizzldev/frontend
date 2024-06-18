@@ -22,6 +22,6 @@ import type { ThemeDataMain } from '@/types/chat'
 defineProps<{
   sentByMe: boolean
   sender: User
-  theme: ThemeDataMain
+  theme: ThemeDataMain | undefined
 }>()
 </script>
