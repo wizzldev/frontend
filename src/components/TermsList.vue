@@ -31,6 +31,8 @@ const props = defineProps<{
   list: unknown;
 }>()
 
+export type ServiceTerms = Array<Record<string, string|Array<string>>>
+
 const i18n = useI18n()
 
 const isLoading = ref(true)
@@ -43,7 +45,7 @@ onMounted(async () => {
     key = locale
   } else key = 'en'
   if(props.list??[key]) {
-    terms.value = (props.list as Record<string, object>)[key]
+    terms.value = (props.list as Record<string, any>)[key]
   }
   isLoading.value = false
 })
