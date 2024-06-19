@@ -9,7 +9,7 @@
       <h2
         class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
       >
-        {{ pageTitle }}
+        {{ $t(pageTitle) }}
       </h2>
     </div>
     <div class="flex items-center space-x-2">
@@ -20,8 +20,10 @@
         <Support />
       </PushButton>
       <PushButton
-        class="bg-secondary text-blue-400 p-1.5 rounded-xl flex items-center justify-center"
-        :is-link="false"
+        class="bg-secondary hover:bg-secondary-hover text-blue-400 p-1.5 rounded-xl flex items-center justify-center"
+        :class="{'bg-tertiary': ['service.terms', 'service.privacy'].includes(<string>route?.name)}"
+        :is-link="true"
+        to-name="service.terms"
       >
         <Book />
       </PushButton>

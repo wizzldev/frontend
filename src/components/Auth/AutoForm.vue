@@ -29,7 +29,7 @@
       <span>{{ $t('Submit') }}</span>
       <Spinner v-if="processing" />
     </button>
-    <p class="text-red-500" v-if="error != ''">{{ error }}</p>
+    <p class="text-red-400" v-if="error != ''">{{ error }}</p>
   </form>
 </template>
 

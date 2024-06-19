@@ -2,6 +2,10 @@ import LoginView from '@/views/Auth/LoginView.vue'
 import Guard from '@/router/guard'
 import type { RouteRecordRaw } from 'vue-router'
 import RegisterView from '@/views/Auth/RegisterView.vue'
+import ResetPasswordView from '@/views/Auth/ResetPasswordView.vue'
+import VerifyEmailView from '@/views/Auth/VerifyEmailView.vue'
+import RequestResetPasswordView from '@/views/Auth/RequestResetPasswordView.vue'
+import EmailVerificationView from '@/views/Auth/EmailVerificationView.vue'
 
 const noLogin = {
   auth: Guard.ACCESS_NO_LOGIN
@@ -19,5 +23,27 @@ export default [
     name: 'auth.register',
     component: RegisterView,
     meta: noLogin
+  },
+  {
+    path: '/reset-password',
+    name: 'auth.reset-password',
+    component: RequestResetPasswordView,
+    meta: noLogin
+  },
+  {
+    path: '/set-password/:token',
+    name: 'auth.set-password',
+    component: ResetPasswordView,
+    meta: noLogin
+  },
+  {
+    path: '/email-verification',
+    name: 'auth.email-verification',
+    component: EmailVerificationView
+  },
+  {
+    path: '/verify-email/:token',
+    name: 'auth.verify-email',
+    component: VerifyEmailView,
   }
 ] as Array<RouteRecordRaw>

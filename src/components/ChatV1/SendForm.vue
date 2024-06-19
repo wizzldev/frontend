@@ -41,13 +41,13 @@
       <Bounce>
         <button
           v-if="value == ''"
-          @click="$emit('emoji', theme?.emoji || ':wizzl-star:')"
+          @click="$emit('emoji', theme?.emoji || '✨')"
           class="transition-colors text-md w-9 h-9 p-2 flex items-center justify-center rounded-full hover:bg-tertiary hover:bg-opacity-50"
         >
         <span v-if="theme?.emoji">
           {{ theme.emoji }}
         </span>
-          <StarEmoji v-else />
+          ✨
         </button>
       </Bounce>
     </div>

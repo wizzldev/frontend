@@ -9,6 +9,12 @@ export default {
   You: 'You',
   'chat.create': '{sender} created a new chat',
   'chat.create.you': 'You\'ve created a new chat',
+  'file:file': 'Sent a file',
+  'file:image': 'Sent an image',
+  'file:video': 'Sent a video',
+  'file:file.you': 'Sent a file',
+  'file:image.you': 'Sent an image',
+  'file:video.you': 'Sent a video',
 
   'message.reply': '{who} replied to: {to}',
   'message.reply.you': 'You replied to: {to}',

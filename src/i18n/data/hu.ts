@@ -15,6 +15,14 @@ export default {
   You: 'Te',
   'chat.create': '{sender} létrehozott egy chatet',
   'chat.create.you': 'Létrehoztál egy chatet',
+
+  'file:file': 'Fájlt küldött',
+  'file:image': 'Fényképet küldött',
+  'file:video': 'Videót küldött',
+  'file:file.you': 'Fájlt küldtél',
+  'file:image.you': 'Fényképet küldtél',
+  'file:video.you': 'Videót küldtél',
+
   'Message': 'Üzenet',
   'Enter email': 'Email cím megadása',
   'Start chatting': 'Chatelés megkezdése',
@@ -25,7 +33,6 @@ export default {
   'Read more': 'További információk',
   'All good?': 'Minden jó?',
   'Create': 'Létrehozás',
-
 
   'message.reply': '{who} válaszolt neki: {to}',
   'message.reply.you': 'Válaszoltál neki: {to}',
@@ -40,6 +47,11 @@ export default {
   Submit: 'Küldés',
   'Already have an account?': 'Már van fiókod?',
   'Don\'t have an account?': 'Nincs fiókod?',
+  Back: 'Vissza',
+  'Do you remember?': 'Mégis emlékszel?',
+  'Reset password': 'Jelszó visszaállítás',
+  'Reset password expired': 'Lejárt jelszó visszaállítási kérés',
+  'Email verification': 'Email hitelesítés',
 
   // Form errors
   'error.required': 'Ezt a mezőt nem hagyhatja üresen'

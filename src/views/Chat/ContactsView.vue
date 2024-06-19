@@ -5,10 +5,9 @@
     </section>
     <ChatNav />
     <section
-      class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll pt-4"
-      :class="{'flex items-center justify-center': !hasContact}"
+      class="h-full w-full max-w-full overflow-y-scroll pt-4"
     >
-      <div v-if="!hasContact">
+      <div v-if="!hasContact" class="w-full my-auto text-center">
         <h2 class="text-gray-600 fontTheme px-2">
           {{ $t('You currently have no active conversation') }}
         </h2>
@@ -20,6 +19,7 @@
           {{ $t('New chat') }}
         </PushButton>
       </div>
+
       <div class="w-full">
         <template v-for="(con, i) in contacts.contacts" :key="i">
           <PushButton

@@ -31,7 +31,7 @@ export const messageSorter = (messages: Messages, authUserId: number): MessageGr
       data.push({
         type: 'info',
         sender: message.sender,
-        messages: [getDateTimeMessage(message)],
+        messages: [getDateTimeMessage(latest)],
       })
       data.push({
         type: messageType,

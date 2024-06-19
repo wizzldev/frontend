@@ -1,5 +1,5 @@
 <template>
-  <p class="text-center text-sm">
+  <p class="text-center text-sm text-gray-400">
     {{ date }}
   </p>
 </template>

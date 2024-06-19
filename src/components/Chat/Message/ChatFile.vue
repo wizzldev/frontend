@@ -8,7 +8,7 @@
         <Spinner v-else />
       </button>
       <div class="ml-2 px-2">
-        <h1 class="max-w-full">{{ (file as FileInfo).name }}</h1>
+        <h1 class="max-w-full text-ellipsis text-nowrap overflow-hidden line-clamp-1">{{ (file as FileInfo).name }}</h1>
         <p class="text-gray-600">{{ prettyBytes((file as FileInfo).size) }}</p>
       </div>
     </div>

@@ -28,6 +28,10 @@
         {{ $t("Don't have an account?") }}
         <router-link :to="{ name: 'auth.register' }">{{ $t('Register') }}</router-link>
       </p>
+      <p class="mt-1 text-gray-400 text-sm">
+        <router-link :to="{ name: 'auth.reset-password' }">{{ $t('Reset password') }}</router-link> |
+        <router-link :to="{ name: 'auth.email-verification' }">{{ $t('Email verification') }}</router-link>
+      </p>
     </div>
   </GuestLayout>
 </template>
