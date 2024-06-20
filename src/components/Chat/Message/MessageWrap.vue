@@ -1,20 +1,10 @@
 <template>
-  <li v-if="!isEmoji" :data-emoji="isEmoji" :data-theme="`message-${sentByMe ? 'you' : 'other'}`"
-      class="relative cursor-pointer w-max max-w-full mt-1 rounded-lg break-words first:rounded-b-3xl last:rounded-t-3xl"
+  <li :data-emoji="isEmoji" :data-theme="`message-${sentByMe ? 'you' : 'other'}`"
+      class="relative w-max max-w-full mt-1 break-words"
       :class="{
-        'ml-auto bg-secondary rounded-l-3xl z-0': sentByMe,
-        'bg-tertiary rounded-r-3xl': !sentByMe,
-        customTheme: theme
+        'ml-auto rounded-l-3xl z-0': sentByMe,
+        'rounded-r-3xl': !sentByMe,
       }"
-  >
-    <slot/>
-    <MessageLike :likes="likes || []" :sent-by-me="sentByMe" />
-  </li>
-  <li
-    v-else
-    :class="{
-       'ml-auto': sentByMe,
-    }"
   >
     <slot/>
     <MessageLike :likes="likes || []" :sent-by-me="sentByMe" />

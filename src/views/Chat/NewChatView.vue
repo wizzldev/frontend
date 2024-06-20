@@ -13,7 +13,7 @@
             v-for="user in groupMake.users"
             :key="user.id"
           >
-            <img class="w-8 h-8 rounded-full" :src="user.image_url" alt="User image" />
+            <img class="w-8 h-8 rounded-full" :src="cdnImage(user.image_url)" alt="User image" />
             <p>{{ user.first_name }} {{ user.last_name }}</p>
             <button @click="rm(user)">
               &times;
@@ -45,6 +45,7 @@ import GroupCreateConfig from '@/components/Group/GroupCreateConfig.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import MyProfile from '@/components/Navigation/MyProfile.vue'
 import { useGroupMakeStore } from '@/stores/groupMake'
+import { cdnImage } from '@/scripts/image'
 
 const groupMake = useGroupMakeStore()
 const router = useRouter()

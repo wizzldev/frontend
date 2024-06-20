@@ -1,6 +1,17 @@
 <template>
-  <div class="border-t-2 border-t-secondary px-3 py-2" :class="{ customTheme: theme }">
-    <div class="flex items-center space-x-2" v-if="allowed">
+  <div class="border-t-2 border-t-secondary" :class="{ customTheme: theme }">
+    <div v-if="reply" class="bg-secondary px-2 py-1.5 flex items-center justify-start space-x-3 w-full max-w-full">
+      <LazyImage alt="Sender profile image" :src="cdnImage(reply.sender.image_url)"
+        class="w-6 h-6 rounded-full"
+      />
+      <div class="flex flex-wrap items-center w-full">
+        <span class="text-purple-400">{{ $t('Reply') }}:</span>
+        <span v-if="reply.type == 'message'" class="ml-1 w-[70%] break-all line-clamp-1 text-nowrap">{{ reply.content }}</span>
+        <span class="ml-1" v-else-if="reply.type.startsWith('file:')">{{ $t('File') }}</span>
+        <button @click="$emit('detachReply')" class="ml-auto w-5 h-5 flex items-center justify-center rounded-full bg-tertiary"><Times class="!w-3 !h-3" /></button>
+      </div>
+    </div>
+    <div class="flex items-center space-x-2 px-3 py-2" v-if="allowed">
       <Slide :duration="0.3">
         <div class="flex items-center space-x-1.5" v-show="showIcons">
           <button v-show="!recording" @click="($refs['fileUploadInput'] as HTMLInputElement).click()" v-tippy="{content: 'Upload file'}" class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary" data-theme="icons">
@@ -51,7 +62,7 @@
         </button>
       </Bounce>
     </div>
-    <h2 v-else class="fontTheme text-gray-400 text-center px-3">{{ $t('You are not allowed to send a message') }}</h2>
+    <h2 v-else class="fontTheme text-gray-400 text-center px-4">{{ $t('You are not allowed to send a message') }}</h2>
   </div>
   <form ref="fileUploadForm" class="hidden" enctype="multipart/form-data">
     <input name="file" type="file" ref="fileUploadInput" @change="($event) => uploadFile($event)" />
@@ -62,19 +73,22 @@
 import Send from '@/components/Icons/Send.vue'
 import type { ThemeDataBottom } from '@/types/chat'
 import { onMounted, ref } from 'vue'
-import Image from '@/components/Icons/Image.vue'
 import File from '@/components/Icons/File.vue'
-import StarEmoji from '@/components/Icons/StarEmoji.vue'
 import Bounce from '@/components/Transitions/Bounce.vue'
 import Slide from '@/components/Transitions/Slide.vue'
 import request from '@/scripts/request/request'
 import { useRoute } from 'vue-router'
 import Mic from '@/components/Icons/Mic.vue'
+import type { Message } from '@/types/message'
+import LazyImage from '@/components/Loaders/LazyImage.vue'
+import { cdnImage } from '@/scripts/image'
+import Times from '@/components/Icons/Times.vue'
 
 const props = defineProps<{
   theme: ThemeDataBottom | undefined
   value: string
   allowed: boolean
+  reply: Message | null
 }>()
 
 const route = useRoute()

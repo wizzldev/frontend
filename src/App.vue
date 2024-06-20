@@ -1,12 +1,27 @@
 <script setup lang="ts">
-import { RouterView, useRouter } from 'vue-router'
+import { type RouteLocationNormalized, RouterView, useRoute, useRouter } from 'vue-router'
 import setup from '@/scripts/mobile/setup'
 import InfiniteLoader from '@/components/Loaders/InfiniteLoader.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
+import { ref, watch } from 'vue'
+import TermsModal from '@/components/Modals/TermsModal.vue'
+import { WizzlTermsAccepted } from '@/scripts/consts'
 
 const router = useRouter()
+const route = useRoute()
 const loader = useRouteLoaderStore()
+
+watch(route, (r: RouteLocationNormalized) => {
+  isTermsPage.value = ['service.terms', 'service.privacy'].includes(r.name as string);
+})
+
+const isTermsPage = ref(false)
+const isTermsAccepted = ref(window.localStorage.getItem(WizzlTermsAccepted) == 'true')
+const accept = () => {
+  isTermsAccepted.value = true
+  window.localStorage.setItem(WizzlTermsAccepted, 'true')
+}
 
 setup(router)
 </script>
@@ -22,6 +37,7 @@ setup(router)
   <AppLayout v-show="!loader.isLoaded" class="!flex-1 items-center justify-center">
     <InfiniteLoader/>
   </AppLayout>
+  <TermsModal v-if="!isTermsAccepted && !isTermsPage" @accept="accept" />
 </template>
 
 <style>

@@ -1,7 +1,13 @@
 <template>
-  <ul class="py-2 px-4 h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse text-white" :class="{customTheme: theme}">
+  <ul ref="scrollContainer" class="py-2 px-4 h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse text-white" :class="{customTheme: theme}">
     <li class="w-full" v-for="(msg, inx) in messageList" :key="inx">
-      <MessageGroup :theme="theme" @like="(id: number) => $emit('like', id)" :messages="msg" />
+      <MessageGroup @modal="msg => $emit('modal', msg)" :theme="theme" @like="(id: number) => $emit('like', id)" :messages="msg" />
+    </li>
+    <li class="w-full text-center text-xl my-3" v-if="loading">
+      <Spinner class="text-gray-400" />
+    </li>
+    <li class="w-full text-center my-3" v-if="!hasNext">
+      <p class="text-center text-gray-400 fontTheme">{{ $t('No more messages') }}</p>
     </li>
   </ul>
 </template>
@@ -10,18 +16,45 @@
 import type { Messages } from '@/types/message'
 import type { ThemeDataMain } from '@/types/chat'
 import MessageGroup from '@/components/Chat/MessageGroup.vue'
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { messageSorter } from '@/components/Chat/messageSorter'
 import { useAuthStore } from '@/stores/auth'
+import Spinner from '@/components/Icons/Spinner.vue'
+import { sleep } from '@/scripts/sleep'
 
 const props = defineProps<{
   messages: Messages
   theme: ThemeDataMain | undefined
+  hasNext: boolean
 }>()
 
+const emit = defineEmits(['load', 'modal', 'like'])
+
 const auth = useAuthStore()
+const loading = ref(false)
+const scrollContainer = ref()
 
 const messageList = computed(() => messageSorter(props.messages, auth.user?.id || -1))
+
+const handleScroll = async () => {
+  if(loading.value == false && props.hasNext) {
+    const el = scrollContainer.value
+    if (el.getBoundingClientRect().bottom < window.innerHeight) {
+      loading.value = true
+      emit('load')
+      await sleep(1000)
+      loading.value = false
+    }
+  }
+}
+
+onMounted(() => {
+  scrollContainer.value.addEventListener("scroll", handleScroll)
+})
+
+onBeforeUnmount(() => {
+  scrollContainer.value.removeEventListener("scroll", handleScroll)
+})
 </script>
 
 <style scoped>

@@ -1,6 +1,12 @@
 <template>
   <img class="rounded-t-xl w-full" v-if="file && file.content_type.startsWith('image/')" :src="chatImage(fileInfo.fetchFrom + `?access_token=${fileInfo.accessToken}`)" :alt="file.name" />
-  <div class="px-4 py-2 w-full ">
+  <div
+    class="px-4 py-2 w-full rounded-b-xl"
+    :class="{
+      'bg-secondary': sentByMe,
+      'bg-tertiary': !sentByMe
+    }"
+  >
     <Spinner v-if="file == null" />
     <div v-else class="flex space-x-3 items-center justify-between">
       <button @click="download" :disabled="downloading" class="transition w-7 h-7 min-w-7 min-h-7 bg-tertiary hover:bg-tertiary-hover rounded-full flex items-center justify-center ">

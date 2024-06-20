@@ -37,6 +37,10 @@ export default {
   'message.reply': '{who} válaszolt neki: {to}',
   'message.reply.you': 'Válaszoltál neki: {to}',
 
+  Reply: 'Válasz',
+  'Edit message': 'Üzenet szerkesztése',
+  'Delete message': 'Üzenet törlése',
+
   // Form
   Login: 'Bejelentkezés',
   Register: 'Regisztráció',

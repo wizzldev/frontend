@@ -4,9 +4,10 @@
     :chat-profile="chat.profile[chatID] || { name: '', image: '', loading: true }"
     :connection="{ connected, error: connectionError }"
   >
-    <MessageLayout @modal="(msg: WSMessage) => modalMessage = msg" @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
-    <SendForm :reply="replyMessage" @noReply="replyMessage = null" :allowed="sendMessagePermission" :value="message" :theme="theme?.dark?.bottom" v-model="message" @send="send" @emoji="emoji" />
+    <MessageLayout :hasNext="cursors == null || cursors.next != ''" @load="loadMore" @modal="(msg: WSMessage) => modalMessage = msg" @like="like" :theme="theme?.dark?.main" :messages="chat.messages[chatID] || []" />
+    <SendForm :reply="replyMessage" @detachReply="replyMessage = null" :allowed="sendMessagePermission" :value="message" :theme="theme?.dark?.bottom" v-model="message" @send="send" @emoji="emoji" />
   </ChatLayout>
+  <MessageActionModal :show="modalMessage != null" @close="modalMessage = null" :msg="modalMessage as WSMessage" @reply="replyTo" />
 </template>
 
 <script setup lang="ts">
@@ -27,6 +28,9 @@ import type Channel from '@/scripts/websocket/channel'
 import { resetTheme, setTheme } from '@/scripts/mobile/theme'
 import { useAuthStore } from '@/stores/auth'
 import MessageLayout from '@/components/Chat/MessageLayout.vue'
+import MessageActionModal from '@/components/Modals/MessageActionModal.vue'
+import { useToast } from 'vue-toastification'
+import { useI18n } from 'vue-i18n'
 
 const auth = useAuthStore()
 const loader = useRouteLoaderStore()
@@ -34,6 +38,8 @@ const router = useRouter()
 const route = useRoute()
 const chat = useChatStore()
 const contacts = useContactsStore()
+const toast = useToast()
+const i18n = useI18n()
 const connected = ref(false)
 const connectionError = ref(false)
 const theme = ref(null) as Ref<Theme | null>
@@ -41,9 +47,12 @@ const message = ref('')
 let ws: Channel|undefined
 const modalMessage = ref(null) as Ref<null | WSMessage>
 const replyMessage = ref(null) as Ref<null | WSMessage>
+const cursors = ref(null) as Ref<{next: string, prev: string} | null>
 
 const send = () => {
-  const hookID = ws?.send('message', message.value)
+  const data = {} as {reply_id: number|undefined}
+  if(replyMessage.value != null) data.reply_id = replyMessage.value?.id
+  const hookID = ws?.send('message', message.value, data)
   console.log("PUSHING UNSENT MESSAGES WITH HOOK ID:", hookID)
   chat.push(chatID, [{
     id: 0,
@@ -53,8 +62,10 @@ const send = () => {
     data_json: '{}',
     underSending: true,
     hookId: hookID,
-  } as WSMessage])
+    reply: replyMessage.value || undefined
+  } as WSMessage], null, true)
   message.value = ''
+  replyMessage.value = null
 }
 
 const emoji = (emoji: string) => {
@@ -67,7 +78,7 @@ const emoji = (emoji: string) => {
     data_json: '{}',
     underSending: true,
     hookId: hookID,
-  } as WSMessage])
+  } as WSMessage], null, true)
 }
 
 const sendMessagePermission = computed(() => (!chat.roles[chatID] || chat.roles[chatID]?.includes('SEND_MESSAGE')) as boolean)
@@ -90,7 +101,7 @@ const initWebsocket = async () => {
 
   ws.on<WSMessage>('message', (m, hookID) => {
     console.log(m, hookID)
-    chat.push(chatID, [m], hookID)
+    chat.push(chatID, [m], hookID, true)
     contacts.update(parseInt(route.params.id as string), m)
   })
 
@@ -119,9 +130,13 @@ const fetchChat = async () => {
     loader.isLoaded = false
     const res = await request.get(`/chat/${route.params.id as string}`)
     if (!res.data.$error) {
-      const data = res.data as { user_roles: Array<string>; group: { name: string; image_url: string }; messages: Messages;  }
+      const data = res.data as { user_roles: Array<string>; group: { name: string; image_url: string }; messages: {data: Messages; next_cursor: string; previous_cursor: string};  }
+      console.log("CURSORS", cursors.value)
+      console.log("UPDATING CURSORS")
+      cursors.value = {next: data.messages.next_cursor, prev: data.messages.previous_cursor}
+      console.log("CURSORS", cursors.value)
       chat.isPM[chatID] = true
-      chat.push(chatID, data.messages)
+      chat.push(chatID, data.messages.data)
       chat.setRoles(chatID, data.user_roles)
       chat.profile[chatID] = {
         image: data.group.image_url,
@@ -131,6 +146,24 @@ const fetchChat = async () => {
       loader.isLoaded = true
     } else return await router.push({ name: 'chat.contacts' })
   }
+}
+
+const loadMore = async () => {
+  const next = cursors.value?.next || ''
+  if(next == '') console.log('CURSOR IS EMPTYYY')
+  const res = await request.get(`/chat/${route.params.id as string}/paginate?cursor=${next}`)
+  if (res.data.$error) {
+    toast.error(i18n.t('Failed to load more messages'))
+    return
+  }
+  const data = res.data as {next_cursor: string, previous_cursor: string, data: Messages}
+  if(next != '') chat.push(chatID, data.data)
+  cursors.value = {next: data.next_cursor, prev: data.previous_cursor}
+}
+
+const replyTo = (msg: WSMessage) => {
+  replyMessage.value = msg
+  modalMessage.value = null
 }
 
 onMounted(async () => {

@@ -1,5 +1,4 @@
 import ContactsView from '@/views/Chat/ContactsView.vue'
-import ChatView from '@/views/Chat/ChatView.vue'
 import Guard from '@/router/guard'
 import NewChatView from '@/views/Chat/NewChatView.vue'
 import type { RouteRecordRaw } from 'vue-router'

@@ -60,6 +60,7 @@ export const messageSorter = (messages: Messages, authUserId: number): MessageGr
 
 const getType = (m: Message): string => {
   if(['message', 'file:file', 'file:image'].includes(m.type)) return 'message'
+  if(m.type == 'emoji') return 'emoji'
   return 'info'
 }
 
@@ -76,7 +77,6 @@ const isLatestMessageLengthOK = (group: MessageGroupList, authUserId: number): b
 
 const isDateTagRequired = (d1: Date, d2: Date): boolean => {
   const hours = Math.abs(d1.getTime() - d2.getTime()) / 36e5;
-  console.log(hours)
   return hours > 1
 }
 
