@@ -23,6 +23,7 @@
     "@capacitor/status-bar": "^6.0.0",
     "@capgo/capacitor-navigation-bar": "^6.1.5",
     "@nanogiants/vue3-longpress": "^1.0.8",
+    "@vueuse/core": "^10.11.0",
     "axios": "^1.6.8",
     "buffer": "^6.0.3",
     "check-password-strength": "^2.0.10",

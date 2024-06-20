@@ -4,13 +4,14 @@
       <ul class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse !text-white overflow-hidden text-ellipsis" :class="{'col-span-4': sentByMe, customTheme: theme}">
         <MessageWrap
           v-for="msg in messages.messages" :key="msg.id"
+          :message="msg"
           :sentByMe="sentByMe"
           :isEmoji="msg.type == 'emoji'"
           :likes="msg.likes"
           @dblclick="$emit('like', msg.id)"
           :theme="theme"
-          v-use-longpress="200"
-          @longpress="onLongPress(msg)"
+          ref="msgWrap"
+          @modal="(msg: Message) => emit('modal', msg)"
         >
           <ChatReply v-if="msg.reply" :reply="msg.reply" :sent-by-me="sentByMe" :sender-name="msg.sender.first_name" />
           <ChatMessage v-if="msg.type == 'message'" :message="msg" :sent-by-me="sentByMe" :place="getPlace(msg)" />
@@ -31,7 +32,7 @@
 <script setup lang="ts">
 import type { Message, MessageGroup as MessageGroupType } from '@/types/message'
 import { useAuthStore } from '@/stores/auth'
-import { computed, type Ref, ref } from 'vue'
+import { computed } from 'vue'
 import DateTimeInfo from '@/components/Chat/Info/DateTimeInfo.vue'
 import MessageWrap from '@/components/Chat/Message/MessageWrap.vue'
 import ChatMessage from '@/components/Chat/Message/ChatMessage.vue'
@@ -39,8 +40,6 @@ import ChatEmoji from '@/components/Chat/Message/ChatEmoji.vue'
 import MessagerWrap from '@/components/Chat/MessagerWrap.vue'
 import ChatFile from '@/components/Chat/Message/ChatFile.vue'
 import type { ThemeDataMain } from '@/types/chat'
-import { Haptics, ImpactStyle } from '@capacitor/haptics'
-import { isApp } from '@/scripts/mobile/isApp'
 import ChatReply from '@/components/Chat/Message/ChatReply.vue'
 import InfoMessage from '@/components/Chat/Info/InfoMessage.vue'
 
@@ -49,16 +48,10 @@ const props = defineProps<{
   theme: ThemeDataMain | undefined
 }>()
 
-let place = ref([]) as Ref<Array<string>>
 const emit = defineEmits(['modal', 'like'])
 const auth = useAuthStore()
 
 const sentByMe = computed(() => props.messages.sender.id == auth.user?.id)
-
-const onLongPress = async (msg: Message) => {
-  if(isApp()) await Haptics.impact({ style: ImpactStyle.Light })
-  emit('modal', msg)
-}
 
 const getPlace = (msg: Message): Array<string> => {
   const inx = props.messages.messages.indexOf(msg)

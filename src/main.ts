@@ -16,7 +16,6 @@ import VueTippy from 'vue-tippy'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 TimeAgo.addDefaultLocale(en)
-import { vLongpress } from '@nanogiants/vue3-longpress';
 
 const timeAgo = new TimeAgo('en-US')
 
@@ -27,8 +26,6 @@ app.use(i18n)
 app.use(VueTippy)
 app.use(createPinia())
 app.use(router)
-
-app.directive('use-longpress', vLongpress)
 
 app.config.globalProperties.$time = timeAgo
 app.config.globalProperties.$toast = useToast()
