@@ -1,5 +1,3 @@
 <template>
-  <button class="">
-
-  </button>
+  <button class=""></button>
 </template>

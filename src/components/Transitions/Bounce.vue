@@ -1,6 +1,6 @@
 <template>
   <Transition name="bounce">
-    <slot/>
+    <slot />
   </Transition>
 </template>
 

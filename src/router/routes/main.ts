@@ -23,11 +23,11 @@ export default [
   {
     path: '/terms',
     name: 'service.terms',
-    component: TermsOfServiceView,
+    component: TermsOfServiceView
   },
   {
     path: '/privacy',
     name: 'service.privacy',
-    component: PrivacyPolicyView,
-  },
+    component: PrivacyPolicyView
+  }
 ] as Array<RouteRecordRaw>

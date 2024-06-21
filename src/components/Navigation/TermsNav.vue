@@ -4,7 +4,10 @@
       :is-link="true"
       to-name="service.terms"
       class="w-full px-2 py-1 rounded-xl"
-      :class="{ 'bg-tertiary': route.name == 'service.terms', 'bg-secondary-all': route.name != 'service.terms' }"
+      :class="{
+        'bg-tertiary': route.name == 'service.terms',
+        'bg-secondary-all': route.name != 'service.terms'
+      }"
     >
       {{ $t('Terms') }}
     </PushButton>
@@ -12,7 +15,10 @@
       :is-link="true"
       to-name="service.privacy"
       class="w-full px-2 py-1 rounded-xl"
-      :class="{ 'bg-tertiary': route.name == 'service.privacy', 'bg-secondary-all': route.name != 'service.privacy' }"
+      :class="{
+        'bg-tertiary': route.name == 'service.privacy',
+        'bg-secondary-all': route.name != 'service.privacy'
+      }"
     >
       {{ $t('Privacy') }}
     </PushButton>

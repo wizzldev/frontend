@@ -1,5 +1,5 @@
 <template>
-  <p class="text-xs text-gray-400">
+  <p class="text-center text-xs text-gray-400">
     {{ info }}
   </p>
 </template>
@@ -17,5 +17,9 @@ const props = defineProps<{
 const i18n = useI18n()
 const auth = useAuthStore()
 
-const info = computed(() => i18n.t(props.message.type + (props.message.sender.id == auth?.user?.id ? '.you' : ''), { sender: props.message.sender.first_name }))
+const info = computed(() =>
+  i18n.t(props.message.type + (props.message.sender.id == auth?.user?.id ? '.you' : ''), {
+    sender: props.message.sender.first_name
+  })
+)
 </script>

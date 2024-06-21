@@ -1,6 +1,6 @@
 <template>
   <Modal :show="show">
-    <h2 class="text-2xl fontTheme">{{$t('Actions')}}</h2>
+    <h2 class="text-2xl fontTheme">{{ $t('Actions') }}</h2>
     <div class="mt-2">
       <PushButton class="btnList" :is-link="false" @click="$emit('reply', msg)">
         {{ $t('Reply') }}

@@ -18,7 +18,7 @@
     />
     <div>
       <p class="mt-2 text-gray-400 text-sm">
-        {{ $t("Do you remember?") }}
+        {{ $t('Do you remember?') }}
         <router-link :to="{ name: 'auth.login' }">{{ $t('Login') }}</router-link>
       </p>
     </div>
@@ -44,7 +44,7 @@ const handle = () => router.push({ name: 'auth.login' })
 
 onMounted(async () => {
   const res = await request.get('/set-new-password/' + (route.params.token as string))
-  if(res.status == 200) return
+  if (res.status == 200) return
   toast.warning(i18n.t('Reset password expired'))
 })
 </script>

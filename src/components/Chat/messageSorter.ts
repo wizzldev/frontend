@@ -5,33 +5,33 @@ export const messageSorter = (messages: Messages, authUserId: number): MessageGr
   const data = [] as MessageGroupList
   let mustUseNext = false
 
-  if(messages?.length < 1) return data
+  if (messages?.length < 1) return data
 
-  for(let i = 0; i < messages.length; i++) {
+  for (let i = 0; i < messages.length; i++) {
     // current message
     const message = messages[i]
     const messageType = getType(message)
-    if(isEmoji(message.content)) {
+    if (isEmoji(message.content)) {
       message.type = 'emoji'
       mustUseNext = true
     }
     // append the first message
-    if(data.length == 0) {
+    if (data.length == 0) {
       data.push({
         type: messageType,
         sender: message.sender,
-        messages: [message],
+        messages: [message]
       })
       continue
     }
 
     const latest = latestMessage(data)
 
-    if(isDateTagRequired(new Date(latest.created_at), new Date(message.created_at))) {
+    if (isDateTagRequired(new Date(latest.created_at), new Date(message.created_at))) {
       data.push({
         type: 'info',
         sender: message.sender,
-        messages: [getDateTimeMessage(latest)],
+        messages: [getDateTimeMessage(latest)]
       })
       data.push({
         type: messageType,
@@ -41,7 +41,12 @@ export const messageSorter = (messages: Messages, authUserId: number): MessageGr
       continue
     }
 
-    if(!mustUseNext && latest.sender.id == message.sender.id && isLatestMessageLengthOK(data, authUserId) && getType(latest) == messageType) {
+    if (
+      !mustUseNext &&
+      latest.sender.id == message.sender.id &&
+      isLatestMessageLengthOK(data, authUserId) &&
+      getType(latest) == messageType
+    ) {
       data[data.length - 1].messages.push(message)
       continue
     }
@@ -51,7 +56,7 @@ export const messageSorter = (messages: Messages, authUserId: number): MessageGr
     data.push({
       type: messageType,
       sender: message.sender,
-      messages: [message],
+      messages: [message]
     })
   }
 
@@ -59,8 +64,8 @@ export const messageSorter = (messages: Messages, authUserId: number): MessageGr
 }
 
 const getType = (m: Message): string => {
-  if(['message', 'file:file', 'file:image'].includes(m.type)) return 'message'
-  if(m.type == 'emoji') return 'emoji'
+  if (['message', 'file:file', 'file:image'].includes(m.type)) return 'message'
+  if (m.type == 'emoji') return 'emoji'
   return 'info'
 }
 
@@ -71,12 +76,12 @@ const latestMessage = (group: MessageGroupList): Message => {
 
 const isLatestMessageLengthOK = (group: MessageGroupList, authUserId: number): boolean => {
   const g = group[group.length - 1]
-  if(g.sender.id == authUserId) return true
+  if (g.sender.id == authUserId) return true
   return g.messages.length <= 5
 }
 
 const isDateTagRequired = (d1: Date, d2: Date): boolean => {
-  const hours = Math.abs(d1.getTime() - d2.getTime()) / 36e5;
+  const hours = Math.abs(d1.getTime() - d2.getTime()) / 36e5
   return hours > 1
 }
 

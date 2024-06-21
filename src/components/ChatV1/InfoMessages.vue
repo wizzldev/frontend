@@ -19,6 +19,8 @@ const i18n = useI18n()
 const auth = useAuthStore()
 
 const infoMessage = (msg: Message) => {
-  return i18n.t(msg.type + (msg.sender.id == auth?.user?.id ? '.you' : ''), { sender: msg.sender.first_name })
+  return i18n.t(msg.type + (msg.sender.id == auth?.user?.id ? '.you' : ''), {
+    sender: msg.sender.first_name
+  })
 }
 </script>

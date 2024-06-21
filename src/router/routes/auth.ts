@@ -44,6 +44,6 @@ export default [
   {
     path: '/verify-email/:token',
     name: 'auth.verify-email',
-    component: VerifyEmailView,
+    component: VerifyEmailView
   }
 ] as Array<RouteRecordRaw>

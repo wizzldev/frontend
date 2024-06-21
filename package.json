@@ -20,6 +20,7 @@
     "@capacitor/app": "^6.0.0",
     "@capacitor/core": "^6.0.0",
     "@capacitor/haptics": "^6.0.0",
+    "@capacitor/ios": "^6.1.0",
     "@capacitor/status-bar": "^6.0.0",
     "@capgo/capacitor-navigation-bar": "^6.1.5",
     "@nanogiants/vue3-longpress": "^1.0.8",

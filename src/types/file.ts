@@ -1,8 +1,8 @@
-
 export interface FileDataJSON {
   fetchFrom: string
   hasAccessToken: boolean
   accessToken: string
+  justLoad: boolean
 }
 
 export interface FileInfo {

@@ -5,7 +5,7 @@
     </div>
     <input
       class="w-full bg-secondary-all px-4 py-2 rounded-xl"
-      :class="{'pl-12': icon}"
+      :class="{ 'pl-12': icon }"
       :placeholder="$t(placeholder)"
       @change="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       :disabled="disabled || false"
@@ -18,7 +18,7 @@
 import type { Component } from 'vue'
 
 defineProps<{
-  icon?: Component|undefined
+  icon?: Component | undefined
   placeholder: string
   disabled?: boolean
   value?: string

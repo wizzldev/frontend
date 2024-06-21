@@ -8,7 +8,7 @@ export default {
   Search: 'Search',
   You: 'You',
   'chat.create': '{sender} created a new chat',
-  'chat.create.you': 'You\'ve created a new chat',
+  'chat.create.you': "You've created a new chat",
   'file:file': 'Sent a file',
   'file:image': 'Sent an image',
   'file:video': 'Sent a video',

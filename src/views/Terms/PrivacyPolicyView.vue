@@ -2,11 +2,10 @@
   <AppLayout>
     <GuestNav />
     <main class="h-full w-full max-w-full overflow-y-scroll py-4 px-4">
-      <TermsNav/>
+      <TermsNav />
       <TermsList :list="privacy" />
     </main>
   </AppLayout>
-
 </template>
 
 <script setup lang="ts">

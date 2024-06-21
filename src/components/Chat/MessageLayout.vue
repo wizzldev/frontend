@@ -1,7 +1,17 @@
 <template>
-  <ul ref="scrollContainer" class="py-2 px-4 h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse text-white" :class="{customTheme: theme}">
+  <ul
+    ref="scrollContainer"
+    class="py-2 h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse text-white"
+    :class="{ customTheme: theme }"
+  >
     <li class="w-full" v-for="(msg, inx) in messageList" :key="inx">
-      <MessageGroup @modal="msg => $emit('modal', msg)" :theme="theme" @like="(id: number) => $emit('like', id)" :messages="msg" />
+      <MessageGroup
+        @reply="(msg) => $emit('reply', msg)"
+        @modal="(msg) => $emit('modal', msg)"
+        :theme="theme"
+        @like="(id: number) => $emit('like', id)"
+        :messages="msg"
+      />
     </li>
     <li class="w-full text-center text-xl my-3" v-if="loading">
       <Spinner class="text-gray-400" />
@@ -28,7 +38,7 @@ const props = defineProps<{
   hasNext: boolean
 }>()
 
-const emit = defineEmits(['load', 'modal', 'like'])
+const emit = defineEmits(['load', 'modal', 'like', 'reply'])
 
 const auth = useAuthStore()
 const loading = ref(false)
@@ -37,7 +47,7 @@ const scrollContainer = ref()
 const messageList = computed(() => messageSorter(props.messages, auth.user?.id || -1))
 
 const handleScroll = async () => {
-  if(loading.value == false && props.hasNext) {
+  if (loading.value == false && props.hasNext) {
     const el = scrollContainer.value
     if (el.getBoundingClientRect().bottom < window.innerHeight) {
       loading.value = true
@@ -49,11 +59,11 @@ const handleScroll = async () => {
 }
 
 onMounted(() => {
-  scrollContainer.value.addEventListener("scroll", handleScroll)
+  scrollContainer.value.addEventListener('scroll', handleScroll)
 })
 
 onBeforeUnmount(() => {
-  scrollContainer.value.removeEventListener("scroll", handleScroll)
+  scrollContainer.value.removeEventListener('scroll', handleScroll)
 })
 </script>
 

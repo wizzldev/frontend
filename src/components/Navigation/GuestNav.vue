@@ -21,7 +21,9 @@
       </PushButton>
       <PushButton
         class="bg-secondary hover:bg-secondary-hover text-blue-400 p-1.5 rounded-xl flex items-center justify-center"
-        :class="{'bg-tertiary': ['service.terms', 'service.privacy'].includes(<string>route?.name)}"
+        :class="{
+          'bg-tertiary': ['service.terms', 'service.privacy'].includes(<string>route?.name)
+        }"
         :is-link="true"
         to-name="service.terms"
       >

@@ -1,5 +1,8 @@
 <template>
-  <PushButton :is-link="false" class="w-6 h-6 flex items-center justify-center text-sm text-gray-400 rounded-full bg-secondary">
+  <PushButton
+    :is-link="false"
+    class="w-6 h-6 flex items-center justify-center text-sm text-gray-400 rounded-full bg-secondary"
+  >
     <Reply />
   </PushButton>
 </template>

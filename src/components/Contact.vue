@@ -46,13 +46,15 @@ const props = defineProps<{
 
 const realMessage = computed(() => {
   const isSentByYou = props.message.sender_id == auth.user?.id
-  const sender = (isSentByYou ? i18n.t('You') : props.message.sender_name)
+  const sender = isSentByYou ? i18n.t('You') : props.message.sender_name
   let build = sender + ': '
 
-  if (props.message.content != null && props.message.type == 'message') return (
-      build + props.message.content
-    ).replace('\n', ' ')
+  if (props.message.content != null && props.message.type == 'message')
+    return (build + props.message.content).replace('\n', ' ')
 
-  return i18n.t(props.message.type + (isSentByYou ? '.you' : ''), { sender: sender, groupName: props.title })
+  return i18n.t(props.message.type + (isSentByYou ? '.you' : ''), {
+    sender: sender,
+    groupName: props.title
+  })
 })
 </script>

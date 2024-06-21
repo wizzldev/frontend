@@ -1,20 +1,37 @@
 <template>
-  <img class="rounded-t-xl w-full" v-if="file && file.content_type.startsWith('image/')" :src="chatImage(fileInfo.fetchFrom + `?access_token=${fileInfo.accessToken}`)" :alt="file.name" />
+  <LazyImage
+    class="rounded-t-xl w-full"
+    v-if="file && file.content_type.startsWith('image/')"
+    :src="chatImage(fileInfo.fetchFrom + `?access_token=${fileInfo.accessToken}`)"
+    :alt="file.name"
+  />
   <div
     class="px-4 py-2 w-full rounded-b-xl"
     :class="{
       'bg-secondary': sentByMe,
-      'bg-tertiary': !sentByMe
+      'bg-tertiary': !sentByMe,
+      'rounded-t-xl': !isImage
     }"
   >
-    <Spinner v-if="file == null" />
-    <div v-else class="flex space-x-3 items-center justify-between">
-      <button @click="download" :disabled="downloading" class="transition w-7 h-7 min-w-7 min-h-7 bg-tertiary hover:bg-tertiary-hover rounded-full flex items-center justify-center ">
+    <Spinner v-if="file == null || fileInfo.justLoad" />
+    <div
+      v-else
+      class="flex space-x-2 items-center justify-between relative w-max max-w-full break-words"
+    >
+      <button
+        @click="download"
+        :disabled="downloading"
+        class="transition w-7 h-7 min-w-7 min-h-7 bg-tertiary hover:bg-tertiary-hover rounded-full flex items-center justify-center"
+      >
         <Download v-if="!downloading" />
         <Spinner v-else />
       </button>
-      <div class="ml-2 px-2">
-        <h1 class="max-w-full text-ellipsis text-nowrap overflow-hidden line-clamp-1">{{ (file as FileInfo).name }}</h1>
+      <div class="ml-2 px-2 max-w-[90%]">
+        <h1
+          class="w-max max-w-full break-words text-ellipsis text-nowrap overflow-hidden line-clamp-1"
+        >
+          {{ (file as FileInfo).name }}
+        </h1>
         <p class="text-gray-600">{{ prettyBytes((file as FileInfo).size) }}</p>
       </div>
     </div>
@@ -31,6 +48,7 @@ import Download from '@/components/Icons/Download.vue'
 import prettyBytes from 'pretty-bytes'
 import { Buffer } from 'buffer'
 import { chatImage } from '@/scripts/image'
+import LazyImage from '@/components/Loaders/LazyImage.vue'
 
 const props = defineProps<{
   message: Message
@@ -40,18 +58,20 @@ const props = defineProps<{
 const fileInfo = ref({}) as Ref<FileDataJSON>
 const file = ref(null) as Ref<FileInfo | null>
 const downloading = ref(false)
+const isImage = ref(false)
 
 const fetchFileInfo = async () => {
-  if(props.message.data_json == null) return
+  if (props.message.data_json == null) return
   const info = JSON.parse(props.message.data_json) as FileDataJSON
   fileInfo.value = info
   const res = await request.get(info.fetchFrom + '/info', {
     headers: {
-      'X-File-Access-Token': info.accessToken,
+      'X-File-Access-Token': info.accessToken
     }
   })
-  if(res.data.$error) return
+  if (res.data.$error) return
   file.value = res.data
+  isImage.value = file.value?.content_type.includes('image') || false
 }
 
 const download = async () => {
@@ -63,11 +83,11 @@ const download = async () => {
     responseType: 'blob'
   })
   downloading.value = false
-  if(res.data?.$error) return
+  if (res.data?.$error) return
 
   const base64 = Buffer.from(await res.data.arrayBuffer(), 'binary').toString('base64')
   const a = document.createElement('a')
-  a.setAttribute('href',`data:${file.value?.content_type};base64,${base64}`)
+  a.setAttribute('href', `data:${file.value?.content_type};base64,${base64}`)
   a.setAttribute('download', file.value?.name || 'unknown')
   a.setAttribute('wizzl-download', fileInfo.value.fetchFrom)
   a.click()
@@ -75,18 +95,4 @@ const download = async () => {
 }
 
 onMounted(fetchFileInfo)
-
-const getStyle = (msg: Message) => {
-  if (!msg.data_json) return {}
-  const json = JSON.parse(msg.data_json)
-  const style = {} as {
-    background: string | undefined
-    color: string | undefined
-    border: string | null
-  }
-  if ('bg' in json) style['background'] = json['bg'] + '!important'
-  if ('text' in json) style['color'] = json['text'] + '!important'
-  if ('border' in json) style['border'] = json['border'] + '!important'
-  return style
-}
 </script>

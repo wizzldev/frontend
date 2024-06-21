@@ -1,24 +1,36 @@
 <template>
-  <li data-message
-      :data-theme="`message-${sentByMe ? 'you' : 'other'}`"
-      class="relative cursor-pointer mt-1 rounded-xl break-words first:rounded-t-3xl last:rounded-b-3xl"
-      :class="{
-              'ml-auto bg-secondary rounded-l-3xl z-0': sentByMe,
-              'bg-tertiary rounded-r-3xl': !sentByMe
-            }"
-      :style="getStyle(message)"
-      @dblclick="$emit('like', message.id)"
+  <li
+    data-message
+    :data-theme="`message-${sentByMe ? 'you' : 'other'}`"
+    class="relative cursor-pointer mt-1 rounded-xl break-words first:rounded-t-3xl last:rounded-b-3xl"
+    :class="{
+      'ml-auto bg-secondary rounded-l-3xl z-0': sentByMe,
+      'bg-tertiary rounded-r-3xl': !sentByMe
+    }"
+    :style="getStyle(message)"
+    @dblclick="$emit('like', message.id)"
   >
-    <img class="rounded-t-xl w-full" v-if="file && file.content_type.startsWith('image/')" :src="chatImage(fileInfo.fetchFrom + `?access_token=${fileInfo.accessToken}`)" :alt="file.name" />
+    <img
+      class="rounded-t-xl w-full"
+      v-if="file && file.content_type.startsWith('image/')"
+      :src="chatImage(fileInfo.fetchFrom + `?access_token=${fileInfo.accessToken}`)"
+      :alt="file.name"
+    />
     <div class="px-4 py-2 w-max max-w-full flex space-x-3 items-center justify-between">
       <Spinner v-if="file == null" />
       <template v-else>
-        <button @click="download" :disabled="downloading" class="transition w-7 h-7 bg-tertiary hover:bg-tertiary-hover rounded-full flex items-center justify-center ">
+        <button
+          @click="download"
+          :disabled="downloading"
+          class="transition w-7 h-7 bg-tertiary hover:bg-tertiary-hover rounded-full flex items-center justify-center"
+        >
           <Download v-if="!downloading" />
           <Spinner v-else />
         </button>
         <div>
-          <h1 class="font-bold text-ellipsis text-nowrap overflow-hidden line-clamp-1">{{ file.name }}</h1>
+          <h1 class="font-bold text-ellipsis text-nowrap overflow-hidden line-clamp-1">
+            {{ file.name }}
+          </h1>
           <p class="text-gray-600">{{ prettyBytes(file.size) }}</p>
         </div>
       </template>
@@ -47,15 +59,15 @@ const file = ref(null) as Ref<FileInfo | null>
 const downloading = ref(false)
 
 const fetchFileInfo = async () => {
-  if(props.message.data_json == null) return
+  if (props.message.data_json == null) return
   const info = JSON.parse(props.message.data_json) as FileDataJSON
   fileInfo.value = info
   const res = await request.get(info.fetchFrom + '/info', {
     headers: {
-      'X-File-Access-Token': info.accessToken,
+      'X-File-Access-Token': info.accessToken
     }
   })
-  if(res.data.$error) return
+  if (res.data.$error) return
   file.value = res.data
 }
 
@@ -68,11 +80,11 @@ const download = async () => {
     responseType: 'blob'
   })
   downloading.value = false
-  if(res.data?.$error) return
+  if (res.data?.$error) return
 
   const base64 = Buffer.from(await res.data.arrayBuffer(), 'binary').toString('base64')
   const a = document.createElement('a')
-  a.setAttribute('href',`data:${file.value?.content_type};base64,${base64}`)
+  a.setAttribute('href', `data:${file.value?.content_type};base64,${base64}`)
   a.setAttribute('download', file.value?.name || 'unknown')
   a.setAttribute('wizzl-download', fileInfo.value.fetchFrom)
   a.click()

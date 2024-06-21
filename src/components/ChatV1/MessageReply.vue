@@ -4,9 +4,9 @@
     <div
       class="px-4 py-1.5 pb-3 -mb-4 w-max mt-1 rounded-xl max-w-full rounded-t-3xl bg-secondary opacity-50"
       :class="{
-                'rounded-l-3xl ml-auto': sentByMe,
-                'rounded-r-3xl': !sentByMe
-              }"
+        'rounded-l-3xl ml-auto': sentByMe,
+        'rounded-r-3xl': !sentByMe
+      }"
       data-theme="message-reply"
     >
       <p class="break-words text-ellipsis text-nowrap overflow-hidden line-clamp-2">

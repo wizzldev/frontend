@@ -19,7 +19,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (res) => {
-    if(res.data == null) res.data = {nullValue: true}
+    if (res.data == null) res.data = { nullValue: true }
     return Promise.resolve(res)
   },
   (err) => {

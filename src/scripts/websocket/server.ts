@@ -20,7 +20,7 @@ class Server {
   }
 
   public channel(name: string = ''): Channel {
-    console.log("channels:", name, this.channels, Object.keys(this.channels).includes(name))
+    console.log('channels:', name, this.channels, Object.keys(this.channels).includes(name))
     if (Object.keys(this.channels).includes(name)) {
       return this.channels[name]
     }

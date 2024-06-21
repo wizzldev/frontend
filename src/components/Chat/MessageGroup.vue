@@ -1,9 +1,16 @@
 <template>
   <template v-if="['message', 'emoji'].includes(messages.type)">
     <MessagerWrap :sent-by-me="sentByMe" :sender="messages.sender" :theme="theme">
-      <ul class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse !text-white overflow-hidden text-ellipsis" :class="{'col-span-4': sentByMe, customTheme: theme}">
+      <ul
+        class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse !text-white overflow-hidden text-ellipsis"
+        :class="{
+          'col-span-4': sentByMe,
+          customTheme: theme
+        }"
+      >
         <MessageWrap
-          v-for="msg in messages.messages" :key="msg.id"
+          v-for="msg in messages.messages"
+          :key="msg.id"
           :message="msg"
           :sentByMe="sentByMe"
           :isEmoji="msg.type == 'emoji'"
@@ -12,16 +19,31 @@
           :theme="theme"
           ref="msgWrap"
           @modal="(msg: Message) => emit('modal', msg)"
+          @reply="$emit('reply', msg)"
         >
-          <ChatReply v-if="msg.reply" :reply="msg.reply" :sent-by-me="sentByMe" :sender-name="msg.sender.first_name" />
-          <ChatMessage v-if="msg.type == 'message'" :message="msg" :sent-by-me="sentByMe" :place="getPlace(msg)" />
-          <ChatFile v-else-if="msg.type.startsWith('file:')" :message="msg" :sent-by-me="sentByMe" />
+          <ChatReply
+            v-if="msg.reply"
+            :reply="msg.reply"
+            :sent-by-me="sentByMe"
+            :sender-name="msg.sender.first_name"
+          />
+          <ChatMessage
+            v-if="msg.type == 'message'"
+            :message="msg"
+            :sent-by-me="sentByMe"
+            :place="getPlace(msg)"
+          />
+          <ChatFile
+            v-else-if="msg.type.startsWith('file:')"
+            :message="msg"
+            :sent-by-me="sentByMe"
+          />
           <ChatEmoji v-else-if="msg.type == 'emoji'" :message="msg" />
         </MessageWrap>
       </ul>
     </MessagerWrap>
   </template>
-  <div v-else>
+  <div v-else class="px-2">
     <template v-for="msg in messages.messages" :key="msg.id">
       <DateTimeInfo v-if="msg.type == 'date-time'" :message="msg" />
       <InfoMessage v-else :message="msg" />
@@ -48,7 +70,7 @@ const props = defineProps<{
   theme: ThemeDataMain | undefined
 }>()
 
-const emit = defineEmits(['modal', 'like'])
+const emit = defineEmits(['modal', 'like', 'reply'])
 const auth = useAuthStore()
 
 const sentByMe = computed(() => props.messages.sender.id == auth.user?.id)
@@ -56,10 +78,9 @@ const sentByMe = computed(() => props.messages.sender.id == auth.user?.id)
 const getPlace = (msg: Message): Array<string> => {
   const inx = props.messages.messages.indexOf(msg)
   const len = props.messages.messages.length - 1
-  console.log(msg, inx, len)
-  if(inx == 0 && len == 0) return ['first', 'last']
-  if(inx == 0) return ['first']
-  if(inx == len) return ['last']
+  if (inx == 0 && len == 0) return ['first', 'last']
+  if (inx == 0) return ['first']
+  if (inx == len) return ['last']
   return ['middle']
 }
 </script>

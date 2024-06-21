@@ -13,7 +13,7 @@ const route = useRoute()
 const loader = useRouteLoaderStore()
 
 watch(route, (r: RouteLocationNormalized) => {
-  isTermsPage.value = ['service.terms', 'service.privacy'].includes(r.name as string);
+  isTermsPage.value = ['service.terms', 'service.privacy'].includes(r.name as string)
 })
 
 const isTermsPage = ref(false)
@@ -35,7 +35,7 @@ setup(router)
     </transition>
   </RouterView>
   <AppLayout v-show="!loader.isLoaded" class="!flex-1 items-center justify-center">
-    <InfiniteLoader/>
+    <InfiniteLoader />
   </AppLayout>
   <TermsModal v-if="!isTermsAccepted && !isTermsPage" @accept="accept" />
 </template>

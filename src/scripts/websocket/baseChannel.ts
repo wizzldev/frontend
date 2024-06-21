@@ -32,9 +32,9 @@ class BaseChannel {
   }
 
   public async connect() {
-    if(window.WS.channel(this.name).connecting() || this.connectionInProgress) return
-    if(window.WS.channel(this.name).isConnected() || this._isConnected) return
-    if(this.terminated) return
+    if (window.WS.channel(this.name).connecting() || this.connectionInProgress) return
+    if (window.WS.channel(this.name).isConnected() || this._isConnected) return
+    if (this.terminated) return
     this.connectionInProgress = true
     this.conn = await new Promise((resolve) => {
       const c = new WebSocket(this.uri)
@@ -86,9 +86,9 @@ class BaseChannel {
     })
     this.statusChange = () => {}
     for (let i = 0; i < this.messageHandlers.length; i++) delete this.messageHandlers[i]
-    if(this.conn) this.conn.onclose = () => {}
+    if (this.conn) this.conn.onclose = () => {}
     this.baseSend('close', 'close', null)
-    if(this.conn?.readyState == WebSocket.OPEN) this.conn?.close()
+    if (this.conn?.readyState == WebSocket.OPEN) this.conn?.close()
     window.WS.detach(this.name)
   }
 
@@ -118,11 +118,11 @@ class BaseChannel {
   protected baseSend<T>(type: string, content: string, data_json: T | object | null): string {
     if (data_json === null) data_json = {}
     const hook = this.newHookID(content)
-    const payload: { type: string; content: string; data_json: string, hook_id: string } = {
+    const payload: { type: string; content: string; data_json: string; hook_id: string } = {
       type,
       content,
       data_json: JSON.stringify(data_json),
-      hook_id: hook,
+      hook_id: hook
     }
     const payloadString = JSON.stringify(payload)
     console.log('[WS]: Payload sent:', payloadString)
@@ -160,7 +160,7 @@ class BaseChannel {
     this.disconnect()
   }
 
-  public WS(): WebSocket|null {
+  public WS(): WebSocket | null {
     return this.conn
   }
 }

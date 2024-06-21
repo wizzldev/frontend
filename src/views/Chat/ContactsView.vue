@@ -4,9 +4,7 @@
       <IconInput v-model="searchInput" :icon="Magnifier as Component" placeholder="Search" />
     </section>
     <ChatNav />
-    <section
-      class="h-full w-full max-w-full overflow-y-scroll pt-4"
-    >
+    <section class="h-full w-full max-w-full overflow-y-scroll pt-4">
       <div v-if="!hasContact" class="w-full my-auto text-center">
         <h2 class="text-gray-600 fontTheme px-2">
           {{ $t('You currently have no active conversation') }}
@@ -29,12 +27,16 @@
             to-name="chat.message"
             :to-params="{ id: con.id }"
           >
-            <Contact :title="con.name" :image="cdnImage(con.image, 256)" :message="con.last_message" />
+            <Contact
+              :title="con.name"
+              :image="cdnImage(con.image, 256)"
+              :message="con.last_message"
+            />
           </PushButton>
         </template>
 
         <div class="text-center px-2 mt-3 mb-2" v-if="hasContact">
-          <p  class="text-sm text-gray-600 fontTheme">
+          <p class="text-sm text-gray-600 fontTheme">
             {{ $t('No more active conversations') }}
           </p>
           <PushButton

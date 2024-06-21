@@ -1,8 +1,6 @@
 import Server from '@/scripts/websocket/server'
 import type BaseChannel from '@/scripts/websocket/baseChannel'
 import { WizzlDefaultChannel } from '@/scripts/consts'
-import chat from '@/router/routes/chat'
-import channel from '@/scripts/websocket/channel'
 
 const disconnectHandler = async (chan: BaseChannel) => {
   console.error(`Channel ${chan.uri} disconnected. Trying to reconnect...`)
@@ -23,17 +21,17 @@ const setup = async (auth: string, force: boolean = false) => {
 }
 
 const chanStatus = () => {
-  window.WS.allChannel().forEach(chan => {
+  window.WS.allChannel().forEach((chan) => {
     console.info(`${chan.name} - ${chan.isConnected()}`)
     chan.send('ping', 'ping')
   })
-  setTimeout(chanStatus, 5000)
+  setTimeout(chanStatus, 3000)
 }
 
 window.onbeforeunload = function () {
   if (!window.WS) return
   const channels = window.WS.allChannel()
-  channels.forEach(chan => chan.disconnect())
+  channels.forEach((chan) => chan.disconnect())
 }
 
 export default setup

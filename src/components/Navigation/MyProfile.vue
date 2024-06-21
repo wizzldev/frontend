@@ -2,16 +2,21 @@
   <header class="px-5 py-4 flex items-center justify-between border-b-secondary z-10">
     <div class="flex items-center space-x-2 transition-all">
       <Slide>
-        <PushButton v-if="backButton"
-                    :is-link="true"
-                    :to-name="backButton.route"
-                    :to-params="backButton.params || {} as RouteParamsRaw"
-                    class="bg-secondary-all rounded-full p-2 flex items-center justify-center text-gray-400"
+        <PushButton
+          v-if="backButton"
+          :is-link="true"
+          :to-name="backButton.route"
+          :to-params="backButton.params || ({} as RouteParamsRaw)"
+          class="bg-secondary-all rounded-full p-2 flex items-center justify-center text-gray-400"
         >
           <BackArrow />
         </PushButton>
       </Slide>
-      <LazyImage class="w-8 h-8 rounded-full" :src="cdnImage(auth.user?.image_url || '', 128)" :alt="userImageAlt" />
+      <LazyImage
+        class="w-8 h-8 rounded-full"
+        :src="cdnImage(auth.user?.image_url || '', 128)"
+        :alt="userImageAlt"
+      />
       <h2 class="text-lg font-bold fontTheme">{{ $t('Chats') }}</h2>
     </div>
     <div class="flex items-center space-x-2">

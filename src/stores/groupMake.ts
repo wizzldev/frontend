@@ -9,16 +9,19 @@ export const useGroupMakeStore = defineStore('groupMake', () => {
 
   function initialize() {
     const data = window.localStorage.getItem(WizzlGroupMakeSave)
-    if(!data) return
+    if (!data) return
     const json = JSON.parse(data)
-    if(!json) return
+    if (!json) return
     users.value = (json as { users: Array<User> }).users
-    selectedRoles.value = (json as {roles: Array<string>}).roles
+    selectedRoles.value = (json as { roles: Array<string> }).roles
   }
 
   function save() {
-    window.localStorage.setItem(WizzlGroupMakeSave, JSON.stringify({users: users.value, roles: selectedRoles.value}))
+    window.localStorage.setItem(
+      WizzlGroupMakeSave,
+      JSON.stringify({ users: users.value, roles: selectedRoles.value })
+    )
   }
 
-  return {initialize, users, selectedRoles, save}
+  return { initialize, users, selectedRoles, save }
 })

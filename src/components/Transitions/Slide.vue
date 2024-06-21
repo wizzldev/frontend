@@ -11,7 +11,7 @@ const props = defineProps<{
   duration?: number
 }>()
 
-const getDuration = computed(() => props?.duration ? `${props.duration}s` : `0.8s`)
+const getDuration = computed(() => (props?.duration ? `${props.duration}s` : `0.8s`))
 </script>
 
 <style>

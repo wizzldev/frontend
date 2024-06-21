@@ -15,7 +15,12 @@
           src="../../assets/vectors/loading.svg"
           alt="Loading image"
         />
-        <LazyImage v-else class="w-8 h-8 rounded-full" :src="cdnImage(image, 128)" :alt="`${name}'s chat image`" />
+        <LazyImage
+          v-else
+          class="w-8 h-8 rounded-full"
+          :src="cdnImage(image, 128)"
+          :alt="`${name}'s chat image`"
+        />
         <h2
           class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
         >
@@ -28,7 +33,7 @@
           class="bg-secondary-all text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
           :is-link="true"
           to-name="chat.settings"
-          :to-params="{id: $route.params.id} as RouteParamsRaw"
+          :to-params="{ id: $route.params.id } as RouteParamsRaw"
         >
           <Settings />
         </PushButton>

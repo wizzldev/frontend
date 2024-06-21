@@ -1,8 +1,11 @@
 <template>
   <GuestLayout>
-    <h1 v-if="loading" class="text-2xl fontTheme text-center flex items-center space-x-3 justify-center">
+    <h1
+      v-if="loading"
+      class="text-2xl fontTheme text-center flex items-center space-x-3 justify-center"
+    >
       <span>{{ $t('Just a moment') }}</span>
-      <Spinner/>
+      <Spinner />
     </h1>
     <div v-else-if="success">
       <div class="flex items-center justify-center">

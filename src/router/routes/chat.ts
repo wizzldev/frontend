@@ -32,6 +32,6 @@ export default [
     path: '/chat/:id/settings',
     name: 'chat.settings',
     component: ChatSettings,
-    meta: needsAuth,
+    meta: needsAuth
   }
 ] as Array<RouteRecordRaw>

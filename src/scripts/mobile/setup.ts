@@ -18,8 +18,8 @@ const setup = async (router: Router) => {
   })
 
   await App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-    const slug = event.url.split(".app").pop();
-    if (slug) router.push({path: slug});
+    const slug = event.url.split('.app').pop()
+    if (slug) router.push({ path: slug })
   })
 }
 
