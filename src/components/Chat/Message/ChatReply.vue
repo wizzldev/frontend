@@ -2,7 +2,7 @@
   <p class="text-xs text-gray-400">{{ getReply }}</p>
   <div
     class="bg-tertiary rounded-3xl mb-0.5 relative w-max max-w-full break-words text-ellipsis text-nowrap overflow-hidden line-clamp-1"
-    :class="{ 'ml-auto': sentByMe }"
+    :class="{ 'ml-auto rounded-br-lg': sentByMe }"
     v-if="reply.type == 'message'"
   >
     <p class="px-3 py-1.5" :class="{ 'text-right': sentByMe }">

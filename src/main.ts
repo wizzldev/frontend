@@ -1,6 +1,7 @@
 import './assets/styles/main.css'
 import 'vue-toastification/dist/index.css'
 import 'tippy.js/dist/tippy.css'
+import 'vue-advanced-cropper/dist/style.css'
 // customized
 import './assets/styles/customization/toast.css'
 import './assets/styles/customization/tippy.css'

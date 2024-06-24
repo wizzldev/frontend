@@ -3,11 +3,11 @@
   <transition name="pop" appear>
     <div v-if="show" class="h-screen w-full flex fixed top-0 left-0">
       <div class="my-auto w-full px-2 z-50">
-        <div class="relative bg-tertiary rounded-xl shadow max-w-sm mx-auto">
+        <div class="relative bg-secondary rounded-xl shadow max-w-sm mx-auto">
           <button
             v-if="!disableClose"
             type="button"
-            class="transition duration-150 absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-secondary rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
+            class="transition duration-150 absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-tertiary rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
             @click="close"
           >
             <svg

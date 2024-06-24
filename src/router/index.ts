@@ -5,10 +5,20 @@ import { useAuthStore } from '@/stores/auth'
 import Guard from '@/router/guard'
 import main from '@/router/routes/main'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
+import NotFound from '@/views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [...main, ...auth, ...chat]
+  routes: [
+    ...main,
+    ...auth,
+    ...chat,
+    {
+      path: '/:pathMatch(.*)',
+      name: 'notFound',
+      component: NotFound,
+    }
+  ]
 })
 
 router.beforeEach(async (to, from, next) => {

@@ -8,7 +8,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    config.headers['X-Frontend-Client'] = 'Web/Vue@alpha'
+    config.headers['X-Frontend-Client'] = 'Web/Vue@build:alpha'
     config.headers.Authorization = window.localStorage.getItem(WizzlAuthToken)
     return config
   },
