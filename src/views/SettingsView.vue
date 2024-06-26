@@ -11,9 +11,7 @@
         {{ $t('Edit profile image') }}
       </SettingsButton>
     </section>
-    <section>
-
-    </section>
+    <section></section>
   </SettingsLayout>
   <Modal :show="editProfileImage" @close="editProfileImage = false">
     <ProfileImageCropper
@@ -38,7 +36,7 @@ const auth = useAuthStore()
 const editProfileImage = ref(false)
 
 const updateImage = (key: string) => {
-  if(!auth.user) return
+  if (!auth.user) return
   auth.user.image_url = key
 }
 </script>

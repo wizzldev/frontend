@@ -1,13 +1,13 @@
 <template>
   <template v-if="['message', 'emoji'].includes(messages.type)">
-    <MessagerWrap :sent-by-me="sentByMe" :sender="messages.sender" :theme="theme">
-      <ul
-        class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse !text-white overflow-hidden text-ellipsis"
-        :class="{
-          'col-span-4': sentByMe,
-          customTheme: theme
-        }"
-      >
+    <div
+      class="h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse !text-white overflow-hidden text-ellipsis"
+      :class="{
+        'col-span-4': sentByMe,
+        customTheme: theme
+      }"
+    >
+      <MessagerWrap :sent-by-me="sentByMe" :sender="messages.sender" :theme="theme" :isPM="isPM">
         <MessageWrap
           v-for="msg in messages.messages"
           :key="msg.id"
@@ -18,7 +18,7 @@
           @dblclick="$emit('like', msg.id)"
           :theme="theme"
           ref="msgWrap"
-          @modal="(msg: Message) => emit('modal', msg)"
+          @modal="emitModal"
           @reply="$emit('reply', msg)"
         >
           <ChatReply
@@ -33,18 +33,24 @@
             :sent-by-me="sentByMe"
             :place="getPlace(msg)"
           />
+          <DeletedMessage
+            v-if="msg.type == 'deleted'"
+            :sent-by-me="sentByMe"
+            :place="getPlace(msg)"
+          />
           <ChatFile
             v-else-if="msg.type.startsWith('file:')"
             :message="msg"
             :sent-by-me="sentByMe"
+            @showImage="(img: string) => emit('showImage', img)"
           />
           <ChatEmoji v-else-if="msg.type == 'emoji'" :message="msg" />
         </MessageWrap>
-      </ul>
-    </MessagerWrap>
+      </MessagerWrap>
+    </div>
   </template>
   <div v-else class="px-2">
-    <template v-for="msg in messages.messages" :key="msg.id">
+    <template v-for="msg in infoMessages" :key="msg.id">
       <DateTimeInfo v-if="msg.type == 'date-time'" :message="msg" />
       <InfoMessage v-else :message="msg" />
     </template>
@@ -64,13 +70,15 @@ import ChatFile from '@/components/Chat/Message/ChatFile.vue'
 import type { ThemeDataMain } from '@/types/chat'
 import ChatReply from '@/components/Chat/Message/ChatReply.vue'
 import InfoMessage from '@/components/Chat/Info/InfoMessage.vue'
+import DeletedMessage from '@/components/Chat/Message/DeletedMessage.vue'
 
 const props = defineProps<{
   messages: MessageGroupType
   theme: ThemeDataMain | undefined
+  isPM: boolean
 }>()
 
-const emit = defineEmits(['modal', 'like', 'reply'])
+const emit = defineEmits(['modal', 'like', 'reply', 'showImage'])
 const auth = useAuthStore()
 
 const sentByMe = computed(() => props.messages.sender.id == auth.user?.id)
@@ -82,6 +90,15 @@ const getPlace = (msg: Message): Array<string> => {
   if (inx == 0) return ['first']
   if (inx == len) return ['last']
   return ['middle']
+}
+
+const infoMessages = computed(() => {
+  const msg = props.messages.messages
+  return msg.reverse()
+})
+
+const emitModal = (msg: Message) => {
+  if(msg.type != 'deleted') emit('modal', msg)
 }
 </script>
 

@@ -14,7 +14,7 @@
         <div class="flex flex-wrap items-center w-full">
           <span class="text-purple-400">{{ $t('Reply') }}:</span>
           <span
-            v-if="reply.type == 'message'"
+            v-if="['message', 'emoji'].includes(reply.type)"
             class="ml-1 w-[70%] break-all line-clamp-1 text-nowrap"
             >{{ reply.content }}</span
           >

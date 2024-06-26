@@ -11,6 +11,8 @@
         :theme="theme"
         @like="(id: number) => $emit('like', id)"
         :messages="msg"
+        :isPM="isPM"
+        @showImage="showImage"
       />
     </li>
     <li class="w-full text-center text-xl my-3" v-if="loading">
@@ -20,6 +22,9 @@
       <p class="text-center text-gray-400 fontTheme">{{ $t('No more messages') }}</p>
     </li>
   </ul>
+  <div class="fixed top-0 left-0" v-if="previewImage != ''">
+    <img :src="previewImage" alt="Preview image" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -36,6 +41,7 @@ const props = defineProps<{
   messages: Messages
   theme: ThemeDataMain | undefined
   hasNext: boolean
+  isPM: boolean
 }>()
 
 const emit = defineEmits(['load', 'modal', 'like', 'reply'])
@@ -43,6 +49,8 @@ const emit = defineEmits(['load', 'modal', 'like', 'reply'])
 const auth = useAuthStore()
 const loading = ref(false)
 const scrollContainer = ref()
+
+const previewImage = ref('')
 
 const messageList = computed(() => messageSorter(props.messages, auth.user?.id || -1))
 
@@ -56,6 +64,11 @@ const handleScroll = async () => {
       loading.value = false
     }
   }
+}
+
+const showImage = (src: string) => {
+  console.log('show image...')
+  previewImage.value = src
 }
 
 onMounted(() => {

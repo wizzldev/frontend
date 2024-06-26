@@ -32,9 +32,9 @@ class BaseChannel {
   }
 
   public async connect() {
+    if (this.terminated) return
     if (window.WS.channel(this.name).connecting() || this.connectionInProgress) return
     if (window.WS.channel(this.name).isConnected() || this._isConnected) return
-    if (this.terminated) return
     this.connectionInProgress = true
     this.conn = await new Promise((resolve) => {
       const c = new WebSocket(this.uri)
@@ -71,24 +71,23 @@ class BaseChannel {
     return this._isConnected
   }
 
-  public log(...data: Array<unknown>) {
-    console.info(`WS [${this.name}] - ${data.join(', ')}`)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public log(..._: Array<unknown>) {
+    return
   }
 
   public disconnect() {
+    if (this.terminated) return
+    this.terminated = true
     this.onDisconnect = async () => {
       console.log('Disconnected from ws')
       this._isConnected = false
     }
-    this.messageHandlers.forEach((h, id) => {
-      delete this.messageHandlers[id]
-      this.log(`Handler ${h.event} detached`)
-    })
+    this.messageHandlers = []
     this.statusChange = () => {}
-    for (let i = 0; i < this.messageHandlers.length; i++) delete this.messageHandlers[i]
     if (this.conn) this.conn.onclose = () => {}
     this.baseSend('close', 'close', null)
-    if (this.conn?.readyState == WebSocket.OPEN) this.conn?.close()
+    if (this.conn?.readyState != WebSocket.CLOSED) this.conn?.close()
     window.WS.detach(this.name)
   }
 
@@ -117,47 +116,33 @@ class BaseChannel {
 
   protected baseSend<T>(type: string, content: string, data_json: T | object | null): string {
     if (data_json === null) data_json = {}
-    const hook = this.newHookID(content)
-    const payload: { type: string; content: string; data_json: string; hook_id: string } = {
-      type,
-      content,
-      data_json: JSON.stringify(data_json),
-      hook_id: hook
-    }
+    console.log('send', type, content, data_json)
+    const hook = type == 'close' ? '' : this.newHookID(content)
+    const payload: { type: string; content: string | number; data_json: string; hook_id: string } =
+      {
+        type,
+        content,
+        data_json: JSON.stringify(data_json),
+        hook_id: hook
+      }
     const payloadString = JSON.stringify(payload)
-    console.log('[WS]: Payload sent:', payloadString)
     this.conn?.send(payloadString)
     return hook
   }
 
   protected newHookID(s: string) {
-    return xxHash32(s + Math.random().toString(16), Date.now()).toString(16)
+    console.log(s)
+    let id = 'hookID'
+    try {
+      id = xxHash32(s + Math.random().toString(16), Date.now()).toString(16)
+    } catch (e) {
+      console.error('Failed to generate new hookID', e)
+    }
+    return id
   }
 
   public onStatusChange(fn: StatusChangeHandler) {
     this.statusChange = fn
-  }
-
-  public job(
-    name: string,
-    msg: { type: string; content: string; data_json: string },
-    timeout: number
-  ) {
-    if (name in this.jobs) return
-    this.jobs.push(name)
-    const finish = () =>
-      setInterval(() => {
-        this.baseSend(msg.type, msg.content, msg.data_json)
-        console.log(`[WS] ${this.uri}: Task "${name}" finished`)
-        if (!this._isConnected) return
-        setInterval(() => finish, timeout)
-      }, timeout)
-    finish()
-  }
-
-  public terminate() {
-    this.terminated = true
-    this.disconnect()
   }
 
   public WS(): WebSocket | null {

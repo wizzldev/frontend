@@ -1,9 +1,10 @@
 <template>
   <LazyImage
-    class="rounded-t-xl w-full"
+    class="rounded-t-xl w-full cursor-pointer"
     v-if="file && file.content_type.startsWith('image/')"
-    :src="chatImage(fileInfo.fetchFrom + `?access_token=${fileInfo.accessToken}`)"
+    :src="imageSrc"
     :alt="file.name"
+    @click="$emit('showImage', imageSrc)"
   />
   <div
     class="px-4 py-2 w-full rounded-b-xl"
@@ -43,7 +44,7 @@ import type { Message } from '@/types/message'
 import Spinner from '@/components/Icons/Spinner.vue'
 import request from '@/scripts/request/request'
 import type { FileDataJSON, FileInfo } from '@/types/file'
-import { onMounted, type Ref, ref } from 'vue'
+import { computed, onMounted, type Ref, ref } from 'vue'
 import Download from '@/components/Icons/Download.vue'
 import prettyBytes from 'pretty-bytes'
 import { Buffer } from 'buffer'
@@ -95,4 +96,8 @@ const download = async () => {
 }
 
 onMounted(fetchFileInfo)
+
+const imageSrc = computed(() =>
+  chatImage(fileInfo.value.fetchFrom + `?access_token=${fileInfo.value.accessToken}`)
+)
 </script>

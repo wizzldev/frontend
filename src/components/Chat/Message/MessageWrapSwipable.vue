@@ -4,7 +4,7 @@
     :data-theme="`message-${sentByMe ? 'you' : 'other'}`"
     class="relative w-max max-w-full mt-1"
     :class="{
-      'ml-auto rounded-l-3xl z-0': sentByMe,
+      'ml-auto z-0': sentByMe,
       'rounded-r-3xl': !sentByMe,
       'transition-all duration-200 ease-linear': !isSwiping
     }"
@@ -57,6 +57,7 @@ const emit = defineEmits(['modal', 'reply'])
 const wrap = ref<HTMLElement | null>(null)
 const distance = ref(0)
 const containerWidth = computed(() => wrap.value?.offsetWidth)
+const vibrated = ref(false)
 
 const swipeStyle = computed(() =>
   props.sentByMe ? { right: distance.value + 'px' } : { left: distance.value + 'px' }
@@ -80,12 +81,14 @@ const { distanceX, isSwiping } = usePointerSwipe(wrap, {
   },
   onSwipeEnd() {
     distance.value = 0
+    vibrated.value = false
   }
 })
 
 watch(distance, async (value) => {
   if (value < 150) return
-  if (isApp()) await Haptics.impact({ style: ImpactStyle.Light })
+  if (isApp() && !vibrated.value) await Haptics.impact({ style: ImpactStyle.Light })
+  vibrated.value = true
   emit('reply', props.message)
 })
 </script>

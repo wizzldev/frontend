@@ -5,6 +5,7 @@
     :connection="{ connected, error: connectionError }"
   >
     <MessageLayout
+      :isPM="isPM"
       @reply="(msg) => (replyMessage = msg)"
       :hasNext="cursors == null || cursors.next != ''"
       @load="loadMore"
@@ -30,12 +31,13 @@
     @close="modalMessage = null"
     :msg="modalMessage as WSMessage"
     @reply="replyTo"
+    @delete="unSend"
   />
 </template>
 
 <script setup lang="ts">
 import ChatLayout from '@/layouts/ChatLayout.vue'
-import { computed, onBeforeUnmount, onMounted, type Ref, ref } from 'vue'
+import { computed, onMounted, onUnmounted, type Ref, ref } from 'vue'
 import request from '@/scripts/request/request'
 import { useRoute, useRouter } from 'vue-router'
 import type { Like, Message as WSMessage, Messages } from '@/types/message'
@@ -67,18 +69,19 @@ const connected = ref(false)
 const connectionError = ref(false)
 const theme = ref(null) as Ref<Theme | null>
 const message = ref('')
-let ws: Channel | undefined
+let wsConn: Channel | undefined
 const modalMessage = ref(null) as Ref<null | WSMessage>
 const replyMessage = ref(null) as Ref<null | WSMessage>
 const cursors = ref(null) as Ref<{ next: string; prev: string } | null>
+const isPM = ref(true)
 
 const send = () => {
   const data = {} as { reply_id: number | undefined }
   if (replyMessage.value != null) data.reply_id = replyMessage.value?.id
-  const hookID = ws?.send('message', message.value, data)
+  const hookID = ws().send('message', message.value, data)
   console.log('PUSHING UNSENT MESSAGES WITH HOOK ID:', hookID)
   chat.push(
-    chatID,
+    chatID.value,
     [
       {
         id: 0,
@@ -102,7 +105,7 @@ const handleUpload = (hookID: string) => {
   const data = {} as { reply_id: number | undefined }
   if (replyMessage.value != null) data.reply_id = replyMessage.value?.id
   chat.push(
-    chatID,
+    chatID.value,
     [
       {
         id: 0,
@@ -122,9 +125,9 @@ const handleUpload = (hookID: string) => {
 }
 
 const emoji = (emoji: string) => {
-  const hookID = ws?.send('message', emoji)
+  const hookID = ws().send('message', emoji)
   chat.push(
-    chatID,
+    chatID.value,
     [
       {
         id: 0,
@@ -142,78 +145,81 @@ const emoji = (emoji: string) => {
 }
 
 const sendMessagePermission = computed(
-  () => (!chat.roles[chatID] || chat.roles[chatID]?.includes('SEND_MESSAGE')) as boolean
+  () => (!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes('SEND_MESSAGE')) as boolean
 )
 
 const like = async (id: number) => {
-  ws?.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
+  ws().send<{ message_id: number }>('message.like', '❤️', { message_id: id })
   if (isApp()) await Haptics.impact({ style: ImpactStyle.Light })
 }
 
-const chatID = `chat.${route.params.id as string}`
+const chatID = computed(() => `chat.${route.params.id as string}`)
 
 const initWebsocket = async () => {
-  ws = window.WS.channel(chatID)
+  wsConn = window.WS.channel(chatID.value)
 
   if (
-    ws.isConnected() ||
-    ws.WS()?.readyState == WebSocket.OPEN ||
-    ws.WS()?.readyState == WebSocket.CONNECTING
+    ws().isConnected() ||
+    ws().WS()?.readyState == WebSocket.OPEN ||
+    ws().WS()?.readyState == WebSocket.CONNECTING
   )
     return
 
-  ws.on<string>('connection', (data) => {
-    console.info(`chat connection [${ws?.uri}]:`, data)
+  ws().on<string>('connection', (data) => {
+    console.info(`chat connection [${ws().uri}]:`, data)
   })
 
-  ws.on<WSMessage>('message', (m, hookID) => {
+  ws().on<WSMessage>('message', (m, hookID) => {
     console.log(m, hookID)
-    chat.push(chatID, [m], hookID, true)
+    chat.push(chatID.value, [m], hookID, true)
     contacts.update(parseInt(route.params.id as string), m)
   })
 
-  ws.on<Like>('message.like', (l) => {
+  ws().on<Like>('message.like', (l) => {
     console.log('LIKE:', l)
-    chat.pushLike(chatID, l?.message_id || 0, l)
+    chat.pushLike(chatID.value, l?.message_id || 0, l)
   })
 
-  ws.on<Like>('message.like.remove', (l) => {
-    chat.removeLike(chatID, l?.message_id || 0, l)
+  ws().on<Like>('message.like.remove', (l) => {
+    chat.removeLike(chatID.value, l?.message_id || 0, l)
   })
 
-  ws.onStatusChange((chan: BaseChannel, is_connected: boolean) => {
+  ws().on<number>('message.unSend', (id) => {
+    console.log('UNSEND', id)
+    chat.rmMessageID(chatID.value, id)
+  })
+
+  ws().onStatusChange((_: BaseChannel, is_connected: boolean) => {
     connected.value = is_connected
     connectionError.value = !is_connected
   })
 
-  await ws.connect()
-  connected.value = ws?.isConnected()
-  connectionError.value = !ws.isConnected()
+  await ws().connect()
+  connected.value = ws().isConnected()
+  connectionError.value = !ws().isConnected()
 }
 
 const fetchChat = async () => {
-  if (chat.shouldFetch(chatID)) {
+  if (chat.shouldFetch(chatID.value)) {
     connected.value = false
     loader.isLoaded = false
     const res = await request.get(`/chat/${route.params.id as string}`)
     if (!res.data.$error) {
       const data = res.data as {
         user_roles: Array<string>
-        group: { name: string; image_url: string }
+        group: { name: string; image_url: string; is_private_message: boolean }
         messages: { data: Messages; next_cursor: string; previous_cursor: string }
       }
-      console.log('CURSORS', cursors.value)
-      console.log('UPDATING CURSORS')
       cursors.value = { next: data.messages.next_cursor, prev: data.messages.previous_cursor }
-      console.log('CURSORS', cursors.value)
-      chat.isPM[chatID] = true
-      chat.push(chatID, data.messages.data)
-      chat.setRoles(chatID, data.user_roles)
-      chat.profile[chatID] = {
+      chat.isPM[chatID.value] = true
+      chat.push(chatID.value, data.messages.data)
+      chat.setRoles(chatID.value, data.user_roles)
+      chat.profile[chatID.value] = {
         image: data.group.image_url,
         name: data.group.name,
         loading: false
       }
+      isPM.value = data.group.is_private_message
       loader.isLoaded = true
     } else return await router.push({ name: 'chat.contacts' })
   }
@@ -228,7 +234,7 @@ const loadMore = async () => {
     return
   }
   const data = res.data as { next_cursor: string; previous_cursor: string; data: Messages }
-  if (next != '') chat.push(chatID, data.data)
+  if (next != '') chat.push(chatID.value, data.data)
   cursors.value = { next: data.next_cursor, prev: data.previous_cursor }
 }
 
@@ -237,15 +243,28 @@ const replyTo = (msg: WSMessage) => {
   modalMessage.value = null
 }
 
+const unSend = (msg: WSMessage) => {
+  ws().send('message.delete', msg.id.toString())
+}
+
+const ws = () => {
+  return wsConn as Channel
+}
+
+const destroying = ref(false)
+
 onMounted(async () => {
+  console.log('Mounted...')
+  if (destroying.value) return
   await fetchChat()
   await initWebsocket()
   if (theme.value != null)
     await setTheme(theme.value?.dark?.top.bg || '', theme.value?.dark?.bottom.bg || '')
 })
 
-onBeforeUnmount(async () => {
-  if (ws) ws.disconnect()
+onUnmounted(async () => {
+  destroying.value = true
+  if (ws()) ws().disconnect()
   await resetTheme()
 })
 </script>

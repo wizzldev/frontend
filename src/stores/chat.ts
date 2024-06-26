@@ -75,5 +75,40 @@ export const useChatStore = defineStore('chat', () => {
     return Object.keys(roles.value).includes(chatID) && (roles.value[chatID] || []).length > 0
   }
 
-  return { push, pushLike, removeLike, setRoles, shouldFetch, roles, messages, profile, isPM }
+  function rmMessageID(chatID: string, msgID: number) {
+    if (!Object.keys(messages.value).includes(chatID)) return
+    for (let i = 0; i < messages.value[chatID].length; i++) {
+      const m = messages.value[chatID][i]
+      if (m.id == msgID) {
+        messages.value[chatID][i] = {
+          content: '',
+          created_at: m.created_at,
+          data_json: '{}',
+          hookId: '',
+          id: m.id,
+          likes: m.likes,
+          reply: m.reply,
+          sender: m.sender,
+          type: 'deleted',
+          underSending: false,
+          updated_at: m.updated_at
+
+        }
+        break
+      }
+    }
+  }
+
+  return {
+    push,
+    pushLike,
+    removeLike,
+    setRoles,
+    shouldFetch,
+    rmMessageID,
+    roles,
+    messages,
+    profile,
+    isPM
+  }
 })

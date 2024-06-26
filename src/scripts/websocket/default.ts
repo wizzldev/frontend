@@ -22,9 +22,9 @@ const setup = async (auth: string, force: boolean = false) => {
 
 const chanStatus = () => {
   window.WS.allChannel().forEach((chan) => {
-    console.info(`${chan.name} - ${chan.isConnected()}`)
     chan.send('ping', 'ping')
   })
+  console.log('active channels', window.WS.allChannel(), window.WS.allChannel().length)
   setTimeout(chanStatus, 3000)
 }
 

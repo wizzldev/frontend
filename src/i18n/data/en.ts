@@ -16,6 +16,9 @@ export default {
   'file:image.you': 'Sent an image',
   'file:video.you': 'Sent a video',
 
+  'update.image': '{sender} has changed the profile picture',
+  'update.image.you': 'You have changed the profile picture',
+
   'message.reply': '{who} replied to: {to}',
   'message.reply.you': 'You replied to: {to}',
 

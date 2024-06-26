@@ -23,6 +23,9 @@ export default {
   'file:image.you': 'Fényképet küldtél',
   'file:video.you': 'Videót küldtél',
 
+  'update.image': '{sender} módosította a profilképet',
+  'update.image.you': 'Módosítottad a profilképet',
+
   Message: 'Üzenet',
   'Enter email': 'Email cím megadása',
   'Start chatting': 'Chatelés megkezdése',

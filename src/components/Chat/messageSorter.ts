@@ -64,7 +64,7 @@ export const messageSorter = (messages: Messages, authUserId: number): MessageGr
 }
 
 const getType = (m: Message): string => {
-  if (['message', 'file:file', 'file:image'].includes(m.type)) return 'message'
+  if (['message', 'file:file', 'file:image', 'deleted'].includes(m.type)) return 'message'
   if (m.type == 'emoji') return 'emoji'
   return 'info'
 }
