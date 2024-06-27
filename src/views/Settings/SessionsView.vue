@@ -30,7 +30,7 @@
     </section>
     <BuildInfo v-if="!loading" />
   </SettingsLayout>
-  <Modal :show="sessionDetails" @close="sessionDetails = null">
+  <Modal :show="sessionDetails != null" @close="sessionDetails = null">
     <h2 class="text-2xl fontTheme">{{ $t('Session details') }}</h2>
     <p class="text-left">
       IP: {{ sessionDetails?.ip }}<br>
