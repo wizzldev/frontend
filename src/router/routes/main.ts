@@ -4,6 +4,7 @@ import SettingsView from '@/views/Settings/SettingsView.vue'
 import TermsOfServiceView from '@/views/Terms/TermsOfServiceView.vue'
 import PrivacyPolicyView from '@/views/Terms/PrivacyPolicyView.vue'
 import SessionsView from '@/views/Settings/SessionsView.vue'
+import IPView from '@/views/Settings/IPView.vue'
 
 const needsAuth = {
   auth: Guard.ACCESS_LOGIN
@@ -25,6 +26,12 @@ export default [
     path: '/settings/sessions',
     name: 'settings.sessions',
     component: SessionsView,
+    meta: needsAuth
+  },
+  {
+    path: '/settings/ips',
+    name: 'settings.ips',
+    component: IPView,
     meta: needsAuth
   },
   {

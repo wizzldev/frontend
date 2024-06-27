@@ -1,5 +1,5 @@
 <template>
-  <section class="text-center text-gray-500 text-xs mt-12 pt-12 mb-5 pb-4">
+  <section class="text-center text-gray-500 text-xs pt-5 mb-5 pb-4">
     <p>
       {{ ucFirst(mode) }} <Tippy class="transition-all cursor-pointer hover:px-2 py-0.5 rounded hover:bg-secondary hover:text-gray-100" :content="hash">{{ shortHash }}</Tippy>
     </p>
