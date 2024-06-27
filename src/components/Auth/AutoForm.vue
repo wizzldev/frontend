@@ -21,15 +21,8 @@
         }}</label>
       </div>
     </template>
-    <button
-      @click="submit"
-      :disabled="processing"
-      class="transition-colors w-full bg-purple-500 hover:bg-purple-400 focus:bg-purple-400 py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
-    >
-      <span>{{ $t('Submit') }}</span>
-      <Spinner v-if="processing" />
-    </button>
-    <p class="text-red-400" v-if="error != ''">{{ error }}</p>
+    <FormButton title="Submit" :processing="processing" @submit="submit" />
+    <p class="text-red-400" v-if="error != ''">{{ $t(error) }}</p>
   </form>
 </template>
 
@@ -38,7 +31,7 @@ import { type Component, type Ref, ref } from 'vue'
 import translateError, { type Errors } from '../../scripts/translator/errors'
 import request from '@/scripts/request/request'
 import { passwordStrength } from 'check-password-strength'
-import Spinner from '@/components/Icons/Spinner.vue'
+import FormButton from '@/components/Auth/FormButton.vue'
 
 interface Field {
   icon: Component

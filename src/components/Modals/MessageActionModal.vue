@@ -1,5 +1,5 @@
 <template>
-  <Modal :show="show">
+  <Modal :show="show" @close="emit('close')">
     <h2 class="text-2xl fontTheme">{{ $t('Actions') }}</h2>
     <div class="mt-2">
       <PushButton class="btnList" :is-link="false" @click="d('reply', msg)">

@@ -11,14 +11,14 @@ export const useAuthStore = defineStore('auth', () => {
   const checkTime = ref(minuteAgoHelper(5))
 
   async function login(u: User, t: string) {
-    user.value = userHelper(u)
+    user.value = u
     token.value = tokenHelper(t)
     await setup(token.value.value, true)
   }
 
   async function logout() {
     await request.get('/logout')
-    window.localStorage.removeItem(WizzlAuthToken)
+    window.localStorage.clear()
     if (user.value?.id) user.value.id = 0
   }
 
@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (res.data?.$error) {
       await logout()
       return false
-    } else if (res.data?.user) user.value = userHelper(<User>res.data.user)
+    } else if (res.data?.user) user.value = res.data.user as User
     token.value = tokenHelper(null)
     await setup(token.value.value)
     return true
@@ -60,11 +60,6 @@ function tokenHelper(t: string | null = null) {
     type: _t[0],
     value: _t[1]
   }
-}
-
-function userHelper(u: User): User {
-  u.image_url = u.image_url.replace('{cdn}', window.GLOBAL_ENV.CDN_HOST)
-  return u
 }
 
 function minuteAgoHelper(m: number): Date {

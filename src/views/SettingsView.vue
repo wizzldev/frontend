@@ -1,6 +1,6 @@
 <template>
   <SettingsLayout>
-    <section class="mx-2 my-4 text-center">
+    <section class="mx-2 my-3 text-center">
       <LazyImage
         class="w-16 h-16 rounded-lg mx-auto"
         :alt="auth.user?.first_name + '\'s profile image'"
@@ -11,7 +11,8 @@
         {{ $t('Edit profile image') }}
       </SettingsButton>
     </section>
-    <section></section>
+    <EditUserInfo/>
+    <BuildInfo/>
   </SettingsLayout>
   <Modal :show="editProfileImage" @close="editProfileImage = false">
     <ProfileImageCropper
@@ -31,6 +32,8 @@ import Modal from '@/components/Modals/Modal.vue'
 import { ref } from 'vue'
 import ProfileImageCropper from '@/components/Settings/ProfileImageCropper.vue'
 import SettingsButton from '@/components/Settings/SettingsButton.vue'
+import BuildInfo from '@/components/Settings/BuildInfo.vue'
+import EditUserInfo from '@/components/Settings/EditUserInfo.vue'
 
 const auth = useAuthStore()
 const editProfileImage = ref(false)
