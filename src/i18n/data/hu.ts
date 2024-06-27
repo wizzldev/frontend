@@ -61,6 +61,13 @@ export default {
   'Reset password expired': 'Lejárt jelszó visszaállítási kérés',
   'Email verification': 'Email hitelesítés',
 
+  // Settings
+  'General information': 'Általános információk',
+  'Password & Security': 'Jelszó és Biztonság',
+  Save: 'Mentés',
+  Sessions: 'Munkamenetek',
+  'IP addresses': 'IP címek',
+
   // Form errors
   'error.required': 'Ezt a mezőt nem hagyhatja üresen'
 }

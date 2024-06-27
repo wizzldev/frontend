@@ -1,6 +1,6 @@
 <template>
   <SettingsLayout>
-    <section class="mx-2 my-3 text-center">
+    <section class="mx-2 mb-3 mt-5 text-center">
       <LazyImage
         class="w-16 h-16 rounded-lg mx-auto"
         :alt="auth.user?.first_name + '\'s profile image'"
@@ -12,6 +12,7 @@
       </SettingsButton>
     </section>
     <EditUserInfo/>
+    <AccountSecurity/>
     <BuildInfo/>
   </SettingsLayout>
   <Modal :show="editProfileImage" @close="editProfileImage = false">
@@ -34,6 +35,7 @@ import ProfileImageCropper from '@/components/Settings/ProfileImageCropper.vue'
 import SettingsButton from '@/components/Settings/SettingsButton.vue'
 import BuildInfo from '@/components/Settings/BuildInfo.vue'
 import EditUserInfo from '@/components/Settings/EditUserInfo.vue'
+import AccountSecurity from '@/components/Settings/AccountSecurity.vue'
 
 const auth = useAuthStore()
 const editProfileImage = ref(false)

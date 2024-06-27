@@ -32,9 +32,13 @@ import { reactive, type Ref, ref } from 'vue'
 import request from '@/scripts/request/request'
 import translateError, { type Errors } from '@/scripts/translator/errors'
 import type { User } from '@/types/user'
+import { useToast } from 'vue-toastification'
+import { useI18n } from 'vue-i18n'
 
 const auth = useAuthStore()
 const processing = ref(false)
+const i18n = useI18n()
+const toast = useToast()
 
 const data = reactive({
   first_name: auth.user?.first_name,
@@ -59,6 +63,7 @@ const update = async () =>  {
   } else {
     // do the actual thing in the view
     auth.user = res.data as User
+    toast.success(i18n.t('Successfully updated'))
   }
 }
 </script>

@@ -1,8 +1,9 @@
 import Guard from '@/router/guard'
 import type { RouteRecordRaw } from 'vue-router'
-import SettingsView from '@/views/SettingsView.vue'
+import SettingsView from '@/views/Settings/SettingsView.vue'
 import TermsOfServiceView from '@/views/Terms/TermsOfServiceView.vue'
 import PrivacyPolicyView from '@/views/Terms/PrivacyPolicyView.vue'
+import SessionsView from '@/views/Settings/SessionsView.vue'
 
 const needsAuth = {
   auth: Guard.ACCESS_LOGIN
@@ -18,6 +19,12 @@ export default [
     path: '/settings',
     name: 'settings.default',
     component: SettingsView,
+    meta: needsAuth
+  },
+  {
+    path: '/settings/sessions',
+    name: 'settings.sessions',
+    component: SessionsView,
     meta: needsAuth
   },
   {

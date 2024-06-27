@@ -24,6 +24,7 @@
     <FormButton title="Submit" :processing="processing" @submit="submit" />
     <p class="text-red-400" v-if="error != ''">{{ $t(error) }}</p>
   </form>
+  <IPModal :show="ipModal" @close="ipModal = false" />
 </template>
 
 <script setup lang="ts">
@@ -32,6 +33,7 @@ import translateError, { type Errors } from '../../scripts/translator/errors'
 import request from '@/scripts/request/request'
 import { passwordStrength } from 'check-password-strength'
 import FormButton from '@/components/Auth/FormButton.vue'
+import IPModal from '@/components/Modals/IPModal.vue'
 
 interface Field {
   icon: Component
@@ -55,6 +57,8 @@ const processing = ref(false)
 const error = ref('')
 const errors = ref({}) as Ref<Errors>
 
+const ipModal = ref(false)
+
 const submit = async () => {
   error.value = ''
   errors.value = {}
@@ -66,6 +70,7 @@ const submit = async () => {
     if (res.data?.error) error.value = res.data.error
     if (res.data?.errors) errors.value = translateError(res.data.errors)
     if (res.data?.$network) error.value = 'error.network'
+    if(res.data?.show_ip_modal) ipModal.value = true
   } else {
     // do the actual thing in the view
     emit('success', res.data)

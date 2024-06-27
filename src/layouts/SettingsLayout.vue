@@ -1,7 +1,7 @@
 <template>
   <AppLayout>
     <SettingsNav />
-    <main class="h-full flex flex-col space-y-3">
+    <main class="h-full flex flex-col space-y-3 overflow-y-scroll overflow-x-hidden">
       <slot />
     </main>
   </AppLayout>

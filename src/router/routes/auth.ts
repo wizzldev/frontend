@@ -6,6 +6,7 @@ import ResetPasswordView from '@/views/Auth/ResetPasswordView.vue'
 import VerifyEmailView from '@/views/Auth/VerifyEmailView.vue'
 import RequestResetPasswordView from '@/views/Auth/RequestResetPasswordView.vue'
 import EmailVerificationView from '@/views/Auth/EmailVerificationView.vue'
+import IPVerification from '@/views/Auth/IPVerification.vue'
 
 const noLogin = {
   auth: Guard.ACCESS_NO_LOGIN
@@ -45,5 +46,10 @@ export default [
     path: '/verify-email/:token',
     name: 'auth.verify-email',
     component: VerifyEmailView
+  },
+  {
+    path: '/ip-verification/:token',
+    name: 'auth.ip-verification',
+    component: IPVerification,
   }
 ] as Array<RouteRecordRaw>
