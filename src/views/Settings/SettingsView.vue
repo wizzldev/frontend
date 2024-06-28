@@ -11,9 +11,9 @@
         {{ $t('Edit profile image') }}
       </SettingsButton>
     </section>
-    <EditUserInfo/>
-    <AccountSecurity/>
-    <BuildInfo/>
+    <EditUserInfo />
+    <AccountSecurity />
+    <BuildInfo />
   </SettingsLayout>
   <Modal :show="editProfileImage" @close="editProfileImage = false">
     <ProfileImageCropper

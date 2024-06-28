@@ -103,7 +103,6 @@ import Mic from '@/components/Icons/Mic.vue'
 import type { Message } from '@/types/message'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import { cdnImage } from '@/scripts/image'
-import Times from '@/components/Icons/Times.vue'
 import Fade from '@/components/Transitions/Fade.vue'
 
 const props = defineProps<{

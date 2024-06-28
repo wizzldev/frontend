@@ -1,12 +1,19 @@
 <template>
   <section class="text-center text-gray-500 text-xs pt-5 mb-5 pb-4">
     <p>
-      {{ ucFirst(mode) }} <Tippy class="transition-all cursor-pointer hover:px-2 py-0.5 rounded hover:bg-secondary hover:text-gray-100" :content="hash">{{ shortHash }}</Tippy>
+      {{ ucFirst(mode) }}
+      <Tippy
+        class="transition-all cursor-pointer hover:px-2 py-0.5 rounded hover:bg-secondary hover:text-gray-100"
+        :content="hash"
+        >{{ shortHash }}</Tippy
+      >
     </p>
-    <p class="mt-0.5">
-      {{ branch }} - {{ $time.format(date.getTime(), 'mini') }}
-    </p>
-    <LazyImage class="mx-auto w-6 h-6 rounded mt-3" alt="Wizzl Logo" :src="cdnImage('wizzl.webp', 64)" />
+    <p class="mt-0.5">{{ branch }} - {{ $time.format(date.getTime(), 'mini') }}</p>
+    <LazyImage
+      class="mx-auto w-6 h-6 rounded mt-3"
+      alt="Wizzl Logo"
+      :src="cdnImage('wizzl.webp', 64)"
+    />
   </section>
 </template>
 

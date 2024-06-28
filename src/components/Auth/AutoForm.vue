@@ -70,7 +70,7 @@ const submit = async () => {
     if (res.data?.error) error.value = res.data.error
     if (res.data?.errors) errors.value = translateError(res.data.errors)
     if (res.data?.$network) error.value = 'error.network'
-    if(res.data?.show_ip_modal) ipModal.value = true
+    if (res.data?.show_ip_modal) ipModal.value = true
   } else {
     // do the actual thing in the view
     emit('success', res.data)

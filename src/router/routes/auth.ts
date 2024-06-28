@@ -50,6 +50,6 @@ export default [
   {
     path: '/ip-verification/:token',
     name: 'auth.ip-verification',
-    component: IPVerification,
+    component: IPVerification
   }
 ] as Array<RouteRecordRaw>

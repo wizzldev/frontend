@@ -69,7 +69,6 @@ import MessageBox from '@/components/ChatV1/MessageBox.vue'
 import MessageEmoji from '@/components/ChatV1/MessageEmoji.vue'
 import MessageLike from '@/components/ChatV1/MessageLike.vue'
 import InfoMessages from '@/components/ChatV1/InfoMessages.vue'
-import Circle from '@/components/Icons/Circle.vue'
 import CircleTick from '@/components/Icons/CircleTick.vue'
 import MessageFile from '@/components/ChatV1/MessageFile.vue'
 

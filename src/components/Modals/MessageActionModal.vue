@@ -8,7 +8,12 @@
       <PushButton v-if="auth.user?.id == msg.sender.id" class="btnList" :is-link="false">
         {{ $t('Edit message') }}
       </PushButton>
-      <PushButton v-if="auth.user?.id == msg.sender.id" class="btnList" :is-link="false" @click="d('delete', msg)">
+      <PushButton
+        v-if="auth.user?.id == msg.sender.id"
+        class="btnList"
+        :is-link="false"
+        @click="d('delete', msg)"
+      >
         {{ $t('Delete message') }}
       </PushButton>
       <PushButton v-if="auth.user?.id != msg.sender.id" class="btnList" :is-link="false">

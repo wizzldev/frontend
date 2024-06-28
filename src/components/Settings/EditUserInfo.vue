@@ -4,18 +4,30 @@
       <h2 class="text-lg font-bold">{{ $t('General information') }}</h2>
       <div class="my-2">
         <label class="text-sm text-gray-200">{{ $t('First name') }}</label>
-        <input id="first_name" :disabled="processing" :placeholder="$t('First name')" v-model.lazy="data.first_name" class="w-full bg-secondary-all px-4 py-2 rounded-xl">
+        <input
+          id="first_name"
+          :disabled="processing"
+          :placeholder="$t('First name')"
+          v-model.lazy="data.first_name"
+          class="w-full bg-secondary-all px-4 py-2 rounded-xl"
+        />
         <label class="text-red-400" v-if="'first_name' in errors" :for="`first_name`">{{
-            errors['first_name']
-          }}</label>
+          errors['first_name']
+        }}</label>
       </div>
 
       <div class="my-2">
         <label class="text-sm text-gray-200" for="last_name">{{ $t('Last name') }}</label>
-        <input id="last_name" :disabled="processing" :placeholder="$t('Last name')" v-model.lazy="data.last_name" class="w-full bg-secondary-all px-4 py-2 rounded-xl">
+        <input
+          id="last_name"
+          :disabled="processing"
+          :placeholder="$t('Last name')"
+          v-model.lazy="data.last_name"
+          class="w-full bg-secondary-all px-4 py-2 rounded-xl"
+        />
         <label class="text-red-400" v-if="'last_name' in errors" :for="`last_name`">{{
-            errors['last_name']
-          }}</label>
+          errors['last_name']
+        }}</label>
       </div>
 
       <FormButton class="!py-2" title="Save" :processing="processing" @submit="update" />
@@ -47,7 +59,7 @@ const data = reactive({
 const error = ref('')
 const errors = ref({}) as Ref<Errors>
 
-const update = async () =>  {
+const update = async () => {
   errors.value = {}
   error.value = ''
   processing.value = true

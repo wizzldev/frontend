@@ -92,7 +92,6 @@ export const useChatStore = defineStore('chat', () => {
           type: 'deleted',
           underSending: false,
           updated_at: m.updated_at
-
         }
         break
       }

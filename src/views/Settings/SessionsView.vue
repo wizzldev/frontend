@@ -7,19 +7,35 @@
       </div>
       <div class="mt-5" v-else>
         <ul>
-          <li class="bg-secondary first:rounded-t-lg last:rounded-b-lg px-2 py-3 flex items-center border-b border-tertiary last:border-b-0" v-for="session in sessions" :key="session.id">
-            <div @click="sessionDetails = session" class="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center cursor-pointer">
+          <li
+            class="bg-secondary first:rounded-t-lg last:rounded-b-lg px-2 py-3 flex items-center border-b border-tertiary last:border-b-0"
+            v-for="session in sessions"
+            :key="session.id"
+          >
+            <div
+              @click="sessionDetails = session"
+              class="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center cursor-pointer"
+            >
               <Phone class="!w-4 !h-4" v-if="session.type == 'mobile'" />
               <Tablet class="!w-4 !h-4" v-else-if="session.type == 'tablet'" />
               <Desktop class="!w-4 !h-4" v-else />
             </div>
             <div class="ml-5">
-              <h2 class="text-gray-200 text-sm font-bold">{{ session.os }} &#x2022; {{ session.browser }}</h2>
+              <h2 class="text-gray-200 text-sm font-bold">
+                {{ session.os }} &#x2022; {{ session.browser }}
+              </h2>
               <p class="text-sm text-gray-400">
-                {{ session.ip }}<template v-if="session.current">&nbsp;&#x2022; <span class="text-green-400">{{ $t('current') }}</span></template>
+                {{ session.ip
+                }}<template v-if="session.current"
+                  >&nbsp;&#x2022; <span class="text-green-400">{{ $t('current') }}</span></template
+                >
               </p>
             </div>
-            <button :disabled="deletingAll" @click="remove(session)" class="w-8 h-8 rounded-full bg-tertiary-all text-gray-400 hover:text-white focus:text-white cursor-pointer flex items-center justify-center ml-auto">
+            <button
+              :disabled="deletingAll"
+              @click="remove(session)"
+              class="w-8 h-8 rounded-full bg-tertiary-all text-gray-400 hover:text-white focus:text-white cursor-pointer flex items-center justify-center ml-auto"
+            >
               <Times v-if="!processingIDs.includes(session.id)" class="!w-4 !h-4" />
               <Spinner v-else class="!w-4 !h-4" />
             </button>
@@ -28,17 +44,16 @@
         <FormButtonSecondary @submit="deleteAll" title="Delete all" :processing="deletingAll" />
       </div>
     </section>
-    <BuildInfo v-if="!loading" />
   </SettingsLayout>
   <Modal :show="sessionDetails != null" @close="sessionDetails = null">
     <h2 class="text-2xl fontTheme">{{ $t('Session details') }}</h2>
     <p class="text-left">
-      IP: {{ sessionDetails?.ip }}<br>
-      Browser: {{ sessionDetails?.browser }}<br>
-      OS: {{ sessionDetails?.os }}<br>
-      Device: {{ sessionDetails?.device }}<br>
-      CPU: {{ sessionDetails?.cpu }}<br>
-      Type: {{ sessionDetails?.type }}<br>
+      IP: {{ sessionDetails?.ip }}<br />
+      Browser: {{ sessionDetails?.browser }}<br />
+      OS: {{ sessionDetails?.os }}<br />
+      Device: {{ sessionDetails?.device }}<br />
+      CPU: {{ sessionDetails?.cpu }}<br />
+      Type: {{ sessionDetails?.type }}<br />
       User-Agent: {{ sessionDetails?.agent }}
     </p>
   </Modal>
@@ -46,7 +61,6 @@
 
 <script setup lang="ts">
 import SettingsLayout from '@/layouts/SettingsLayout.vue'
-import BuildInfo from '@/components/Settings/BuildInfo.vue'
 import Spinner from '@/components/Icons/Spinner.vue'
 import { onMounted, ref } from 'vue'
 import request from '@/scripts/request/request'
@@ -69,7 +83,7 @@ interface Session {
   device: string
   cpu: string
   current: boolean
-  type: "desktop" | "tablet" | "mobile"
+  type: 'desktop' | 'tablet' | 'mobile'
 }
 
 interface RawSession {
@@ -91,13 +105,13 @@ const deletingAll = ref(false)
 const fetch = async () => {
   loading.value = true
   const res = await request.get('/security/sessions')
-  if(res.data.$error) {
-    await router.push({name: 'settings.default'})
+  if (res.data.$error) {
+    await router.push({ name: 'settings.default' })
     return
   }
   const raw = res.data as Array<RawSession>
 
-  raw.forEach(s => {
+  raw.forEach((s) => {
     const parser = new UAParser(s.user_agent)
     const data = parser.getResult()
     sessions.value.push({
@@ -109,22 +123,25 @@ const fetch = async () => {
       device: data.device.type || 'unknown',
       os: data.os.name || 'unknown',
       type: getType(s.user_agent),
-      current: s.current,
+      current: s.current
     })
   })
 
   loading.value = false
 }
 
-const getType = (u: string): "mobile" | "tablet" | "desktop" => {
+const getType = (u: string): 'mobile' | 'tablet' | 'desktop' => {
   const isMobile = Boolean(u.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)?.length)
-  if(isMobile) return "mobile"
-  const isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(u);
-  if(isTablet) return "tablet"
-  return "desktop"
+  if (isMobile) return 'mobile'
+  const isTablet =
+    /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(
+      u
+    )
+  if (isTablet) return 'tablet'
+  return 'desktop'
 }
 
-const remove = async (s: Session)  => {
+const remove = async (s: Session) => {
   const inx = sessions.value.indexOf(s)
   processingIDs.value.push(s.id)
   await request.delete(`/security/sessions/${s.id}`)
@@ -137,7 +154,7 @@ const deleteAll = async () => {
   const res = await request.delete('/security/sessions')
   sessions.value = []
   deletingAll.value = false
-  if(!res.data.$error && res.status == 200) await auth.logout()
+  if (!res.data.$error && res.status == 200) await auth.logout()
 }
 
 onMounted(fetch)

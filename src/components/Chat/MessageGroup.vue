@@ -98,7 +98,7 @@ const infoMessages = computed(() => {
 })
 
 const emitModal = (msg: Message) => {
-  if(msg.type != 'deleted') emit('modal', msg)
+  if (msg.type != 'deleted') emit('modal', msg)
 }
 </script>
 

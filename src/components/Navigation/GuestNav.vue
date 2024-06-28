@@ -22,7 +22,7 @@
       <PushButton
         class="bg-secondary hover:bg-secondary-hover text-blue-400 p-1.5 rounded-xl flex items-center justify-center"
         :class="{
-          'bg-tertiary': ['service.terms', 'service.privacy'].includes(<string>route?.name)
+          'bg-tertiary': ['service.terms', 'service.privacy'].includes(route?.name as string)
         }"
         :is-link="true"
         to-name="service.terms"
@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import PushButton from '@/components/Elements/PushButton.vue'
-import { useAuthStore } from '@/stores/auth'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import Book from '@/components/Icons/Book.vue'
