@@ -60,6 +60,7 @@ export default {
   'Reset password': 'Jelszó visszaállítás',
   'Reset password expired': 'Lejárt jelszó visszaállítási kérés',
   'Email verification': 'Email hitelesítés',
+  'Set password': 'Jelszó beállítása',
 
   // Settings
   'General information': 'Általános információk',

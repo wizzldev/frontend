@@ -62,7 +62,6 @@ import request from '@/scripts/request/request'
 import ChatNav from '@/components/ChatV1/ChatNav.vue'
 import Magnifier from '@/components/Icons/Magnifier.vue'
 import { useChatStore } from '@/stores/chat'
-import type { Messages } from '@/types/message'
 import type { Contact as TContact } from '@/types/contact'
 import { useContactsStore } from '@/stores/contacts'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
@@ -70,7 +69,6 @@ import { cdnImage } from '@/scripts/image'
 
 const loader = useRouteLoaderStore()
 const contacts = useContactsStore()
-const chat = useChatStore()
 const hasContact = computed(() => contacts.contacts.length)
 
 const fetchContacts = async () => {
@@ -84,14 +82,6 @@ const fetchContacts = async () => {
     contacts.push(res.data)
   }
   loader.isLoaded = true
-
-  window.WS.channel().on<{ resource: string; group_id: number }>('should_fetch', async (r) => {
-    const res = await request.get(`/${r.resource.replace('.', '/')}`)
-    if (!res.data.$error) {
-      chat.push(r.resource, res.data.messages as Messages)
-      contacts.update(r.group_id, res.data.messages[0])
-    }
-  })
 }
 
 const searchInput = ref('')

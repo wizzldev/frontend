@@ -4,7 +4,6 @@
       :name="chatProfile.name"
       :image="chatProfile.image"
       :loading="chatProfile.loading"
-      :connection="connection"
       :theme="theme"
     />
     <slot />
@@ -18,7 +17,6 @@ import type { ThemeDataTop } from '@/types/chat'
 
 defineProps<{
   chatProfile: { name: string; image: string; loading: boolean }
-  connection: { connected: boolean; error: boolean }
   theme: ThemeDataTop | undefined
 }>()
 </script>

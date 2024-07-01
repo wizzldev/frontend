@@ -39,21 +39,6 @@
         </PushButton>
       </div>
     </div>
-    <div
-      v-if="!connection.connected"
-      class="bg-purple-400 px-2 py-0.5 flex items-center justify-center space-x-1"
-      :class="{ '!bg-amber-400': connection.error }"
-    >
-      <Error class="!w-3 !h-3" v-if="connection.error" />
-      <Cloud class="!w-3 !h-3" v-else />
-      <p class="text-xs">
-        {{
-          connection.error
-            ? $t('Failed to connect to our real-time servers')
-            : $t('Connecting to our servers') + '...'
-        }}
-      </p>
-    </div>
   </header>
 </template>
 
@@ -61,8 +46,6 @@
 import PushButton from '@/components/Elements/PushButton.vue'
 import Settings from '@/components/Icons/Settings.vue'
 import BackArrow from '@/components/Icons/BackArrow.vue'
-import Error from '@/components/Icons/Error.vue'
-import Cloud from '@/components/Icons/Cloud.vue'
 import type { ThemeDataTop } from '@/types/chat'
 import type { RouteParamsRaw } from 'vue-router'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
@@ -72,7 +55,6 @@ defineProps<{
   image: string
   name: string
   loading: boolean
-  connection: { connected: boolean; error: boolean }
   theme: ThemeDataTop | undefined
 }>()
 </script>

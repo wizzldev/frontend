@@ -3,7 +3,7 @@ import Guard from '@/router/guard'
 import NewChatView from '@/views/Chat/NewChatView.vue'
 import type { RouteRecordRaw } from 'vue-router'
 import ChatSettings from '@/views/Chat/ChatSettings.vue'
-import ChatViewNew from '@/views/Chat/ChatViewNew.vue'
+import ChatViewNew from '@/views/Chat/ChatView.vue'
 
 const needsAuth = {
   auth: Guard.ACCESS_LOGIN

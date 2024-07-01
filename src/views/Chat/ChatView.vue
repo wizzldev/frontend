@@ -2,7 +2,6 @@
   <ChatLayout
     :theme="theme?.dark?.top"
     :chat-profile="chat.profile[chatID] || { name: '', image: '', loading: true }"
-    :connection="{ connected, error: connectionError }"
   >
     <MessageLayout
       :isPM="isPM"
@@ -42,20 +41,19 @@ import request from '@/scripts/request/request'
 import { useRoute, useRouter } from 'vue-router'
 import type { Like, Message as WSMessage, Messages } from '@/types/message'
 import { useChatStore } from '@/stores/chat'
-import type BaseChannel from '@/scripts/websocket/baseChannel'
 import { useContactsStore } from '@/stores/contacts'
 import SendForm from '@/components/ChatV1/SendForm.vue'
 import type { Theme } from '@/types/chat'
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { isApp } from '@/scripts/mobile/isApp'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
-import type Channel from '@/scripts/websocket/channel'
 import { resetTheme, setTheme } from '@/scripts/mobile/theme'
 import { useAuthStore } from '@/stores/auth'
 import MessageLayout from '@/components/Chat/MessageLayout.vue'
 import MessageActionModal from '@/components/Modals/MessageActionModal.vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
+import { Channel } from '@/scripts/ws/channel'
 
 const auth = useAuthStore()
 const loader = useRouteLoaderStore()
@@ -65,11 +63,8 @@ const chat = useChatStore()
 const contacts = useContactsStore()
 const toast = useToast()
 const i18n = useI18n()
-const connected = ref(false)
-const connectionError = ref(false)
 const theme = ref(null) as Ref<Theme | null>
 const message = ref('')
-let wsConn: Channel | undefined
 const modalMessage = ref(null) as Ref<null | WSMessage>
 const replyMessage = ref(null) as Ref<null | WSMessage>
 const cursors = ref(null) as Ref<{ next: string; prev: string } | null>
@@ -78,8 +73,8 @@ const isPM = ref(true)
 const send = () => {
   const data = {} as { reply_id: number | undefined }
   if (replyMessage.value != null) data.reply_id = replyMessage.value?.id
-  const hookID = ws().send('message', message.value, data)
-  console.log('PUSHING UNSENT MESSAGES WITH HOOK ID:', hookID)
+  const hookID = ws()?.send('message', message.value, data)
+  console.log('senddddd', ws())
   chat.push(
     chatID.value,
     [
@@ -125,7 +120,7 @@ const handleUpload = (hookID: string) => {
 }
 
 const emoji = (emoji: string) => {
-  const hookID = ws().send('message', emoji)
+  const hookID = ws()?.send('message', emoji)
   chat.push(
     chatID.value,
     [
@@ -149,59 +144,36 @@ const sendMessagePermission = computed(
 )
 
 const like = async (id: number) => {
-  ws().send<{ message_id: number }>('message.like', '❤️', { message_id: id })
+  ws()?.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
   if (isApp()) await Haptics.impact({ style: ImpactStyle.Light })
 }
 
 const chatID = computed(() => `chat.${route.params.id as string}`)
 
-const initWebsocket = async () => {
-  wsConn = window.WS.channel(chatID.value)
-
-  if (
-    ws().isConnected() ||
-    ws().WS()?.readyState == WebSocket.OPEN ||
-    ws().WS()?.readyState == WebSocket.CONNECTING
-  )
-    return
-
-  ws().on<string>('connection', (data) => {
-    console.info(`chat connection [${ws().uri}]:`, data)
-  })
-
-  ws().on<WSMessage>('message', (m, hookID) => {
-    console.log(m, hookID)
+const initWebsocket = () => {
+  const chan = new Channel(route.params.id as string)
+  chan.on<WSMessage>('message', (m, hookID) => {
     chat.push(chatID.value, [m], hookID, true)
     contacts.update(parseInt(route.params.id as string), m)
   })
 
-  ws().on<Like>('message.like', (l) => {
-    console.log('LIKE:', l)
+  chan.on<Like>('message.like', (l) => {
     chat.pushLike(chatID.value, l?.message_id || 0, l)
   })
 
-  ws().on<Like>('message.like.remove', (l) => {
+  chan.on<Like>('message.like.remove', (l) => {
     chat.removeLike(chatID.value, l?.message_id || 0, l)
   })
 
-  ws().on<number>('message.unSend', (id) => {
-    console.log('UNSEND', id)
+  chan.on<number>('message.unSend', (id) => {
     chat.rmMessageID(chatID.value, id)
   })
 
-  ws().onStatusChange((_: BaseChannel, is_connected: boolean) => {
-    connected.value = is_connected
-    connectionError.value = !is_connected
-  })
-
-  await ws().connect()
-  connected.value = ws().isConnected()
-  connectionError.value = !ws().isConnected()
+  window.WS.push(route.params.id as string, chan)
 }
 
 const fetchChat = async () => {
   if (chat.shouldFetch(chatID.value)) {
-    connected.value = false
     loader.isLoaded = false
     const res = await request.get(`/chat/${route.params.id as string}`)
     if (!res.data.$error) {
@@ -244,27 +216,21 @@ const replyTo = (msg: WSMessage) => {
 }
 
 const unSend = (msg: WSMessage) => {
-  ws().send('message.delete', msg.id.toString())
+  ws()?.send('message.delete', msg.id.toString())
 }
 
 const ws = () => {
-  return wsConn as Channel
+  return window.WS.get(route.params.id as string)
 }
 
-const destroying = ref(false)
-
 onMounted(async () => {
-  console.log('Mounted...')
-  if (destroying.value) return
   await fetchChat()
-  await initWebsocket()
+  initWebsocket()
   if (theme.value != null)
     await setTheme(theme.value?.dark?.top.bg || '', theme.value?.dark?.bottom.bg || '')
 })
 
 onUnmounted(async () => {
-  destroying.value = true
-  if (ws()) ws().disconnect()
   await resetTheme()
 })
 </script>

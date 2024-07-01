@@ -33,7 +33,6 @@ export const useChatStore = defineStore('chat', () => {
       if (!j) sorted.push(m)
       else break
     }
-    console.log('reverse', reverse)
     if (reverse) messages.value[chat] = [...sorted, ...messages.value[chat]]
     else messages.value[chat] = [...messages.value[chat], ...sorted]
   }

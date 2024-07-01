@@ -3,7 +3,7 @@ import type { User } from '@/types/user'
 import { computed, type Ref, ref } from 'vue'
 import { WizzlAuthToken } from '@/scripts/consts'
 import request from '@/scripts/request/request'
-import setup from '@/scripts/websocket/default'
+import { setup } from '@/scripts/ws/default'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null) as Ref<User | null>

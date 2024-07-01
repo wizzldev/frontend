@@ -1,5 +1,5 @@
-import type Server from '@/scripts/websocket/server'
 import type TimeAgo from 'javascript-time-ago'
+import type Server from '@/scripts/ws/server'
 
 declare global {
   interface Window {
