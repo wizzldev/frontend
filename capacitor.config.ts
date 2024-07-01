@@ -10,7 +10,7 @@ const config: CapacitorConfig = {
     }
   },
   android: {
-    overrideUserAgent: 'Wizzl/1.0 (Android)'
+    appendUserAgent: 'Wizzl/1.0 (Android)'
   }
 };
 

@@ -41,7 +41,7 @@
             </button>
           </li>
         </ul>
-        <FormButtonSecondary @submit="deleteAll" title="Delete all" :processing="deletingAll" />
+        <FormButtonSecondary @submit="deleteAll" title="Terminate all" :processing="deletingAll" />
       </div>
     </section>
   </SettingsLayout>
@@ -118,7 +118,7 @@ const fetch = async () => {
       id: s.id,
       ip: s.ip_address,
       agent: s.user_agent,
-      browser: data.browser.name || 'unknown',
+      browser: getClient(s.user_agent) || data.browser.name || 'unknown',
       cpu: data.cpu.architecture || 'unknown',
       device: data.device.type || 'unknown',
       os: data.os.name || 'unknown',
@@ -131,14 +131,22 @@ const fetch = async () => {
 }
 
 const getType = (u: string): 'mobile' | 'tablet' | 'desktop' => {
-  const isMobile = Boolean(u.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)?.length)
-  if (isMobile) return 'mobile'
+  if (u.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)?.length) return 'mobile'
   const isTablet =
     /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(
       u
     )
   if (isTablet) return 'tablet'
   return 'desktop'
+}
+
+const getClient = (u: string): string | undefined => {
+  if(u.match(/Wizzl/)?.length) {
+    if(u.match(/Android/)?.length) return 'Wizzl Android'
+    else if(u.match(/(iPhone|iPod|iPad)/)?.length) return 'Wizzl iOS'
+    return 'Wizzl Client'
+  }
+  return undefined
 }
 
 const remove = async (s: Session) => {

@@ -70,6 +70,7 @@ export default {
   Save: 'Mentés',
   Sessions: 'Munkamenetek',
   'IP addresses': 'IP címek',
+  'Terminate all': 'Összes megszüntetése',
 
   // Form errors
   'error.required': 'Ezt a mezőt nem hagyhatja üresen'
