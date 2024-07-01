@@ -56,7 +56,7 @@ import type { ThemeDataMain } from '@/types/chat'
 const props = defineProps<{
   message: Message
   sentByMe: boolean
-  theme: ThemeDataMain | null
+  theme: ThemeDataMain | undefined
 }>()
 
 const fileInfo = ref({}) as Ref<FileDataJSON>

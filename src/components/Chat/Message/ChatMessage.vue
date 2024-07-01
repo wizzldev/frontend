@@ -24,7 +24,7 @@ const props = defineProps<{
   message: Message
   place: Array<string>
   sentByMe: boolean
-  theme: ThemeDataMain | null
+  theme: ThemeDataMain | undefined
 }>()
 
 const bg = computed(() => props.sentByMe ? props.theme?.message?.you.bg : props.theme?.message?.other.bg)

@@ -13,7 +13,7 @@ import type { ThemeDataMain } from '@/types/chat'
 
 const props = defineProps<{
   message: Message
-  theme: ThemeDataMain | null
+  theme: ThemeDataMain | undefined
 }>()
 
 const i18n = useI18n()
