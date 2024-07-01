@@ -16,10 +16,10 @@
       />
     </li>
     <li class="w-full text-center text-xl my-3" v-if="loading">
-      <Spinner class="text-gray-400" />
+      <Spinner class="text-gray-400" :class="{customText: theme}" />
     </li>
     <li class="w-full text-center my-3" v-if="!hasNext">
-      <p class="text-center text-gray-400 fontTheme">{{ $t('No more messages') }}</p>
+      <p class="text-center text-gray-400 fontTheme" :class="{customText: theme}">{{ $t('No more messages') }}</p>
     </li>
   </ul>
   <div class="fixed top-0 left-0" v-if="previewImage != ''">
@@ -89,6 +89,10 @@ onBeforeUnmount(() => {
   background-size: contain;
   background-attachment: fixed;
   background-repeat: no-repeat;
+}
+
+.customText {
+  color: v-bind('theme?.text')!important;
 }
 
 @media only screen and (max-width: 600px) {

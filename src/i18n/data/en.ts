@@ -22,6 +22,9 @@ export default {
   'message.reply': '{who} replied to: {to}',
   'message.reply.you': 'You replied to: {to}',
 
+  'deleted.you': 'Deleted a message',
+  'deleted': '{who} deleted a message',
+
   // Form
   Login: 'Login',
   Register: 'Register',

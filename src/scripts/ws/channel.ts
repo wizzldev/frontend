@@ -20,6 +20,7 @@ export class Channel {
   public use(fn: useFunc, interval: number) {
     setTimeout(() => {
       fn(this)
+      this.use(fn, interval)
     }, interval)
   }
 

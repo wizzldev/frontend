@@ -39,6 +39,16 @@
         </PushButton>
       </div>
     </div>
+
+    <div
+      v-if="!connected"
+      class="bg-purple-400 px-2 py-0.5 flex items-center justify-center space-x-1"
+    >
+      <Cloud class="!w-3 !h-3" />
+      <p class="text-xs">
+        {{ $t('Failed to connect to our real-time servers') }}
+      </p>
+    </div>
   </header>
 </template>
 
@@ -50,6 +60,14 @@ import type { ThemeDataTop } from '@/types/chat'
 import type { RouteParamsRaw } from 'vue-router'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import { cdnImage } from '@/scripts/image'
+import { ref, watch } from 'vue'
+import Cloud from '@/components/Icons/Cloud.vue'
+
+const connected = ref(window.WS.connected)
+
+watch(window.WS, (w) => {
+  connected.value = window.WS.connected
+})
 
 defineProps<{
   image: string

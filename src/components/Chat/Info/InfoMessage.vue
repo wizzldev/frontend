@@ -1,5 +1,5 @@
 <template>
-  <p class="text-center text-xs text-gray-400">
+  <p class="text-center text-xs text-gray-400" :class="{customText: theme}">
     {{ info }}
   </p>
 </template>
@@ -9,9 +9,11 @@ import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { computed } from 'vue'
 import type { Message } from '@/types/message'
+import type { ThemeDataMain } from '@/types/chat'
 
 const props = defineProps<{
   message: Message
+  theme: ThemeDataMain | null
 }>()
 
 const i18n = useI18n()
@@ -23,3 +25,9 @@ const info = computed(() =>
   })
 )
 </script>
+
+<style scoped>
+.customText {
+  color: v-bind('theme?.text')!important;
+}
+</style>

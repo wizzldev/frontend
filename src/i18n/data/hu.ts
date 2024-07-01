@@ -40,6 +40,8 @@ export default {
 
   'message.reply': '{who} válaszolt neki: {to}',
   'message.reply.you': 'Válaszoltál neki: {to}',
+  'deleted.you': 'Töröltél egy üzenetet',
+  'deleted': '{who} törölt egy üzenetet',
 
   Reply: 'Válasz',
   'Edit message': 'Üzenet szerkesztése',

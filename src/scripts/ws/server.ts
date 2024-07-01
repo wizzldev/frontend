@@ -2,6 +2,7 @@ import type { Channel } from '@/scripts/ws/channel'
 import type { Detach, MessageWrapper } from '@/scripts/ws/types'
 
 export default class Server {
+  public connected = false
   private readonly host: string
   private conn: WebSocket | null = null
   private channels: Array<{ name: string; ch: Channel }> = []
@@ -10,21 +11,26 @@ export default class Server {
     this.host = host
   }
 
-  public async connect() {
-    let connected = false
+  public async connect(host: string | undefined = undefined) {
+    this.connected = false
     this.conn = await new Promise((resolve) => {
-      const c = new WebSocket(this.host)
+      console.log(this.host)
+      const c = new WebSocket(host ? host : this.host)
+
+      c.onerror = window.WS.connector()
+      c.onclose = window.WS.connector()
       c.onopen = () => {
-        connected = true
+        this.connected = true
         resolve(c)
       }
       c.onerror = () => {
-        console.log('Something went wrong:', c)
+        this.connected = false
+        console.log('Something went wrong:', c, this)
         resolve(c)
       }
     })
 
-    if (!connected || !this.conn) return false
+    if (!this.connected || !this.conn) return false
 
     this.conn.onmessage = (e: MessageEvent<string>): void => {
       this.handle(e)
@@ -33,10 +39,20 @@ export default class Server {
     return true
   }
 
+  public connector() {
+    const host = this.host
+    return () => {
+      window.WS.connected = false
+      setTimeout(async () => {
+        await window.WS.connect(host)
+      }, 1000)
+    }
+  }
+
   private handle<T>(e: MessageEvent<string>): void {
     const data = JSON.parse(e.data) as MessageWrapper<T>
     this.channels.forEach((ch) => {
-      if (ch.ch.id == data.resource) ch.ch.dispatch<T>(data.message)
+      if (ch.ch.id == data.resource || ch.ch.id == 'global') ch.ch.dispatch<T>(data.message)
     })
   }
 
@@ -48,7 +64,7 @@ export default class Server {
   }
 
   public send(s: string) {
-    console.log('Sending payload', s)
+    console.log('Sending payload:', s)
     this.conn?.send(s)
   }
 

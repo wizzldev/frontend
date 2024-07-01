@@ -22,7 +22,7 @@
         </div>
       </div>
     </Fade>
-    <div class="flex items-center space-x-2 px-3 py-2 border-t-2 border-t-secondary" v-if="allowed">
+    <div class="flex items-center space-x-2 px-3 py-2 border-t-2 border-t-secondary" :class="{customBorder: theme}" v-if="allowed">
       <Slide :duration="0.3">
         <div class="flex items-center space-x-1.5" v-show="showIcons">
           <button
@@ -77,7 +77,9 @@
           <span v-if="theme?.emoji">
             {{ theme.emoji }}
           </span>
-          ✨
+          <span v-else>
+            ✨
+          </span>
         </button>
       </Bounce>
     </div>
@@ -86,7 +88,7 @@
     </h2>
   </div>
   <form ref="fileUploadForm" class="hidden" enctype="multipart/form-data">
-    <input name="file" type="file" ref="fileUploadInput" @change="($event) => uploadFile($event)" />
+    <input name="file" type="file" ref="fileUploadInput" @change="uploadFile" />
   </form>
 </template>
 
@@ -163,6 +165,10 @@ watch(props, (value) => {
 .customTheme {
   background: v-bind('theme?.bg') !important;
   color: v-bind('theme?.text') !important;
+  border-color: v-bind('theme?.border') !important;
+}
+
+.customBorder {
   border-color: v-bind('theme?.border') !important;
 }
 

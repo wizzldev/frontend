@@ -11,7 +11,7 @@ export const setup = async (auth: string, force: boolean = false) => {
     console.info(`connection: ${s}`)
   })
 
-  base.use(ping, 1000)
+  base.use(ping, 2500)
   window.WS.push(WizzlDefaultChannel, base)
   await window.WS.connect()
 }

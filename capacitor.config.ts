@@ -8,6 +8,9 @@ const config: CapacitorConfig = {
     PushNotifications: {
       presentationOptions: ['badge', 'sound', 'alert']
     }
+  },
+  android: {
+    overrideUserAgent: 'Wizzl/1.0 (Android)'
   }
 };
 

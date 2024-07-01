@@ -74,7 +74,6 @@ const send = () => {
   const data = {} as { reply_id: number | undefined }
   if (replyMessage.value != null) data.reply_id = replyMessage.value?.id
   const hookID = ws()?.send('message', message.value, data)
-  console.log('senddddd', ws())
   chat.push(
     chatID.value,
     [

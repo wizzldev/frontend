@@ -32,17 +32,20 @@
             :message="msg"
             :sent-by-me="sentByMe"
             :place="getPlace(msg)"
+            :theme="theme"
           />
           <DeletedMessage
             v-if="msg.type == 'deleted'"
             :sent-by-me="sentByMe"
             :place="getPlace(msg)"
+            :theme="theme"
           />
           <ChatFile
             v-else-if="msg.type.startsWith('file:')"
             :message="msg"
             :sent-by-me="sentByMe"
             @showImage="(img: string) => emit('showImage', img)"
+            :theme="theme"
           />
           <ChatEmoji v-else-if="msg.type == 'emoji'" :message="msg" />
         </MessageWrap>
@@ -51,8 +54,8 @@
   </template>
   <div v-else class="px-2">
     <template v-for="msg in infoMessages" :key="msg.id">
-      <DateTimeInfo v-if="msg.type == 'date-time'" :message="msg" />
-      <InfoMessage v-else :message="msg" />
+      <DateTimeInfo :theme="theme" v-if="msg.type == 'date-time'" :message="msg" />
+      <InfoMessage :theme="theme" v-else :message="msg" />
     </template>
   </div>
 </template>
@@ -101,25 +104,3 @@ const emitModal = (msg: Message) => {
   if (msg.type != 'deleted') emit('modal', msg)
 }
 </script>
-
-<style scoped>
-.customTheme * {
-  color: v-bind('theme?.text') !important;
-}
-
-.customTheme [data-theme='message-you'] {
-  background: v-bind('theme?.message.you.bg') !important;
-  color: v-bind('theme?.message.you.text') !important;
-}
-
-.customTheme [data-theme='message-other'] {
-  background: v-bind('theme?.message.other.bg') !important;
-  color: v-bind('theme?.message.other.text') !important;
-}
-
-.customTheme [data-theme='message-reply'] {
-  background: v-bind('theme?.message.you.bg') !important;
-  color: v-bind('theme?.message.you.text') !important;
-  opacity: 70% !important;
-}
-</style>
