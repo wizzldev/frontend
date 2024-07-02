@@ -49,3 +49,12 @@ body {
 .w-icon {
   @apply w-5 h-5 inline-block;
 }
+
+::-moz-selection {
+  color: #b26bf4;
+  background: #ffffffcf;
+}
+::selection {
+  color: #b26bf4;
+  background: #ffffffcf;
+}

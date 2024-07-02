@@ -3,7 +3,7 @@
     <HasReply :message="reply" @detach="emit('detachReply')" />
     <div class="flex items-center space-x-2 px-3 py-2 border-t-2 border-t-secondary">
       <Slide :duration=".3">
-        <LeftButtons v-if="showIcons || compactView" />
+        <LeftButtons v-if="showIcons || compactView" :canAttachFile="canAttachFile" />
       </Slide>
       <button v-if="!showIcons && !compactView" @click="compactView = true">
         <ArrowRight class="text-gray-400" />
@@ -31,6 +31,7 @@ defineProps<{
   reply?: Message | undefined
   canSendMessage: boolean
   theme?: ThemeDataBottom | undefined
+  canAttachFile: boolean
 }>()
 
 const emit = defineEmits(['send', 'detachReply'])

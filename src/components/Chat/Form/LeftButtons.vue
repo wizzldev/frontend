@@ -3,7 +3,7 @@
     <IconButton @click="emit('other')">
       <JoyStick/>
     </IconButton>
-    <IconButton @click="(fileInput as HTMLInputElement).click()">
+    <IconButton :disabled="!canAttachFile" @click="(fileInput as HTMLInputElement).click()">
       <File/>
     </IconButton>
     <IconButton @click="emit('audio')">
@@ -24,6 +24,10 @@ import { uploadFileToServer } from '@/components/Chat/Form/uploadFile'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
+
+defineProps<{
+  canAttachFile: boolean
+}>()
 
 const emit = defineEmits(['other', 'file', 'audio'])
 const route = useRoute()

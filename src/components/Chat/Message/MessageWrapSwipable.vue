@@ -17,14 +17,16 @@
         <div v-if="sentByMe"></div>
         <div class="relative w-max max-w-full break-words col-span-4">
           <slot />
+          <p class="text-xs text-red-400" v-if="failed">Failed to send message</p>
         </div>
         <div v-if="!sentByMe"></div>
       </div>
       <span
         class="ml-auto right-0 text-gray-400 text-xs self-end"
-        v-if="sentByMe && message.hookId"
+        v-if="sentByMe && (message.hookId || failed)"
       >
-        <Circle />
+        <Circle v-if="!failed" />
+        <CircleTimes class="text-red-400" v-else />
       </span>
       <MessageReply :flip="false" :show="sentByMe" :distance="distance" />
     </div>
@@ -43,6 +45,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { getDistance } from '@/components/Chat/Message/swipe'
 import MessageReply from '@/components/Chat/Utils/MessageReply.vue'
 import Circle from '@/components/Icons/Circle.vue'
+import CircleTimes from '@/components/Icons/CircleTimes.vue'
 
 const props = defineProps<{
   sentByMe: boolean
@@ -62,6 +65,10 @@ const vibrated = ref(false)
 const swipeStyle = computed(() =>
   props.sentByMe ? { right: distance.value + 'px' } : { left: distance.value + 'px' }
 )
+
+const failed = computed(() => {
+  return props.message.id && ((new Date(props.message.created_at).getTime()) > (new Date().getTime() + 15 * 1000))
+})
 
 onLongPress(
   wrap,

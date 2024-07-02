@@ -47,6 +47,8 @@ export default {
   'Edit message': 'Üzenet szerkesztése',
   'Delete message': 'Üzenet törlése',
 
+  'You are not allowed to send a message': 'Nincs engedélyed üzenet küldésére',
+
   // Form
   Login: 'Bejelentkezés',
   Register: 'Regisztráció',

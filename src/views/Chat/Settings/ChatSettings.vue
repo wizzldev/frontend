@@ -13,16 +13,26 @@
       />
       <h2 class="text-center fontTheme" v-emoji>{{ chatProfile.name }}</h2>
       <SettingsButton
-        v-if="!chatProfile.isPrivateMessage"
+        v-if="!chatProfile.isPrivateMessage && yourRoles.includes('EDIT_GROUP_IMAGE')"
         class="text-sm"
         @click="editProfileImage = true"
       >
         {{ $t('Edit profile image') }}
       </SettingsButton>
     </header>
-    <main class="px-4 my-2 text-gray-500">
-      <h4 class="text-sm font-bold">{{ $t('Customize') }}</h4>
-      <div>x</div>
+    <main class="px-4 my-2" v-if="loaded">
+      <EditName :name="chatProfile.name" />
+      <div>
+        <PushButton
+          v-if="!chatProfile.isPrivateMessage && yourRoles.includes('ADMIN')"
+          toName="chat.roles"
+          :to-params="{id: $route.params.id as string}"
+          :is-link="true"
+          class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+        >
+          {{ $t('Default roles') }}
+        </PushButton>
+      </div>
     </main>
   </ChatLayout>
 
@@ -38,7 +48,6 @@
 <script setup lang="ts">
 import ChatLayout from '@/layouts/ChatLayout.vue'
 import { onMounted, ref } from 'vue'
-import request from '@/scripts/request/request'
 import { useRoute } from 'vue-router'
 import { cdnImage } from '@/scripts/image'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
@@ -47,30 +56,25 @@ import Modal from '@/components/Modals/Modal.vue'
 import ProfileImageCropper from '@/components/Settings/ProfileImageCropper.vue'
 import { useChatStore } from '@/stores/chat'
 import { useContactsStore } from '@/stores/contacts'
+import PushButton from '@/components/Elements/PushButton.vue'
+import { fetchInfo } from '@/views/Chat/Settings/fetchInfo'
+import EditName from '@/components/Group/EditName.vue'
 
 const route = useRoute()
 const contacts = useContactsStore()
 const chat = useChatStore()
 const chatProfile = ref({ id: 0, name: '', image: '', isPrivateMessage: false, loading: true })
 const editProfileImage = ref(false)
+const yourRoles = ref<Array<string>>([])
+const loaded = ref(false)
 
 const fetchProfile = async () => {
-  const res = await request.get(`/chat/user/${route.params.id as string}`)
-  if (!res?.data?.$error) {
-    const user = res.data as {
-      id: number
-      name: string
-      image_url: string
-      is_private_message: boolean
-    }
-    chatProfile.value = {
-      id: user.id,
-      name: user.name,
-      image: user.image_url,
-      loading: false,
-      isPrivateMessage: user.is_private_message
-    }
-  }
+  const { user, your_roles } = await fetchInfo(route.params.id as string)
+  if(!user) return
+  chatProfile.value = user
+  loaded.value = true
+  if(!your_roles) return
+  yourRoles.value = your_roles
 }
 
 const handleUpload = (src: string) => {

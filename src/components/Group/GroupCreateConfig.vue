@@ -12,31 +12,7 @@
         />
       </div>
       <div class="mt-2">
-        <label class="text-gray-200">{{ $t('Roles') }}</label>
-        <p class="text-sm my-1 text-gray-400">
-          {{ $t('Note') }}:
-          {{
-            $t(
-              'Selected roles will be assigned to all users when they join, and you will be the creator.'
-            )
-          }}
-          <a
-            class="transition-colors text-purple-400 hover:text-purple-500 focus:text-purple-500"
-            :href="`${supportHost}/q?roles`"
-            >{{ $t('Read more') }}</a
-          >
-        </p>
-        <template v-for="role in roles" :key="role">
-          <button
-            class="block w-full py-1.5 px-2 bg-secondary-all my-2 rounded-xl"
-            :class="{
-              '!bg-purple-500 !hover:bg-purple-400 !focus:bg-purple-400': usedRoles.includes(role)
-            }"
-            @click="toggle(role)"
-          >
-            {{ role }}
-          </button>
-        </template>
+        <RolePicker :roles="roles" :active="usedRoles" @toggle="toggle" />
       </div>
       <div class="mt-4">
         <p>{{ $t('All good?') }}</p>
@@ -58,10 +34,10 @@ import MagicWand from '@/components/Icons/MagicWand.vue'
 import { onMounted, type Ref, ref } from 'vue'
 import request from '@/scripts/request/request'
 import Spinner from '@/components/Icons/Spinner.vue'
+import RolePicker from '@/components/Group/RolePicker.vue'
 
 const roles = ref([]) as Ref<Array<string>>
 const usedRoles = ref([]) as Ref<Array<string>>
-const supportHost = ref(window.GLOBAL_ENV.SUPPORT_HOST)
 const chatName = ref('')
 
 defineProps<{
@@ -78,7 +54,6 @@ const fetchRoles = async () => {
 }
 
 const toggle = (role: string) => {
-  console.log('toggle', role)
   if (usedRoles.value.includes(role)) usedRoles.value.splice(usedRoles.value.indexOf(role), 1)
   else usedRoles.value.push(role)
 }

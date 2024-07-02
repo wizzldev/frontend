@@ -15,14 +15,16 @@
       :messages="chat.messages[chatID] || []"
     />
     <MessageForm
-      :reply="replyMessage"
-      :canSendMessage="sendMessagePermission"
       :theme="theme?.dark?.bottom"
+      :reply="replyMessage"
+      :canSendMessage="permission('SEND_MESSAGE')"
+      :canAttachFile="permission('ATTACH_FILE')"
       @send="send"
       @detachReply="replyMessage = undefined"
     />
   </ChatLayout>
   <MessageActionModal
+    :canDeleteMessage="permission('DELETE_MESSAGE')"
     :show="modalMessage != null"
     @close="modalMessage = null"
     :msg="modalMessage as WSMessage"
@@ -91,9 +93,7 @@ const send = (content: string) => {
   replyMessage.value = undefined
 }
 
-const sendMessagePermission = computed(
-  () => (!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes('SEND_MESSAGE')) as boolean
-)
+const permission = (role: string) => (!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes(role)) as boolean
 
 const like = async (id: number) => {
   ws()?.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
@@ -121,11 +121,15 @@ const initWebsocket = () => {
     chat.rmMessageID(chatID.value, id)
   })
 
+  chan.on<null>('reload', () => {
+    mount(true)
+  })
+
   window.WS.push(route.params.id as string, chan)
 }
 
-const fetchChat = async () => {
-  if (chat.shouldFetch(chatID.value)) {
+const fetchChat = async (hard: boolean = false) => {
+  if (chat.shouldFetch(chatID.value) || hard) {
     loader.isLoaded = false
     const res = await request.get(`/chat/${route.params.id as string}`)
     if (!res.data.$error) {
@@ -177,12 +181,14 @@ const ws = () => {
   return window.WS.get(route.params.id as string)
 }
 
-onMounted(async () => {
-  await fetchChat()
-  initWebsocket()
-  if (theme.value != null)
-    await setTheme(theme.value?.dark?.top.bg || '', theme.value?.dark?.bottom.bg || '')
-})
+const mount = async (hard: boolean = false) => {
+    await fetchChat(hard)
+    initWebsocket()
+    if (theme.value != null)
+      await setTheme(theme.value?.dark?.top.bg || '', theme.value?.dark?.bottom.bg || '')
+}
+
+onMounted(mount)
 
 onUnmounted(async () => {
   await resetTheme()

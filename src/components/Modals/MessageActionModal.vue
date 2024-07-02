@@ -9,7 +9,7 @@
         {{ $t('Edit message') }}
       </PushButton>
       <PushButton
-        v-if="auth.user?.id == msg.sender.id"
+        v-if="auth.user?.id == msg.sender.id && canDeleteMessage"
         class="btnList"
         :is-link="false"
         @click="d('delete', msg)"
@@ -34,6 +34,7 @@ const auth = useAuthStore()
 defineProps<{
   show: boolean
   msg: Message
+  canDeleteMessage: boolean
 }>()
 
 const emit = defineEmits(['reply', 'delete', 'close'])

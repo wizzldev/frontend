@@ -48,7 +48,7 @@
             @showImage="(img: string) => emit('showImage', img)"
             :theme="theme"
           />
-          <ChatEmoji v-else-if="msg.type == 'emoji'" :message="msg" />
+          <ChatEmoji :sent-by-me="sentByMe" v-else-if="msg.type == 'emoji'" :message="msg" />
         </MessageWrap>
       </MessagerWrap>
     </div>

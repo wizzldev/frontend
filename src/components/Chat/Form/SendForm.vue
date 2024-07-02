@@ -3,7 +3,7 @@
     <textarea
       data-theme="input-form"
       type="text"
-      class="duration-150 no-scrollbar bg-secondary border-2 border-secondary rounded-3xl py-2 px-5 w-full resize-none max-h-24 min-h-10"
+      class="transition-all duration-150 no-scrollbar bg-secondary border-2 border-secondary rounded-3xl py-2 px-5 w-full resize-none max-h-24 min-h-10"
       placeholder="Aa"
       required
       ref="textarea"
