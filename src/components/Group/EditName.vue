@@ -12,8 +12,8 @@
           class="w-full bg-secondary-all px-4 py-2 rounded-xl"
         />
         <label class="text-red-400" v-if="'name' in errors" :for="`name`">{{
-            errors['name']
-          }}</label>
+          errors['name']
+        }}</label>
       </div>
 
       <FormButton class="!py-2" title="Save" :processing="processing" @submit="update" />

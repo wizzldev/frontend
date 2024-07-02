@@ -30,7 +30,7 @@
       <div class="ml-2 px-2 max-w-[90%]">
         <h1
           class="w-max max-w-full break-words text-ellipsis text-nowrap overflow-hidden line-clamp-1"
-          :class="{customText: theme}"
+          :class="{ customText: theme }"
         >
           {{ (file as FileInfo).name }}
         </h1>
@@ -104,11 +104,13 @@ const imageSrc = computed(() =>
   chatImage(fileInfo.value.fetchFrom + `?access_token=${fileInfo.value.accessToken}`)
 )
 
-const color = computed(() => props.sentByMe ? props.theme?.message?.you.text : props.theme?.message?.other.text)
+const color = computed(() =>
+  props.sentByMe ? props.theme?.message?.you.text : props.theme?.message?.other.text
+)
 </script>
 
 <style scoped>
 .customText {
-  color: v-bind('color')!important;
+  color: v-bind('color') !important;
 }
 </style>

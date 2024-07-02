@@ -8,7 +8,7 @@ export const setup = async (auth: string, force: boolean = false) => {
 
   const base = new Channel(WizzlDefaultChannel)
   base.on<string>('connection', (s) => {
-    console.info(`connection: ${s}`)
+    console.debug(`[ws] connection: ${s}`)
   })
 
   base.use(ping, 2500)

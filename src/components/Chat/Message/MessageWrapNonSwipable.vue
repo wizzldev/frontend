@@ -38,7 +38,6 @@ import { isApp } from '@/scripts/mobile/isApp'
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import Circle from '@/components/Icons/Circle.vue'
 import MessageLike from '@/components/Chat/Utils/MessageLike.vue'
-import CircleTimes from '@/components/Icons/CircleTimes.vue'
 
 const props = defineProps<{
   sentByMe: boolean
@@ -56,7 +55,6 @@ const distance = ref(0)
 const swipeStyle = computed(() =>
   props.sentByMe ? { right: distance.value + 'px' } : { left: distance.value + 'px' }
 )
-
 
 onLongPress(
   wrap,

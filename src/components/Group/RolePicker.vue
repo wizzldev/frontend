@@ -10,16 +10,19 @@
     <a
       class="transition-colors text-purple-400 hover:text-purple-500 focus:text-purple-500"
       :href="`${supportHost}/q?roles`"
-    >{{ $t('Read more') }}</a
+      >{{ $t('Read more') }}</a
     >
   </p>
   <template v-for="role in roles" :key="role">
     <button
-      :disabled="yourRoles && (!yourRoles.includes(role) || (!yourRoles.includes('CREATOR') && role == 'ADMIN'))"
+      :disabled="
+        yourRoles &&
+        (!yourRoles.includes(role) || (!yourRoles.includes('CREATOR') && role == 'ADMIN'))
+      "
       class="block w-full py-1.5 px-2 bg-secondary-all my-2 rounded-xl text-white disabled:cursor-not-allowed disabled:opacity-75"
       :class="{
-              '!bg-purple-500 !hover:bg-purple-400 !focus:bg-purple-400': active.includes(role)
-            }"
+        '!bg-purple-500 !hover:bg-purple-400 !focus:bg-purple-400': active.includes(role)
+      }"
       @click="toggle(role)"
     >
       {{ role }}

@@ -9,7 +9,7 @@
       customBg: theme
     }"
   >
-    <p class="px-4 py-1.5" :class="{customText: theme}" v-emoji>
+    <p class="px-4 py-1.5" :class="{ customText: theme }" v-emoji>
       {{ message.content }}
     </p>
   </div>
@@ -27,15 +27,19 @@ const props = defineProps<{
   theme: ThemeDataMain | undefined
 }>()
 
-const bg = computed(() => props.sentByMe ? props.theme?.message?.you.bg : props.theme?.message?.other.bg)
-const color = computed(() => props.sentByMe ? props.theme?.message?.you.text : props.theme?.message?.other.text)
+const bg = computed(() =>
+  props.sentByMe ? props.theme?.message?.you.bg : props.theme?.message?.other.bg
+)
+const color = computed(() =>
+  props.sentByMe ? props.theme?.message?.you.text : props.theme?.message?.other.text
+)
 </script>
 
 <style scoped>
 .customText {
-  color: v-bind('color')!important;
+  color: v-bind('color') !important;
 }
 .customBg {
-  background-color: v-bind('bg')!important;
+  background-color: v-bind('bg') !important;
 }
 </style>

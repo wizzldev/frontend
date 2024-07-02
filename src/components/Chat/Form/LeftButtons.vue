@@ -1,13 +1,13 @@
 <template>
   <div class="flex items-center space-x-1.5 justify-center">
     <IconButton @click="emit('other')">
-      <JoyStick/>
+      <JoyStick />
     </IconButton>
     <IconButton :disabled="!canAttachFile" @click="(fileInput as HTMLInputElement).click()">
-      <File/>
+      <File />
     </IconButton>
     <IconButton @click="emit('audio')">
-      <Mic/>
+      <Mic />
     </IconButton>
   </div>
   <form class="hidden">
@@ -38,6 +38,6 @@ const fileInput = ref<HTMLInputElement | null>(null)
 
 const uploadFile = async (e: Event) => {
   const res = await uploadFileToServer(e, route.params.id as string)
-  if(res?.data.$error) toast.error(i18n.t(`Failed to upload file: ${res.status}`))
+  if (res?.data.$error) toast.error(i18n.t(`Failed to upload file: ${res.status}`))
 }
 </script>

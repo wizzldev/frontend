@@ -23,7 +23,7 @@ export default {
   'message.reply.you': 'You replied to: {to}',
 
   'deleted.you': 'Deleted a message',
-  'deleted': '{who} deleted a message',
+  deleted: '{who} deleted a message',
 
   // Form
   Login: 'Login',

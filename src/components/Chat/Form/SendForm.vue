@@ -11,7 +11,7 @@
       rows="1"
       :class="{
         'text-orange-400': input?.length > 400 && input?.length <= 500,
-        'text-red-400': input?.length > 500,
+        'text-red-400': input?.length > 500
       }"
       @focusin="isFocus = true"
       @focusout="isFocus = false"
@@ -23,7 +23,8 @@
       class="transition-colors duration-500 flex items-center justify-center rounded-full p-2 w-9 h-9 min-w-9 min-h-9 disabled:!bg-red-400 disabled:cursor-not-allowed"
       :class="{
         'bg-secondary border-secondary': inputEmpty,
-        'bg-purple-500 border-purple-500 hover:bg-purple-400 hover:border-purple-400 focus:bg-purple-600 focus:border-purple-600': !inputEmpty
+        'bg-purple-500 border-purple-500 hover:bg-purple-400 hover:border-purple-400 focus:bg-purple-600 focus:border-purple-600':
+          !inputEmpty
       }"
     >
       <Send class="!w-4 !h-4" />
@@ -46,10 +47,10 @@ const emit = defineEmits(['send', 'showIcons'])
 
 const inputEmpty = computed(() => input.value == '' || input.value == undefined)
 const isFocus = ref(false)
-const showSend = computed(() => isFocus.value || !inputEmpty.value && !props.compactView)
+const showSend = computed(() => isFocus.value || (!inputEmpty.value && !props.compactView))
 
 const send = () => {
-  if(input?.value == '') return
+  if (input?.value == '') return
   emit('send', input.value)
   input.value = ''
 }
@@ -58,7 +59,7 @@ watch(showSend, (s) => {
   emit('showIcons', !s)
 })
 
-onBeforeMount(() => input.value = '')
+onBeforeMount(() => (input.value = ''))
 </script>
 
 <style scoped>

@@ -25,7 +25,6 @@ export class Channel {
   }
 
   public send<T>(type: string, content: string, dataJSON: T | null = null) {
-    console.log('Preparing payload', type, content, dataJSON)
     const data_json = dataJSON != null ? JSON.stringify(dataJSON) : '{}'
     const hookID = this.newHookID(content)
     const payload = {
@@ -49,7 +48,6 @@ export class Channel {
   }
 
   protected newHookID(s: string) {
-    console.log(s)
     let id = 'hookID'
     try {
       id = xxHash32(s + Math.random().toString(16), Date.now()).toString(16)

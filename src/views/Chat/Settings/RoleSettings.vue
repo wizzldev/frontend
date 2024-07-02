@@ -43,15 +43,15 @@ const yourRoles = ref<Array<string>>([])
 const loading = ref(false)
 
 const fetchProfile = async () => {
-  const {user, roles, your_roles} = await fetchInfo(route.params.id as string)
-  if(!user) return
+  const { user, roles, your_roles } = await fetchInfo(route.params.id as string)
+  if (!user) return
   chatProfile.value = user
-  if(!your_roles || !your_roles.includes('ADMIN')) {
-    await router.push({name: 'chat.settings', params: {id: route.params.id}})
+  if (!your_roles || !your_roles.includes('ADMIN')) {
+    await router.push({ name: 'chat.settings', params: { id: route.params.id } })
     return
   }
   yourRoles.value = your_roles
-  if(!roles) return
+  if (!roles) return
   usedRoles.value = roles
 }
 
@@ -64,7 +64,7 @@ const fetchRoles = async () => {
 }
 
 const toggle = (role: string) => {
-  if(loading.value) return
+  if (loading.value) return
   if (usedRoles.value.includes(role)) usedRoles.value.splice(usedRoles.value.indexOf(role), 1)
   else usedRoles.value.push(role)
 }
@@ -76,7 +76,7 @@ const save = async () => {
   })
   loading.value = false
 
-  if(!res.data.$error) toast.success(i18n.t('Successfully updated'))
+  if (!res.data.$error) toast.success(i18n.t('Successfully updated'))
   else toast.error(i18n.t('Something went wrong'))
 }
 

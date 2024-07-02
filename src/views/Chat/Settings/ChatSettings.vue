@@ -26,11 +26,11 @@
         <PushButton
           v-if="!chatProfile.isPrivateMessage && yourRoles.includes('ADMIN')"
           toName="chat.roles"
-          :to-params="{id: $route.params.id as string}"
+          :to-params="{ id: $route.params.id as string }"
           :is-link="true"
           class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
         >
-          {{ $t('Default roles') }}
+          {{ $t('Edit roles') }}
         </PushButton>
       </div>
     </main>
@@ -70,10 +70,10 @@ const loaded = ref(false)
 
 const fetchProfile = async () => {
   const { user, your_roles } = await fetchInfo(route.params.id as string)
-  if(!user) return
+  if (!user) return
   chatProfile.value = user
   loaded.value = true
-  if(!your_roles) return
+  if (!your_roles) return
   yourRoles.value = your_roles
 }
 

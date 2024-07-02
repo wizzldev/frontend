@@ -2,13 +2,18 @@
   <section v-if="canSendMessage">
     <HasReply :message="reply" @detach="emit('detachReply')" />
     <div class="flex items-center space-x-2 px-3 py-2 border-t-2 border-t-secondary">
-      <Slide :duration=".3">
+      <Slide :duration="0.3">
         <LeftButtons v-if="showIcons || compactView" :canAttachFile="canAttachFile" />
       </Slide>
       <button v-if="!showIcons && !compactView" @click="compactView = true">
         <ArrowRight class="text-gray-400" />
       </button>
-      <SendForm @send="send" @showIcons="(s: boolean) => showIcons = s" :compactView="compactView" @click="compactView = false" />
+      <SendForm
+        @send="send"
+        @showIcons="(s: boolean) => (showIcons = s)"
+        :compactView="compactView"
+        @click="compactView = false"
+      />
       <EmojiButton @send="send" v-if="showIcons || compactView" />
     </div>
   </section>

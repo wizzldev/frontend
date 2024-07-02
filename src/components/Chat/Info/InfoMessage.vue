@@ -1,5 +1,5 @@
 <template>
-  <p class="text-center text-xs text-gray-400" :class="{customText: theme}">
+  <p class="text-center text-xs text-gray-400" :class="{ customText: theme }">
     {{ info }}
   </p>
 </template>
@@ -28,6 +28,6 @@ const info = computed(() =>
 
 <style scoped>
 .customText {
-  color: v-bind('theme?.text')!important;
+  color: v-bind('theme?.text') !important;
 }
 </style>

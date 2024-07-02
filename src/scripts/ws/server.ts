@@ -14,7 +14,6 @@ export default class Server {
   public async connect(host: string | undefined = undefined) {
     this.connected = false
     this.conn = await new Promise((resolve) => {
-      console.log(this.host)
       const c = new WebSocket(host ? host : this.host)
 
       c.onerror = window.WS.connector()
@@ -25,7 +24,7 @@ export default class Server {
       }
       c.onerror = () => {
         this.connected = false
-        console.log('Something went wrong:', c, this)
+        console.error('Something went wrong:', c, this)
         resolve(c)
       }
     })
@@ -64,7 +63,6 @@ export default class Server {
   }
 
   public send(s: string) {
-    console.log('Sending payload:', s)
     this.conn?.send(s)
   }
 

@@ -16,10 +16,12 @@
       />
     </li>
     <li class="w-full text-center text-xl my-3" v-if="loading">
-      <Spinner class="text-gray-400" :class="{customText: theme}" />
+      <Spinner class="text-gray-400" :class="{ customText: theme }" />
     </li>
     <li class="w-full text-center my-3" v-if="!hasNext">
-      <p class="text-center text-gray-400 fontTheme" :class="{customText: theme}">{{ $t('No more messages') }}</p>
+      <p class="text-center text-gray-400 fontTheme" :class="{ customText: theme }">
+        {{ $t('No more messages') }}
+      </p>
     </li>
   </ul>
   <div class="fixed top-0 left-0" v-if="previewImage != ''">
@@ -67,7 +69,6 @@ const handleScroll = async () => {
 }
 
 const showImage = (src: string) => {
-  console.log('show image...')
   previewImage.value = src
 }
 
@@ -92,7 +93,7 @@ onBeforeUnmount(() => {
 }
 
 .customText {
-  color: v-bind('theme?.text')!important;
+  color: v-bind('theme?.text') !important;
 }
 
 @media only screen and (max-width: 600px) {

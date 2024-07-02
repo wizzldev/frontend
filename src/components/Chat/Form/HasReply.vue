@@ -16,7 +16,7 @@
           v-if="['message', 'emoji'].includes(message.type)"
           class="ml-1 w-[70%] break-all line-clamp-1 text-nowrap"
           v-emoji
-        >{{ message.content }}</span
+          >{{ message.content }}</span
         >
         <span class="ml-1" v-else-if="message.type.startsWith('file:')">{{ $t('File') }}</span>
       </div>

@@ -4,11 +4,17 @@
       <div class="flex items-center w-10/12">
         <img class="rounded-xl w-12 h-12" :src="image" alt="Chat Image" />
         <div class="w-full px-2">
-          <h3 class="max-w-full text-ellipsis text-nowrap overflow-hidden line-clamp-1 mr-3" v-emoji>
+          <h3
+            class="max-w-full text-ellipsis text-nowrap overflow-hidden line-clamp-1 mr-3"
+            v-emoji
+          >
             {{ title }}
           </h3>
           <div class="flex items-center space-x-0.5">
-            <p class="text-sm text-gray-400 break-words text-ellipsis overflow-hidden line-clamp-1" v-emoji>
+            <p
+              class="text-sm text-gray-400 break-words text-ellipsis overflow-hidden line-clamp-1"
+              v-emoji
+            >
               {{ realMessage }}
             </p>
           </div>

@@ -29,7 +29,6 @@ export const useContactsStore = defineStore('contacts', () => {
     contacts.value = contacts.value.sort((a, b) =>
       new Date(a.last_message.date).getTime() > new Date(b.last_message.date).getTime() ? -1 : 1
     )
-    console.log('sorted', contacts.value)
   }
 
   return { contacts, push, update }

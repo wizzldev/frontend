@@ -141,9 +141,9 @@ const getType = (u: string): 'mobile' | 'tablet' | 'desktop' => {
 }
 
 const getClient = (u: string): string | undefined => {
-  if(u.match(/Wizzl/)?.length) {
-    if(u.match(/Android/)?.length) return 'Wizzl Android'
-    else if(u.match(/(iPhone|iPod|iPad)/)?.length) return 'Wizzl iOS'
+  if (u.match(/Wizzl/)?.length) {
+    if (u.match(/Android/)?.length) return 'Wizzl Android'
+    else if (u.match(/(iPhone|iPod|iPad)/)?.length) return 'Wizzl iOS'
     return 'Wizzl Client'
   }
   return undefined

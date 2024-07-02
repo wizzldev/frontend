@@ -5,14 +5,14 @@
     :isYou="isYou"
   >
     <MessageLayout
+      :theme="theme?.dark?.main"
       :isPM="isPM"
-      @reply="(msg) => (replyMessage = msg)"
       :hasNext="cursors == null || cursors.next != ''"
+      :messages="chat.messages[chatID] || []"
+      @reply="(msg) => (replyMessage = msg)"
       @load="loadMore"
       @modal="(msg: WSMessage) => (modalMessage = msg)"
       @like="like"
-      :theme="theme?.dark?.main"
-      :messages="chat.messages[chatID] || []"
     />
     <MessageForm
       :theme="theme?.dark?.bottom"
@@ -71,7 +71,7 @@ const isYou = ref<boolean>(false)
 
 const send = (content: string) => {
   const data = {} as { reply_id: number | undefined }
-  if (replyMessage.value != null) data.reply_id = replyMessage.value?.id
+  if (replyMessage.value) data.reply_id = replyMessage.value?.id
   const hookID = ws()?.send('message', content, data)
   chat.push(
     chatID.value,
@@ -93,7 +93,8 @@ const send = (content: string) => {
   replyMessage.value = undefined
 }
 
-const permission = (role: string) => (!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes(role)) as boolean
+const permission = (role: string) =>
+  (!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes(role)) as boolean
 
 const like = async (id: number) => {
   ws()?.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
@@ -157,7 +158,9 @@ const fetchChat = async (hard: boolean = false) => {
 
 const loadMore = async () => {
   const next = cursors.value?.next || ''
-  if (next == '') console.log('CURSOR IS EMPTYYY')
+  if (next == '') {
+    return
+  }
   const res = await request.get(`/chat/${route.params.id as string}/paginate?cursor=${next}`)
   if (res.data.$error) {
     toast.error(i18n.t('Failed to load more messages'))
@@ -182,10 +185,10 @@ const ws = () => {
 }
 
 const mount = async (hard: boolean = false) => {
-    await fetchChat(hard)
-    initWebsocket()
-    if (theme.value != null)
-      await setTheme(theme.value?.dark?.top.bg || '', theme.value?.dark?.bottom.bg || '')
+  await fetchChat(hard)
+  initWebsocket()
+  if (theme.value != null)
+    await setTheme(theme.value?.dark?.top.bg || '', theme.value?.dark?.bottom.bg || '')
 }
 
 onMounted(mount)

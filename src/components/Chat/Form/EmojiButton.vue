@@ -16,5 +16,5 @@ const props = defineProps<{
   emoji?: string | undefined
 }>()
 
-const emote = computed(() => props.emoji ? props.emoji : '✨')
+const emote = computed(() => (props.emoji ? props.emoji : '✨'))
 </script>

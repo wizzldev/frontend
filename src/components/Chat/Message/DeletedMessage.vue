@@ -9,7 +9,7 @@
       customBorder: theme
     }"
   >
-    <p class="px-4 py-1.5 text-gray-400" :class="{customText: theme}">
+    <p class="px-4 py-1.5 text-gray-400" :class="{ customText: theme }">
       {{ $t('Deleted message') }}
     </p>
   </div>
@@ -25,15 +25,17 @@ const props = defineProps<{
   theme: ThemeDataMain | undefined
 }>()
 
-const border = computed(() => props.sentByMe ? props.theme?.message?.you.bg : props.theme?.message?.other.bg)
+const border = computed(() =>
+  props.sentByMe ? props.theme?.message?.you.bg : props.theme?.message?.other.bg
+)
 </script>
 
 <style scoped>
 .customBorder {
-  border-color: v-bind('border')!important;
+  border-color: v-bind('border') !important;
 }
 
 .customText {
-  color: v-bind('border')!important;
+  color: v-bind('border') !important;
 }
 </style>

@@ -67,7 +67,10 @@ const swipeStyle = computed(() =>
 )
 
 const failed = computed(() => {
-  return props.message.id && ((new Date(props.message.created_at).getTime()) > (new Date().getTime() + 15 * 1000))
+  return (
+    props.message.id &&
+    new Date(props.message.created_at).getTime() > new Date().getTime() + 15 * 1000
+  )
 })
 
 onLongPress(

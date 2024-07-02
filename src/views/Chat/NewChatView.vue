@@ -122,7 +122,6 @@ const addGroup = async (name: string, roles: Array<string>) => {
 
 onMounted(() => {
   groupMake.initialize()
-  console.log(window.location.hash)
   groupSettings.value = window.location.hash == '#group'
 })
 

@@ -12,16 +12,16 @@ export const fetchInfo = async (id: string) => {
       your_roles: Array<string>
     }
     return {
-      user:  {
+      user: {
         id: data.id,
         name: data.name,
         image: data.image_url,
         isPrivateMessage: data.is_private_message,
-        loading: false,
+        loading: false
       },
       roles: data.roles,
       your_roles: data.your_roles
     }
   }
-  return {user: null, roles: null}
+  return { user: null, roles: null }
 }

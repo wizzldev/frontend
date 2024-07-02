@@ -30,7 +30,7 @@
 import FormButtonSecondary from '@/components/Auth/FormButtonSecondary.vue'
 import { useAuthStore } from '@/stores/auth'
 import request from '@/scripts/request/request'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 import PushButton from '@/components/Elements/PushButton.vue'
@@ -39,8 +39,6 @@ const auth = useAuthStore()
 const i18n = useI18n()
 const toast = useToast()
 const newPassProcessing = ref(false)
-
-onMounted(() => console.log(auth.user))
 
 const requestNewPassword = async () => {
   newPassProcessing.value = true

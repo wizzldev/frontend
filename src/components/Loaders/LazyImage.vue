@@ -40,7 +40,7 @@ const onError = async () => {
 }
 
 onMounted(async () => {
-  if(props.src.endsWith('/')) return
+  if (props.src.endsWith('/')) return
   await fetch(props.src)
 })
 </script>

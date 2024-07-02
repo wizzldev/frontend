@@ -23,6 +23,7 @@
         />
         <h2
           class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
+          v-emoji
         >
           {{ loading ? $t('Loading') : name }}
         </h2>
