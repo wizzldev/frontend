@@ -9,7 +9,7 @@
       customBg: theme
     }"
   >
-    <p class="px-4 py-1.5" :class="{customText: theme}">
+    <p class="px-4 py-1.5" :class="{customText: theme}" v-emoji>
       {{ message.content }}
     </p>
   </div>

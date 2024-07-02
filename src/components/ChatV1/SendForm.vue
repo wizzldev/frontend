@@ -16,6 +16,7 @@
           <span
             v-if="['message', 'emoji'].includes(reply.type)"
             class="ml-1 w-[70%] break-all line-clamp-1 text-nowrap"
+            v-emoji
             >{{ reply.content }}</span
           >
           <span class="ml-1" v-else-if="reply.type.startsWith('file:')">{{ $t('File') }}</span>
@@ -23,65 +24,65 @@
       </div>
     </Fade>
     <div class="flex items-center space-x-2 px-3 py-2 border-t-2 border-t-secondary" :class="{customBorder: theme}" v-if="allowed">
-      <Slide :duration="0.3">
-        <div class="flex items-center space-x-1.5" v-show="showIcons">
-          <button
-            v-show="!recording"
-            @click="($refs['fileUploadInput'] as HTMLInputElement).click()"
-            v-tippy="{ content: 'Upload file' }"
-            class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary"
-            data-theme="icons"
-          >
-            <FileIcon />
-          </button>
-          <button
-            @click="record"
-            v-tippy="{ content: 'Record audio' }"
-            class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary"
-            data-theme="icons"
-            :class="{ 'w-auto px-4 space-x-2': recording }"
-          >
-            <span v-if="recording">2</span>
-            <span><Mic /></span>
-          </button>
-        </div>
-      </Slide>
-      <form class="w-full" v-on:submit.prevent="$emit('send')">
-        <div
-          data-theme="input-form"
-          class="bg-secondary rounded-3xl w-full flex items-center space-x-2 transition-[width] duration-300 ease-in-out"
-          @focusin="showIcons = false"
-          @focusout="showIcons = true"
-        >
-          <input
+      <button v-if="!showIcons">
+        <ArrowRight/>
+      </button>
+      <form class="w-full flex items-end space-x-2 justify-center" v-on:submit.prevent="send">
+        <Slide :duration="0.3">
+          <div class="flex items-center space-x-1.5" v-show="iconsVisible">
+            <button
+              v-show="!recording"
+              @click="($refs['fileUploadInput'] as HTMLInputElement).click()"
+              v-tippy="{ content: 'Upload file' }"
+              class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary"
+              data-theme="icons"
+            >
+              <FileIcon />
+            </button>
+            <button
+              @click="record"
+              v-tippy="{ content: 'Record audio' }"
+              class="transition-colors text-lg w-9 h-9 p-2 flex items-center justify-center rounded-full bg-secondary"
+              data-theme="icons"
+              :class="{ 'w-auto px-4 space-x-2': recording }"
+            >
+              <span v-if="recording">2</span>
+              <span><Mic /></span>
+            </button>
+          </div>
+        </Slide>
+        <textarea
             data-theme="input-form"
             type="text"
-            class="bg-secondary rounded-3xl py-2 px-3 pl-5 w-full"
+            class="bg-secondary rounded-3xl py-2 px-3 pl-5 w-full resize-none max-h-[90px] h-9"
             @change="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-            :value="value"
             :placeholder="$t('Message')"
             required
-            ref="textInput"
-          />
-          <button class="py-2 px-3 flex items-center justify-center">
-            <Send />
+            ref="textarea"
+            v-model="input"
+            @focusin="showIcons = false"
+            @focusout="showIcons = true"
+        />
+          <button
+            v-if="!showIcons || input != ''"
+            class="transition-colors text-lg w-9 h-9 p-3 flex items-center justify-center rounded-full bg-secondary"
+            data-theme="icons"
+          >
+            <Send/>
           </button>
-        </div>
       </form>
-      <Bounce>
         <button
-          v-if="value == ''"
+          v-if="iconsVisible"
           @click="$emit('emoji', theme?.emoji || '✨')"
           class="transition-colors text-md w-9 h-9 p-2 flex items-center justify-center rounded-full hover:bg-tertiary hover:bg-opacity-50"
         >
-          <span v-if="theme?.emoji">
+          <span v-emoji v-if="theme?.emoji">
             {{ theme.emoji }}
           </span>
-          <span v-else>
+          <span v-emoji v-else>
             ✨
           </span>
         </button>
-      </Bounce>
     </div>
     <h2 v-else class="fontTheme text-gray-400 text-center px-4">
       {{ $t('You are not allowed to send a message') }}
@@ -95,9 +96,8 @@
 <script setup lang="ts">
 import Send from '@/components/Icons/Send.vue'
 import type { ThemeDataBottom } from '@/types/chat'
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import FileIcon from '@/components/Icons/File.vue'
-import Bounce from '@/components/Transitions/Bounce.vue'
 import Slide from '@/components/Transitions/Slide.vue'
 import request from '@/scripts/request/request'
 import { useRoute } from 'vue-router'
@@ -106,6 +106,8 @@ import type { Message } from '@/types/message'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import { cdnImage } from '@/scripts/image'
 import Fade from '@/components/Transitions/Fade.vue'
+import { useTextareaAutosize } from '@vueuse/core'
+import ArrowRight from '@/components/Icons/ArrowRight.vue'
 
 const props = defineProps<{
   theme: ThemeDataBottom | undefined
@@ -116,8 +118,8 @@ const props = defineProps<{
 
 const emit = defineEmits(['uploadStarted', 'detachReply', 'update:modelValue', 'emoji', 'send'])
 
+const { textarea, input } = useTextareaAutosize()
 const route = useRoute()
-
 const fileUploadForm = ref<HTMLFormElement | null>(null)
 const recording = ref(false)
 const textInput = ref<HTMLInputElement | null>(null)
@@ -156,9 +158,19 @@ onMounted(() => console.info('PROPS:', props))
 
 const showIcons = ref(true)
 
+const iconsVisible = computed(() => {
+  return showIcons.value && input.value == ''
+})
+
+const send = () => {
+  emit('send')
+}
+
 watch(props, (value) => {
   if (value.reply != null) textInput.value?.focus()
 })
+
+watch(input, (v) => emit('update:modelValue', v))
 </script>
 
 <style scoped>
@@ -193,5 +205,14 @@ watch(props, (value) => {
 .customTheme [data-theme='icons'] {
   color: v-bind('theme?.icons');
   background-color: v-bind('theme?.input.bg.default') !important;
+}
+
+textarea {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+textarea::-webkit-scrollbar {
+  display: none;
 }
 </style>

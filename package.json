@@ -34,6 +34,7 @@
     "pinia": "^2.1.7",
     "pretty-bytes": "^6.1.1",
     "serve": "^14.2.3",
+    "twemoji": "^14.0.2",
     "ua-parser-js": "^1.0.38",
     "vue": "^3.4.21",
     "vue-advanced-cropper": "^2.8.9",

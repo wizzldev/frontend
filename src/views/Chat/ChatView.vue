@@ -2,6 +2,7 @@
   <ChatLayout
     :theme="theme?.dark?.top"
     :chat-profile="chat.profile[chatID] || { name: '', image: '', loading: true }"
+    :isYou="isYou"
   >
     <MessageLayout
       :isPM="isPM"
@@ -13,16 +14,12 @@
       :theme="theme?.dark?.main"
       :messages="chat.messages[chatID] || []"
     />
-    <SendForm
-      @uploadStarted="handleUpload"
+    <MessageForm
       :reply="replyMessage"
-      @detachReply="replyMessage = null"
-      :allowed="sendMessagePermission"
-      :value="message"
+      :canSendMessage="sendMessagePermission"
       :theme="theme?.dark?.bottom"
-      v-model="message"
       @send="send"
-      @emoji="emoji"
+      @detachReply="replyMessage = undefined"
     />
   </ChatLayout>
   <MessageActionModal
@@ -42,7 +39,6 @@ import { useRoute, useRouter } from 'vue-router'
 import type { Like, Message as WSMessage, Messages } from '@/types/message'
 import { useChatStore } from '@/stores/chat'
 import { useContactsStore } from '@/stores/contacts'
-import SendForm from '@/components/ChatV1/SendForm.vue'
 import type { Theme } from '@/types/chat'
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { isApp } from '@/scripts/mobile/isApp'
@@ -54,6 +50,7 @@ import MessageActionModal from '@/components/Modals/MessageActionModal.vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
 import { Channel } from '@/scripts/ws/channel'
+import MessageForm from '@/components/Chat/Form/MessageForm.vue'
 
 const auth = useAuthStore()
 const loader = useRouteLoaderStore()
@@ -64,23 +61,23 @@ const contacts = useContactsStore()
 const toast = useToast()
 const i18n = useI18n()
 const theme = ref(null) as Ref<Theme | null>
-const message = ref('')
 const modalMessage = ref(null) as Ref<null | WSMessage>
-const replyMessage = ref(null) as Ref<null | WSMessage>
+const replyMessage = ref(undefined) as Ref<undefined | WSMessage>
 const cursors = ref(null) as Ref<{ next: string; prev: string } | null>
 const isPM = ref(true)
+const isYou = ref<boolean>(false)
 
-const send = () => {
+const send = (content: string) => {
   const data = {} as { reply_id: number | undefined }
   if (replyMessage.value != null) data.reply_id = replyMessage.value?.id
-  const hookID = ws()?.send('message', message.value, data)
+  const hookID = ws()?.send('message', content, data)
   chat.push(
     chatID.value,
     [
       {
         id: 0,
         sender: auth.user,
-        content: message.value,
+        content: content,
         type: 'message',
         data_json: '{}',
         underSending: true,
@@ -91,51 +88,7 @@ const send = () => {
     null,
     true
   )
-  message.value = ''
-  replyMessage.value = null
-}
-
-const handleUpload = (hookID: string) => {
-  const data = {} as { reply_id: number | undefined }
-  if (replyMessage.value != null) data.reply_id = replyMessage.value?.id
-  chat.push(
-    chatID.value,
-    [
-      {
-        id: 0,
-        sender: auth.user,
-        content: message.value,
-        type: 'file:file',
-        data_json: `{}`,
-        underSending: true,
-        hookId: hookID,
-        reply: replyMessage.value || undefined
-      } as WSMessage
-    ],
-    null,
-    true
-  )
-  replyMessage.value = null
-}
-
-const emoji = (emoji: string) => {
-  const hookID = ws()?.send('message', emoji)
-  chat.push(
-    chatID.value,
-    [
-      {
-        id: 0,
-        sender: auth.user,
-        content: emoji,
-        type: 'message',
-        data_json: '{}',
-        underSending: true,
-        hookId: hookID
-      } as WSMessage
-    ],
-    null,
-    true
-  )
+  replyMessage.value = undefined
 }
 
 const sendMessagePermission = computed(
@@ -180,7 +133,9 @@ const fetchChat = async () => {
         user_roles: Array<string>
         group: { name: string; image_url: string; is_private_message: boolean }
         messages: { data: Messages; next_cursor: string; previous_cursor: string }
+        is_your_profile: boolean
       }
+      isYou.value = data.is_your_profile
       cursors.value = { next: data.messages.next_cursor, prev: data.messages.previous_cursor }
       chat.isPM[chatID.value] = true
       chat.push(chatID.value, data.messages.data)

@@ -1,5 +1,5 @@
 <template>
-  <p class="text-3xl px-4 py-1.5">
+  <p class="text-3xl px-4 py-1.5 cursor-pointer" v-emoji>
     {{ message.content }}
   </p>
 </template>

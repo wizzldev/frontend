@@ -5,6 +5,7 @@
       :image="chatProfile.image"
       :loading="chatProfile.loading"
       :theme="theme"
+      :isYou="isYou"
     />
     <slot />
   </AppLayout>
@@ -18,5 +19,6 @@ import type { ThemeDataTop } from '@/types/chat'
 defineProps<{
   chatProfile: { name: string; image: string; loading: boolean }
   theme: ThemeDataTop | undefined
+  isYou: boolean
 }>()
 </script>

@@ -1,5 +1,6 @@
 @import 'tailwind.css';
 @import 'fonts.css';
+@import 'twemoji.css';
 
 .blurred {
   -webkit-backdrop-filter: blur(10px);
@@ -34,4 +35,17 @@ body {
 
 .bg-tertiary-all {
   @apply transition-colors bg-tertiary hover:bg-tertiary-hover focus:bg-tertiary-focus;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.w-icon {
+  @apply w-5 h-5 inline-block;
 }

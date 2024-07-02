@@ -29,6 +29,7 @@
       </div>
       <div class="flex items-center space-x-2">
         <PushButton
+          v-if="!isYou"
           :disabled="loading"
           class="bg-secondary-all text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
           :is-link="true"
@@ -66,7 +67,7 @@ import Cloud from '@/components/Icons/Cloud.vue'
 const connected = ref(window.WS.connected)
 
 watch(window.WS, (w) => {
-  connected.value = window.WS.connected
+  connected.value = w.connected
 })
 
 defineProps<{
@@ -74,6 +75,7 @@ defineProps<{
   name: string
   loading: boolean
   theme: ThemeDataTop | undefined
+  isYou: boolean
 }>()
 </script>
 

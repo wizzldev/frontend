@@ -3,6 +3,7 @@
     :chat-profile="chatProfile"
     :connection="{ connected: true, error: false }"
     :theme="undefined"
+    :isYou="false"
   >
     <header class="px-4 my-4 text-center">
       <LazyImage
@@ -10,7 +11,7 @@
         :src="cdnImage(chatProfile.image)"
         class="w-14 h-14 rounded-lg mx-auto"
       />
-      <h2 class="text-center fontTheme">{{ chatProfile.name }}</h2>
+      <h2 class="text-center fontTheme" v-emoji>{{ chatProfile.name }}</h2>
       <SettingsButton
         v-if="!chatProfile.isPrivateMessage"
         class="text-sm"

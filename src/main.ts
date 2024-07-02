@@ -16,6 +16,7 @@ import Toast, { useToast } from 'vue-toastification'
 import VueTippy from 'vue-tippy'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import twemoji from 'twemoji'
 TimeAgo.addDefaultLocale(en)
 
 const timeAgo = new TimeAgo('en-US')
@@ -27,6 +28,12 @@ app.use(i18n)
 app.use(VueTippy)
 app.use(createPinia())
 app.use(router)
+
+app.directive('emoji', {
+  mounted: (el: HTMLElement) => {
+    twemoji.parse(el, { size: 'svg', ext: '.svg' })
+  }
+})
 
 app.config.globalProperties.$time = timeAgo
 app.config.globalProperties.$toast = useToast()

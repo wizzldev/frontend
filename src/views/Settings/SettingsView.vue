@@ -6,7 +6,7 @@
         :alt="auth.user?.first_name + '\'s profile image'"
         :src="cdnImage(auth.user?.image_url || '', 128)"
       />
-      <h2 class="mt-1 fontTheme">{{ auth.user?.first_name }} {{ auth.user?.last_name }}</h2>
+      <h2 class="mt-1 fontTheme" v-emoji>{{ auth.user?.first_name }} {{ auth.user?.last_name }}</h2>
       <SettingsButton class="text-sm" @click="editProfileImage = true">
         {{ $t('Edit profile image') }}
       </SettingsButton>
