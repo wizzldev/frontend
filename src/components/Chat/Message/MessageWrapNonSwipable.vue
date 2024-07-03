@@ -15,6 +15,7 @@
         <div v-if="sentByMe"></div>
         <div class="relative w-max max-w-full break-words col-span-4">
           <slot />
+          <MessageLike :sent-by-me="sentByMe" :likes="message.likes || []" />
         </div>
         <div v-if="!sentByMe"></div>
       </div>
@@ -25,7 +26,6 @@
         <Circle />
       </span>
     </div>
-    <MessageLike :likes="likes || []" :sent-by-me="sentByMe" />
   </li>
 </template>
 

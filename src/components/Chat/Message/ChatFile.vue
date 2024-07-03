@@ -1,7 +1,7 @@
 <template>
   <LazyImage
     class="rounded-t-xl w-full cursor-pointer"
-    v-if="file && file.content_type.startsWith('image/')"
+    v-if="file && isImage"
     :src="imageSrc"
     :alt="file.name"
     @click="$emit('showImage', imageSrc)"
@@ -52,6 +52,7 @@ import { Buffer } from 'buffer'
 import { chatImage } from '@/scripts/image'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import type { ThemeDataMain } from '@/types/chat'
+import { fileCache } from '@/components/Chat/Message/fileCache'
 
 const props = defineProps<{
   message: Message
@@ -64,18 +65,12 @@ const file = ref(null) as Ref<FileInfo | null>
 const downloading = ref(false)
 const isImage = ref(false)
 
-const fetchFileInfo = async () => {
-  if (props.message.data_json == null) return
-  const info = JSON.parse(props.message.data_json) as FileDataJSON
-  fileInfo.value = info
-  const res = await request.get(info.fetchFrom + '/info', {
-    headers: {
-      'X-File-Access-Token': info.accessToken
-    }
-  })
-  if (res.data.$error) return
-  file.value = res.data
-  isImage.value = file.value?.content_type.includes('image') || false
+const mount = async () => {
+  const data = await fileCache(props.message.data_json)
+  if (!data) return
+  fileInfo.value = data.info
+  file.value = data.file
+  isImage.value = data.isImage
 }
 
 const download = async () => {
@@ -98,7 +93,7 @@ const download = async () => {
   a.remove()
 }
 
-onMounted(fetchFileInfo)
+onMounted(mount)
 
 const imageSrc = computed(() =>
   chatImage(fileInfo.value.fetchFrom + `?access_token=${fileInfo.value.accessToken}`)

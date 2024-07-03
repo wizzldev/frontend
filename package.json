@@ -31,6 +31,7 @@
     "check-password-strength": "^2.0.10",
     "human-date": "^1.4.0",
     "javascript-time-ago": "^2.5.10",
+    "js-md5": "^0.8.3",
     "js-xxhash": "^4.0.0",
     "pinia": "^2.1.7",
     "pretty-bytes": "^6.1.1",

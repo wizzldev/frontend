@@ -17,6 +17,7 @@
         <div v-if="sentByMe"></div>
         <div class="relative w-max max-w-full break-words col-span-4">
           <slot />
+          <MessageLike :sent-by-me="sentByMe" :likes="message.likes || []" />
           <p class="text-xs text-red-400" v-if="failed">Failed to send message</p>
         </div>
         <div v-if="!sentByMe"></div>
@@ -30,13 +31,11 @@
       </span>
       <MessageReply :flip="false" :show="sentByMe" :distance="distance" />
     </div>
-    <MessageLike :likes="likes || []" :sent-by-me="sentByMe" />
   </li>
 </template>
 
 <script setup lang="ts">
 import type { Like, Message } from '@/types/message'
-import MessageLike from '@/components/Chat/Utils/MessageLike.vue'
 import type { ThemeDataMain } from '@/types/chat'
 import { computed, ref, watch } from 'vue'
 import { onLongPress, usePointerSwipe } from '@vueuse/core'
@@ -46,6 +45,7 @@ import { getDistance } from '@/components/Chat/Message/swipe'
 import MessageReply from '@/components/Chat/Utils/MessageReply.vue'
 import Circle from '@/components/Icons/Circle.vue'
 import CircleTimes from '@/components/Icons/CircleTimes.vue'
+import MessageLike from '@/components/Chat/Utils/MessageLike.vue'
 
 const props = defineProps<{
   sentByMe: boolean

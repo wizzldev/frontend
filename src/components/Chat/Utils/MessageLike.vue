@@ -2,16 +2,13 @@
   <Transition name="bounce">
     <div
       v-if="show"
-      class="absolute text-xs z-99 -mt-1.5 w-max"
-      :class="{ 'ml-auto mr-2': sentByMe, 'ml-2': !sentByMe }"
+      class="text-xs z-99 w-max m-0.5"
+      :class="{ 'ml-3': !sentByMe, 'text-right ml-2': sentByMe }"
     >
-      <button
-        class="px-2 py-0.5 rounded-3xl w-max"
-        :class="{ 'bg-tertiary': sentByMe, 'bg-secondary': !sentByMe }"
-      >
-        <span v-emoji :data-likeIds="likes.map((l) => l.id).join('.')">{{
-          likes.map((l) => l.emoji).join(' ')
-        }}</span>
+      <button class="px-2 py-0.5 rounded-lg bg-secondary border border-tertiary w-max">
+        <span v-for="(count, emote) in mergedLikes" :key="emote">
+          <template v-if="count > 1">{{ count }}</template> {{ emote }}
+        </span>
       </button>
     </div>
   </Transition>
@@ -27,6 +24,19 @@ const props = defineProps<{
 }>()
 
 const show = computed(() => props.likes.length > 0)
+
+const mergedLikes = computed(() => {
+  const sorted = {} as Record<string, number>
+
+  props.likes
+    .map((l) => l.emoji)
+    .forEach((e) => {
+      if (Object.keys(sorted).includes(e)) sorted[e]++
+      else sorted[e] = 1
+    })
+
+  return sorted
+})
 </script>
 
 <style>
