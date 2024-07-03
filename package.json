@@ -13,7 +13,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "assets": "capacitor-assets generate --iconBackgroundColor '#b36bf5' --iconBackgroundColorDark '#b36bf5' --splashBackgroundColor '#b36bf5' --splashBackgroundColorDark '#b36bf5'"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",
