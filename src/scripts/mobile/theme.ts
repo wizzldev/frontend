@@ -4,10 +4,10 @@ import { isApp } from '@/scripts/mobile/isApp'
 
 export const setTheme = async (top: string, bottom: string) => {
   if (!isApp()) return
-  await NavigationBar.setNavigationBarColor({ color: top })
+  await NavigationBar.setNavigationBarColor({ color: bottom })
 
   await StatusBar.setOverlaysWebView({ overlay: false })
-  await StatusBar.setBackgroundColor({ color: bottom })
+  await StatusBar.setBackgroundColor({ color: top })
 }
 
 export const resetTheme = async () => {
