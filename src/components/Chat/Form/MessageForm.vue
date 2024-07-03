@@ -3,7 +3,11 @@
     <HasReply :message="reply" @detach="emit('detachReply')" />
     <div class="flex items-center space-x-2 px-3 py-2 border-t-2 border-t-secondary">
       <Slide :duration="0.3">
-        <LeftButtons v-if="showIcons || compactView" :canAttachFile="canAttachFile" />
+        <LeftButtons
+          v-if="showIcons || compactView"
+          :canAttachFile="canAttachFile"
+          @tools="showToolbar = !showToolbar"
+        />
       </Slide>
       <button v-if="!showIcons && !compactView" @click="compactView = true">
         <ArrowRight class="text-gray-400" />
@@ -18,6 +22,7 @@
     </div>
   </section>
   <MessagePermissionDenied v-else />
+  <ToolBar v-if="showToolbar" @close="showToolbar = false" />
 </template>
 
 <script setup lang="ts">
@@ -31,6 +36,7 @@ import LeftButtons from '@/components/Chat/Form/LeftButtons.vue'
 import Slide from '@/components/Transitions/Slide.vue'
 import EmojiButton from '@/components/Chat/Form/EmojiButton.vue'
 import ArrowRight from '@/components/Icons/ArrowRight.vue'
+import ToolBar from '@/components/Chat/Form/ToolBar.vue'
 
 defineProps<{
   reply?: Message | undefined
@@ -42,6 +48,7 @@ defineProps<{
 const emit = defineEmits(['send', 'detachReply'])
 const showIcons = ref(true)
 const compactView = ref(false)
+const showToolbar = ref(false)
 
 const send = (content: string) => {
   emit('send', content)

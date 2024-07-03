@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center space-x-1.5 justify-center">
-    <IconButton @click="emit('other')">
+    <IconButton class="iconHover" @click="emit('tools')">
       <JoyStick />
     </IconButton>
     <IconButton :disabled="!canAttachFile" @click="(fileInput as HTMLInputElement).click()">
@@ -29,7 +29,7 @@ defineProps<{
   canAttachFile: boolean
 }>()
 
-const emit = defineEmits(['other', 'file', 'audio'])
+const emit = defineEmits(['tools', 'file', 'audio'])
 const route = useRoute()
 const i18n = useI18n()
 const toast = useToast()
@@ -41,3 +41,13 @@ const uploadFile = async (e: Event) => {
   if (res?.data.$error) toast.error(i18n.t(`Failed to upload file: ${res.status}`))
 }
 </script>
+
+<style scoped>
+.iconHover {
+  transition: transform 0.7s ease-in-out;
+}
+
+.iconHover:hover {
+  transform: rotate(360deg);
+}
+</style>

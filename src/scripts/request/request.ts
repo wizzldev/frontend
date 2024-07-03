@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { WizzlAuthToken } from '@/scripts/consts'
+import { isApp } from '@/scripts/mobile/isApp'
 
 const instance = axios.create({
   baseURL: window.GLOBAL_ENV.API_ENDPOINT,
@@ -8,7 +9,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    config.headers['X-Frontend-Client'] = 'Web/Vue@build:alpha'
+    if (isApp())
+      config.headers['X-Frontend-Client'] = 'Android/Vue@' + import.meta.env.VITE_BUILD_HASH_SHORT
+    else config.headers['X-Frontend-Client'] = 'Web/Vue@' + import.meta.env.VITE_BUILD_HASH_SHORT
     config.headers.Authorization = window.localStorage.getItem(WizzlAuthToken)
     return config
   },
@@ -23,7 +26,7 @@ instance.interceptors.response.use(
     return Promise.resolve(res)
   },
   (err) => {
-    console.error(err.message)
+    console.error('Request error', err.message)
 
     if (!err?.response) {
       err.response = { code: 520, data: {} }

@@ -32,6 +32,9 @@ app.use(router)
 app.directive('emoji', {
   mounted: (el: HTMLElement) => {
     twemoji.parse(el, { size: 'svg', ext: '.svg' })
+  },
+  updated: (el: HTMLElement) => {
+    twemoji.parse(el, { size: 'svg', ext: '.svg' })
   }
 })
 

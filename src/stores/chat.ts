@@ -7,6 +7,7 @@ export const useChatStore = defineStore('chat', () => {
   const messages = ref({}) as Ref<Record<string, Messages>>
   const roles = ref({}) as Ref<Record<string, Array<string> | null>>
   const profile = ref({}) as Ref<Record<string, { name: string; image: string; loading: boolean }>>
+  const lastFetch = ref<Record<string, Date>>({})
 
   function push(
     chat: string,
@@ -70,7 +71,9 @@ export const useChatStore = defineStore('chat', () => {
 
   function shouldFetch(chatID: string): boolean {
     if (!(chatID in messages.value)) return true
-    if (isPM.value?.[chatID]) return false
+    if (!(chatID in lastFetch.value)) return true
+    if (lastFetch.value[chatID].getTime() > new Date().getTime() - 2 * 60 * 1000)
+      if (isPM.value?.[chatID]) return false
     return Object.keys(roles.value).includes(chatID) && (roles.value[chatID] || []).length > 0
   }
 
@@ -107,6 +110,7 @@ export const useChatStore = defineStore('chat', () => {
     roles,
     messages,
     profile,
-    isPM
+    isPM,
+    lastFetch
   }
 })

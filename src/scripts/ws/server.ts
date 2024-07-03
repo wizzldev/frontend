@@ -58,6 +58,7 @@ export default class Server {
   public push(name: string, ch: Channel): Detach {
     const len = this.channels.push({ name, ch })
     return () => {
+      console.debug(`[WS] Detaching channel: ${name}`)
       delete this.channels[len - 1]
     }
   }
