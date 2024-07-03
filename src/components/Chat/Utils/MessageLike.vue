@@ -1,7 +1,6 @@
 <template>
   <Transition name="bounce">
     <div
-      data-fake-ul
       v-if="show"
       class="absolute text-xs z-99 -mt-1.5 w-max"
       :class="{ 'ml-auto mr-2': sentByMe, 'ml-2': !sentByMe }"
@@ -10,7 +9,7 @@
         class="px-2 py-0.5 rounded-3xl w-max"
         :class="{ 'bg-tertiary': sentByMe, 'bg-secondary': !sentByMe }"
       >
-        <span :data-likeIds="likes.map((l) => l.id).join('.')">{{
+        <span v-emoji :data-likeIds="likes.map((l) => l.id).join('.')">{{
           likes.map((l) => l.emoji).join(' ')
         }}</span>
       </button>

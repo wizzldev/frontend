@@ -1,9 +1,3 @@
-export interface Theme {
-  id: number
-  dark: ThemeData | undefined
-  light: ThemeData | undefined
-}
-
 export interface ThemeData {
   top: ThemeDataTop
   main: ThemeDataMain

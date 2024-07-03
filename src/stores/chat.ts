@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { type Ref, ref } from 'vue'
 import type { Like, Messages } from '@/types/message'
+import type { ThemeData } from '@/types/chat'
 
 export const useChatStore = defineStore('chat', () => {
   const isPM = ref({}) as Ref<Record<string, boolean>>
@@ -8,6 +9,7 @@ export const useChatStore = defineStore('chat', () => {
   const roles = ref({}) as Ref<Record<string, Array<string> | null>>
   const profile = ref({}) as Ref<Record<string, { name: string; image: string; loading: boolean }>>
   const lastFetch = ref<Record<string, Date>>({})
+  const theme = ref<Record<string, ThemeData | undefined>>({})
 
   function push(
     chat: string,
@@ -111,6 +113,7 @@ export const useChatStore = defineStore('chat', () => {
     messages,
     profile,
     isPM,
-    lastFetch
+    lastFetch,
+    theme
   }
 })

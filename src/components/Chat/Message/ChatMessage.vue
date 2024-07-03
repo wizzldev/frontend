@@ -1,6 +1,6 @@
 <template>
   <div
-    class="cursor-pointer w-max max-w-full rounded-lg break-words z-0"
+    class="cursor-pointer w-max max-w-full rounded-lg break-words whitespace-pre-wrap z-0"
     :class="{
       'bg-secondary rounded-l-3xl ml-auto': sentByMe,
       'bg-tertiary rounded-r-3xl': !sentByMe,

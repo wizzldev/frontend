@@ -1,6 +1,6 @@
 <template>
-  <section class="bg-main border-t-4 border-t-secondary w-full">
-    <div class="h-52 max-h-52 overflow-y-scroll px-3 py-2">
+  <section class="bg-main w-full">
+    <div class="h-64 max-h-64 overflow-y-scroll px-3 py-2">
       <div class="my-2">
         <p class="text-xs text-gray-400">{{ $t('General') }}</p>
         <FormButtonSecondary class="!mt-1" title="Upload a GIF" :processing="false" />
@@ -14,6 +14,7 @@
     </div>
   </section>
 </template>
+
 <script setup lang="ts">
 import FormButtonSecondary from '@/components/Auth/FormButtonSecondary.vue'
 </script>
