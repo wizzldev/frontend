@@ -25,6 +25,8 @@ export default {
   'deleted.you': 'Deleted a message',
   deleted: '{who} deleted a message',
 
+  'Show {count} more': 'Show {count} more',
+
   // Form
   Login: 'Login',
   Register: 'Register',

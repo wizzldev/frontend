@@ -53,18 +53,25 @@
       </MessagerWrap>
     </div>
   </template>
-  <div v-else class="px-2">
-    <template v-for="msg in infoMessages" :key="msg.id">
-      <DateTimeInfo :theme="theme" v-if="msg.type == 'date-time'" :message="msg" />
-      <InfoMessage :theme="theme" v-else :message="msg" />
+  <div v-else class="px-2 my-3">
+    <template v-for="(msg, inx) in infoMessages" :key="msg.id">
+      <template v-if="inx < 3 || showAllInfo">
+        <DateTimeInfo :theme="theme" v-if="msg.type == 'date-time'" :message="msg" />
+        <InfoMessage :theme="theme" v-else :message="msg" />
+      </template>
     </template>
+    <div class="w-full flex items-center justify-center mt-2">
+      <button class="transition-colors text-center text-xs text-purple-400 px-2 py-0.5 rounded-lg hover:bg-secondary focus:bg-secondary" @click="showAllInfo = !showAllInfo" v-if="infoMessages.length > 3">
+        {{ showAllInfo ? $t('Collapse') : showMoreText }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Message, MessageGroup as MessageGroupType } from '@/types/message'
 import { useAuthStore } from '@/stores/auth'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import DateTimeInfo from '@/components/Chat/Info/DateTimeInfo.vue'
 import MessageWrap from '@/components/Chat/Message/MessageWrap.vue'
 import ChatMessage from '@/components/Chat/Message/ChatMessage.vue'
@@ -75,6 +82,7 @@ import type { ThemeDataMain } from '@/types/chat'
 import ChatReply from '@/components/Chat/Message/ChatReply.vue'
 import InfoMessage from '@/components/Chat/Info/InfoMessage.vue'
 import DeletedMessage from '@/components/Chat/Message/DeletedMessage.vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   messages: MessageGroupType
@@ -84,6 +92,8 @@ const props = defineProps<{
 
 const emit = defineEmits(['modal', 'like', 'reply', 'showImage'])
 const auth = useAuthStore()
+const showAllInfo = ref(false)
+const i18n = useI18n()
 
 const sentByMe = computed(() => props.messages.sender.id == auth.user?.id)
 
@@ -104,4 +114,6 @@ const infoMessages = computed(() => {
 const emitModal = (msg: Message) => {
   if (msg.type != 'deleted') emit('modal', msg)
 }
+
+const showMoreText = computed(() => i18n.t('Show {count} more', {count: infoMessages.value.length - 3}))
 </script>
