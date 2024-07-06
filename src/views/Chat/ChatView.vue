@@ -57,7 +57,6 @@ import {
   initChatStore,
   newReactiveStore
 } from '@/views/Chat/scripts'
-import type { Detach } from '@/scripts/ws/types'
 import type { User } from '@/types/user'
 
 // using
@@ -71,8 +70,6 @@ const i18n = useI18n()
 
 // refs
 const store = newReactiveStore()
-
-const detachChan = ref<Detach | null>(null)
 
 const theme = computed(() => chat.theme[chatID.value] || undefined)
 
@@ -131,7 +128,7 @@ const initWebsocket = () => {
     toast.info(i18n.t('Chat successfully reloaded'))
   })
 
-  detachChan.value = window.WS.push(route.params.id as string, chan)
+  window.WS.push(route.params.id as string, chan)
 }
 
 const loadMore = async () => {
@@ -162,15 +159,15 @@ const ws = () => {
 
 const mount = async (hard: boolean = false) => {
   await fetchChat(hard)
-  initWebsocket()
-  if (theme.value != undefined)
-    await setTheme(theme.value?.top.bg || '', theme.value?.bottom.bg || '')
+  if (theme.value != undefined) await setTheme(theme.value?.top.bg || '', theme.value?.bottom.bg || '')
 }
 
-onMounted(mount)
+onMounted(async () => {
+  await mount()
+  initWebsocket()
+})
 
 onUnmounted(async () => {
   await resetTheme()
-  detachChan.value?.()
 })
 </script>

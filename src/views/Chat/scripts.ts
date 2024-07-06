@@ -30,20 +30,23 @@ export const createChannel = (id: string, chatID: string) => {
   const contacts = useContactsStore()
 
   const chan = new Channel(id)
-  chan.on<Message>('message', (m, hookID) => {
-    chat.push(chatID, [m], hookID, true)
-    contacts.update(parseInt(id), m)
+
+  chan.on<Message>('message', ({data, hookID}) => {
+    console.log("NEW MESSSAGEE")
+    console.log({chatID, data, hookID})
+    chat.push(chatID, [data], hookID, true)
+    contacts.update(parseInt(id), data)
   })
 
-  chan.on<Like>('message.like', (l) => {
+  chan.on<Like>('message.like', ({data: l}) => {
     chat.pushLike(chatID, l?.message_id || 0, l)
   })
 
-  chan.on<Like>('message.like.remove', (l) => {
+  chan.on<Like>('message.like.remove', ({data: l}) => {
     chat.removeLike(chatID, l?.message_id || 0, l)
   })
 
-  chan.on<number>('message.unSend', (id) => {
+  chan.on<number>('message.unSend', ({data: id}) => {
     chat.rmMessageID(chatID, id)
   })
 

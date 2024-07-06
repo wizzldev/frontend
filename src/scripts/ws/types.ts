@@ -23,7 +23,7 @@ export type Payload = {
   hook_id: string
 }
 
-export type MessageHandler<T> = (data: T, hookID: string) => void
+export type MessageHandler<T> = (ctx: {data: T; hookID: string, channel: Channel}) => void
 
 // removes an event listener
 export type Detach = () => void

@@ -25,17 +25,25 @@ export const useChatStore = defineStore('chat', () => {
 
     for (let i = 0; i < msg.length; i++) {
       const m = msg[i]
-      const j = messages.value[chat].find(
+      const existingIndex = messages.value[chat].findIndex(
         (k) => k.id == m.id || (hookID != null && k.hookId == hookID)
       )
-      if (j && j.underSending && j.hookId == hookID) {
-        const rmInx = messages.value[chat].indexOf(j)
-        if (rmInx !== -1) messages.value[chat].splice(rmInx, 1)
+      if (existingIndex !== -1) {
+        const existingMessage = messages.value[chat][existingIndex]
+        if (existingMessage.underSending) {
+          // If az existingMessage.underSending is true, replace it with the new message
+          messages.value[chat][existingIndex] = m
+        } else {
+          // If the existing message is not under sending, just add the new message to sorted
+          sorted.push(m)
+        }
+      } else {
+        // If no existing message is found, add the new message to sorted
+        sorted.push(m)
       }
-
-      if (!j) sorted.push(m)
-      else break
     }
+
+    // Append or prepend the sorted messages based on the reverse flag
     if (reverse) messages.value[chat] = [...sorted, ...messages.value[chat]]
     else messages.value[chat] = [...messages.value[chat], ...sorted]
   }

@@ -2,7 +2,7 @@
   <div class="py-3 transition-colors hover:bg-secondary text-left">
     <div class="flex items-center mx-5">
       <div class="flex items-center w-10/12">
-        <img class="rounded-xl w-12 h-12" :src="image" alt="Chat Image" />
+        <LazyImage class="rounded-xl w-12 h-12" :src="image" alt="Chat Image" />
         <div class="w-full px-2">
           <h3
             class="max-w-full text-ellipsis text-nowrap overflow-hidden line-clamp-1 mr-3"
@@ -33,6 +33,7 @@
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import LazyImage from '@/components/Loaders/LazyImage.vue'
 
 const i18n = useI18n()
 const auth = useAuthStore()

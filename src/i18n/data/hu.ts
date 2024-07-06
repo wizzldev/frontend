@@ -26,6 +26,9 @@ export default {
   'update.image': '{sender} módosította a profilképet',
   'update.image.you': 'Módosítottad a profilképet',
 
+  'update.roles.you': 'Módosítottad a rangokat',
+  'update.roles': '{who} módosította a rangokat',
+
   Message: 'Üzenet',
   'Enter email': 'Email cím megadása',
   'Start chatting': 'Chatelés megkezdése',

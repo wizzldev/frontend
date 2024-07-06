@@ -50,17 +50,32 @@ export default class Server {
 
   private handle<T>(e: MessageEvent<string>): void {
     const data = JSON.parse(e.data) as MessageWrapper<T>
+    const log = [] as Array<any>
     this.channels.forEach((ch) => {
+      log.push({ch: ch.name, id: ch.ch.id, sent: ch.ch.id == data.resource || ch.ch.id == 'global'})
       if (ch.ch.id == data.resource || ch.ch.id == 'global') ch.ch.dispatch<T>(data.message)
     })
+    console.debug(`[WS] Data Received and sent to channels:`, log)
   }
 
   public push(name: string, ch: Channel): Detach {
-    const len = this.channels.push({ name, ch })
+    console.debug(`[WS] Registering channel ${name}`)
+    let inx = this.getChannelIndex(name)
+    if(inx == -1) {
+      this.channels.push({ name, ch })
+      inx = this.channels.length - 1
+    } else this.channels[inx] = {name, ch}
     return () => {
       console.debug(`[WS] Detaching channel: ${name}`)
-      delete this.channels[len - 1]
+      if(inx > -1) this.channels.splice(inx, 1)
     }
+  }
+
+  private getChannelIndex(name: string): number {
+    for(let i = 0; i < this.channels.length; i++) {
+      if(this.channels[i].name == name) return i
+    }
+    return -1
   }
 
   public send(s: string) {

@@ -7,8 +7,12 @@ export const setup = async (auth: string, force: boolean = false) => {
   window.WS = new Server(`${window.GLOBAL_ENV.WS_ENDPOINT}?authorization=${auth}`)
 
   const base = new Channel(WizzlDefaultChannel)
-  base.on<string>('connection', (s) => {
-    console.debug(`[ws] connection: ${s}`)
+  base.on<string>('connection', ({data}) => {
+    console.debug(`[ws] connection: ${data}`)
+  })
+
+  base.on<string>('echo', ({data}) => {
+    console.debug('[ws] echo:', JSON.parse(data))
   })
 
   base.use(ping, 2500)
