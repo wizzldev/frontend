@@ -7,7 +7,7 @@
         customTheme: theme
       }"
     >
-      <MessagerWrap :sent-by-me="sentByMe" :sender="messages.sender" :theme="theme" :isPM="isPM">
+      <MessagerWrap :is-bot="messages.sender.is_bot" :sent-by-me="sentByMe" :sender="messages.sender" :theme="theme" :isPM="isPM">
         <MessageWrap
           v-for="msg in messages.messages"
           :key="msg.id"

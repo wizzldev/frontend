@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import ChatLayout from '@/layouts/ChatLayout.vue'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import request from '@/scripts/request/request'
 import { useRoute, useRouter } from 'vue-router'
 import type { Message as WSMessage, Messages } from '@/types/message'

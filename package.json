@@ -30,6 +30,7 @@
     "axios": "^1.6.8",
     "buffer": "^6.0.3",
     "check-password-strength": "^2.0.10",
+    "highlight.js": "^11.10.0",
     "human-date": "^1.4.0",
     "javascript-time-ago": "^2.5.10",
     "js-md5": "^0.8.3",
@@ -46,7 +47,8 @@
     "vue-long-press-directive": "^1.0.2",
     "vue-router": "^4.3.0",
     "vue-tippy": "^6.4.1",
-    "vue-toastification": "^2.0.0-rc.5"
+    "vue-toastification": "^2.0.0-rc.5",
+    "vue3-highlightjs": "^1.0.5"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

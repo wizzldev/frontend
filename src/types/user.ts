@@ -4,4 +4,5 @@ export interface User {
   last_name: string
   image_url: string
   email: string
+  is_bot: boolean
 }

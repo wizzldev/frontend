@@ -12,6 +12,12 @@
     }
   ],
   "compilerOptions": {
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "typeRoots": [
+      "./src/types"
+    ],
+    "types": [
+      "vue3-highlightjs"
+    ]
   }
 }
