@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="inline-block w-5 h-5"
+    class="inline-block w-4 h-4"
     fill="none"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"

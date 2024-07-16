@@ -7,7 +7,7 @@ export const useChatStore = defineStore('chat', () => {
   const isPM = ref({}) as Ref<Record<string, boolean>>
   const messages = ref({}) as Ref<Record<string, Messages>>
   const roles = ref({}) as Ref<Record<string, Array<string> | null>>
-  const profile = ref({}) as Ref<Record<string, { name: string; image: string; loading: boolean }>>
+  const profile = ref({}) as Ref<Record<string, { name: string; pm: boolean; image: string, loading: boolean }>>
   const lastFetch = ref<Record<string, Date>>({})
   const theme = ref<Record<string, ThemeData | undefined>>({})
 
@@ -82,8 +82,9 @@ export const useChatStore = defineStore('chat', () => {
   function shouldFetch(chatID: string): boolean {
     if (!(chatID in messages.value)) return true
     if (!(chatID in lastFetch.value)) return true
-    if (lastFetch.value[chatID].getTime() > new Date().getTime() - 2 * 60 * 1000)
-      if (isPM.value?.[chatID]) return false
+    if (lastFetch.value[chatID].getTime() > new Date().getTime() - 5 * 60 * 1000) {
+      return !!isPM.value?.[chatID];
+    }
     return Object.keys(roles.value).includes(chatID) && (roles.value[chatID] || []).length > 0
   }
 

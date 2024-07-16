@@ -53,7 +53,7 @@ export default class Server {
     const log = [] as Array<any>
     this.channels.forEach((ch) => {
       log.push({ch: ch.name, id: ch.ch.id, sent: ch.ch.id == data.resource || ch.ch.id == 'global'})
-      if (ch.ch.id == data.resource || ch.ch.id == 'global') ch.ch.dispatch<T>(data.message)
+      if (ch.ch.id == data.resource || ch.ch.id == 'global') ch.ch.dispatch<T>(data.message, data.resource)
     })
     console.debug(`[WS] Data Received and sent to channels:`, log)
   }

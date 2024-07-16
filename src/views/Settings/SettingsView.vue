@@ -13,6 +13,7 @@
     </section>
     <EditUserInfo />
     <AccountSecurity />
+    <DangerZone/>
     <BuildInfo />
   </SettingsLayout>
   <Modal :show="editProfileImage" @close="editProfileImage = false">
@@ -36,6 +37,7 @@ import SettingsButton from '@/components/Settings/SettingsButton.vue'
 import BuildInfo from '@/components/Settings/BuildInfo.vue'
 import EditUserInfo from '@/components/Settings/EditUserInfo.vue'
 import AccountSecurity from '@/components/Settings/AccountSecurity.vue'
+import DangerZone from '@/components/Settings/DangerZone.vue'
 
 const auth = useAuthStore()
 const editProfileImage = ref(false)

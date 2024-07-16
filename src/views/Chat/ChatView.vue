@@ -6,7 +6,7 @@
   >
     <MessageLayout
       :theme="theme?.main"
-      :isPM="store.isPM"
+      :isPM="isPM"
       :hasNext="store.cursors.next != ''"
       :messages="chat.messages[chatID] || []"
       @reply="(msg) => (store.replyMessage = msg)"
@@ -94,8 +94,11 @@ const send = (content: string, data_json: string = '{}') => {
   store.replyMessage = undefined
 }
 
-const permission = (role: string) =>
-  store.isPM || ((!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes(role)) as boolean)
+const permission = (role: string) => {
+  return isPM.value || ((!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes(role)) as boolean)
+}
+
+const isPM = computed(() => chat.profile[chatID.value] && chat.profile[chatID.value].pm)
 
 const like = async (id: number) => {
   ws()?.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
@@ -112,16 +115,15 @@ const fetchChat = async (hard: boolean = false) => {
   const data = await fetchChatInfo(route.params.id as string)
   if (!data) return await router.push({ name: 'chat.contacts' })
 
-  store.isPM = data.group.is_private_message
   store.isYou = data.is_your_profile
 
-  initChatStore(chatID.value, data.group, data.messages.data, data.user_roles)
+  initChatStore(chatID.value, data.group, data.messages.data, data.user_roles, data.group.is_private_message)
   store.cursors = { next: data.messages.next_cursor, prev: data.messages.previous_cursor }
   loader.isLoaded = true
 }
 
 const initWebsocket = () => {
-  const chan = createChannel(route.params.id as string, chatID.value)
+  const chan = createChannel(route.params.id as string)
 
   chan.on<null>('reload', () => {
     mount(true)

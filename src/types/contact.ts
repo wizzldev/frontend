@@ -2,6 +2,7 @@ export interface Contact {
   id: number
   name: string
   image: string
+  is_verified: boolean
   last_message: LastMessage
 }
 

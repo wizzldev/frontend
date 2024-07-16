@@ -7,8 +7,11 @@
   >
     <slot />
   </router-link>
-  <button class="block transition-colors" @click="handle" v-else>
-    <slot />
+  <button class="transition-colors flex items-center space-x-2" @click="handle" v-else>
+    <span>
+      <slot />
+    </span>
+    <Spinner v-if="loading" />
   </button>
 </template>
 
@@ -16,11 +19,13 @@
 import { isApp } from '@/scripts/mobile/isApp'
 import { type RouteLocationRaw, type RouteParamsRaw, useRouter } from 'vue-router'
 import { computed } from 'vue'
+import Spinner from '@/components/Icons/Spinner.vue'
 
 const props = defineProps<{
   isLink: boolean
   toName?: string
   toParams?: RouteParamsRaw
+  loading?: boolean
 }>()
 
 const router = useRouter()

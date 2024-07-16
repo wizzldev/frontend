@@ -12,16 +12,18 @@ export const useContactsStore = defineStore('contacts', () => {
   }
 
   function update(cID: number, message: Message) {
-    contacts.value.forEach((c) => {
-      if (c.id == cID)
-        c.last_message = {
-          content: message.content,
-          date: message.created_at,
+    for(let i = 0; i < contacts.value.length; i++) {
+      if(contacts.value[i].id === cID) {
+        contacts.value[i].last_message = {
+          sender_id: message.sender.id,
           sender_name: message.sender.first_name,
+          content: message.content,
           type: message.type,
-          sender_id: message.sender.id
+          date: message.created_at
         }
-    })
+        break
+      }
+    }
     sort()
   }
 

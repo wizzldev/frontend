@@ -1,7 +1,6 @@
 import { Channel } from '@/scripts/ws/channel'
-import type { Like, Message as WSMessage, Message, Messages } from '@/types/message'
+import type { Message, Messages } from '@/types/message'
 import { useChatStore } from '@/stores/chat'
-import { useContactsStore } from '@/stores/contacts'
 import request from '@/scripts/request/request'
 import type { User } from '@/types/user'
 import type { ThemeData } from '@/types/chat'
@@ -25,33 +24,7 @@ export const fetchChatInfo = async (id: string): Promise<ChatData | null> => {
   return res.data as ChatData
 }
 
-export const createChannel = (id: string, chatID: string) => {
-  const chat = useChatStore()
-  const contacts = useContactsStore()
-
-  const chan = new Channel(id)
-
-  chan.on<Message>('message', ({data, hookID}) => {
-    console.log("NEW MESSSAGEE")
-    console.log({chatID, data, hookID})
-    chat.push(chatID, [data], hookID, true)
-    contacts.update(parseInt(id), data)
-  })
-
-  chan.on<Like>('message.like', ({data: l}) => {
-    chat.pushLike(chatID, l?.message_id || 0, l)
-  })
-
-  chan.on<Like>('message.like.remove', ({data: l}) => {
-    chat.removeLike(chatID, l?.message_id || 0, l)
-  })
-
-  chan.on<number>('message.unSend', ({data: id}) => {
-    chat.rmMessageID(chatID, id)
-  })
-
-  return chan
-}
+export const createChannel = (id: string) => new Channel(id)
 
 export const createUnsentMessage = (
   user: User,
@@ -76,18 +49,19 @@ export const initChatStore = (
   id: string,
   group: { image_url: string; name: string; theme: { data: string } | undefined },
   messages: Messages,
-  roles: Array<string>
+  roles: Array<string>,
+  pm: boolean,
 ) => {
   const chat = useChatStore()
 
   // set the last fetch date to now
   chat.lastFetch[id] = new Date()
 
-  chat.isPM[id] = true
   chat.profile[id] = {
     image: group.image_url,
     name: group.name,
-    loading: false
+    loading: false,
+    pm,
   }
   if (group.theme) chat.theme[id] = JSON.parse(group.theme.data) as ThemeData
   chat.push(id, messages)
@@ -96,16 +70,14 @@ export const initChatStore = (
 
 export const newReactiveStore = () => {
   return reactive<{
-    modalMessage: WSMessage | null
-    replyMessage: WSMessage | undefined
+    modalMessage: Message | null
+    replyMessage: Message | undefined
     cursors: { next: string; prev: string }
-    isPM: boolean
     isYou: boolean
   }>({
     modalMessage: null,
     replyMessage: undefined,
     cursors: { next: '', prev: '' },
-    isPM: true,
     isYou: false
   })
 }

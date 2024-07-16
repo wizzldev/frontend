@@ -29,5 +29,9 @@ coverage
 
 *.tsbuildinfo
 
+# Android files
 android/app/src/main/assets/*
 android/app/build/*
+
+# nano/vim saves
+*.save

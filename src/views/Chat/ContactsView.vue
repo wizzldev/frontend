@@ -4,7 +4,7 @@
       <IconInput v-model="searchInput" :icon="Magnifier as Component" placeholder="Search" />
     </section>
     <ChatNav />
-    <section class="h-full w-full max-w-full overflow-y-scroll pt-4">
+    <section class="h-full w-full max-w-full overflow-y-scroll pt-2">
       <div v-if="!hasContact" class="w-full my-auto text-center">
         <h2 class="text-gray-600 fontTheme px-2">
           {{ $t('You currently have no active conversation') }}
@@ -19,18 +19,22 @@
       </div>
 
       <div class="w-full">
+        <div class="px-3 mb-2">
+          <PremiumAd/>
+        </div>
         <template v-for="(con, i) in contacts.contacts" :key="i">
           <PushButton
             class="w-full"
             v-if="showSearch(con)"
             :is-link="true"
             to-name="chat.message"
-            :to-params="{ id: con.id }"
+            :to-params="{ id: con?.id }"
           >
             <Contact
               :title="con.name"
               :image="cdnImage(con.image, 256)"
               :message="con.last_message"
+              :verified="con.is_verified"
             />
           </PushButton>
         </template>
@@ -65,6 +69,7 @@ import type { Contact as TContact } from '@/types/contact'
 import { useContactsStore } from '@/stores/contacts'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
 import { cdnImage } from '@/scripts/image'
+import PremiumAd from '@/components/PremiumAd.vue'
 
 const loader = useRouteLoaderStore()
 const contacts = useContactsStore()

@@ -1,7 +1,6 @@
 <template>
   <section>
     <form v-on:submit.prevent>
-      <h2 class="text-lg font-bold">{{ $t('General information') }}</h2>
       <div class="my-2">
         <label class="text-sm text-gray-200">{{ $t('Group name') }}</label>
         <input

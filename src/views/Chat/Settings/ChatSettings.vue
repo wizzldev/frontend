@@ -23,15 +23,37 @@
     <main class="px-4 my-2" v-if="loaded">
       <EditName :name="chatProfile.name" />
       <div>
-        <PushButton
-          v-if="!chatProfile.isPrivateMessage && yourRoles.includes('ADMIN')"
-          toName="chat.roles"
-          :to-params="{ id: $route.params.id as string }"
-          :is-link="true"
-          class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
-        >
-          {{ $t('Edit roles') }}
-        </PushButton>
+        <ChatGroup title="Roles & Permissions">
+          <PushButton
+            v-if="!chatProfile.isPrivateMessage && yourRoles.includes('ADMIN')"
+            toName="chat.roles"
+            :to-params="{ id: $route.params.id as string }"
+            :is-link="true"
+            class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+          >
+            {{ $t('Edit roles') }}
+          </PushButton>
+        </ChatGroup>
+
+        <ChatGroup title="Request data access" v-if="chatProfile.isPrivateMessage || yourRoles.includes('ADMIN')">
+          <PushButton
+            v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')"
+            :is-link="false"
+            class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
+          >
+            {{ $t('Download group data in JSON') }}
+          </PushButton>
+        </ChatGroup>
+
+        <ChatGroup title="Danger zone" v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')">
+          <PushButton
+            v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')"
+            :is-link="false"
+            class="transition-colors w-full text-white bg-red-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
+          >
+            {{ $t('Delete chat') }}
+          </PushButton>
+        </ChatGroup>
       </div>
     </main>
   </ChatLayout>
@@ -59,6 +81,7 @@ import { useContactsStore } from '@/stores/contacts'
 import PushButton from '@/components/Elements/PushButton.vue'
 import { fetchInfo } from '@/views/Chat/Settings/fetchInfo'
 import EditName from '@/components/Group/EditName.vue'
+import ChatGroup from '@/views/Chat/Settings/ChatGroup.vue'
 
 const route = useRoute()
 const contacts = useContactsStore()

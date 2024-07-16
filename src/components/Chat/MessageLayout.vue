@@ -1,31 +1,32 @@
 <template>
-  <ul
-    ref="scrollContainer"
-    class="py-2 h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse text-white"
-    :class="{ customTheme: theme }"
-  >
-    <li class="w-full" v-for="(msg, inx) in messageList" :key="inx">
-      <MessageGroup
-        @reply="(msg) => $emit('reply', msg)"
-        @modal="(msg) => $emit('modal', msg)"
-        :theme="theme"
-        @like="(id: number) => $emit('like', id)"
-        :messages="msg"
-        :isPM="isPM"
-        @showImage="showImage"
-      />
-    </li>
-    <li class="w-full text-center text-xl my-3" v-if="loading">
-      <Spinner class="text-gray-400" :class="{ customText: theme }" />
-    </li>
-    <li class="w-full text-center my-3" v-if="!hasNext">
-      <p class="text-center text-gray-400 fontTheme" :class="{ customText: theme }">
-        {{ $t('No more messages') }}
-      </p>
-    </li>
-  </ul>
-  <div class="fixed top-0 left-0" v-if="previewImage != ''">
-    <img :src="previewImage" alt="Preview image" />
+  <div class="w-full h-full overflow-hidden relative">
+    <img v-if="theme && theme.bgImage" class="customTheme-bg" :src="theme?.bgImage" alt="Background image" />
+    <ul
+      ref="scrollContainer"
+      class="py-2 h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse text-white z-99"
+      :class="{ customTheme: theme }"
+      :data-theme-pattern="theme?.is_pattern ? 'true' : 'false'"
+    >
+      <li class="w-full" v-for="(msg, inx) in messageList" :key="inx">
+        <MessageGroup
+          @reply="(msg) => $emit('reply', msg)"
+          @modal="(msg) => $emit('modal', msg)"
+          :theme="theme"
+          @like="(id: number) => $emit('like', id)"
+          :messages="msg"
+          :isPM="isPM"
+          @showImage="showImage"
+        />
+      </li>
+      <li class="w-full text-center text-xl my-3" v-if="loading">
+        <Spinner class="text-gray-400" :class="{ customText: theme }" />
+      </li>
+      <li class="w-full text-center my-3" v-if="!hasNext">
+        <p class="text-center text-gray-400 fontTheme" :class="{ customText: theme }">
+          {{ $t('No more messages') }}
+        </p>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -85,20 +86,20 @@ onBeforeUnmount(() => {
 .customTheme {
   background-color: v-bind('theme?.bg') !important;
   color: v-bind('theme?.text') !important;
-  background-image: v-bind('theme?.bgImage');
-  background-position: center;
-  background-size: contain;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
 }
 
 .customText {
   color: v-bind('theme?.text') !important;
 }
 
-@media only screen and (max-width: 600px) {
-  .customTheme {
-    background-size: cover;
-  }
+.customTheme-bg {
+  opacity: 0.8;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  object-fit: cover;
 }
 </style>

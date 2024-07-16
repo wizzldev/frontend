@@ -37,6 +37,10 @@ body {
   @apply transition-colors bg-tertiary hover:bg-tertiary-hover focus:bg-tertiary-focus;
 }
 
+.bg-red-all {
+  @apply transition-colors bg-red-400 hover:bg-red-500 focus:bg-red-400;
+}
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;

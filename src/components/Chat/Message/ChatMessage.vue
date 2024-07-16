@@ -64,7 +64,6 @@ const color = computed(() =>
 
 const codify = () => {
   snippets.value = stringBetween(["```", "```"])(props.message.content)
-  console.log(props.message.content, snippets.value)
 }
 
 onMounted(codify)

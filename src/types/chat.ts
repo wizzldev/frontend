@@ -14,6 +14,7 @@ export interface ThemeDataTop {
 export interface ThemeDataMain {
   bg: string
   bgImage: string
+  is_pattern: boolean
   text: string
   message: {
     you: ThemeDataMessage

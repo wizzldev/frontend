@@ -5,10 +5,10 @@
         <LazyImage class="rounded-xl w-12 h-12" :src="image" alt="Chat Image" />
         <div class="w-full px-2">
           <h3
-            class="max-w-full text-ellipsis text-nowrap overflow-hidden line-clamp-1 mr-3"
-            v-emoji
+            class="max-w-full mr-3 flex items-center space-x-1"
           >
-            {{ title }}
+            <span class="text-ellipsis text-nowrap overflow-hidden line-clamp-1" v-emoji>{{ realTitle }}</span>
+            <VerifiedBadge v-if="verified" class="text-yellow-400" />
           </h3>
           <div class="flex items-center space-x-0.5">
             <p
@@ -34,6 +34,7 @@ import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
+import VerifiedBadge from '@/components/Icons/VerifiedBadge.vue'
 
 const i18n = useI18n()
 const auth = useAuthStore()
@@ -41,6 +42,7 @@ const auth = useAuthStore()
 const props = defineProps<{
   image: string
   title: string
+  verified: boolean
   message: {
     sender_id: number
     sender_name: string
@@ -63,5 +65,12 @@ const realMessage = computed(() => {
     sender: sender,
     groupName: props.title
   })
+})
+
+const realTitle = computed(() => {
+  if(props.title.endsWith('#allowTranslation')) {
+    return i18n.t(props.title.substring(0, props.title.length - '#allowTranslation'.length))
+  }
+  return props.title
 })
 </script>
