@@ -60,7 +60,7 @@ export class Channel {
   public dispatch<T>(data: MessageData<T>, resource: string) {
     this.handlers.forEach((h) => {
       if (h.event == data.event) {
-        h.handler({data: data.data, hookID: data.hook_id, channel: this, resource})
+        h.handler({ data: data.data, hookID: data.hook_id, channel: this, resource })
       }
     })
   }

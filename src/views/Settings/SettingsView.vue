@@ -13,7 +13,7 @@
     </section>
     <EditUserInfo />
     <AccountSecurity />
-    <DangerZone/>
+    <DangerZone />
     <BuildInfo />
   </SettingsLayout>
   <Modal :show="editProfileImage" @close="editProfileImage = false">

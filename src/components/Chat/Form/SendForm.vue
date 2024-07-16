@@ -56,7 +56,7 @@ watch(showSend, (s) => {
 })
 
 const handleSpace = (e: KeyboardEvent) => {
-  if(e.code == 'Space' || e.key == " ") textarea.value.focus()
+  if (e.code == 'Space' || e.key == ' ') textarea.value.focus()
 }
 
 onBeforeMount(() => {

@@ -36,5 +36,7 @@ const props = defineProps<{
   message: Message
 }>()
 
-const isSwipable = computed(() => ['message', 'emoji'].includes(props.message.type) && !props.message.content.includes('```'))
+const isSwipable = computed(
+  () => ['message', 'emoji'].includes(props.message.type) && !props.message.content.includes('```')
+)
 </script>

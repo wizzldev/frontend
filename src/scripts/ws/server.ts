@@ -52,8 +52,13 @@ export default class Server {
     const data = JSON.parse(e.data) as MessageWrapper<T>
     const log = [] as Array<any>
     this.channels.forEach((ch) => {
-      log.push({ch: ch.name, id: ch.ch.id, sent: ch.ch.id == data.resource || ch.ch.id == 'global'})
-      if (ch.ch.id == data.resource || ch.ch.id == 'global') ch.ch.dispatch<T>(data.message, data.resource)
+      log.push({
+        ch: ch.name,
+        id: ch.ch.id,
+        sent: ch.ch.id == data.resource || ch.ch.id == 'global'
+      })
+      if (ch.ch.id == data.resource || ch.ch.id == 'global')
+        ch.ch.dispatch<T>(data.message, data.resource)
     })
     console.debug(`[WS] Data Received and sent to channels:`, log)
   }
@@ -61,19 +66,19 @@ export default class Server {
   public push(name: string, ch: Channel): Detach {
     console.debug(`[WS] Registering channel ${name}`)
     let inx = this.getChannelIndex(name)
-    if(inx == -1) {
+    if (inx == -1) {
       this.channels.push({ name, ch })
       inx = this.channels.length - 1
-    } else this.channels[inx] = {name, ch}
+    } else this.channels[inx] = { name, ch }
     return () => {
       console.debug(`[WS] Detaching channel: ${name}`)
-      if(inx > -1) this.channels.splice(inx, 1)
+      if (inx > -1) this.channels.splice(inx, 1)
     }
   }
 
   private getChannelIndex(name: string): number {
-    for(let i = 0; i < this.channels.length; i++) {
-      if(this.channels[i].name == name) return i
+    for (let i = 0; i < this.channels.length; i++) {
+      if (this.channels[i].name == name) return i
     }
     return -1
   }

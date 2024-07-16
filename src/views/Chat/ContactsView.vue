@@ -20,7 +20,7 @@
 
       <div class="w-full">
         <div class="px-3 mb-2">
-          <PremiumAd/>
+          <PremiumAd />
         </div>
         <template v-for="(con, i) in contacts.contacts" :key="i">
           <PushButton

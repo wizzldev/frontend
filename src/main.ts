@@ -34,10 +34,18 @@ app.use(router)
 
 app.directive('emoji', {
   mounted: (el: HTMLElement) => {
-    twemoji.parse(el, { size: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' })
+    twemoji.parse(el, {
+      size: 'svg',
+      ext: '.svg',
+      base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'
+    })
   },
   updated: (el: HTMLElement) => {
-    twemoji.parse(el, {size: 'svg', ext: 'svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' })
+    twemoji.parse(el, {
+      size: 'svg',
+      ext: 'svg',
+      base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'
+    })
   }
 })
 

@@ -4,9 +4,10 @@ import setup from '@/scripts/mobile/setup'
 import InfiniteLoader from '@/components/Loaders/InfiniteLoader.vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import TermsModal from '@/components/Modals/TermsModal.vue'
 import { WizzlTermsAccepted } from '@/scripts/consts'
+import { isApp } from '@/scripts/mobile/isApp'
 
 const router = useRouter()
 const route = useRoute()
@@ -24,6 +25,10 @@ const accept = () => {
 }
 
 setup(router)
+
+onMounted(() => {
+  if (isApp()) document.body.setAttribute('data-platform', 'mobile')
+})
 </script>
 
 <template>

@@ -13,7 +13,11 @@
     <h2 class="text-2xl fontTheme">{{ $t('Are you sure?') }}</h2>
     <div class="mt-2">
       <p class="text-left">
-        {{ $t('If you delete your account, all your data will be deleted and you will not be able to restore it') }}
+        {{
+          $t(
+            'If you delete your account, all your data will be deleted and you will not be able to restore it'
+          )
+        }}
       </p>
       <div v-if="!nextDelete" class="grid grid-cols-2 gap-2">
         <PushButton
@@ -32,7 +36,13 @@
         </PushButton>
       </div>
       <form v-on:submit.prevent v-else class="mt-2">
-        <IconInput v-model.lazy="pw" :disabled="deleting" class="border border-tertiary rounded-xl" :placeholder="$t('Password')" :icon="Lock" />
+        <IconInput
+          v-model.lazy="pw"
+          :disabled="deleting"
+          class="border border-tertiary rounded-xl"
+          :placeholder="$t('Password')"
+          :icon="Lock"
+        />
         <PushButton
           :is-link="false"
           @click="del"
@@ -73,8 +83,8 @@ const retain = () => {
 
 const del = async () => {
   deleting.value = true
-  const res = await request.post('/me/delete', {password: pw.value})
-  if(!res.data.$error) {
+  const res = await request.post('/me/delete', { password: pw.value })
+  if (!res.data.$error) {
     toast.success(i18n.t('Your account successfully deleted'))
     await router.push('/')
     return

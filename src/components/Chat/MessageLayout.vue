@@ -1,6 +1,11 @@
 <template>
   <div class="w-full h-full overflow-hidden relative">
-    <img v-if="theme && theme.bgImage" class="customTheme-bg" :src="theme?.bgImage" alt="Background image" />
+    <img
+      v-if="theme && theme.bgImage"
+      class="customTheme-bg"
+      :src="theme?.bgImage"
+      alt="Background image"
+    />
     <ul
       ref="scrollContainer"
       class="py-2 h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse text-white z-99"

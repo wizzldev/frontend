@@ -50,7 +50,7 @@ export const initChatStore = (
   group: { image_url: string; name: string; theme: { data: string } | undefined },
   messages: Messages,
   roles: Array<string>,
-  pm: boolean,
+  pm: boolean
 ) => {
   const chat = useChatStore()
 
@@ -61,7 +61,7 @@ export const initChatStore = (
     image: group.image_url,
     name: group.name,
     loading: false,
-    pm,
+    pm
   }
   if (group.theme) chat.theme[id] = JSON.parse(group.theme.data) as ThemeData
   chat.push(id, messages)

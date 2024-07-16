@@ -95,7 +95,10 @@ const send = (content: string, data_json: string = '{}') => {
 }
 
 const permission = (role: string) => {
-  return isPM.value || ((!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes(role)) as boolean)
+  return (
+    isPM.value ||
+    ((!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes(role)) as boolean)
+  )
 }
 
 const isPM = computed(() => chat.profile[chatID.value] && chat.profile[chatID.value].pm)
@@ -117,7 +120,13 @@ const fetchChat = async (hard: boolean = false) => {
 
   store.isYou = data.is_your_profile
 
-  initChatStore(chatID.value, data.group, data.messages.data, data.user_roles, data.group.is_private_message)
+  initChatStore(
+    chatID.value,
+    data.group,
+    data.messages.data,
+    data.user_roles,
+    data.group.is_private_message
+  )
   store.cursors = { next: data.messages.next_cursor, prev: data.messages.previous_cursor }
   loader.isLoaded = true
 }
@@ -161,7 +170,8 @@ const ws = () => {
 
 const mount = async (hard: boolean = false) => {
   await fetchChat(hard)
-  if (theme.value != undefined) await setTheme(theme.value?.top.bg || '', theme.value?.bottom.bg || '')
+  if (theme.value != undefined)
+    await setTheme(theme.value?.top.bg || '', theme.value?.bottom.bg || '')
 }
 
 onMounted(async () => {

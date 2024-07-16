@@ -4,10 +4,10 @@
       <div class="flex items-center w-10/12">
         <LazyImage class="rounded-xl w-12 h-12" :src="image" alt="Chat Image" />
         <div class="w-full px-2">
-          <h3
-            class="max-w-full mr-3 flex items-center space-x-1"
-          >
-            <span class="text-ellipsis text-nowrap overflow-hidden line-clamp-1" v-emoji>{{ realTitle }}</span>
+          <h3 class="max-w-full mr-3 flex items-center space-x-1">
+            <span class="text-ellipsis text-nowrap overflow-hidden line-clamp-1" v-emoji>{{
+              realTitle
+            }}</span>
             <VerifiedBadge v-if="verified" class="text-yellow-400" />
           </h3>
           <div class="flex items-center space-x-0.5">
@@ -68,7 +68,7 @@ const realMessage = computed(() => {
 })
 
 const realTitle = computed(() => {
-  if(props.title.endsWith('#allowTranslation')) {
+  if (props.title.endsWith('#allowTranslation')) {
     return i18n.t(props.title.substring(0, props.title.length - '#allowTranslation'.length))
   }
   return props.title

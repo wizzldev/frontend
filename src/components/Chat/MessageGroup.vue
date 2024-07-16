@@ -7,7 +7,13 @@
         customTheme: theme
       }"
     >
-      <MessagerWrap :is-bot="messages.sender.is_bot" :sent-by-me="sentByMe" :sender="messages.sender" :theme="theme" :isPM="isPM">
+      <MessagerWrap
+        :is-bot="messages.sender.is_bot"
+        :sent-by-me="sentByMe"
+        :sender="messages.sender"
+        :theme="theme"
+        :isPM="isPM"
+      >
         <MessageWrap
           v-for="msg in messages.messages"
           :key="msg.id"
@@ -61,7 +67,11 @@
       </template>
     </template>
     <div class="w-full flex items-center justify-center mt-2">
-      <button class="transition-colors text-center text-xs text-purple-400 px-2 py-0.5 rounded-lg hover:bg-secondary focus:bg-secondary" @click="showAllInfo = !showAllInfo" v-if="infoMessages.length > 3">
+      <button
+        class="transition-colors text-center text-xs text-purple-400 px-2 py-0.5 rounded-lg hover:bg-secondary focus:bg-secondary"
+        @click="showAllInfo = !showAllInfo"
+        v-if="infoMessages.length > 3"
+      >
         {{ showAllInfo ? $t('Collapse') : showMoreText }}
       </button>
     </div>
@@ -115,5 +125,7 @@ const emitModal = (msg: Message) => {
   if (msg.type != 'deleted') emit('modal', msg)
 }
 
-const showMoreText = computed(() => i18n.t('Show {count} more', {count: infoMessages.value.length - 3}))
+const showMoreText = computed(() =>
+  i18n.t('Show {count} more', { count: infoMessages.value.length - 3 })
+)
 </script>

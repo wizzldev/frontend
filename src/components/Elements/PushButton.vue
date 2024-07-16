@@ -7,11 +7,17 @@
   >
     <slot />
   </router-link>
-  <button class="transition-colors flex items-center space-x-2" @click="handle" v-else>
-    <span>
+  <button
+    class="transition-colors"
+    :class="{ 'flex items-center space-x-2 justify-center': loading }"
+    @click="handle"
+    v-else
+  >
+    <span v-if="loading">
       <slot />
     </span>
     <Spinner v-if="loading" />
+    <slot v-else />
   </button>
 </template>
 

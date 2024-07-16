@@ -35,7 +35,10 @@
           </PushButton>
         </ChatGroup>
 
-        <ChatGroup title="Request data access" v-if="chatProfile.isPrivateMessage || yourRoles.includes('ADMIN')">
+        <ChatGroup
+          title="Request data access"
+          v-if="chatProfile.isPrivateMessage || yourRoles.includes('ADMIN')"
+        >
           <PushButton
             v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')"
             :is-link="false"
@@ -45,7 +48,10 @@
           </PushButton>
         </ChatGroup>
 
-        <ChatGroup title="Danger zone" v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')">
+        <ChatGroup
+          title="Danger zone"
+          v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')"
+        >
           <PushButton
             v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')"
             :is-link="false"

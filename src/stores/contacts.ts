@@ -12,8 +12,8 @@ export const useContactsStore = defineStore('contacts', () => {
   }
 
   function update(cID: number, message: Message) {
-    for(let i = 0; i < contacts.value.length; i++) {
-      if(contacts.value[i].id === cID) {
+    for (let i = 0; i < contacts.value.length; i++) {
+      if (contacts.value[i].id === cID) {
         contacts.value[i].last_message = {
           sender_id: message.sender.id,
           sender_name: message.sender.first_name,
