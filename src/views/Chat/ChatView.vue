@@ -125,7 +125,8 @@ const fetchChat = async (hard: boolean = false) => {
     data.group,
     data.messages.data,
     data.user_roles,
-    data.group.is_private_message
+    data.group.is_private_message,
+    data.group.is_verified
   )
   store.cursors = { next: data.messages.next_cursor, prev: data.messages.previous_cursor }
   loader.isLoaded = true

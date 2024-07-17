@@ -21,12 +21,14 @@
           :src="cdnImage(image, 128)"
           :alt="`${name}'s chat image`"
         />
-        <h2
-          class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
-          v-emoji
+        <h3
+          class="max-w-full mr-3 flex items-center space-x-1 fontTheme"
         >
-          {{ loading ? $t('Loading') : name }}
-        </h2>
+          <span class="text-ellipsis text-nowrap overflow-hidden line-clamp-1 text-lg" v-emoji>
+              {{ loading ? $t('Loading') : realTitle }}
+          </span>
+          <VerifiedBadge class="text-yellow-400" v-if="verified" />
+        </h3>
       </div>
       <div class="flex items-center space-x-2">
         <PushButton
@@ -62,22 +64,34 @@ import type { ThemeDataTop } from '@/types/chat'
 import type { RouteParamsRaw } from 'vue-router'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import { cdnImage } from '@/scripts/image'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Cloud from '@/components/Icons/Cloud.vue'
+import VerifiedBadge from '@/components/Icons/VerifiedBadge.vue'
+import { useI18n } from 'vue-i18n'
 
+const i18n = useI18n()
 const connected = ref(window.WS.connected)
 
 watch(window.WS, (w) => {
   connected.value = w.connected
 })
 
-defineProps<{
+const props = defineProps<{
   image: string
   name: string
   loading: boolean
   theme: ThemeDataTop | undefined
   isYou: boolean
+  verified: boolean
 }>()
+
+
+const realTitle = computed(() => {
+  if (props.name.endsWith('#allowTranslation')) {
+    return i18n.t(props.name.substring(0, props.name.length - '#allowTranslation'.length))
+  }
+  return props.name
+})
 </script>
 
 <style scoped>

@@ -27,12 +27,7 @@
             <button @click="rm(user)">&times;</button>
           </li>
           <li v-if="groupMake.users.length >= 1">
-            <button
-              @click="submit"
-              class="my-2 bg-secondary px-4 py-2 w-full rounded-full text-center"
-            >
-              {{ $t('Start chatting') }}
-            </button>
+            <FormButtonSecondary title="Start chatting" :processing="false" />
           </li>
         </ul>
       </div>
@@ -56,6 +51,7 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import MyProfile from '@/components/Navigation/MyProfile.vue'
 import { useGroupMakeStore } from '@/stores/groupMake'
 import { cdnImage } from '@/scripts/image'
+import FormButtonSecondary from '@/components/Auth/FormButtonSecondary.vue'
 
 const groupMake = useGroupMakeStore()
 const router = useRouter()

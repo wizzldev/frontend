@@ -13,6 +13,7 @@ export interface ChatData {
     image_url: string
     is_private_message: boolean
     theme: { id: number; name: string; data: string } | undefined
+    is_verified: boolean
   }
   messages: { data: Messages; next_cursor: string; previous_cursor: string }
   is_your_profile: boolean
@@ -50,7 +51,8 @@ export const initChatStore = (
   group: { image_url: string; name: string; theme: { data: string } | undefined },
   messages: Messages,
   roles: Array<string>,
-  pm: boolean
+  pm: boolean,
+  is_verified: boolean
 ) => {
   const chat = useChatStore()
 
@@ -61,7 +63,8 @@ export const initChatStore = (
     image: group.image_url,
     name: group.name,
     loading: false,
-    pm
+    pm,
+    is_verified,
   }
   if (group.theme) chat.theme[id] = JSON.parse(group.theme.data) as ThemeData
   chat.push(id, messages)

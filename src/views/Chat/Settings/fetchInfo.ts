@@ -17,7 +17,8 @@ export const fetchInfo = async (id: string) => {
         name: data.name,
         image: data.image_url,
         isPrivateMessage: data.is_private_message,
-        loading: false
+        loading: false,
+        is_verified: false
       },
       roles: data.roles,
       your_roles: data.your_roles

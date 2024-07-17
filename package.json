@@ -19,6 +19,7 @@
   "dependencies": {
     "@capacitor/android": "^6.0.0",
     "@capacitor/app": "^6.0.0",
+    "@capacitor/browser": "^6.0.1",
     "@capacitor/core": "^6.0.0",
     "@capacitor/haptics": "^6.0.0",
     "@capacitor/ios": "^6.1.0",
@@ -38,6 +39,7 @@
     "pinia": "^2.1.7",
     "pretty-bytes": "^6.1.1",
     "serve": "^14.2.3",
+    "tlds": "^1.254.0",
     "twemoji": "^14.0.2",
     "ua-parser-js": "^1.0.38",
     "vue": "^3.4.21",
@@ -48,7 +50,8 @@
     "vue-router": "^4.3.0",
     "vue-tippy": "^6.4.1",
     "vue-toastification": "^2.0.0-rc.5",
-    "vue3-highlightjs": "^1.0.5"
+    "vue3-highlightjs": "^1.0.5",
+    "xss": "^1.0.15"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

@@ -6,6 +6,7 @@
       :loading="chatProfile.loading"
       :theme="theme"
       :isYou="isYou"
+      :verified="chatProfile.is_verified"
     />
     <slot />
   </AppLayout>
@@ -17,7 +18,7 @@ import ChatProfile from '@/components/Navigation/ChatProfile.vue'
 import type { ThemeDataTop } from '@/types/chat'
 
 defineProps<{
-  chatProfile: { name: string; image: string; loading: boolean }
+  chatProfile: { name: string; image: string; loading: boolean; is_verified: boolean }
   theme: ThemeDataTop | undefined
   isYou: boolean
 }>()

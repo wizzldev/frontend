@@ -92,7 +92,7 @@ import ChatGroup from '@/views/Chat/Settings/ChatGroup.vue'
 const route = useRoute()
 const contacts = useContactsStore()
 const chat = useChatStore()
-const chatProfile = ref({ id: 0, name: '', image: '', isPrivateMessage: false, loading: true })
+const chatProfile = ref({ id: 0, name: '', image: '', isPrivateMessage: false, loading: true, is_verified: false })
 const editProfileImage = ref(false)
 const yourRoles = ref<Array<string>>([])
 const loaded = ref(false)

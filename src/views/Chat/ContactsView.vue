@@ -4,7 +4,10 @@
       <IconInput v-model="searchInput" :icon="Magnifier as Component" placeholder="Search" />
     </section>
     <ChatNav />
-    <section class="h-full w-full max-w-full overflow-y-scroll pt-2">
+    <div class="mx-5 pb-2">
+      <PremiumAd />
+    </div>
+    <section class="h-full w-full max-w-full overflow-y-scroll pt-1">
       <div v-if="!hasContact" class="w-full my-auto text-center">
         <h2 class="text-gray-600 fontTheme px-2">
           {{ $t('You currently have no active conversation') }}
@@ -19,9 +22,6 @@
       </div>
 
       <div class="w-full">
-        <div class="px-3 mb-2">
-          <PremiumAd />
-        </div>
         <template v-for="(con, i) in contacts.contacts" :key="i">
           <PushButton
             class="w-full"

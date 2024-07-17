@@ -8,7 +8,7 @@ export const useChatStore = defineStore('chat', () => {
   const messages = ref({}) as Ref<Record<string, Messages>>
   const roles = ref({}) as Ref<Record<string, Array<string> | null>>
   const profile = ref({}) as Ref<
-    Record<string, { name: string; pm: boolean; image: string; loading: boolean }>
+    Record<string, { name: string; pm: boolean; image: string; loading: boolean, is_verified: boolean }>
   >
   const lastFetch = ref<Record<string, Date>>({})
   const theme = ref<Record<string, ThemeData | undefined>>({})
