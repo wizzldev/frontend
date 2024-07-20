@@ -1,5 +1,8 @@
 <template>
-  <div class="relative">
+  <div
+    class="relative"
+    :class="{'border border-tertiary rounded-xl': hasBorder}"
+  >
     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none" v-if="icon">
       <component :is="icon" class="text-gray-400" />
     </div>
@@ -22,5 +25,6 @@ defineProps<{
   placeholder: string
   disabled?: boolean
   value?: string
+  hasBorder?: boolean
 }>()
 </script>

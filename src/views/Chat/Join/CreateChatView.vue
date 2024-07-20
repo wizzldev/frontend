@@ -27,7 +27,7 @@
             <button @click="rm(user)">&times;</button>
           </li>
           <li v-if="groupMake.users.length >= 1">
-            <FormButtonSecondary title="Start chatting" :processing="false" />
+            <FormButtonSecondary title="Start chatting" :processing="false" @click="submit" />
           </li>
         </ul>
       </div>

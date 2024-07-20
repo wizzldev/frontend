@@ -1,23 +1,43 @@
 <template>
-  <Modal :show="show" @close="emit('close')">
-    <h2 class="text-2xl fontTheme">{{ $t('Actions') }}</h2>
-    <div class="mt-2">
-      <PushButton class="btnList" :is-link="false" @click="d('reply', msg)">
+  <Modal :show="show" :disable-close="true">
+    <div>
+      <PushButton class="btnList bg-tertiary-all" :is-link="false" @click="d('reply', msg)">
         {{ $t('Reply') }}
       </PushButton>
-      <PushButton v-if="auth.user?.id == msg.sender.id" class="btnList" :is-link="false">
+      <PushButton @click="d('edit', msg)" v-if="auth.user?.id == msg.sender.id" class="btnList bg-tertiary-all" :is-link="false">
         {{ $t('Edit message') }}
       </PushButton>
-      <PushButton
-        v-if="auth.user?.id == msg.sender.id && canDeleteMessage"
-        class="btnList"
-        :is-link="false"
-        @click="d('delete', msg)"
-      >
-        {{ $t('Delete message') }}
-      </PushButton>
-      <PushButton v-if="auth.user?.id != msg.sender.id" class="btnList" :is-link="false">
+      <div v-if="auth.user?.id == msg.sender.id && canDeleteMessage">
+        <PushButton
+          v-if="!nextDelete"
+          class="btnList bg-red-all"
+          :is-link="false"
+          @click="nextDelete = true"
+        >
+          {{ $t('Delete message') }}
+        </PushButton>
+        <div v-if="nextDelete" class="grid grid-cols-2 gap-2">
+          <PushButton
+            @click="nextDelete = false"
+            :is-link="false"
+            class="w-full bg-tertiary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+          >
+            {{ $t('Retain') }}
+          </PushButton>
+          <PushButton
+            :is-link="false"
+            @click="d('delete', msg)"
+            class="w-full bg-red-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+          >
+            {{ $t('Delete') }}
+          </PushButton>
+        </div>
+      </div>
+      <PushButton v-if="auth.user?.id != msg.sender.id" class="btnList bg-tertiary-all" :is-link="false">
         {{ $t('Report message') }}
+      </PushButton>
+      <PushButton class="btnList bg-tertiary-all" :is-link="false" @click="emit('close')">
+        {{ $t('Close') }}
       </PushButton>
     </div>
   </Modal>
@@ -28,6 +48,7 @@ import PushButton from '@/components/Elements/PushButton.vue'
 import Modal from '@/components/Modals/Modal.vue'
 import type { Message } from '@/types/message'
 import { useAuthStore } from '@/stores/auth'
+import { onMounted, ref } from 'vue'
 
 const auth = useAuthStore()
 
@@ -37,16 +58,20 @@ defineProps<{
   canDeleteMessage: boolean
 }>()
 
-const emit = defineEmits(['reply', 'delete', 'close'])
+const emit = defineEmits(['reply', 'delete', 'close', 'edit'])
 
-const d = (event: 'reply' | 'delete', ...data: Array<any>) => {
+const nextDelete = ref(false)
+
+const d = (event: 'reply' | 'delete' | 'edit', ...data: Array<any>) => {
   emit(event, ...data)
   emit('close')
 }
+
+onMounted(() => nextDelete.value = false)
 </script>
 
 <style scoped>
 .btnList {
-  @apply mt-2 w-full px-3 py-1.5 rounded-lg bg-tertiary hover:bg-tertiary-hover focus:bg-tertiary-hover;
+  @apply w-full block py-2 rounded-xl mt-3 items-center space-x-2 justify-center;
 }
 </style>

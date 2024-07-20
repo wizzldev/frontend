@@ -14,6 +14,6 @@ import Spinner from '@/components/Icons/Spinner.vue'
 
 defineProps<{
   title: string
-  processing: boolean
+  processing?: boolean
 }>()
 </script>

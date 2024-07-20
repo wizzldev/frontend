@@ -4,11 +4,14 @@ import type Server from '@/scripts/ws/server'
 declare global {
   interface Window {
     GLOBAL_ENV: {
+      DOMAIN: string
       API_ENDPOINT: string
       API_VERSION: string
       WS_ENDPOINT: string
       CDN_HOST: string
       SUPPORT_HOST: string
+      INVITE_HOST: string
+      MODE: string
     }
     WS: Server
   }

@@ -4,6 +4,7 @@
     :class="{ 'border-b-4 border-b-secondary': showToolbar, 'theme-border': theme }"
   >
     <HasReply :message="reply" @detach="emit('detachReply')" />
+    <HasMessageEdit :message="edit" @detach="emit('detachEdit')" />
     <div
       class="bg-main flex items-center space-x-2 px-3 py-2 border-t-2 border-t-secondary"
       :class="{ 'theme-bg theme-border': theme }"
@@ -22,6 +23,7 @@
         </button>
       </Fade>
       <SendForm
+        :defaultValue="edit ? edit.content : ''"
         :compactView="compactView"
         :theme="theme"
         @send="send"
@@ -51,15 +53,17 @@ import ArrowRight from '@/components/Icons/ArrowRight.vue'
 import ToolBar from '@/components/Chat/Form/ToolBar.vue'
 import SlideFromBottom from '@/components/Transitions/SlideFromBottom.vue'
 import Fade from '@/components/Transitions/Fade.vue'
+import HasMessageEdit from '@/components/Chat/Form/HasMessageEdit.vue'
 
 defineProps<{
   reply?: Message | undefined
   canSendMessage: boolean
   theme?: ThemeDataBottom | undefined
   canAttachFile: boolean
+  edit: Message | null
 }>()
 
-const emit = defineEmits(['send', 'detachReply'])
+const emit = defineEmits(['send', 'detachReply', 'detachEdit'])
 const showIcons = ref(true)
 const compactView = ref(false)
 const showToolbar = ref(false)

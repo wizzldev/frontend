@@ -20,7 +20,9 @@
       :canSendMessage="permission('SEND_MESSAGE')"
       :canAttachFile="permission('ATTACH_FILE')"
       @send="send"
+      :edit="store.editMessage"
       @detachReply="store.replyMessage = undefined"
+      @detachEdit="store.editMessage = null"
     />
   </ChatLayout>
   <MessageActionModal
@@ -30,6 +32,7 @@
     :msg="store.modalMessage as WSMessage"
     @reply="replyTo"
     @delete="unSend"
+    @edit="(msg: WSMessage) => store.editMessage = msg"
   />
 </template>
 

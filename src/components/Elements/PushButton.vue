@@ -8,6 +8,7 @@
     <slot />
   </router-link>
   <button
+    :disabled="loading"
     class="transition-colors"
     :class="{ 'flex items-center space-x-2 justify-center': loading }"
     @click="handle"
@@ -28,7 +29,7 @@ import { computed } from 'vue'
 import Spinner from '@/components/Icons/Spinner.vue'
 
 const props = defineProps<{
-  isLink: boolean
+  isLink?: boolean
   toName?: string
   toParams?: RouteParamsRaw
   loading?: boolean

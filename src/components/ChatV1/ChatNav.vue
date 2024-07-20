@@ -16,8 +16,8 @@
       to-name="chat.new"
       class="w-full px-2 py-1 rounded-xl"
       :class="{
-        'bg-tertiary': route.name == 'chat.new',
-        'bg-secondary-all': route.name != 'chat.new'
+        'bg-tertiary':  ['chat.new', 'chat.create'].includes(route.name as string),
+        'bg-secondary-all': !['chat.new', 'chat.create'].includes(route.name as string)
       }"
     >
       {{ $t('New') }}

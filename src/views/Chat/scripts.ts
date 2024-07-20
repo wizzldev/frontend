@@ -76,11 +76,13 @@ export const newReactiveStore = () => {
     modalMessage: Message | null
     replyMessage: Message | undefined
     cursors: { next: string; prev: string }
-    isYou: boolean
+    isYou: boolean,
+    editMessage: Message | null
   }>({
     modalMessage: null,
     replyMessage: undefined,
     cursors: { next: '', prev: '' },
-    isYou: false
+    isYou: false,
+    editMessage: null,
   })
 }

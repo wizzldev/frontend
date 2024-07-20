@@ -12,12 +12,15 @@
   <Modal :show="deletionStarted" @close="retain">
     <h2 class="text-2xl fontTheme">{{ $t('Are you sure?') }}</h2>
     <div class="mt-2">
-      <p class="text-left">
+      <p class="text-left" v-if="!nextDelete">
         {{
           $t(
-            'If you delete your account, all your data will be deleted and you will not be able to restore it'
+            'If you delete your account, all your data will be deleted and you will not be able to restore it.'
           )
         }}
+      </p>
+      <p>
+        {{ $t('Enter your password to begin the deletion.') }}
       </p>
       <div v-if="!nextDelete" class="grid grid-cols-2 gap-2">
         <PushButton

@@ -31,13 +31,18 @@
     <!---->
     <script>
       window.GLOBAL_ENV = {
+        DOMAIN: '%VITE_DOMAIN%',
         API_ENDPOINT: "%VITE_API_ENDPOINT%",
         API_VERSION: "%VITE_API_VERSION%",
         WS_ENDPOINT: "%VITE_WS_ENDPOINT%",
         CDN_HOST: "%VITE_CDN_HOST%",
         SUPPORT_HOST: '%VITE_SUPPORT_HOST%',
+        INVITE_HOST: '%VITE_INVITE_HOST%',
+        MODE: '%MODE%',
       }
     </script>
+    <!-- Console attention -->
+    <script src="/attention.js" defer></script>
     <style>
         [data-platform="mobile"] {
           -webkit-touch-callout: none;

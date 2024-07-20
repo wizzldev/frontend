@@ -28,13 +28,14 @@
 
 <script setup lang="ts">
 import { useTextareaAutosize } from '@vueuse/core'
-import { computed, onBeforeMount, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import type { ThemeDataBottom } from '@/types/chat'
 import SendButton from '@/components/Chat/Form/SendButton.vue'
 
 const props = defineProps<{
   compactView: boolean
   theme: ThemeDataBottom | undefined
+  defaultValue: string
 }>()
 
 const { textarea, input } = useTextareaAutosize()
@@ -59,8 +60,8 @@ const handleSpace = (e: KeyboardEvent) => {
   if (e.code == 'Space' || e.key == ' ') textarea.value.focus()
 }
 
-onBeforeMount(() => {
-  input.value = ''
+onMounted(() => {
+  input.value = props.defaultValue || ''
   document.addEventListener('keyup', handleSpace)
 })
 
