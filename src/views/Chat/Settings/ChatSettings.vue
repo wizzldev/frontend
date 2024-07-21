@@ -23,9 +23,10 @@
     <main class="px-4 my-2" v-if="loaded">
       <EditName :name="chatProfile.name" />
       <div>
+        <Invite :is-private-message="chatProfile.isPrivateMessage" :your-roles="yourRoles" />
         <ChatGroup title="Roles & Permissions">
           <PushButton
-            v-if="!chatProfile.isPrivateMessage && yourRoles.includes('ADMIN')"
+            v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Admin)"
             toName="chat.roles"
             :to-params="{ id: $route.params.id as string }"
             :is-link="true"
@@ -37,10 +38,10 @@
 
         <ChatGroup
           title="Request data access"
-          v-if="chatProfile.isPrivateMessage || yourRoles.includes('ADMIN')"
+          v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Admin)"
         >
           <PushButton
-            v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')"
+            v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)"
             :is-link="false"
             class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
           >
@@ -50,10 +51,10 @@
 
         <ChatGroup
           title="Danger zone"
-          v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')"
+          v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)"
         >
           <PushButton
-            v-if="!chatProfile.isPrivateMessage && yourRoles.includes('CREATOR')"
+            v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)"
             :is-link="false"
             class="transition-colors w-full text-white bg-red-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
           >
@@ -88,6 +89,8 @@ import PushButton from '@/components/Elements/PushButton.vue'
 import { fetchInfo } from '@/views/Chat/Settings/fetchInfo'
 import EditName from '@/components/Group/EditName.vue'
 import ChatGroup from '@/views/Chat/Settings/ChatGroup.vue'
+import { Roles } from '@/scripts/roles'
+import Invite from '@/views/Chat/Settings/Invite.vue'
 
 const route = useRoute()
 const contacts = useContactsStore()

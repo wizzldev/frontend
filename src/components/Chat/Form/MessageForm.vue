@@ -45,7 +45,7 @@ import type { ThemeDataBottom } from '@/types/chat'
 import MessagePermissionDenied from '@/components/Chat/Form/MessagePermissionDenied.vue'
 import HasReply from '@/components/Chat/Form/HasReply.vue'
 import SendForm from '@/components/Chat/Form/SendForm.vue'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import LeftButtons from '@/components/Chat/Form/LeftButtons.vue'
 import Slide from '@/components/Transitions/Slide.vue'
 import EmojiButton from '@/components/Chat/Form/EmojiButton.vue'
@@ -54,8 +54,9 @@ import ToolBar from '@/components/Chat/Form/ToolBar.vue'
 import SlideFromBottom from '@/components/Transitions/SlideFromBottom.vue'
 import Fade from '@/components/Transitions/Fade.vue'
 import HasMessageEdit from '@/components/Chat/Form/HasMessageEdit.vue'
+import { setBottomTheme } from '@/scripts/mobile/theme'
 
-defineProps<{
+const props = defineProps<{
   reply?: Message | undefined
   canSendMessage: boolean
   theme?: ThemeDataBottom | undefined
@@ -74,6 +75,11 @@ const send = (content: string) => {
 
 watch(showIcons, (s) => {
   if (!s) showToolbar.value = false
+})
+
+onMounted(async () => {
+  if(props.canSendMessage) return
+  await setBottomTheme('#1d1d27')
 })
 </script>
 

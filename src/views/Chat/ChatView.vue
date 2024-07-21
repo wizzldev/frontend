@@ -147,7 +147,7 @@ const initWebsocket = () => {
 }
 
 const loadMore = async () => {
-  const next = store.cursors.next || ''
+  const next = store.cursors.next
   const res = await request.get(`/chat/${route.params.id as string}/paginate?cursor=${next}`)
   if (res.data.$error) {
     toast.error(i18n.t('Failed to load more messages'))

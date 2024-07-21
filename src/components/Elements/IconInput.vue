@@ -13,6 +13,7 @@
       @change="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       :disabled="disabled || false"
       :value="value || ''"
+      :type="type || 'text'"
     />
   </div>
 </template>
@@ -25,6 +26,7 @@ defineProps<{
   placeholder: string
   disabled?: boolean
   value?: string
+  type?: string
   hasBorder?: boolean
 }>()
 </script>
