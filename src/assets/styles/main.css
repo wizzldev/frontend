@@ -1,5 +1,6 @@
 @import 'tailwind.css';
 @import 'fonts.css';
+@import 'twemoji.css';
 
 .blurred {
   -webkit-backdrop-filter: blur(10px);
@@ -14,4 +15,50 @@
 
 .fontWizzl {
   font-family: 'Mitr', sans-serif;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: 'slnt' 0;
+}
+
+*:focus {
+  outline: none !important;
+}
+
+.bg-secondary-all {
+  @apply transition-colors bg-secondary hover:bg-secondary-hover focus:bg-secondary-focus;
+}
+
+.bg-tertiary-all {
+  @apply transition-colors bg-tertiary hover:bg-tertiary-hover focus:bg-tertiary-focus;
+}
+
+.bg-red-all {
+  @apply transition-colors bg-red-400 hover:bg-red-500 focus:bg-red-400;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.w-icon {
+  @apply w-5 h-5 inline-block;
+}
+
+::-moz-selection {
+  color: #b26bf4;
+  background: #ffffffcf;
+}
+::selection {
+  color: #b26bf4;
+  background: #ffffffcf;
 }

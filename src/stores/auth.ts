@@ -3,21 +3,23 @@ import type { User } from '@/types/user'
 import { computed, type Ref, ref } from 'vue'
 import { WizzlAuthToken } from '@/scripts/consts'
 import request from '@/scripts/request/request'
-import setup from '@/scripts/websocket/default'
+import { setup } from '@/scripts/ws/default'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null) as Ref<User | null>
   const token = ref({ type: '', value: '' }) as Ref<{ type: string; value: string }>
+  const checkTime = ref(minuteAgoHelper(5))
 
   async function login(u: User, t: string) {
-    user.value = userHelper(u)
+    user.value = u
     token.value = tokenHelper(t)
-    await setup(token.value.value[1])
+    await setup(token.value.value, true)
   }
 
   async function logout() {
     await request.get('/logout')
-    user.value = null
+    window.localStorage.clear()
+    if (user.value?.id) user.value.id = 0
   }
 
   async function check(): Promise<boolean> {
@@ -25,15 +27,19 @@ export const useAuthStore = defineStore('auth', () => {
     if (res.data?.$error) {
       await logout()
       return false
-    } else if (res.data?.user) user.value = userHelper(<User>res.data.user)
+    } else if (res.data?.user) user.value = res.data.user as User
     token.value = tokenHelper(null)
     await setup(token.value.value)
     return true
   }
 
-  const isLoggedIn = computed(() => user.value != null)
+  function needsFresh(): boolean {
+    return checkTime.value <= minuteAgoHelper(5)
+  }
 
-  return { user, token, login, logout, check, isLoggedIn }
+  const isLoggedIn = computed(() => user.value != null && user.value?.id != 0)
+
+  return { user, token, login, logout, check, isLoggedIn, needsFresh }
 })
 
 // helpers
@@ -56,7 +62,6 @@ function tokenHelper(t: string | null = null) {
   }
 }
 
-function userHelper(u: User): User {
-  u.image_url = u.image_url.replace('{cdn}', window.GLOBAL_ENV.CDN_HOST)
-  return u
+function minuteAgoHelper(m: number): Date {
+  return new Date(Date.now() - 1000 * m)
 }

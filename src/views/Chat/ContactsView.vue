@@ -1,27 +1,58 @@
 <template>
   <ContactsLayout>
-    <section class="my-3 px-5">
-      <IconInput/>
+    <section class="px-5">
+      <IconInput v-model="searchInput" :icon="Magnifier as Component" placeholder="Search" />
     </section>
-    <section class="mt-5 grid grid-cols-3 gap-2 mx-5 text-center">
-      <PushButton :is-link="false" class="w-full px-2 py-1 bg-tertiary rounded-xl">
-        Messages
-      </PushButton>
-      <PushButton :is-link="false" class="w-full px-2 py-1 bg-secondary rounded-xl">
-        Restricted
-      </PushButton>
-      <PushButton :is-link="false" class="w-full px-2 py-1 bg-secondary rounded-xl">
-        Blocked
-      </PushButton>
+    <ChatNav />
+    <div class="mx-5 pb-2">
+      <PremiumAd />
+    </div>
+    <section class="h-full w-full max-w-full overflow-y-scroll pt-1">
+      <div v-if="!hasContact" class="w-full my-auto text-center">
+        <h2 class="text-gray-600 fontTheme px-2">
+          {{ $t('You currently have no active conversation') }}
+        </h2>
+        <PushButton
+          :is-link="true"
+          to-name="chat.new"
+          class="w-1/3 m-auto p-1 bg-secondary-all rounded-full text-xs mt-2 text-center"
+        >
+          {{ $t('New chat') }}
+        </PushButton>
+      </div>
+
+      <div class="w-full">
+        <template v-for="(con, i) in contacts.contacts" :key="i">
+          <PushButton
+            class="w-full"
+            v-if="showSearch(con)"
+            :is-link="true"
+            to-name="chat.message"
+            :to-params="{ id: con?.id }"
+          >
+            <Contact
+              :title="con.name"
+              :image="cdnImage(con.image, 256)"
+              :message="con.last_message"
+              :verified="con.is_verified"
+            />
+          </PushButton>
+        </template>
+
+        <div class="text-center px-2 mt-3 mb-2" v-if="hasContact">
+          <p class="text-sm text-gray-600 fontTheme">
+            {{ $t('No more active conversations') }}
+          </p>
+          <PushButton
+            :is-link="true"
+            to-name="chat.new"
+            class="w-1/3 m-auto p-1 bg-secondary-all rounded-full text-xs mt-2"
+          >
+            {{ $t('New chat') }}
+          </PushButton>
+        </div>
+      </div>
     </section>
-    <main class="mt-5 overflow-y-scroll">
-      <Contact v-for="i in 15" :key="i"
-        title="Jane Roe"
-        date="2024-05-03 19:05:49"
-        :image="`https://xsgames.co/randomusers/assets/avatars/female/6${i}.jpg`"
-        message="Hi, so I just wanted to know how old are you exactly?"
-      />
-    </main>
   </ContactsLayout>
 </template>
 
@@ -30,4 +61,38 @@ import ContactsLayout from '@/layouts/ContactsLayout.vue'
 import IconInput from '@/components/Elements/IconInput.vue'
 import Contact from '@/components/Contact.vue'
 import PushButton from '@/components/Elements/PushButton.vue'
+import { type Component, computed, onMounted, ref } from 'vue'
+import request from '@/scripts/request/request'
+import ChatNav from '@/components/ChatV1/ChatNav.vue'
+import Magnifier from '@/components/Icons/Magnifier.vue'
+import type { Contact as TContact } from '@/types/contact'
+import { useContactsStore } from '@/stores/contacts'
+import { useRouteLoaderStore } from '@/stores/routeLoader'
+import { cdnImage } from '@/scripts/image'
+import PremiumAd from '@/components/PremiumAd.vue'
+
+const loader = useRouteLoaderStore()
+const contacts = useContactsStore()
+const hasContact = computed(() => contacts.contacts.length)
+
+const fetchContacts = async () => {
+  if (contacts.contacts.length > 0) {
+    loader.isLoaded = true
+    return
+  }
+
+  const res = await request.get('/chat/contacts')
+  if (!res.data.$error && !res.data?.nullValue) {
+    contacts.push(res.data)
+  }
+  loader.isLoaded = true
+}
+
+const searchInput = ref('')
+const showSearch = (con: TContact): boolean => {
+  const s = con.name.toLowerCase()
+  return s.indexOf(searchInput.value) > -1
+}
+
+onMounted(fetchContacts)
 </script>

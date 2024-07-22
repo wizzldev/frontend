@@ -1,9 +1,7 @@
 <template>
   <AppLayout>
-    <MyProfile/>
-    <main>
-      <slot/>
-    </main>
+    <MyProfile />
+    <slot />
   </AppLayout>
 </template>
 
