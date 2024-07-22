@@ -12,6 +12,7 @@ declare global {
       SUPPORT_HOST: string
       INVITE_HOST: string
       MODE: string
+      STATIC: string
     }
     WS: Server
   }

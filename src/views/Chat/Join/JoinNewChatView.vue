@@ -1,8 +1,6 @@
 <template>
   <AppLayout>
-    <MyProfile
-      :backButton="undefined"
-    />
+    <MyProfile :backButton="undefined" />
     <ChatNav class="!py-0" />
     <main class="h-full flex flex-col space-y-3">
       <div class="my-auto text-center mx-5">
@@ -25,12 +23,19 @@
     <h2 class="text-2xl fontTheme">{{ $t('Enter an invite link') }}</h2>
     <p class="mt-2 text-left text-gray-400 text-sm">
       {{ $t('The invitations should look like this') }}:
-      <br/>
-      <span class="text-white font-bold">{{ host + '/LZVMnBvZYL' }}</span>, <span class="text-white font-bold">LZVMnBvZYL</span>
-      {{ $t('or') }} <span class="text-white font-bold">{{ domain + '/join/LZVMnBvZYL' }}</span>
+      <br />
+      <span class="text-white font-bold">{{ host + '/LZVMnBvZYL' }}</span
+      >, <span class="text-white font-bold">LZVMnBvZYL</span> {{ $t('or') }}
+      <span class="text-white font-bold">{{ domain + '/join/LZVMnBvZYL' }}</span>
     </p>
     <form v-on:submit.prevent class="mt-3">
-      <IconInput v-model.lazy="invite" :value="invite" :icon="IconPlusCircle" :placeholder="`${host}/LZVMnBvZYL`" :has-border="true" />
+      <IconInput
+        v-model.lazy="invite"
+        :value="invite"
+        :icon="IconPlusCircle"
+        :placeholder="`${host}/LZVMnBvZYL`"
+        :has-border="true"
+      />
       <PushButton
         @click="submit"
         :loading="processing"
@@ -53,7 +58,13 @@ import { ref } from 'vue'
 import IconInput from '@/components/Elements/IconInput.vue'
 import PushButton from '@/components/Elements/PushButton.vue'
 import IconPlusCircle from '@/components/Icons/IconPlusCircle.vue'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import { useI18n } from 'vue-i18n'
 
+const router = useRouter()
+const toast = useToast()
+const i18n = useI18n()
 const inviteModal = ref(false)
 const host = ref(`https://${window.GLOBAL_ENV.INVITE_HOST}`)
 const domain = ref(`https://${window.GLOBAL_ENV.DOMAIN}`)
@@ -63,23 +74,28 @@ const processing = ref(false)
 const submit = async () => {
   processing.value = true
   const id = getID(invite.value)
-  console.log(id)
+  if (!id) {
+    toast.error(i18n.t('Invalid invite code'))
+    return
+  }
+  await router.push({ name: 'chat.invite', params: { code: id } })
+  processing.value = false
 }
 
-const getID = (uri: string): string|false => {
-  if(!uri.startsWith('https://')) return uri
+const getID = (uri: string): string | false => {
+  if (!uri.startsWith('https://')) return uri
 
   const url = new URL(uri)
-  if(![window.GLOBAL_ENV.INVITE_HOST, window.GLOBAL_ENV.DOMAIN].includes(url.host)) return false
+  if (![window.GLOBAL_ENV.INVITE_HOST, window.GLOBAL_ENV.DOMAIN].includes(url.host)) return false
 
   const path = url.pathname.substring(1)
-  if(url.host == window.GLOBAL_ENV.INVITE_HOST && path.split('/').length === 1) return path
+  if (url.host == window.GLOBAL_ENV.INVITE_HOST && path.split('/').length === 1) return path
 
-  if(url.host != window.GLOBAL_ENV.DOMAIN) return false
+  if (url.host != window.GLOBAL_ENV.DOMAIN) return false
   const parts = path.split('/')
-  if(parts.length != 2) return false
+  if (parts.length != 2) return false
 
-  if(parts[0] == 'join') return parts[1]
+  if (parts[0] == 'join') return parts[1]
   return false
 }
 </script>

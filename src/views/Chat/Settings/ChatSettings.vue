@@ -21,12 +21,14 @@
       </SettingsButton>
     </header>
     <main class="px-4 my-2" v-if="loaded">
-      <EditName :name="chatProfile.name" />
+      <EditName v-if="!chatProfile.isPrivateMessage" :name="chatProfile.name" />
       <div>
         <Invite :is-private-message="chatProfile.isPrivateMessage" :your-roles="yourRoles" />
-        <ChatGroup title="Roles & Permissions">
+        <ChatGroup
+          title="Roles & Permissions"
+          v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Admin)"
+        >
           <PushButton
-            v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Admin)"
             toName="chat.roles"
             :to-params="{ id: $route.params.id as string }"
             :is-link="true"
@@ -41,7 +43,7 @@
           v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Admin)"
         >
           <PushButton
-            v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)"
+            v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Creator)"
             :is-link="false"
             class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
           >
@@ -51,7 +53,7 @@
 
         <ChatGroup
           title="Danger zone"
-          v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)"
+          v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Creator)"
         >
           <PushButton
             v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)"
@@ -59,6 +61,12 @@
             class="transition-colors w-full text-white bg-red-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
           >
             {{ $t('Delete chat') }}
+          </PushButton>
+          <PushButton
+            v-else-if="chatProfile.isPrivateMessage"
+            class="transition-colors w-full text-white bg-red-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
+          >
+            Block user
           </PushButton>
         </ChatGroup>
       </div>
@@ -95,7 +103,14 @@ import Invite from '@/views/Chat/Settings/Invite.vue'
 const route = useRoute()
 const contacts = useContactsStore()
 const chat = useChatStore()
-const chatProfile = ref({ id: 0, name: '', image: '', isPrivateMessage: false, loading: true, is_verified: false })
+const chatProfile = ref({
+  id: 0,
+  name: '',
+  image: '',
+  isPrivateMessage: false,
+  loading: true,
+  is_verified: false
+})
 const editProfileImage = ref(false)
 const yourRoles = ref<Array<string>>([])
 const loaded = ref(false)

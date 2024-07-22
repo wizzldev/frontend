@@ -11,7 +11,7 @@ export const setTheme = async (top: string, bottom: string) => {
 }
 
 export const setBottomTheme = async (bottom: string) => {
-  if(!isApp()) return
+  if (!isApp()) return
   await NavigationBar.setNavigationBarColor({ color: bottom })
 }
 

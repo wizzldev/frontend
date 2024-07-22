@@ -17,7 +17,12 @@
     }"
   >
     <template v-for="(m, i) in snippets" :key="i">
-      <MessageContentParagraph v-if="!m.is_code" :content="m.content" :sent-by-me="sentByMe" :theme="theme" />
+      <MessageContentParagraph
+        v-if="!m.is_code"
+        :content="m.content"
+        :sent-by-me="sentByMe"
+        :theme="theme"
+      />
       <CodeMessage v-else :sent-by-me="sentByMe" :m="m" />
     </template>
   </div>
@@ -45,7 +50,6 @@ const bg = computed(() =>
   props.sentByMe ? props.theme?.message?.you.bg : props.theme?.message?.other.bg
 )
 
-
 const codify = () => {
   snippets.value = stringBetween(['```', '```'])(props.message.content)
 }
@@ -54,7 +58,6 @@ onMounted(codify)
 </script>
 
 <style scoped>
-
 .customBg {
   background-color: v-bind('bg') !important;
 }

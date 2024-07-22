@@ -16,7 +16,7 @@
       to-name="chat.new"
       class="w-full px-2 py-1 rounded-xl"
       :class="{
-        'bg-tertiary':  ['chat.new', 'chat.create'].includes(route.name as string),
+        'bg-tertiary': ['chat.new', 'chat.create'].includes(route.name as string),
         'bg-secondary-all': !['chat.new', 'chat.create'].includes(route.name as string)
       }"
     >

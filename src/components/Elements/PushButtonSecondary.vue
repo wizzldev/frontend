@@ -6,7 +6,7 @@
     :loading="loading"
     class="transition-colors text-white w-full bg-secondary-all py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
   >
-    <slot/>
+    <slot />
   </PushButton>
 </template>
 

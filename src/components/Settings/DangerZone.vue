@@ -89,7 +89,7 @@ const del = async () => {
   const res = await request.post('/me/delete', { password: pw.value })
   if (!res.data.$error) {
     toast.success(i18n.t('Your account successfully deleted'))
-    await router.push('/')
+    await router.push('/contacts')
     return
   }
 

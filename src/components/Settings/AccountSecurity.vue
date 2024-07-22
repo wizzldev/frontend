@@ -23,6 +23,15 @@
     >
       {{ $t('IP addresses') }}
     </PushButton>
+
+    <PushButton
+      class="transition-colors w-full py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+      :class="{ 'bg-secondary-all': !ipCheckEnabled, 'bg-red-all': ipCheckEnabled }"
+      :loading="changingIPCheck"
+      @click="switchIPCheck"
+    >
+      {{ $t(`${ipCheckEnabled ? 'Disable' : 'Enable'} IP Check`) }}
+    </PushButton>
   </section>
 </template>
 
@@ -39,6 +48,8 @@ const auth = useAuthStore()
 const i18n = useI18n()
 const toast = useToast()
 const newPassProcessing = ref(false)
+const changingIPCheck = ref(false)
+const ipCheckEnabled = ref(auth.user?.enable_ip_check || false)
 
 const requestNewPassword = async () => {
   newPassProcessing.value = true
@@ -51,5 +62,15 @@ const requestNewPassword = async () => {
     return
   }
   toast.success(i18n.t('Reset password email sent'))
+}
+
+const switchIPCheck = async () => {
+  const res = await request.get('/me/ip-check')
+  const data = res.data as { enabled: boolean }
+  if (res.data.$error) {
+    toast.error(i18n.t('An unknown error occurred'))
+    return
+  }
+  ipCheckEnabled.value = data.enabled
 }
 </script>

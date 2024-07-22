@@ -21,11 +21,9 @@
           :src="cdnImage(image, 128)"
           :alt="`${name}'s chat image`"
         />
-        <h3
-          class="max-w-full mr-3 flex items-center space-x-1 fontTheme"
-        >
+        <h3 class="max-w-full mr-3 flex items-center space-x-1 fontTheme">
           <span class="text-ellipsis text-nowrap overflow-hidden line-clamp-1 text-lg" v-emoji>
-              {{ loading ? $t('Loading') : realTitle }}
+            {{ loading ? $t('Loading') : realTitle }}
           </span>
           <VerifiedBadge class="text-yellow-400" v-if="verified" />
         </h3>
@@ -84,7 +82,6 @@ const props = defineProps<{
   isYou: boolean
   verified: boolean
 }>()
-
 
 const realTitle = computed(() => {
   if (props.name.endsWith('#allowTranslation')) {

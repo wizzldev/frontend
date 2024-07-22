@@ -78,7 +78,7 @@ watch(showIcons, (s) => {
 })
 
 onMounted(async () => {
-  if(props.canSendMessage) return
+  if (props.canSendMessage) return
   await setBottomTheme('#1d1d27')
 })
 </script>

@@ -3,9 +3,9 @@
     <div
       class="px-2 py-1 w-full flex items-center justify-between rounded-t text-xs text-gray-300 border"
       :class="{
-            '!bg-secondary border-secondary': !sentByMe,
-            '!bg-tertiary border-tertiary': sentByMe
-          }"
+        '!bg-secondary border-secondary': !sentByMe,
+        '!bg-tertiary border-tertiary': sentByMe
+      }"
     >
       <h3>{{ ucFirst(m.lang || 'unknown') }}</h3>
       <p>Copy</p>

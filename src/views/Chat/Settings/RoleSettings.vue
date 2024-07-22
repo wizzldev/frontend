@@ -36,7 +36,14 @@ const route = useRoute()
 const router = useRouter()
 const i18n = useI18n()
 const toast = useToast()
-const chatProfile = ref({ id: 0, name: '', image: '', isPrivateMessage: false, loading: true, is_verified: false })
+const chatProfile = ref({
+  id: 0,
+  name: '',
+  image: '',
+  isPrivateMessage: false,
+  loading: true,
+  is_verified: false
+})
 const usedRoles = ref<Array<string>>([])
 const allRole = ref<Array<string>>([])
 const yourRoles = ref<Array<string>>([])

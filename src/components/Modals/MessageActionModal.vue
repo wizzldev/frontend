@@ -4,7 +4,12 @@
       <PushButton class="btnList bg-tertiary-all" :is-link="false" @click="d('reply', msg)">
         {{ $t('Reply') }}
       </PushButton>
-      <PushButton @click="d('edit', msg)" v-if="auth.user?.id == msg.sender.id" class="btnList bg-tertiary-all" :is-link="false">
+      <PushButton
+        @click="d('edit', msg)"
+        v-if="auth.user?.id == msg.sender.id"
+        class="btnList bg-tertiary-all"
+        :is-link="false"
+      >
         {{ $t('Edit message') }}
       </PushButton>
       <div v-if="auth.user?.id == msg.sender.id && canDeleteMessage">
@@ -33,7 +38,11 @@
           </PushButton>
         </div>
       </div>
-      <PushButton v-if="auth.user?.id != msg.sender.id" class="btnList bg-tertiary-all" :is-link="false">
+      <PushButton
+        v-if="auth.user?.id != msg.sender.id"
+        class="btnList bg-tertiary-all"
+        :is-link="false"
+      >
         {{ $t('Report message') }}
       </PushButton>
       <PushButton class="btnList bg-tertiary-all" :is-link="false" @click="emit('close')">
@@ -67,7 +76,7 @@ const d = (event: 'reply' | 'delete' | 'edit', ...data: Array<any>) => {
   emit('close')
 }
 
-onMounted(() => nextDelete.value = false)
+onMounted(() => (nextDelete.value = false))
 </script>
 
 <style scoped>

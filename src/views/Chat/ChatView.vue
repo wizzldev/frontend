@@ -32,7 +32,7 @@
     :msg="store.modalMessage as WSMessage"
     @reply="replyTo"
     @delete="unSend"
-    @edit="(msg: WSMessage) => store.editMessage = msg"
+    @edit="(msg: WSMessage) => (store.editMessage = msg)"
   />
 </template>
 

@@ -12,12 +12,9 @@
       />
       <div class="flex flex-wrap items-center w-full">
         <span class="text-purple-400">{{ $t('Edit') }}:</span>
-        <span
-
-          class="ml-1 w-[70%] break-all line-clamp-1 text-nowrap"
-          v-emoji
-        >{{ message.content }}</span
-        >
+        <span class="ml-1 w-[70%] break-all line-clamp-1 text-nowrap" v-emoji>{{
+          message.content
+        }}</span>
       </div>
     </div>
   </Fade>

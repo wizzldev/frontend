@@ -10,9 +10,34 @@
   <Modal :show="show" @close="show = false">
     <h2 class="text-2xl fontTheme">{{ $t('Create an invite') }}</h2>
     <form v-on:submit.prevent class="mt-3" v-if="!createdCode">
-      <IconInput v-model.lazy="count" :value="count" class="mt-2" placeholder="Max usage (empty/0 for no limit)" :has-border="true" type="number" />
-      <IconInput v-model.lazy="date" :value="date" class="mt-2" placeholder="Max usage (0 for no limit)" :has-border="true" :has-clear="true" type="date" />
-      <FormButtonSecondary class="border border-tertiary !py-2" title="Clear date" @click="date = ''" />
+      <div class="text-left mt-2">
+        <label for="m-usage" class="text-sm text-gray-400 ml-2"
+          ><b>{{ $t('Max usage') }}</b> ({{ $t('empty/0 for no limit') }}).</label
+        >
+        <IconInput
+          id="m-usage"
+          v-model.lazy="count"
+          :value="count"
+          placeholder="Max usage (empty/0 for no limit)"
+          :has-border="true"
+          type="number"
+        />
+      </div>
+      <div class="text-left mt-2">
+        <label for="m-date" class="text-sm text-gray-400 ml-2"
+          ><b>{{ $t('Expiration') }}</b> ({{ $t('empty for no expiry') }}).</label
+        >
+        <IconInput
+          id="m-date"
+          v-model.lazy="date"
+          :value="date"
+          placeholder="Expiration (empty for no expiry)"
+          :has-border="true"
+          :has-clear="true"
+          type="date"
+        />
+      </div>
+      <FormButtonSecondary class="bg-tertiary-all !py-2" title="Clear date" @click="date = ''" />
       <FormButton @click="create" title="Create" :processing="loading" />
     </form>
     <div class="mt-3" v-else>
@@ -22,7 +47,11 @@
           <ClipboardIcon @click="copy" class="text-gray-400" />
         </button>
       </div>
-      <FormButtonSecondary class="border border-tertiary !py-2" title="Close" @click="show = false" />
+      <FormButtonSecondary
+        class="border border-tertiary !py-2"
+        title="Close"
+        @click="show = false"
+      />
     </div>
   </Modal>
 </template>
@@ -62,16 +91,20 @@ const createdCode = ref('')
 
 const create = async () => {
   loading.value = true
-  let data = { max_usage: count.value != '' ? parseInt(count.value as string) : 0 } as {max_usage: number, expiration?: string}
-  if(date.value != '') data.expiration = moment(new Date(date.value)).format('YYYY-MM-DDTHH:mm:ssZ')
+  let data = { max_usage: count.value != '' ? parseInt(count.value as string) : 0 } as {
+    max_usage: number
+    expiration?: string
+  }
+  if (date.value != '')
+    data.expiration = moment(new Date(date.value)).format('YYYY-MM-DDTHH:mm:ssZ')
 
   const res = await request.post(`/chat/${route.params.id as string}/new-invite`, data)
-  if(res.data.$error || !res.data.key) {
+  if (res.data.$error || !res.data.key) {
     toast.error(i18n.t('Invalid max usage or expiration'))
   }
   loading.value = false
 
-  if(res.data.key) createdCode.value = res.data.key
+  if (res.data.key) createdCode.value = res.data.key
 }
 
 const copy = async () => {

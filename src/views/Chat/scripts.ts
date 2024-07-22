@@ -64,7 +64,7 @@ export const initChatStore = (
     name: group.name,
     loading: false,
     pm,
-    is_verified,
+    is_verified
   }
   if (group.theme) chat.theme[id] = JSON.parse(group.theme.data) as ThemeData
   chat.push(id, messages)
@@ -76,13 +76,13 @@ export const newReactiveStore = () => {
     modalMessage: Message | null
     replyMessage: Message | undefined
     cursors: { next: string; prev: string }
-    isYou: boolean,
+    isYou: boolean
     editMessage: Message | null
   }>({
     modalMessage: null,
     replyMessage: undefined,
     cursors: { next: '', prev: '' },
     isYou: false,
-    editMessage: null,
+    editMessage: null
   })
 }

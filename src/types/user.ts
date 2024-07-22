@@ -5,4 +5,6 @@ export interface User {
   image_url: string
   email: string
   is_bot: boolean
+  is_verified: boolean
+  enable_ip_check: boolean
 }

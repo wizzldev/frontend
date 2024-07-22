@@ -1,9 +1,9 @@
 <template>
   <a v-if="!isApp()">
-    <slot/>
+    <slot />
   </a>
   <button v-else @click="browser">
-    <slot/>
+    <slot />
   </button>
 </template>
 

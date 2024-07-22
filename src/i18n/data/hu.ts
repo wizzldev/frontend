@@ -76,8 +76,11 @@ export default {
   Sessions: 'Munkamenetek',
   'IP addresses': 'IP címek',
   'Terminate all': 'Összes megszüntetése',
-  'Close': 'Bezár',
+  Close: 'Bezár',
 
   // Form errors
-  'error.required': 'Ezt a mezőt nem hagyhatja üresen'
+  'error.required': 'Ezt a mezőt nem hagyhatja üresen',
+
+  // Home
+  'Elevate your conversations with a platform that<br/>combines style, ease, and community.': 'Dobja fel beszélgetéseit egy olyan platformmal,<br/>amely egyesíti a stílust, az egyszerűséget és a közösséget. ',
 }
