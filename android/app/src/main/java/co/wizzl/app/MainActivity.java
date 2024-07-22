@@ -1,4 +1,4 @@
-package co.wizzl.app;
+package com.wizzl.app;
 
 import com.getcapacitor.BridgeActivity;
 import android.webkit.WebView;
