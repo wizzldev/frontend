@@ -7,6 +7,14 @@
     {{ $t('Create an invite') }}
   </PushButton>
 
+  <PushButton
+    v-if="!isPrivateMessage && yourRoles.includes(Roles.InviteUser)"
+    @click="showCustom = true"
+    class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+  >
+    {{ $t('Manage special invite') }}
+  </PushButton>
+
   <Modal :show="show" @close="show = false">
     <h2 class="text-2xl fontTheme">{{ $t('Create an invite') }}</h2>
     <form v-on:submit.prevent class="mt-3" v-if="!createdCode">
@@ -54,6 +62,26 @@
       />
     </div>
   </Modal>
+
+  <Modal :show="showCustom" @close="showCustom = false">
+    <h2 class="text-2xl fontTheme">{{ $t('Setup a custom invite') }}</h2>
+    <form v-on:submit.prevent class="mt-3" v-if="!createdCode">
+      <div class="text-left mt-2">
+        <label for="m-name" class="text-sm text-gray-400 ml-2"
+        ><b>{{ inviteHost }}/{{ specInvite || '...' }}</b></label
+        >
+        <IconInput
+          id="m-name"
+          v-model="specInvite"
+          :value="specInvite || undefined"
+          :placeholder="$t('super-cool')"
+          :has-border="true"
+        />
+      </div>
+      <FormButtonSecondary type="button" @click="updateCustom(null)" :processing="removeCustomProgress" class="bg-tertiary-all !py-2" title="Remove" />
+      <FormButton type="submit" @click="updateCustom(specInvite)" :title="!specialInvite ? 'Create' : 'Update'" :processing="updateCustomProgress" />
+    </form>
+  </Modal>
 </template>
 
 <script setup lang="ts">
@@ -72,22 +100,29 @@ import { useToast } from 'vue-toastification'
 import ClipboardIcon from '@/components/Icons/Clipboard.vue'
 import { Clipboard } from '@capacitor/clipboard'
 
-defineProps<{
+const props = defineProps<{
   isPrivateMessage: boolean
   yourRoles: Array<string>
+  specialInvite: string | null
 }>()
 
 const route = useRoute()
 const i18n = useI18n()
 const toast = useToast()
+const emit = defineEmits(['reload'])
 
+const inviteHost = ref(`https://${window.GLOBAL_ENV.INVITE_HOST}`)
 const inviteUri = computed(() => `https://${window.GLOBAL_ENV.INVITE_HOST}/${createdCode.value}`)
 
 const loading = ref(false)
 const show = ref(false)
+const showCustom = ref(false)
 const date = ref('')
 const count = ref('')
 const createdCode = ref('')
+const specInvite = ref<string | null>('')
+const removeCustomProgress = ref(false)
+const updateCustomProgress = ref(false)
 
 const create = async () => {
   loading.value = true
@@ -107,6 +142,26 @@ const create = async () => {
   if (res.data.key) createdCode.value = res.data.key
 }
 
+const updateCustom = async (inv: string | null) => {
+  const data = { invite: inv || '' }
+  if(inv) updateCustomProgress.value = true
+  else removeCustomProgress.value = false
+
+  const res = await request.put(`/chat/${route.params.id as string}/invite`, data)
+  const resData = res.data as { status?: string }
+  if(res.data.$error && !resData.status) {
+    toast.error(i18n.t('Something went wrong'))
+  } else if(resData.status == 'already-exists') {
+    toast.warning(i18n.t('This invite is already exists'))
+  } else if(!res.data.$error) {
+    inv ? toast.success(i18n.t('Successfully updated')) : toast.info(i18n.t('Successfully removed'))
+    emit('reload')
+  }
+
+  updateCustomProgress.value = false
+  removeCustomProgress.value = false
+}
+
 const copy = async () => {
   await Clipboard.write({
     string: inviteUri.value
@@ -120,5 +175,6 @@ onMounted(() => {
   date.value = ''
   count.value = ''
   createdCode.value = ''
+  specInvite.value = props.specialInvite || ''
 })
 </script>

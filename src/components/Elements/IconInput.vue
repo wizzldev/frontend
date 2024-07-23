@@ -7,6 +7,7 @@
       class="w-full bg-secondary-all px-4 py-2 rounded-xl"
       :class="{ 'pl-12': icon }"
       :placeholder="$t(placeholder)"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       @change="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       :disabled="disabled || false"
       :value="value || ''"

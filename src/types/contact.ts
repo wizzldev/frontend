@@ -5,6 +5,7 @@ export interface Contact {
   is_verified: boolean
   last_message: LastMessage
   is_private_message: boolean
+  custom_invite: string | null
 }
 
 export interface LastMessage {
