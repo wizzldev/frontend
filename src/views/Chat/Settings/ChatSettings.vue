@@ -13,7 +13,7 @@
       />
       <h2 class="text-center fontTheme" v-emoji>{{ chatProfile.name }}</h2>
       <SettingsButton
-        v-if="!chatProfile.isPrivateMessage && yourRoles.includes('EDIT_GROUP_IMAGE')"
+        v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.EditGroupImage)"
         class="text-sm"
         @click="editProfileImage = true"
       >
@@ -23,7 +23,7 @@
     <main class="px-4 my-2" v-if="loaded">
       <EditName v-if="!chatProfile.isPrivateMessage" :name="chatProfile.name" />
       <div>
-        <Invite :is-private-message="chatProfile.isPrivateMessage" :your-roles="yourRoles" />
+        <Invite v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)" @reload="fetchProfile" :is-private-message="chatProfile.isPrivateMessage" :special-invite="chatProfile.custom_invite" :your-roles="yourRoles" />
         <ChatGroup
           title="Roles & Permissions"
           v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Admin)"
@@ -66,7 +66,7 @@
             v-else-if="chatProfile.isPrivateMessage"
             class="transition-colors w-full text-white bg-red-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
           >
-            Block user
+            {{ $t('Block user') }}
           </PushButton>
         </ChatGroup>
       </div>
@@ -103,13 +103,22 @@ import Invite from '@/views/Chat/Settings/Invite.vue'
 const route = useRoute()
 const contacts = useContactsStore()
 const chat = useChatStore()
-const chatProfile = ref({
+const chatProfile = ref<{
+  id: number
+  name: string
+  image: string
+  isPrivateMessage: boolean
+  loading: boolean
+  is_verified: boolean
+  custom_invite: string | null
+}>({
   id: 0,
   name: '',
   image: '',
   isPrivateMessage: false,
   loading: true,
-  is_verified: false
+  is_verified: false,
+  custom_invite: null,
 })
 const editProfileImage = ref(false)
 const yourRoles = ref<Array<string>>([])
