@@ -1,6 +1,7 @@
 @import 'tailwind.css';
 @import 'fonts.css';
 @import 'twemoji.css';
+@import 'sheet.css';
 
 .blurred {
   -webkit-backdrop-filter: blur(10px);

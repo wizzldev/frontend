@@ -4,6 +4,7 @@ export interface Contact {
   image: string
   is_verified: boolean
   last_message: LastMessage
+  is_private_message: boolean
 }
 
 export interface LastMessage {

@@ -1,5 +1,5 @@
 <template>
-  <header class="px-5 py-4 flex items-center justify-between border-b-secondary z-10">
+  <header class="px-5 py-4 flex items-center justify-between border-b-secondary">
     <div class="flex items-center space-x-2 transition-all">
       <Slide>
         <PushButton

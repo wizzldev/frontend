@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { type Ref, ref } from 'vue'
-import type { Contacts } from '@/types/contact'
+import type { Contact, Contacts } from '@/types/contact'
 import type { Message } from '@/types/message'
 
 export const useContactsStore = defineStore('contacts', () => {
@@ -33,5 +33,14 @@ export const useContactsStore = defineStore('contacts', () => {
     )
   }
 
-  return { contacts, push, update }
+  function findByID(id: number): Contact | null {
+    for(let i = 0; i < contacts.value.length; i++) {
+      if(contacts.value[i].id == id) {
+        return contacts.value[i]
+      }
+    }
+    return null
+  }
+
+  return { contacts, push, update, findByID }
 })
