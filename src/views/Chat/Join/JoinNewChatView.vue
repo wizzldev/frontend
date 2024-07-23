@@ -12,7 +12,7 @@
           {{ $t('Use an invite') }}&nbsp;<Emoji content="🚀" />
         </PushButtonSecondary>
 
-        <PushButtonSecondary>
+        <PushButtonSecondary @click="v2Feature">
           {{ $t('Global chats') }}&nbsp;<Emoji content="🌐" />
         </PushButtonSecondary>
       </div>
@@ -97,5 +97,9 @@ const getID = (uri: string): string | false => {
 
   if (parts[0] == 'join') return parts[1]
   return false
+}
+
+const v2Feature = () => {
+  toast.info(i18n.t('V2 Feature\nCurrently unavailable'))
 }
 </script>

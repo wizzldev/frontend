@@ -37,12 +37,18 @@
 import PushButtonSecondary from '@/components/Elements/PushButtonSecondary.vue'
 import { useAuthStore } from '@/stores/auth'
 import AndroidHead from '@/components/Icons/AndroidHead.vue'
-import { ref } from 'vue'
-import PushButton from '@/components/Elements/PushButton.vue'
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { isApp } from '@/scripts/mobile/isApp'
 
+const router = useRouter()
 const auth = useAuthStore()
 
 const downloadUri = ref(window.GLOBAL_ENV.STATIC + '/beta.apk')
+
+onMounted(() => {
+  if(isApp()) return router.push('/contacts')
+})
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <div class="py-3 transition-colors hover:bg-secondary text-left">
+  <div class="py-3 transition-colors hover:bg-secondary text-left" ref="wrap">
     <div class="flex items-center mx-5">
       <div class="flex items-center w-10/12">
         <LazyImage class="rounded-xl w-12 h-12" :src="image" alt="Chat Image" />
@@ -27,22 +27,29 @@
       </div>
     </div>
   </div>
+  <ContactSheet
+    :visible="showSheet && contacts.findByID(id) != null"
+    @close="showSheet = false"
+    :contact="contacts.findByID(id) as Contact"
+  />
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import VerifiedBadge from '@/components/Icons/VerifiedBadge.vue'
-
-const i18n = useI18n()
-const auth = useAuthStore()
+import { onLongPress } from '@vueuse/core'
+import ContactSheet from '@/components/Group/ContactSheet.vue'
+import { useContactsStore } from '@/stores/contacts'
+import type { Contact } from '@/types/contact'
 
 const props = defineProps<{
   image: string
   title: string
   verified: boolean
+  id: number
   message: {
     sender_id: number
     sender_name: string
@@ -52,6 +59,16 @@ const props = defineProps<{
   }
   seen?: boolean
 }>()
+
+const i18n = useI18n()
+const auth = useAuthStore()
+const contacts = useContactsStore()
+const wrap = ref<HTMLElement | null>(null)
+const showSheet = ref(false)
+
+onLongPress(wrap, () => {
+  showSheet.value = true
+}, { delay: 300 })
 
 const realMessage = computed(() => {
   const isSentByYou = props.message.sender_id == auth.user?.id

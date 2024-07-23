@@ -1,5 +1,5 @@
 [{
   "relation": ["delegate_permission/common.handle_all_urls"],
-  "target" : { "namespace": "android_app", "package_name": "co.wizzl.app",
-    "sha256_cert_fingerprints": ["B0:72:85:EA:9B:01:A0:DB:8C:6D:DB:A4:14:B7:B9:96:89:AE:1E:A2:AA:A1:D8:3F:1F:FD:3A:5A:66:F8:B4:95"] }
+  "target" : { "namespace": "android_app", "package_name": "com.wizzl.app",
+    "sha256_cert_fingerprints": ["ED:A5:3C:C2:A9:EC:56:E1:66:5C:DF:23:9B:41:05:CF:8E:68:CE:CD:7A:5C:E5:DC:86:7E:2E:41:11:26:31:4D"] }
 }]

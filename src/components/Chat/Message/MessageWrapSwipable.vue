@@ -79,15 +79,16 @@ onLongPress(
     if (isApp()) await Haptics.impact({ style: ImpactStyle.Light })
     emit('modal', props.message)
   },
-  { delay: 300 }
+  { delay: 400 }
 )
 
 const { distanceX, isSwiping } = usePointerSwipe(wrap, {
   disableTextSelect: true,
+  pointerTypes: ['touch', 'pen'],
   onSwipe() {
     if (!containerWidth.value || !['message', 'emoji'].includes(props.message.type)) return
     const dist = getDistance(distanceX.value, props.sentByMe)
-    if (dist > 30 || dist < -30) distance.value = dist
+    if (dist > 20 || dist < -20) distance.value = dist
   },
   onSwipeEnd() {
     distance.value = 0

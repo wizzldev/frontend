@@ -4,7 +4,7 @@
       <IconInput v-model="searchInput" :icon="Magnifier as Component" placeholder="Search" />
     </section>
     <ChatNav />
-    <div class="mx-5 pb-2">
+    <div class="mx-5 pb-2 hidden">
       <PremiumAd />
     </div>
     <section class="h-full w-full max-w-full overflow-y-scroll pt-1">
@@ -33,6 +33,7 @@
             <Contact
               :title="con.name"
               :image="cdnImage(con.image, 256)"
+              :id="con.id"
               :message="con.last_message"
               :verified="con.is_verified"
             />
