@@ -19,7 +19,8 @@ export const useContactsStore = defineStore('contacts', () => {
           sender_name: message.sender.first_name,
           content: message.content,
           type: message.type,
-          date: message.created_at
+          date: message.created_at,
+          nick_name: '',
         }
         break
       }
