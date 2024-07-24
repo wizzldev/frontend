@@ -51,6 +51,10 @@ const createGlobal = (): Channel => {
     chat.rmMessageID(chatID(resource), id)
   })
 
+  glob.on<string>('delete', ({ data: id }) => {
+    contacts.removeByID(parseInt(id))
+  })
+
   return glob
 }
 

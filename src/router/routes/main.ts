@@ -1,8 +1,6 @@
 import Guard from '@/router/guard'
 import type { RouteRecordRaw } from 'vue-router'
 import SettingsView from '@/views/Settings/SettingsView.vue'
-import TermsOfServiceView from '@/views/Terms/TermsOfServiceView.vue'
-import PrivacyPolicyView from '@/views/Terms/PrivacyPolicyView.vue'
 import SessionsView from '@/views/Settings/SessionsView.vue'
 import IPView from '@/views/Settings/IPView.vue'
 import HomeView from '@/views/HomeView.vue'
@@ -38,11 +36,11 @@ export default [
   {
     path: '/terms',
     name: 'service.terms',
-    component: TermsOfServiceView
+    component: () => import('@/views/Terms/TermsOfServiceView.vue')
   },
   {
     path: '/privacy',
     name: 'service.privacy',
-    component: PrivacyPolicyView
+    component: () => import('@/views/Terms/PrivacyPolicyView.vue')
   }
 ] as Array<RouteRecordRaw>

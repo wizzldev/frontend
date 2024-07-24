@@ -1,8 +1,8 @@
 <template>
-  <img :class="imgClass" v-show="loaded" :src="src" :alt="alt" @load="onLoad" @error="onError" />
+  <img v-if="!src.endsWith('/')" :class="imgClass" v-show="loaded" :src="src" :alt="alt" @load="onLoad" @error="onError" />
   <div
     :class="imgClass"
-    v-if="!loaded"
+    v-if="!loaded || src.endsWith('/')"
     class="p-1 animate-pulse flex items-center justify-center bg-secondary"
   >
     <Error v-if="failed" class="text-red-300 cursor-not-allowed" />

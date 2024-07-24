@@ -17,14 +17,31 @@
       <ChatNav class="!py-0" />
       <div class="px-4 mt-3">
         <ul>
+          <li class="my-2 bg-secondary px-4 py-2 w-full rounded-xl">
+            <h2 class="fontTheme">
+              {{ $t('Enter a friend\'s email address and start chatting.') }}
+              <span v-emoji>🔥</span>
+            </h2>
+            <p class="text-gray-400 text-sm mt-2">
+              <span class="text-purple-400">{{ $t('Hint') }}:</span>
+              {{ $t('Add at least 2 friends to create a group.') }}
+            </p>
+          </li>
           <li
             class="my-2 bg-secondary px-4 py-2 w-full flex items-center justify-between rounded-xl"
             v-for="user in groupMake.users"
             :key="user.id"
           >
-            <img class="w-8 h-8 rounded-full" :src="cdnImage(user.image_url)" alt="User image" />
-            <p>{{ user.first_name }} {{ user.last_name }}</p>
-            <button @click="rm(user)">&times;</button>
+           <div class="flex items-center space-x-2 justify-start">
+             <img class="w-8 h-8 min-w-8 min-h-8 rounded-xl" :src="cdnImage(user.image_url)" alt="User image" />
+             <div>
+               <p>{{ user.first_name }} {{ user.last_name }}</p>
+               <p class="text-xs text-gray-400">{{ user.email }}</p>
+             </div>
+           </div>
+            <button @click="rm(user)" class="flex items-center justify-center">
+              <Times class="!w-3 !h-3" />
+            </button>
           </li>
           <li v-if="groupMake.users.length >= 1">
             <FormButtonSecondary title="Start chatting" :processing="false" @click="submit" />
@@ -52,6 +69,7 @@ import MyProfile from '@/components/Navigation/MyProfile.vue'
 import { useGroupMakeStore } from '@/stores/groupMake'
 import { cdnImage } from '@/scripts/image'
 import FormButtonSecondary from '@/components/Auth/FormButtonSecondary.vue'
+import Times from '@/components/Icons/Times.vue'
 
 const groupMake = useGroupMakeStore()
 const router = useRouter()

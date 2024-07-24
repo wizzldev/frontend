@@ -28,7 +28,7 @@ const translateError = (errors: Array<ErrorData>): Errors => {
 }
 
 const t = (s: string, d: string | null): string => {
-  if (d != null) return i18n.global.t(s, d as string)
+  if (d != null) return i18n.global.t(s, [d as string])
   return i18n.global.t(s)
 }
 

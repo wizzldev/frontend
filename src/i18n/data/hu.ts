@@ -52,6 +52,14 @@ export default {
 
   'You are not allowed to send a message': 'Nincs engedélyed üzenet küldésére',
 
+  'Retain': 'Mégsem',
+  'Report message': 'Üzenet jelentése',
+  'Deleted message': 'Törölt üzenet',
+  'No more messages': 'Nincs több üzenet',
+  'Upload a GIF': 'GIF feltöltése',
+  'Send a customized message': 'Testreszabott üzenet küldése',
+  'Create an integration': 'Integráció létrehozása',
+
   // Form
   Login: 'Bejelentkezés',
   Register: 'Regisztráció',
@@ -77,10 +85,47 @@ export default {
   'IP addresses': 'IP címek',
   'Terminate all': 'Összes megszüntetése',
   Close: 'Bezár',
+  'Enable IP Check': 'IP ellenőrzés engedélyezése',
+  'Disable IP Check': 'IP ellenőrzés kikapcsolása',
+  'Danger Zone': 'Veszélyzóna',
+  'Delete account': 'Fiók törlése',
+  'Edit profile image': 'Profilkép szerkesztése',
+  'Upload an image': 'Kép feltöltése',
+  'Edit image': 'Kép szerkesztése',
+  'Settings': 'Beállítások',
+  'Delete': 'Törlés',
 
   // Form errors
   'error.required': 'Ezt a mezőt nem hagyhatja üresen',
+  'error.network': 'Hálózati hiba',
 
   // Home
-  'Elevate your conversations with a platform that<br/>combines style, ease, and community.': 'Dobja fel beszélgetéseit egy olyan platformmal,<br/>amely egyesíti a stílust, az egyszerűséget és a közösséget. ',
+  'Elevate your conversations with a platform that combines style, ease, and community.': 'Dobja fel beszélgetéseit egy olyan platformmal, amely egyesíti a stílust, az egyszerűséget és a közösséget. ',
+
+  // Toast
+  'User could not be found': 'A felhasználó nem található',
+
+  // New chat
+  'Create a new chat': 'Új beszélgetés létrehozása',
+  'Use an invite': 'Meghívó használata',
+  'Global chats': 'Globális csevegések',
+  'Enter a friend\'s email address and start chatting.': 'Add meg egy barátod e-mail címét, és kezdj el csevegni.',
+  Hint: 'Tipp',
+  'Add at least 2 friends to create a group.': 'Adj hozzá legalább 2 barátot egy csoport létrehozásához.',
+  'The invitations should look like this': 'A meghívóknak így kell kinézniük',
+  or: 'vagy',
+  Join: 'Csatlakozás',
+  'Enter an invite link': 'Add meg a meghívó linket',
+
+  // Contact sheet
+  'Open chat': 'Beszélgetés megnyitása',
+  Block: 'Tiltás',
+  'Delete group': 'Csoport törlése',
+  'Copy special invite': 'Különleges meghívó másolása',
+  'Leave group': 'Kilépés a csoportból',
+
+  // Login
+  'error.email': 'Hibás email cím',
+  'error.min': 'Legalább {0} karakter kell, hogy legyen',
+  'error.max': 'Maximum {0} karakter lehet'
 }

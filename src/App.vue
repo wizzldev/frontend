@@ -8,6 +8,7 @@ import { onMounted, ref, watch } from 'vue'
 import TermsModal from '@/components/Modals/TermsModal.vue'
 import { WizzlTermsAccepted } from '@/scripts/consts'
 import { isApp } from '@/scripts/mobile/isApp'
+import NetworkError from '@/components/Loaders/NetworkError.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -39,8 +40,9 @@ onMounted(() => {
       </div>
     </transition>
   </RouterView>
-  <AppLayout v-show="!loader.isLoaded" class="!flex-1 items-center justify-center">
-    <InfiniteLoader />
+  <AppLayout v-if="!loader.isLoaded && loader.networkError" class="!flex-1 items-center justify-center">
+    <NetworkError v-if="loader.networkError" />
+    <InfiniteLoader v-else />
   </AppLayout>
   <TermsModal v-if="!isTermsAccepted && !isTermsPage" @accept="accept" />
 </template>

@@ -12,7 +12,7 @@
       >
         {{ $t('Edit message') }}
       </PushButton>
-      <div v-if="auth.user?.id == msg.sender.id && canDeleteMessage">
+      <div v-if="(auth.user?.id == msg.sender.id && canDeleteMessage) || canDeleteOtherMessage">
         <PushButton
           v-if="!nextDelete"
           class="btnList bg-red-all"
@@ -65,6 +65,7 @@ defineProps<{
   show: boolean
   msg: Message
   canDeleteMessage: boolean
+  canDeleteOtherMessage: boolean
 }>()
 
 const emit = defineEmits(['reply', 'delete', 'close', 'edit'])
