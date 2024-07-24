@@ -2,11 +2,11 @@
   <div class="min-h-screen h-auto overflow-hidden bg-div">
     <section class="flex h-screen overflow-hidden blurred-bg">
       <div class="m-auto z-2 w-full px-2 sm:px-0 sm:w-auto text-center">
-        <div class="max-w-screen-sm md:mx-auto">
+        <div class="max-w-md mx-auto">
           <h1>
             <img src="../assets/vectors/wizzl-white-full.svg" alt="Wizzl" class="w-36 md:w-52 mx-auto" />
           </h1>
-          <p class="mt-4 text-gray-400 text-lg" v-html="$t('Elevate your conversations with a platform that<br/>combines style, ease, and community.')"></p>
+          <p class="mt-4 text-gray-400 text-lg" v-html="$t('Elevate your conversations with a platform that combines style, ease, and community.')"></p>
           <div class="md:grid md:grid-cols-7 md:gap-2 mt-3 md:px-5">
             <template v-if="!auth.isLoggedIn">
               <PushButtonSecondary class="col-span-3" :is-link="true" to-name="auth.login">
@@ -17,15 +17,24 @@
               </PushButtonSecondary>
             </template>
             <template v-else>
-              <PushButtonSecondary class="col-span-6" :is-link="true" to-name="chat.contacts">
-                {{ $t('Contacts') }}
+              <PushButtonSecondary class="col-span-6 flex items-center px-3" :is-link="true" to-name="chat.contacts">
+                <LazyImage class="w-5 h-5 rounded-lg" :src="cdnImage(auth.user?.image_url || '')" alt="Your profile image" />
+                <span>{{ $t('Chat now') }}</span>
               </PushButtonSecondary>
             </template>
-            <a target="_blank" rel="nofollow" :href="downloadUri"
-               class="transition-colors text-white w-full bg-secondary-all py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
-            >
-              <AndroidHead class="text-green-400" />
-            </a>
+            <template v-if="!isApp()">
+              <a target="_blank" rel="nofollow" :href="downloadUri"
+                 class="hidden transition-colors text-white w-full bg-secondary-all py-2.5 rounded-xl mt-3 fontTheme sm:flex items-center space-x-2 justify-center"
+              >
+                <AndroidHead class="text-green-400" />
+              </a>
+              <a target="_blank" rel="nofollow" :href="downloadUri"
+                 class="sm:hidden transition-colors text-white w-full bg-secondary-all py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+              >
+                <span class="mr-2">Download</span>
+                <AndroidHead class="text-green-400" />
+              </a>
+            </template>
           </div>
         </div>
       </div>
@@ -37,18 +46,14 @@
 import PushButtonSecondary from '@/components/Elements/PushButtonSecondary.vue'
 import { useAuthStore } from '@/stores/auth'
 import AndroidHead from '@/components/Icons/AndroidHead.vue'
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import LazyImage from '@/components/Loaders/LazyImage.vue'
+import { cdnImage } from '@/scripts/image'
 import { isApp } from '@/scripts/mobile/isApp'
 
-const router = useRouter()
 const auth = useAuthStore()
 
 const downloadUri = ref(window.GLOBAL_ENV.STATIC + '/beta.apk')
-
-onMounted(() => {
-  if(isApp()) return router.push('/contacts')
-})
 </script>
 
 <style scoped>

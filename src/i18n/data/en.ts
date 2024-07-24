@@ -36,5 +36,8 @@ export default {
   'Last name': 'Last name',
   Submit: 'Submit',
   // Form errors
-  'error.required': 'This field is required'
+  'error.required': 'This field is required',
+  'error.email': 'Invalid email address',
+  'error.min': 'Must be at least {0} characters',
+  'error.max': 'Maximum {0} characters'
 }

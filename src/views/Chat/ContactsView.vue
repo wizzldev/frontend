@@ -1,7 +1,7 @@
 <template>
   <ContactsLayout>
     <section class="px-5">
-      <IconInput v-model="searchInput" :icon="Magnifier as Component" placeholder="Search" />
+      <IconInput v-model="searchInput" :value="searchInput" :icon="Magnifier as Component" placeholder="Search" />
     </section>
     <ChatNav />
     <div class="mx-5 pb-2 hidden">
@@ -25,7 +25,7 @@
         <template v-for="(con, i) in contacts.contacts" :key="i">
           <PushButton
             class="w-full"
-            v-if="showSearch(con)"
+            v-if="searchInput == '' || con.name.toLowerCase().indexOf(searchInput.toLowerCase()) > -1"
             :is-link="true"
             to-name="chat.message"
             :to-params="{ id: con?.id }"

@@ -2,7 +2,7 @@
   <div class="py-3 transition-colors hover:bg-secondary text-left" ref="wrap">
     <div class="flex items-center mx-5">
       <div class="flex items-center w-10/12">
-        <LazyImage class="rounded-xl w-12 h-12" :src="image" alt="Chat Image" />
+        <LazyImage class="rounded-xl w-12 h-12 min-w-12 min-h-12" :src="image" alt="Chat Image" />
         <div class="w-full px-2">
           <h3 class="max-w-full mr-3 flex items-center space-x-1">
             <span class="text-ellipsis text-nowrap overflow-hidden line-clamp-1" v-emoji>{{
@@ -53,6 +53,7 @@ const props = defineProps<{
   message: {
     sender_id: number
     sender_name: string
+    nick_name: string | null
     content: string | null
     type: string
     date: string
@@ -72,7 +73,7 @@ onLongPress(wrap, () => {
 
 const realMessage = computed(() => {
   const isSentByYou = props.message.sender_id == auth.user?.id
-  const sender = isSentByYou ? i18n.t('You') : props.message.sender_name
+  const sender = isSentByYou ? i18n.t('You') : props.message.nick_name ? props.message.nick_name : props.message.sender_name
   let build = sender + ': '
 
   if (props.message.content != null && props.message.type == 'message')

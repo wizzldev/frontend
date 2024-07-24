@@ -42,5 +42,14 @@ export const useContactsStore = defineStore('contacts', () => {
     return null
   }
 
-  return { contacts, push, update, findByID }
+  function removeByID(id: number) {
+    for(let i = 0; i < contacts.value.length; i++) {
+      if(contacts.value[i].id == id) {
+        contacts.value.splice(i, 1)
+        break
+      }
+    }
+  }
+
+  return { contacts, push, update, findByID, removeByID }
 })

@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import type { User } from '@/types/user'
 import { computed, type Ref, ref } from 'vue'
-import { WizzlAuthToken } from '@/scripts/consts'
+import { WizzlAuthToken, WizzlTermsAccepted } from '@/scripts/consts'
 import request from '@/scripts/request/request'
 import { setup } from '@/scripts/ws/default'
+import { useRouteLoaderStore } from '@/stores/routeLoader'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null) as Ref<User | null>
@@ -18,16 +19,19 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function logout() {
     await request.get('/logout')
+    const terms = window.localStorage.getItem(WizzlTermsAccepted)
     window.localStorage.clear()
+    if(terms) window.localStorage.setItem(WizzlTermsAccepted, terms)
     if (user.value?.id) user.value.id = 0
   }
 
   async function check(): Promise<boolean> {
     const res = await request.get('/me')
-    if (res.data?.$error) {
+    if (res.data?.$error && !res.data.$network) {
       await logout()
       return false
     } else if (res.data?.user) user.value = res.data.user as User
+    else useRouteLoaderStore().networkError = true
     token.value = tokenHelper(null)
     await setup(token.value.value)
     return true

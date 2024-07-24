@@ -2,7 +2,7 @@
   <BottomSheet :visible="visible" @close="$emit('close')">
     <header class="border-b border-tertiary">
       <h2 class="m-5 text-lg">
-        {{ contact.name }}
+        <span v-emoji>{{ contact.name }}</span>
         <VerifiedBadge class="text-yellow-400" v-if="contact.is_verified" />
       </h2>
     </header>
@@ -16,17 +16,42 @@
       <SheetButton :icon="ShareIcon" @click="share" v-if="contact.custom_invite && isApp()">
         {{ $t('Share group') }}
       </SheetButton>
-      <SheetButton :icon="Trash">
-        {{ $t('Delete') }}
-      </SheetButton>
       <SheetButton v-if="contact.is_private_message" :icon="Block">
         {{ $t('Block') }}
       </SheetButton>
-      <SheetButton :icon="Leave" v-else>
+      <SheetButton @click="leave" :icon="Leave" v-else-if="contact.creator_id != user?.id">
         {{ $t('Leave group') }}
+      </SheetButton>
+      <SheetButton @click="delStart = true" v-if="!contact.is_private_message && contact.creator_id == user?.id" :icon="Trash">
+        {{ $t('Delete group') }}
       </SheetButton>
     </main>
   </BottomSheet>
+
+  <Modal :show="delStart" @close="delStart = false">
+    <h2 class="text-2xl fontTheme">{{ $t('Are you sure?') }}</h2>
+    <p class="text-left mt-2">
+      {{
+        $t('All messages, files will be lost and you may lose your community.')
+      }}
+    </p>
+    <div class="grid grid-cols-2 gap-2">
+      <PushButton
+        @click="delStart = false"
+        :is-link="false"
+        class="w-full bg-tertiary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+      >
+        {{ $t('Retain') }}
+      </PushButton>
+      <PushButton
+        :is-link="false"
+        @click="del"
+        class="w-full bg-red-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+      >
+        {{ $t('Delete') }}
+      </PushButton>
+    </div>
+  </Modal>
 </template>
 <script setup lang="ts">
 import BottomSheet from '@/components/BottomSheet.vue'
@@ -44,8 +69,13 @@ import { useToast } from 'vue-toastification'
 import { Clipboard } from '@capacitor/clipboard'
 import ShareIcon from '@/components/Icons/Share.vue'
 import { Share } from '@capacitor/share'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { isApp } from '@/scripts/mobile/isApp'
+import { useAuthStore } from '@/stores/auth'
+import request from '@/scripts/request/request'
+import { useContactsStore } from '@/stores/contacts'
+import Modal from '@/components/Modals/Modal.vue'
+import PushButton from '@/components/Elements/PushButton.vue'
 
 const props = defineProps<{
   visible: boolean
@@ -54,7 +84,11 @@ const props = defineProps<{
 
 const router = useRouter()
 const { t } = useI18n()
-const { info } = useToast()
+const { info, error } = useToast()
+const { user } = useAuthStore()
+const contacts = useContactsStore()
+const delStart = ref(false)
+const emit = defineEmits(['close'])
 
 const goTo = () => {
   router.push({ name: 'chat.message', params: { id: props.contact.id.toString() } })
@@ -76,5 +110,25 @@ const share = async () => {
     url: customInvite.value,
     dialogTitle: 'Share with friends',
   })
+}
+
+const leave = async () => {
+  const res = await request.get(`/chat/${props.contact.id}/leave`)
+  if(res.data.$error) error(t('Failed to leave the group'))
+  else {
+    info(t('Successfully left the group'))
+    contacts.removeByID(props.contact.id)
+  }
+}
+
+const del = async () => {
+  const res = await request.delete(`/chat/${props.contact.id}`)
+  if(res.data.$error) error(t('Failed to delete the group'))
+  else {
+    info(t('Successfully deleted'))
+    contacts.removeByID(props.contact.id)
+    delStart.value = false
+    emit('close')
+  }
 }
 </script>

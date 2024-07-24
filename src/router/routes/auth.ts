@@ -1,12 +1,7 @@
 import LoginView from '@/views/Auth/LoginView.vue'
+import RegisterView from '@/views/Auth/RegisterView.vue'
 import Guard from '@/router/guard'
 import type { RouteRecordRaw } from 'vue-router'
-import RegisterView from '@/views/Auth/RegisterView.vue'
-import ResetPasswordView from '@/views/Auth/ResetPasswordView.vue'
-import VerifyEmailView from '@/views/Auth/VerifyEmailView.vue'
-import RequestResetPasswordView from '@/views/Auth/RequestResetPasswordView.vue'
-import EmailVerificationView from '@/views/Auth/EmailVerificationView.vue'
-import IPVerification from '@/views/Auth/IPVerification.vue'
 
 const noLogin = {
   auth: Guard.ACCESS_NO_LOGIN
@@ -28,28 +23,28 @@ export default [
   {
     path: '/reset-password',
     name: 'auth.reset-password',
-    component: RequestResetPasswordView,
+    component: () => import('@/views/Auth/RequestResetPasswordView.vue'),
     meta: noLogin
   },
   {
-    path: '/set-password/:token',
+    path: '/reset-password/:token',
     name: 'auth.set-password',
-    component: ResetPasswordView,
+    component: () => import('@/views/Auth/ResetPasswordView.vue'),
     meta: noLogin
   },
   {
     path: '/email-verification',
     name: 'auth.email-verification',
-    component: EmailVerificationView
+    component: () => import('@/views/Auth/EmailVerificationView.vue')
   },
   {
     path: '/verify-email/:token',
     name: 'auth.verify-email',
-    component: VerifyEmailView
+    component: () => import('@/views/Auth/VerifyEmailView.vue')
   },
   {
     path: '/ip-verification/:token',
     name: 'auth.ip-verification',
-    component: IPVerification
+    component: () => import('@/views/Auth/IPVerification.vue')
   }
 ] as Array<RouteRecordRaw>

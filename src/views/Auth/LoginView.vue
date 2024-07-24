@@ -10,7 +10,7 @@
           name: 'email',
           type: 'email',
           label: 'Email address',
-          placeholder: 'email@wizzl.co'
+          placeholder: 'email@wizzl.app'
         },
         {
           icon: Lock,

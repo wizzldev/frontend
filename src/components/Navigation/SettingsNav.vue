@@ -16,7 +16,7 @@
       <h2
         class="text-lg font-bold fontTheme text-ellipsis text-nowrap overflow-hidden line-clamp-1"
       >
-        Settings
+        {{ $t('Settings') }}
       </h2>
     </div>
     <div class="flex items-center space-x-2">

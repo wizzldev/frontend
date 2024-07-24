@@ -19,8 +19,8 @@
     [
       "list",
       [
-        "In order to maintain the safety of your account, be sure to only log in to your account on the wizzl.co site, and not on another fake website. ",
-        "In case the possibility occurs that someone has gained unauthorized access to your profile, it is strongly advised to change your password, and contact us via this email: hi@wizzl.co.",
+        "In order to maintain the safety of your account, be sure to only log in to your account on the wizzl.app site, and not on another fake website. ",
+        "In case the possibility occurs that someone has gained unauthorized access to your profile, it is strongly advised to change your password, and contact us via this email: hi@wizzl.app.",
         "Only click on the \"stay signed in\" option on a trusted device when logging in. "
       ]
     ],
@@ -39,7 +39,7 @@
       [
         "We will not share any of the collected data with a third party.",
         "We strictly only use the collected data for security optimization, and for filtering content.",
-        "You can delete your personal data in settings. (Your user profile will be saved for 15 days, after the deletion occurs. In case you'd like to cancel the deletion of your account within this time-span, you can contact us on this email: hi@wizzl.co.) (We won't be able to restore your activity, or the rest of your personal data.)"
+        "You can delete your personal data in settings. (Your user profile will be saved for 15 days, after the deletion occurs. In case you'd like to cancel the deletion of your account within this time-span, you can contact us on this email: support@wizzl.app.) (We won't be able to restore your activity, or the rest of your personal data.)"
       ]
     ],
     ["secondary_heading", "Browser tracking"],

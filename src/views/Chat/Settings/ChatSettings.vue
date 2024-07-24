@@ -50,25 +50,6 @@
             {{ $t('Download group data in JSON') }}
           </PushButton>
         </ChatGroup>
-
-        <ChatGroup
-          title="Danger zone"
-          v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Creator)"
-        >
-          <PushButton
-            v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)"
-            :is-link="false"
-            class="transition-colors w-full text-white bg-red-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
-          >
-            {{ $t('Delete chat') }}
-          </PushButton>
-          <PushButton
-            v-else-if="chatProfile.isPrivateMessage"
-            class="transition-colors w-full text-white bg-red-all py-2 rounded-xl fontTheme flex items-center space-x-2 justify-center"
-          >
-            {{ $t('Block user') }}
-          </PushButton>
-        </ChatGroup>
       </div>
     </main>
   </ChatLayout>

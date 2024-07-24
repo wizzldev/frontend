@@ -17,8 +17,8 @@
     <MessageForm
       :theme="theme?.bottom"
       :reply="store.replyMessage"
-      :canSendMessage="permission('SEND_MESSAGE')"
-      :canAttachFile="permission('ATTACH_FILE')"
+      :canSendMessage="permission(Roles.SendMessage)"
+      :canAttachFile="permission(Roles.AttachFile)"
       @send="send"
       :edit="store.editMessage"
       @detachReply="store.replyMessage = undefined"
@@ -26,7 +26,8 @@
     />
   </ChatLayout>
   <MessageActionModal
-    :canDeleteMessage="permission('DELETE_MESSAGE')"
+    :canDeleteMessage="permission(Roles.DeleteMessage)"
+    :canDeleteOtherMessage="permission(Roles.DeleteOtherMemberMessage)"
     :show="store.modalMessage != null"
     @close="store.modalMessage = null"
     :msg="store.modalMessage as WSMessage"
@@ -61,6 +62,7 @@ import {
   newReactiveStore
 } from '@/views/Chat/scripts'
 import type { User } from '@/types/user'
+import { Roles } from '@/scripts/roles'
 
 // using
 const auth = useAuthStore()
@@ -119,7 +121,11 @@ const fetchChat = async (hard: boolean = false) => {
   loader.isLoaded = false
 
   const data = await fetchChatInfo(route.params.id as string)
-  if (!data) return await router.push({ name: 'chat.contacts' })
+  if (!data) {
+    await router.push({ name: 'chat.contacts' })
+    loader.isLoaded = true
+    return
+  }
 
   store.isYou = data.is_your_profile
 
