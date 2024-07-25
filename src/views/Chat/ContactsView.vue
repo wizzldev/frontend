@@ -66,7 +66,6 @@ import { type Component, computed, onMounted, ref } from 'vue'
 import request from '@/scripts/request/request'
 import ChatNav from '@/components/ChatV1/ChatNav.vue'
 import Magnifier from '@/components/Icons/Magnifier.vue'
-import type { Contact as TContact } from '@/types/contact'
 import { useContactsStore } from '@/stores/contacts'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
 import { cdnImage } from '@/scripts/image'
@@ -90,10 +89,6 @@ const fetchContacts = async () => {
 }
 
 const searchInput = ref('')
-const showSearch = (con: TContact): boolean => {
-  const s = con.name.toLowerCase()
-  return s.indexOf(searchInput.value) > -1
-}
 
 onMounted(fetchContacts)
 </script>

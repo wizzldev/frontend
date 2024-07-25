@@ -1,8 +1,8 @@
 <template>
   <BottomSheet :visible="visible" @close="$emit('close')">
     <header class="border-b border-tertiary">
-      <h2 class="m-5 text-lg">
-        <span v-emoji>{{ contact.name }}</span>
+      <h2 class="m-5 text-lg flex items-center space-x-1">
+        <span v-emoji>{{ realTitle }}</span>
         <VerifiedBadge class="text-yellow-400" v-if="contact.is_verified" />
       </h2>
     </header>
@@ -13,7 +13,7 @@
       <SheetButton @click="copyInvite" :icon="ClipboardIcon" v-if="contact.custom_invite">
         {{ $t('Copy special invite') }}
       </SheetButton>
-      <SheetButton :icon="ShareIcon" @click="share" v-if="contact.custom_invite && isApp()">
+      <SheetButton :icon="ShareIcon" @click="share" v-if="contact.custom_invite && canShare()">
         {{ $t('Share group') }}
       </SheetButton>
       <SheetButton v-if="contact.is_private_message" :icon="Block">
@@ -76,6 +76,7 @@ import request from '@/scripts/request/request'
 import { useContactsStore } from '@/stores/contacts'
 import Modal from '@/components/Modals/Modal.vue'
 import PushButton from '@/components/Elements/PushButton.vue'
+import { getRealUserName } from '@/scripts/getRealUserName'
 
 const props = defineProps<{
   visible: boolean
@@ -90,11 +91,21 @@ const contacts = useContactsStore()
 const delStart = ref(false)
 const emit = defineEmits(['close'])
 
+const realTitle = computed(() => getRealUserName(props.contact.name))
+
 const goTo = () => {
   router.push({ name: 'chat.message', params: { id: props.contact.id.toString() } })
 }
 
 const customInvite = computed(() => `https://${window.GLOBAL_ENV.INVITE_HOST}/${props.contact.custom_invite}`)
+const shareData = computed(() => {
+  return {
+    title: `Join ${props.contact.name} on Wizzl`,
+    text: `You've been invited to join an awesome group on Wizzl. Join now chat about anything you like!`,
+    url: customInvite.value,
+    dialogTitle: 'Share with friends',
+  }
+})
 
 const copyInvite = async () => {
   await Clipboard.write({
@@ -104,12 +115,20 @@ const copyInvite = async () => {
 }
 
 const share = async () => {
-  if(isApp()) await Share.share({
-    title: `Join ${props.contact.name} on Wizzl`,
-    text: `You've been invited to join an awesome group on Wizzl. Join now chat about anything you like!`,
-    url: customInvite.value,
-    dialogTitle: 'Share with friends',
-  })
+  if(isApp()) {
+    await Share.share(shareData.value)
+    return
+  }
+
+  if(canShare()) await navigator.share(shareData.value)
+}
+
+const canShare = (): boolean => {
+  if(isApp()) return true
+
+  if(!navigator.canShare) return false
+
+  return navigator.canShare(shareData.value);
 }
 
 const leave = async () => {

@@ -85,7 +85,7 @@ const add = async () => {
 
   const res = await request.post('/users/findByEmail', { email: input.value })
   if (!res.data.$error) {
-    if (groupMake.users.indexOf(res.data) == -1) groupMake.users.push(res.data as User)
+    if (groupMake.users.indexOf(res.data as User) != -1) groupMake.users.push(res.data as User)
   } else {
     toast.error(i18n.t('User could not be found'))
   }

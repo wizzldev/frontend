@@ -11,6 +11,7 @@ export const fetchInfo = async (id: string) => {
       roles: Array<string>
       your_roles: Array<string>,
       custom_invite: string | null
+      emoji: string | null
     }
     return {
       user: {
@@ -21,6 +22,7 @@ export const fetchInfo = async (id: string) => {
         loading: false,
         is_verified: false,
         custom_invite: data.custom_invite,
+        emoji: data.emoji || '✨'
       },
       roles: data.roles,
       your_roles: data.your_roles

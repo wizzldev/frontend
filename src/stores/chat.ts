@@ -10,11 +10,12 @@ export const useChatStore = defineStore('chat', () => {
   const profile = ref({}) as Ref<
     Record<
       string,
-      { name: string; pm: boolean; image: string; loading: boolean; is_verified: boolean }
+      { name: string; pm: boolean; image: string; loading: boolean; is_verified: boolean; emoji: string }
     >
   >
   const lastFetch = ref<Record<string, Date>>({})
   const theme = ref<Record<string, ThemeData | undefined>>({})
+  const cursors = ref<Record<string, { nextCursor: string; prevCursor: string }>>({})
 
   function push(
     chat: string,
@@ -124,6 +125,7 @@ export const useChatStore = defineStore('chat', () => {
     profile,
     isPM,
     lastFetch,
-    theme
+    theme,
+    cursors,
   }
 })

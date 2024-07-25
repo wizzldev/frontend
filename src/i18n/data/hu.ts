@@ -116,6 +116,8 @@ export default {
   or: 'vagy',
   Join: 'Csatlakozás',
   'Enter an invite link': 'Add meg a meghívó linket',
+  'Are you sure?': 'Biztos vagy benne?',
+  Discard: 'Elvetés',
 
   // Contact sheet
   'Open chat': 'Beszélgetés megnyitása',
@@ -123,6 +125,7 @@ export default {
   'Delete group': 'Csoport törlése',
   'Copy special invite': 'Különleges meghívó másolása',
   'Leave group': 'Kilépés a csoportból',
+  'Share group': 'Csoport megosztása',
 
   // Login
   'error.email': 'Hibás email cím',

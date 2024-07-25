@@ -9,15 +9,15 @@
         >
           <BackArrow />
         </PushButton>
-        <img
+        <LazyImage
           v-if="loading"
-          class="w-8 h-8 rounded-full animate-spin"
+          class="w-8 h-8 min-w-8 min-h-8 rounded-full animate-spin"
           src="../../assets/vectors/loading.svg"
           alt="Loading image"
         />
         <LazyImage
           v-else
-          class="w-8 h-8 rounded-full"
+          class="w-8 h-8 min-w-8 min-h-8 rounded-full"
           :src="cdnImage(image, 128)"
           :alt="`${name}'s chat image`"
         />

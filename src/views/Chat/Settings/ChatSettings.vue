@@ -21,9 +21,10 @@
       </SettingsButton>
     </header>
     <main class="px-4 my-2" v-if="loaded">
-      <EditName v-if="!chatProfile.isPrivateMessage" :name="chatProfile.name" />
+      <EditName v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.EditGroupName)" :name="chatProfile.name" />
       <div>
         <Invite v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)" @reload="fetchProfile" :is-private-message="chatProfile.isPrivateMessage" :special-invite="chatProfile.custom_invite" :your-roles="yourRoles" />
+        <EmojiSetting v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Admin)" :emoji="chatProfile.emoji" @reload="fetchProfile" />
         <ChatGroup
           title="Roles & Permissions"
           v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Admin)"
@@ -80,6 +81,7 @@ import EditName from '@/components/Group/EditName.vue'
 import ChatGroup from '@/views/Chat/Settings/ChatGroup.vue'
 import { Roles } from '@/scripts/roles'
 import Invite from '@/views/Chat/Settings/Invite.vue'
+import EmojiSetting from '@/views/Chat/Settings/EmojiSetting.vue'
 
 const route = useRoute()
 const contacts = useContactsStore()
@@ -92,6 +94,7 @@ const chatProfile = ref<{
   loading: boolean
   is_verified: boolean
   custom_invite: string | null
+  emoji: string
 }>({
   id: 0,
   name: '',
@@ -100,6 +103,7 @@ const chatProfile = ref<{
   loading: true,
   is_verified: false,
   custom_invite: null,
+  emoji: '✨',
 })
 const editProfileImage = ref(false)
 const yourRoles = ref<Array<string>>([])

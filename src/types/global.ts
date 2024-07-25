@@ -13,6 +13,7 @@ declare global {
       INVITE_HOST: string
       MODE: string
       STATIC: string
+      LINK_HOST: string
     }
     WS: Server
   }
