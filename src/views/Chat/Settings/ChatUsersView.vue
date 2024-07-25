@@ -33,7 +33,7 @@
       </ul>
     </main>
   </ChatSettingsLayout>
-  <ChatUserSheet v-if="userSheet" :user="userSheet as User" :show="!!userSheet" @close="userSheet = null" :isPM="chatProfile.isPrivateMessage" :roles="yourRoles" />
+  <ChatUserSheet :user="userSheet as User" :show="userSheet != null" @close="userSheet = null" :isPM="chatProfile.isPrivateMessage" :roles="yourRoles" />
 </template>
 
 <script setup lang="ts">
