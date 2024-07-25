@@ -3,7 +3,7 @@
     @click="editStart = true"
     class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
   >
-    {{ $t('Edit emoji') }}: "{{ emoji }}"
+    {{ $t('Edit emoji') }}: {{ emoji }}
   </PushButton>
 
   <Modal :show="editStart" @close="editStart = false">

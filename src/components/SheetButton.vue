@@ -2,7 +2,12 @@
   <PushButton
     class="w-full px-3 py-2.5 bg-secondary-all flex items-center"
   >
-    <component class="!w-6 !h-6 text-gray-400" v-if="icon" :is="icon" />
+    <component
+      v-if="icon"
+      :is="icon"
+      class="text-gray-400"
+      :class="{'!w-6 !h-6': !smallIcon, '!w-4 !h-4': smallIcon}"
+    />
     <span class="ml-3"><slot/></span>
   </PushButton>
 </template>
@@ -12,5 +17,6 @@ import PushButton from '@/components/Elements/PushButton.vue'
 import type { Component } from 'vue'
 defineProps<{
   icon?: Component
+  smallIcon?: boolean
 }>()
 </script>

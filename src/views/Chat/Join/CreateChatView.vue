@@ -33,7 +33,7 @@
             :key="user.id"
           >
            <div class="flex items-center space-x-2 justify-start">
-             <img class="w-8 h-8 min-w-8 min-h-8 rounded-xl" :src="cdnImage(user.image_url)" alt="User image" />
+             <LazyImage class="w-8 h-8 min-w-8 min-h-8 rounded-xl" :src="cdnImage(user.image_url)" alt="User image" />
              <div>
                <p>{{ user.first_name }} {{ user.last_name }}</p>
                <p class="text-xs text-gray-400">{{ user.email }}</p>
@@ -70,6 +70,7 @@ import { useGroupMakeStore } from '@/stores/groupMake'
 import { cdnImage } from '@/scripts/image'
 import FormButtonSecondary from '@/components/Auth/FormButtonSecondary.vue'
 import Times from '@/components/Icons/Times.vue'
+import LazyImage from '@/components/Loaders/LazyImage.vue'
 
 const groupMake = useGroupMakeStore()
 const router = useRouter()

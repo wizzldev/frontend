@@ -1,9 +1,11 @@
 <template>
-  <ChatLayout
+  <ChatSettingsLayout
     :chat-profile="chatProfile"
     :connection="{ connected: true, error: false }"
     :theme="undefined"
     :isYou="false"
+    to-name="chat.settings"
+    :to-params="{id: route.params.id}"
   >
     <main class="px-4 my-2 text-gray-500">
       <RolePicker :yourRoles="yourRoles" :roles="allRole" :active="usedRoles" @toggle="toggle" />
@@ -18,11 +20,10 @@
         </button>
       </div>
     </main>
-  </ChatLayout>
+  </ChatSettingsLayout>
 </template>
 
 <script setup lang="ts">
-import ChatLayout from '@/layouts/ChatLayout.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { fetchInfo } from '@/views/Chat/Settings/fetchInfo'
@@ -31,6 +32,7 @@ import request from '@/scripts/request/request'
 import Spinner from '@/components/Icons/Spinner.vue'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
+import ChatSettingsLayout from '@/layouts/ChatSettingsLayout.vue'
 
 const route = useRoute()
 const router = useRouter()

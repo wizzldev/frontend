@@ -4,7 +4,8 @@
       <div class="flex items-center space-x-2">
         <PushButton
           :is-link="true"
-          to-name="chat.contacts"
+          :to-name="toName ? toName : 'chat.contacts'"
+          :to-params="toParams"
           class="bg-secondary-all rounded-full p-2 flex items-center justify-center text-gray-400"
         >
           <BackArrow />
@@ -81,6 +82,8 @@ const props = defineProps<{
   theme: ThemeDataTop | undefined
   isYou: boolean
   verified: boolean
+  toName?: string
+  toParams?: RouteParamsRaw
 }>()
 
 const realTitle = computed(() => {

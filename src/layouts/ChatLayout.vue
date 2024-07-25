@@ -7,6 +7,8 @@
       :theme="theme"
       :isYou="isYou"
       :verified="chatProfile.is_verified"
+      :to-name="toName"
+      :to-params="toParams"
     />
     <slot />
   </AppLayout>
@@ -16,10 +18,13 @@
 import AppLayout from '@/layouts/AppLayout.vue'
 import ChatProfile from '@/components/Navigation/ChatProfile.vue'
 import type { ThemeDataTop } from '@/types/chat'
+import type { RouteParamsRaw } from 'vue-router'
 
 defineProps<{
   chatProfile: { name: string; image: string; loading: boolean; is_verified: boolean }
   theme: ThemeDataTop | undefined
   isYou: boolean
+  toName?: string
+  toParams?: RouteParamsRaw
 }>()
 </script>

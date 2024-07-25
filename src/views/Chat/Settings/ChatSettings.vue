@@ -1,5 +1,5 @@
 <template>
-  <ChatLayout
+  <ChatSettingsLayout
     :chat-profile="chatProfile"
     :connection="{ connected: true, error: false }"
     :theme="undefined"
@@ -27,15 +27,24 @@
         <EmojiSetting v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Admin)" :emoji="chatProfile.emoji" @reload="fetchProfile" />
         <ChatGroup
           title="Roles & Permissions"
-          v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Admin)"
         >
           <PushButton
+            v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Admin)"
             toName="chat.roles"
             :to-params="{ id: $route.params.id as string }"
             :is-link="true"
             class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
           >
             {{ $t('Edit roles') }}
+          </PushButton>
+
+          <PushButton
+            :is-link="true"
+            to-name="chat.members"
+            :to-params="{id: route.params.id as string}"
+            class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+          >
+            {{ $t('Members') }}
           </PushButton>
         </ChatGroup>
 
@@ -53,7 +62,7 @@
         </ChatGroup>
       </div>
     </main>
-  </ChatLayout>
+  </ChatSettingsLayout>
 
   <Modal :show="editProfileImage" @close="editProfileImage = false">
     <ProfileImageCropper
@@ -65,7 +74,6 @@
 </template>
 
 <script setup lang="ts">
-import ChatLayout from '@/layouts/ChatLayout.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { cdnImage } from '@/scripts/image'
@@ -76,35 +84,18 @@ import ProfileImageCropper from '@/components/Settings/ProfileImageCropper.vue'
 import { useChatStore } from '@/stores/chat'
 import { useContactsStore } from '@/stores/contacts'
 import PushButton from '@/components/Elements/PushButton.vue'
-import { fetchInfo } from '@/views/Chat/Settings/fetchInfo'
+import { fetchInfo, getChatProfileRef } from '@/views/Chat/Settings/fetchInfo'
 import EditName from '@/components/Group/EditName.vue'
 import ChatGroup from '@/views/Chat/Settings/ChatGroup.vue'
 import { Roles } from '@/scripts/roles'
 import Invite from '@/views/Chat/Settings/Invite.vue'
 import EmojiSetting from '@/views/Chat/Settings/EmojiSetting.vue'
+import ChatSettingsLayout from '@/layouts/ChatSettingsLayout.vue'
 
 const route = useRoute()
 const contacts = useContactsStore()
 const chat = useChatStore()
-const chatProfile = ref<{
-  id: number
-  name: string
-  image: string
-  isPrivateMessage: boolean
-  loading: boolean
-  is_verified: boolean
-  custom_invite: string | null
-  emoji: string
-}>({
-  id: 0,
-  name: '',
-  image: '',
-  isPrivateMessage: false,
-  loading: true,
-  is_verified: false,
-  custom_invite: null,
-  emoji: '✨',
-})
+const chatProfile = getChatProfileRef()
 const editProfileImage = ref(false)
 const yourRoles = ref<Array<string>>([])
 const loaded = ref(false)
