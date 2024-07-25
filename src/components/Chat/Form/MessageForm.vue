@@ -30,7 +30,7 @@
         @showIcons="(s: boolean) => (showIcons = s)"
         @click="compactView = false"
       />
-      <EmojiButton :emoji="theme?.emoji" @send="send" v-if="showIcons || compactView" />
+      <EmojiButton :emoji="emoji ? emoji : undefined" @send="send" v-if="showIcons || compactView" />
     </div>
   </section>
   <MessagePermissionDenied :theme="theme" v-else />
@@ -62,6 +62,7 @@ const props = defineProps<{
   theme?: ThemeDataBottom | undefined
   canAttachFile: boolean
   edit: Message | null
+  emoji: string
 }>()
 
 const emit = defineEmits(['send', 'detachReply', 'detachEdit'])

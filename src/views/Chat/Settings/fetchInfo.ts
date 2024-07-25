@@ -1,4 +1,5 @@
 import request from '@/scripts/request/request'
+import { ref } from 'vue'
 
 export const fetchInfo = async (id: string) => {
   const res = await request.get(`/chat/user/${id}`)
@@ -11,6 +12,7 @@ export const fetchInfo = async (id: string) => {
       roles: Array<string>
       your_roles: Array<string>,
       custom_invite: string | null
+      emoji: string | null
     }
     return {
       user: {
@@ -21,10 +23,24 @@ export const fetchInfo = async (id: string) => {
         loading: false,
         is_verified: false,
         custom_invite: data.custom_invite,
+        emoji: data.emoji || '✨'
       },
       roles: data.roles,
       your_roles: data.your_roles
     }
   }
   return { user: null, roles: null }
+}
+
+export const getChatProfileRef = () => {
+  return ref({
+    id: 0,
+    name: '',
+    image: '',
+    isPrivateMessage: false,
+    loading: true,
+    is_verified: false,
+    custom_invite: null as string | null,
+    emoji: '✨',
+  })
 }

@@ -4,20 +4,21 @@
       <div class="flex items-center space-x-2">
         <PushButton
           :is-link="true"
-          to-name="chat.contacts"
+          :to-name="toName ? toName : 'chat.contacts'"
+          :to-params="toParams"
           class="bg-secondary-all rounded-full p-2 flex items-center justify-center text-gray-400"
         >
           <BackArrow />
         </PushButton>
-        <img
+        <LazyImage
           v-if="loading"
-          class="w-8 h-8 rounded-full animate-spin"
+          class="w-8 h-8 min-w-8 min-h-8 rounded-full animate-spin"
           src="../../assets/vectors/loading.svg"
           alt="Loading image"
         />
         <LazyImage
           v-else
-          class="w-8 h-8 rounded-full"
+          class="w-8 h-8 min-w-8 min-h-8 rounded-full"
           :src="cdnImage(image, 128)"
           :alt="`${name}'s chat image`"
         />
@@ -81,6 +82,8 @@ const props = defineProps<{
   theme: ThemeDataTop | undefined
   isYou: boolean
   verified: boolean
+  toName?: string
+  toParams?: RouteParamsRaw
 }>()
 
 const realTitle = computed(() => {

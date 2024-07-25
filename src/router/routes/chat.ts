@@ -52,5 +52,11 @@ export default [
     name: 'chat.roles',
     component: () => import('@/views/Chat/Settings/RoleSettings.vue'),
     meta: needsAuth
+  },
+  {
+    path: '/chat/:id/members',
+    name: 'chat.members',
+    component: () => import('@/views/Chat/Settings/ChatUsersView.vue'),
+    meta: needsAuth
   }
 ] as Array<RouteRecordRaw>

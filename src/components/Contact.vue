@@ -44,6 +44,9 @@ import { onLongPress } from '@vueuse/core'
 import ContactSheet from '@/components/Group/ContactSheet.vue'
 import { useContactsStore } from '@/stores/contacts'
 import type { Contact } from '@/types/contact'
+import { getRealUserName } from '@/scripts/getRealUserName'
+import { Haptics, ImpactStyle } from '@capacitor/haptics'
+import { isApp } from '@/scripts/mobile/isApp'
 
 const props = defineProps<{
   image: string
@@ -68,6 +71,7 @@ const wrap = ref<HTMLElement | null>(null)
 const showSheet = ref(false)
 
 onLongPress(wrap, () => {
+  if(isApp()) Haptics.impact({ style: ImpactStyle.Light })
   showSheet.value = true
 }, { delay: 300 })
 
@@ -86,9 +90,6 @@ const realMessage = computed(() => {
 })
 
 const realTitle = computed(() => {
-  if (props.title.endsWith('#allowTranslation')) {
-    return i18n.t(props.title.substring(0, props.title.length - '#allowTranslation'.length))
-  }
-  return props.title
+  return getRealUserName(props.title)
 })
 </script>

@@ -116,6 +116,8 @@ export default {
   or: 'vagy',
   Join: 'Csatlakozás',
   'Enter an invite link': 'Add meg a meghívó linket',
+  'Are you sure?': 'Biztos vagy benne?',
+  Discard: 'Elvetés',
 
   // Contact sheet
   'Open chat': 'Beszélgetés megnyitása',
@@ -123,9 +125,35 @@ export default {
   'Delete group': 'Csoport törlése',
   'Copy special invite': 'Különleges meghívó másolása',
   'Leave group': 'Kilépés a csoportból',
+  'Share group': 'Csoport megosztása',
+
+  'Create an invite': 'Meghívó létrehozása',
+  'Manage special invite': 'Egyedi meghívó kezelése',
+  'Setup a custom invite': 'Egyedi meghívó beállítása',
+  'Max usage': 'Maximális használat',
+  'empty/0 for no limit': 'üres/0: korlátozás nélkül',
+  'Expiration': 'Lejárat',
+  'empty for no expiry': 'üres: lejárat nélkül',
+  'Clear date': 'Dátum törlése',
+  'Remove': 'Törlés',
+  'Update': 'Frissítés',
+  'Edit emoji': 'Emoji módosítása',
+
+  'General': 'Általános',
+  'Developers': 'Fejlesztők',
+  'Create a poll': 'Szavazás létrehozása',
+
+  'Roles & Permissions': 'Szerepkörök és Jogosultságok',
+  'Edit roles': 'Szerepkörök módosítása',
+  Members: 'Tagok',
+  'Request data access': 'Adathozzáférés igénylése',
+  'Download group data in JSON': 'Csoportadatok letöltése JSON-ban',
+
+  'Ban or Kick': 'Kitiltás vagy Kirúgás',
+  'Edit nickname': 'Becenév módosítása',
 
   // Login
   'error.email': 'Hibás email cím',
   'error.min': 'Legalább {0} karakter kell, hogy legyen',
-  'error.max': 'Maximum {0} karakter lehet'
+  'error.max': 'Maximum {0} karakter lehet',
 }

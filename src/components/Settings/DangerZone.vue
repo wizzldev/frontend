@@ -19,7 +19,7 @@
           )
         }}
       </p>
-      <p>
+      <p class="text-left" v-else>
         {{ $t('Enter your password to begin the deletion.') }}
       </p>
       <div v-if="!nextDelete" class="grid grid-cols-2 gap-2">

@@ -14,6 +14,7 @@ export interface ChatData {
     is_private_message: boolean
     theme: { id: number; name: string; data: string } | undefined
     is_verified: boolean
+    emoji: string | null
   }
   messages: { data: Messages; next_cursor: string; previous_cursor: string }
   is_your_profile: boolean
@@ -52,7 +53,10 @@ export const initChatStore = (
   messages: Messages,
   roles: Array<string>,
   pm: boolean,
-  is_verified: boolean
+  is_verified: boolean,
+  emoji: string,
+  nextCursor: string,
+  prevCursor: string,
 ) => {
   const chat = useChatStore()
 
@@ -64,25 +68,20 @@ export const initChatStore = (
     name: group.name,
     loading: false,
     pm,
-    is_verified
+    is_verified,
+    emoji
   }
   if (group.theme) chat.theme[id] = JSON.parse(group.theme.data) as ThemeData
   chat.push(id, messages)
   chat.setRoles(id, roles)
+  chat.cursors[id] = {nextCursor, prevCursor}
 }
 
 export const newReactiveStore = () => {
-  return reactive<{
-    modalMessage: Message | null
-    replyMessage: Message | undefined
-    cursors: { next: string; prev: string }
-    isYou: boolean
-    editMessage: Message | null
-  }>({
-    modalMessage: null,
-    replyMessage: undefined,
-    cursors: { next: '', prev: '' },
-    isYou: false,
-    editMessage: null
-  })
+  return reactive({
+  modalMessage: null as Message | null,
+  replyMessage: undefined as Message | undefined,
+  isYou: false,
+  editMessage: null as Message | null,
+})
 }

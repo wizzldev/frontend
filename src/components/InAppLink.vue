@@ -1,5 +1,5 @@
 <template>
-  <a v-if="!isApp()">
+  <a v-if="!isApp()" :href="href">
     <slot />
   </a>
   <button v-else @click="browser">

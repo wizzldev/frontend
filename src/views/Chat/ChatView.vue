@@ -2,57 +2,52 @@
   <ChatLayout
     :theme="theme?.top"
     :chat-profile="chat.profile[chatID] || { name: '', image: '', loading: true }"
-    :isYou="store.isYou"
+    :isYou="storage.isYou"
   >
     <MessageLayout
       :theme="theme?.main"
       :isPM="isPM"
-      :hasNext="store.cursors.next != ''"
+      :hasNext="cursors.nextCursor != ''"
       :messages="chat.messages[chatID] || []"
-      @reply="(msg) => (store.replyMessage = msg)"
+      @reply="handleReply"
       @load="loadMore"
-      @modal="(msg: WSMessage) => (store.modalMessage = msg)"
+      @modal="handleModal"
       @like="like"
     />
     <MessageForm
       :theme="theme?.bottom"
-      :reply="store.replyMessage"
+      :reply="storage.replyMessage"
       :canSendMessage="permission(Roles.SendMessage)"
       :canAttachFile="permission(Roles.AttachFile)"
       @send="send"
-      :edit="store.editMessage"
-      @detachReply="store.replyMessage = undefined"
-      @detachEdit="store.editMessage = null"
+      :edit="storage.editMessage"
+      @detachReply="detachReply"
+      @detachEdit="detachEdit"
+      :emoji="emoji"
     />
   </ChatLayout>
   <MessageActionModal
     :canDeleteMessage="permission(Roles.DeleteMessage)"
     :canDeleteOtherMessage="permission(Roles.DeleteOtherMemberMessage)"
-    :show="store.modalMessage != null"
-    @close="store.modalMessage = null"
-    :msg="store.modalMessage as WSMessage"
+    :show="storage.modalMessage !== null"
+    @close="storage.modalMessage = null"
+    :msg="storage.modalMessage as WSMessage"
     @reply="replyTo"
     @delete="unSend"
-    @edit="(msg: WSMessage) => (store.editMessage = msg)"
+    @edit="editMessage"
   />
 </template>
 
 <script setup lang="ts">
-import ChatLayout from '@/layouts/ChatLayout.vue'
-import { computed, onMounted, onUnmounted } from 'vue'
-import request from '@/scripts/request/request'
+import { computed, nextTick, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import type { Message as WSMessage, Messages } from '@/types/message'
 import { useChatStore } from '@/stores/chat'
-import { Haptics, ImpactStyle } from '@capacitor/haptics'
-import { isApp } from '@/scripts/mobile/isApp'
-import { useRouteLoaderStore } from '@/stores/routeLoader'
-import { resetTheme, setTheme } from '@/scripts/mobile/theme'
 import { useAuthStore } from '@/stores/auth'
-import MessageLayout from '@/components/Chat/MessageLayout.vue'
-import MessageActionModal from '@/components/Modals/MessageActionModal.vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
+import ChatLayout from '@/layouts/ChatLayout.vue'
+import MessageLayout from '@/components/Chat/MessageLayout.vue'
+import MessageActionModal from '@/components/Modals/MessageActionModal.vue'
 import MessageForm from '@/components/Chat/Form/MessageForm.vue'
 import {
   fetchChatInfo,
@@ -61,64 +56,56 @@ import {
   initChatStore,
   newReactiveStore
 } from '@/views/Chat/scripts'
-import type { User } from '@/types/user'
 import { Roles } from '@/scripts/roles'
+import type { Message as WSMessage, Messages } from '@/types/message'
+import type { User } from '@/types/user'
+import { isApp } from '@/scripts/mobile/isApp'
+import { Haptics, ImpactStyle } from '@capacitor/haptics'
+import request from '@/scripts/request/request'
+import { resetTheme, setTheme } from '@/scripts/mobile/theme'
+import { useRouteLoaderStore } from '@/stores/routeLoader'
 
-// using
-const auth = useAuthStore()
 const loader = useRouteLoaderStore()
+const auth = useAuthStore()
 const router = useRouter()
 const route = useRoute()
 const chat = useChatStore()
 const toast = useToast()
 const i18n = useI18n()
 
-// refs
-const store = newReactiveStore()
+const storage = newReactiveStore()
 
+const chatID = computed(() => `chat.${route.params.id as string}`)
 const theme = computed(() => chat.theme[chatID.value] || undefined)
+const isPM = computed(() => chat.profile[chatID.value]?.pm || false)
+const emoji = computed(() => chat.profile[chatID.value]?.emoji || '')
+const cursors = computed(() => chat.cursors[chatID.value] || { nextCursor: '', prevCursor: '' })
 
 const send = (content: string, data_json: string = '{}') => {
-  const data = {} as { reply_id: number | undefined }
-  if (store.replyMessage) data.reply_id = store.replyMessage?.id
+  const data = { reply_id: storage.replyMessage?.id }
   const hookID = ws()?.send('message', content, data)
   chat.push(
     chatID.value,
-    [
-      createUnsentMessage(
-        auth.user as User,
-        content,
-        data_json,
-        store.replyMessage,
-        hookID as string
-      )
-    ],
+    [createUnsentMessage(auth.user as User, content, data_json, storage.replyMessage, hookID as string)],
     null,
     true
   )
-  store.replyMessage = undefined
+  storage.replyMessage = undefined
 }
 
 const permission = (role: string) => {
-  return (
-    isPM.value ||
-    ((!chat.roles[chatID.value] || chat.roles[chatID.value]?.includes(role)) as boolean)
-  )
+  return isPM.value || (chat.roles[chatID.value]?.includes(role) || false)
 }
-
-const isPM = computed(() => chat.profile[chatID.value] && chat.profile[chatID.value].pm)
 
 const like = async (id: number) => {
   ws()?.send<{ message_id: number }>('message.like', '❤️', { message_id: id })
   if (isApp()) await Haptics.impact({ style: ImpactStyle.Light })
 }
 
-const chatID = computed(() => `chat.${route.params.id as string}`)
-
 const fetchChat = async (hard: boolean = false) => {
   if (!chat.shouldFetch(chatID.value) && !hard) return
 
-  loader.isLoaded = false
+  loader.isLoaded = true
 
   const data = await fetchChatInfo(route.params.id as string)
   if (!data) {
@@ -127,7 +114,9 @@ const fetchChat = async (hard: boolean = false) => {
     return
   }
 
-  store.isYou = data.is_your_profile
+  storage.isYou = data.is_your_profile
+
+  await nextTick()
 
   initChatStore(
     chatID.value,
@@ -135,25 +124,25 @@ const fetchChat = async (hard: boolean = false) => {
     data.messages.data,
     data.user_roles,
     data.group.is_private_message,
-    data.group.is_verified
+    data.group.is_verified,
+    data.group.emoji || '',
+    data.messages.next_cursor,
+    data.messages.previous_cursor
   )
-  store.cursors = { next: data.messages.next_cursor, prev: data.messages.previous_cursor }
-  loader.isLoaded = true
 }
 
 const initWebsocket = () => {
   const chan = createChannel(route.params.id as string)
-
   chan.on<null>('reload', () => {
     mount(true)
     toast.info(i18n.t('Chat successfully reloaded'))
   })
-
   window.WS.push(route.params.id as string, chan)
 }
 
 const loadMore = async () => {
-  const next = store.cursors.next
+  const next = cursors.value.nextCursor
+  if(!next) return
   const res = await request.get(`/chat/${route.params.id as string}/paginate?cursor=${next}`)
   if (res.data.$error) {
     toast.error(i18n.t('Failed to load more messages'))
@@ -161,17 +150,37 @@ const loadMore = async () => {
   }
 
   const data = res.data as { next_cursor: string; previous_cursor: string; data: Messages }
-  if (next != '') chat.push(chatID.value, data.data)
-  store.cursors = { next: data.next_cursor, prev: data.previous_cursor }
+  if (next !== '') chat.push(chatID.value, data.data)
+  chat.cursors[chatID.value] = {nextCursor: data.next_cursor, prevCursor: data.previous_cursor}
+}
+
+const handleReply = (msg: WSMessage) => {
+  storage.replyMessage = msg
+}
+
+const handleModal = (msg: WSMessage) => {
+  storage.modalMessage = msg
+}
+
+const detachReply = () => {
+  storage.replyMessage = undefined
+}
+
+const detachEdit = () => {
+  storage.editMessage = null
 }
 
 const replyTo = (msg: WSMessage) => {
-  store.replyMessage = msg
-  store.modalMessage = null
+  storage.replyMessage = msg
+  storage.modalMessage = null
 }
 
 const unSend = (msg: WSMessage) => {
   ws()?.send('message.delete', msg.id.toString())
+}
+
+const editMessage = (msg: WSMessage) => {
+  storage.editMessage = msg
 }
 
 const ws = () => {
@@ -180,8 +189,7 @@ const ws = () => {
 
 const mount = async (hard: boolean = false) => {
   await fetchChat(hard)
-  if (theme.value != undefined)
-    await setTheme(theme.value?.top.bg || '', theme.value?.bottom.bg || '')
+  if (theme.value) await setTheme(theme.value.top.bg || '', theme.value.bottom.bg || '')
 }
 
 onMounted(async () => {
