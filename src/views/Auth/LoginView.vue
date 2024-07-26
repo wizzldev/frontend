@@ -48,17 +48,20 @@ import { useRoute, useRouter } from 'vue-router'
 import EmailAt from '@/components/Icons/EmailAt.vue'
 import Lock from '@/components/Icons/Lock.vue'
 import { WizzlAuthToken } from '@/scripts/consts'
+import { addListeners } from '@/scripts/mobile/notification'
+import request from '@/scripts/request/request'
 
 const authStore = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 
-const handleLogin = (data: object) => {
+const handleLogin = async (data: object) => {
   if ('session' in data && 'user' in data) {
     window.localStorage.setItem(WizzlAuthToken, data.session as string)
-    authStore.login(data.user as User, data.session as string)
+    await authStore.login(data.user as User, data.session as string)
+    await addListeners(request)
   }
-  if ('to' in route.query) router.push(route.query.to as string)
-  else router.push({ name: 'chat.contacts' })
+  if ('to' in route.query) await router.push(route.query.to as string)
+  else await router.push({ name: 'chat.contacts' })
 }
 </script>
