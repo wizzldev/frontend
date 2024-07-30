@@ -2,6 +2,7 @@ import { isApp } from '@/scripts/mobile/isApp'
 import { App, type URLOpenListenerEvent } from '@capacitor/app'
 import type { Router } from 'vue-router'
 import { setTheme } from '@/scripts/mobile/theme'
+import { addListeners } from '@/scripts/mobile/notification'
 
 const setup = async (router: Router) => {
   if (!isApp()) return

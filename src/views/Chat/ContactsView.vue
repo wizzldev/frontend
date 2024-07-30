@@ -75,13 +75,8 @@ const loader = useRouteLoaderStore()
 const contacts = useContactsStore()
 const hasContact = computed(() => contacts.contacts.length)
 
-const fetchContacts = async () => {
-  if (contacts.contacts.length > 0) {
-    loader.isLoaded = true
-    return
-  }
-
-  const res = await request.get('/chat/contacts')
+const fetchContacts = async (page: number = 0) => {
+  const res = await request.get('/chat/contacts' + (page ? `?page=${page}` : ''))
   if (!res.data.$error && !res.data?.nullValue) {
     contacts.push(res.data)
   }

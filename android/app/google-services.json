@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "856635824754",
+    "project_id": "wizzl-app",
+    "storage_bucket": "wizzl-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856635824754:android:cbdd820d3465845f6840eb",
+        "android_client_info": {
+          "package_name": "com.wizzl.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzNIQyfFhHiYiJYKM65smJ5ZJAeizAjz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

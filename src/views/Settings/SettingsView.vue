@@ -12,6 +12,7 @@
       </SettingsButton>
     </section>
     <EditUserInfo />
+    <Notifications/>
     <AccountSecurity />
     <DangerZone />
     <BuildInfo />
@@ -38,6 +39,7 @@ import BuildInfo from '@/components/Settings/BuildInfo.vue'
 import EditUserInfo from '@/components/Settings/EditUserInfo.vue'
 import AccountSecurity from '@/components/Settings/AccountSecurity.vue'
 import DangerZone from '@/components/Settings/DangerZone.vue'
+import Notifications from '@/views/Settings/Notifications.vue'
 
 const auth = useAuthStore()
 const editProfileImage = ref(false)

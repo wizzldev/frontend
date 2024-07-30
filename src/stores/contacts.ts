@@ -7,7 +7,10 @@ export const useContactsStore = defineStore('contacts', () => {
   const contacts = ref([]) as Ref<Contacts>
 
   function push(c: Contacts) {
-    contacts.value.push(...c)
+    for(let i = 0; i < c.length; i++) {
+      if(contacts.value.filter(con => con.id == c[i].id).length > 0) continue
+      contacts.value.push(c[i])
+    }
     sort()
   }
 

@@ -25,6 +25,7 @@
     "@capacitor/haptics": "^6.0.0",
     "@capacitor/ios": "^6.1.0",
     "@capacitor/keyboard": "^6.0.1",
+    "@capacitor/push-notifications": "^6.0.1",
     "@capacitor/share": "^6.0.1",
     "@capacitor/status-bar": "^6.0.0",
     "@capgo/capacitor-navigation-bar": "^6.1.5",
