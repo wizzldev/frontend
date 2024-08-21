@@ -7,3 +7,5 @@ export const WizzlGroupMakeSave = p('groupMake')
 export const WizzlTermsAccepted = p('terms_and_conditions')
 
 export const WizzlDefaultChannel = 'ws.default'
+
+export const WizzlCachePiniaChat = 'wizzl.cache.pinia.chat'

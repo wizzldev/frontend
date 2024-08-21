@@ -5,6 +5,7 @@ import { WizzlAuthToken, WizzlTermsAccepted } from '@/scripts/consts'
 import request from '@/scripts/request/request'
 import { setup } from '@/scripts/ws/default'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
+import { resetPinia } from '@/stores/helpers'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null) as Ref<User | null>
@@ -23,9 +24,11 @@ export const useAuthStore = defineStore('auth', () => {
     window.localStorage.clear()
     if(terms) window.localStorage.setItem(WizzlTermsAccepted, terms)
     if (user.value?.id) user.value.id = 0
+    resetPinia()
   }
 
   async function check(): Promise<boolean> {
+    checkTime.value = minuteAgoHelper(5)
     const res = await request.get('/me')
     if (res.data?.$error && !res.data.$network) {
       await logout()

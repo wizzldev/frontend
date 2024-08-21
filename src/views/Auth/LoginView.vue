@@ -59,7 +59,9 @@ const handleLogin = async (data: object) => {
   if ('session' in data && 'user' in data) {
     window.localStorage.setItem(WizzlAuthToken, data.session as string)
     await authStore.login(data.user as User, data.session as string)
-    await addListeners(request)
+    addListeners(request).then(() => {
+      console.log('listeners attached')
+    })
   }
   if ('to' in route.query) await router.push(route.query.to as string)
   else await router.push({ name: 'chat.contacts' })

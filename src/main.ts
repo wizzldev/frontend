@@ -22,6 +22,7 @@ import en from 'javascript-time-ago/locale/en'
 import twemoji from 'twemoji'
 import { createBottomSheet } from 'bottom-sheet-vue3'
 import mitt from 'mitt'
+import resetStore from '@/stores/helpers'
 TimeAgo.addDefaultLocale(en)
 
 const timeAgo = new TimeAgo('en-US')
@@ -29,11 +30,14 @@ const emitter = mitt()
 
 const app = createApp(App)
 
+const pinia = createPinia()
+pinia.use(resetStore)
+
 app.use(Toast, {})
 app.use(i18n)
 app.use(VueTippy)
 app.use(VueHighlightJS)
-app.use(createPinia())
+app.use(pinia)
 app.use(createBottomSheet())
 app.use(router)
 

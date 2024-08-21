@@ -1,7 +1,10 @@
 import { PushNotifications } from '@capacitor/push-notifications'
 import type { AxiosInstance } from 'axios'
+import { isApp } from '@/scripts/mobile/isApp'
 
 export const addListeners = async (request: AxiosInstance) => {
+  if(!isApp()) return
+
   await PushNotifications.addListener('registration', token => {
     console.info('Registration token: ', token.value)
     request.post('/mobile/register-push-notification', { token: token.value })
