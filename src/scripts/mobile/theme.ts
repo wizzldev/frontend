@@ -3,6 +3,8 @@ import { StatusBar } from '@capacitor/status-bar'
 import { isApp } from '@/scripts/mobile/isApp'
 
 export const setTheme = async (top: string, bottom: string) => {
+  console.debug(`Mobile theme change: top ${top} bottom ${bottom}`)
+
   if (!isApp()) return
   await NavigationBar.setNavigationBarColor({ color: bottom })
 
@@ -11,11 +13,16 @@ export const setTheme = async (top: string, bottom: string) => {
 }
 
 export const setBottomTheme = async (bottom: string) => {
+  console.debug(`Mobile theme change: bottom ${bottom}`)
+
   if (!isApp()) return
   await NavigationBar.setNavigationBarColor({ color: bottom })
 }
 
 export const setTopTheme = async (top: string) => {
+  console.debug(`Mobile theme change: top ${top}`)
+
+  if(!isApp()) return
   await StatusBar.setOverlaysWebView({ overlay: false })
   await StatusBar.setBackgroundColor({ color: top })
 }

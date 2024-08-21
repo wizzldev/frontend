@@ -1,21 +1,39 @@
 import { defineStore } from 'pinia'
-import { type Ref, ref } from 'vue'
+import { reactive } from 'vue'
 import type { Like, Messages } from '@/types/message'
 import type { ThemeData } from '@/types/chat'
+import { Preferences } from '@capacitor/preferences'
+import { isApp } from '@/scripts/mobile/isApp'
+import { WizzlCachePiniaChat } from '@/scripts/consts'
+
+interface Storage {
+  isPM: Record<string, boolean>
+  messages: Record<string, Messages>
+  roles: Record<string, Array<string> | null>
+  profile: Record<
+    string,
+    { name: string; pm: boolean; image: string; loading: boolean; is_verified: boolean; emoji: string }
+  >
+  lastFetch: Record<string, Date>
+  theme: Record<string, ThemeData | undefined>
+  cursors: Record<string, { nextCursor: string; prevCursor: string }>
+}
 
 export const useChatStore = defineStore('chat', () => {
-  const isPM = ref({}) as Ref<Record<string, boolean>>
-  const messages = ref({}) as Ref<Record<string, Messages>>
-  const roles = ref({}) as Ref<Record<string, Array<string> | null>>
-  const profile = ref({}) as Ref<
-    Record<
-      string,
-      { name: string; pm: boolean; image: string; loading: boolean; is_verified: boolean; emoji: string }
-    >
-  >
-  const lastFetch = ref<Record<string, Date>>({})
-  const theme = ref<Record<string, ThemeData | undefined>>({})
-  const cursors = ref<Record<string, { nextCursor: string; prevCursor: string }>>({})
+  const store = reactive<Storage>({
+    isPM: {},
+    messages: {},
+    roles: {},
+    profile: {},
+    lastFetch: {},
+    theme: {},
+    cursors: {},
+  })
+
+  async function setup(dataStr: string) {
+    const data = JSON.parse(dataStr) as Storage
+    Object.assign(store, data)
+  }
 
   function push(
     chat: string,
@@ -23,52 +41,58 @@ export const useChatStore = defineStore('chat', () => {
     hookID: string | null = null,
     reverse: boolean = false
   ) {
-    if (!Object.keys(messages.value).includes(chat)) {
-      messages.value[chat] = []
+    if (!Object.keys(store.messages).includes(chat)) {
+      store.messages[chat] = []
     }
 
     const sorted = [] as Messages
 
     for (let i = 0; i < msg.length; i++) {
       const m = msg[i]
-      const existingIndex = messages.value[chat].findIndex(
+      const existingIndex = store.messages[chat].findIndex(
         (k) => k.id === m.id || (hookID != null && k.hookId === hookID)
       )
       if (existingIndex !== -1) {
-        const existingMessage = messages.value[chat][existingIndex]
+        const existingMessage = store.messages[chat][existingIndex]
         if (existingMessage.underSending) {
-          messages.value[chat][existingIndex] = m
+          store.messages[chat][existingIndex] = m
         } else {
-          messages.value[chat][existingIndex] = { ...existingMessage, ...m }
+          store.messages[chat][existingIndex] = { ...existingMessage, ...m }
         }
       } else {
         sorted.push(m)
       }
     }
 
-    if (reverse) messages.value[chat] = [...sorted, ...messages.value[chat]]
-    else messages.value[chat] = [...messages.value[chat], ...sorted]
+    if (reverse) store.messages[chat] = [...sorted, ...store.messages[chat]]
+    else store.messages[chat] = [...store.messages[chat], ...sorted]
+
+    writeChanges().then(() => console.log('Changes written'))
   }
 
   function setRoles(chat: string, roleList: Array<string>) {
-    if (!Object.keys(roles.value).includes(chat)) {
-      roles.value[chat] = []
+    if (!Object.keys(store.roles).includes(chat)) {
+      store.roles[chat] = []
     }
-    roles.value[chat] = roleList
+    store.roles[chat] = roleList
+
+    writeChanges().then(() => console.log('Changes written'))
   }
 
   function pushLike(chat: string, mId: number, l: Like) {
-    if (!Object.keys(messages.value).includes(chat)) return
-    messages.value[chat].forEach((m) => {
+    if (!Object.keys(store.messages).includes(chat)) return
+    store.messages[chat].forEach((m) => {
       if (m.id != mId) return
       if (!m.likes) m.likes = []
       if (!m.likes.includes(l)) m.likes.push(l)
     })
+
+    writeChanges().then(() => console.log('Changes written'))
   }
 
   function removeLike(chat: string, mId: number, l: Like) {
-    if (!Object.keys(messages.value).includes(chat)) return
-    messages.value[chat].forEach((m) => {
+    if (!Object.keys(store.messages).includes(chat)) return
+    store.messages[chat].forEach((m) => {
       if (m.id != mId) return
       if (!m.likes) return
       let inx = -1
@@ -79,23 +103,25 @@ export const useChatStore = defineStore('chat', () => {
       })
       if (inx > -1) m.likes.splice(inx, 1)
     })
+
+    writeChanges().then(() => console.log('Changes written'))
   }
 
   function shouldFetch(chatID: string): boolean {
-    if (!(chatID in messages.value)) return true
-    if (!(chatID in lastFetch.value)) return true
-    if (lastFetch.value[chatID].getTime() > new Date().getTime() - 5 * 60 * 1000) {
-      return !!isPM.value?.[chatID]
+    if (!(chatID in store.messages)) return true
+    if (!(chatID in store.lastFetch)) return true
+    if (store.lastFetch[chatID].getTime() > new Date().getTime() - 5 * 60 * 1000) {
+      return !!store.isPM?.[chatID]
     }
-    return Object.keys(roles.value).includes(chatID) && (roles.value[chatID] || []).length > 0
+    return Object.keys(store.roles).includes(chatID) && (store.roles[chatID] || []).length > 0
   }
 
   function rmMessageID(chatID: string, msgID: number) {
-    if (!Object.keys(messages.value).includes(chatID)) return
-    for (let i = 0; i < messages.value[chatID].length; i++) {
-      const m = messages.value[chatID][i]
+    if (!Object.keys(store.messages).includes(chatID)) return
+    for (let i = 0; i < store.messages[chatID].length; i++) {
+      const m = store.messages[chatID][i]
       if (m.id == msgID) {
-        messages.value[chatID][i] = {
+        store.messages[chatID][i] = {
           content: '',
           created_at: m.created_at,
           data_json: '{}',
@@ -111,21 +137,32 @@ export const useChatStore = defineStore('chat', () => {
         break
       }
     }
+
+    writeChanges().then(() => console.log('Changes written'))
+  }
+
+  async function writeChanges() {
+    if(!isApp()) return
+    await Preferences.set({
+      key: WizzlCachePiniaChat,
+      value: JSON.stringify(store)
+    })
   }
 
   return {
+    setup,
     push,
     pushLike,
     removeLike,
     setRoles,
     shouldFetch,
     rmMessageID,
-    roles,
-    messages,
-    profile,
-    isPM,
-    lastFetch,
-    theme,
-    cursors,
+    roles: store.roles,
+    messages: store.messages,
+    profile: store.profile,
+    isPM: store.isPM,
+    lastFetch: store.lastFetch,
+    theme: store.theme,
+    cursors: store.cursors,
   }
 })

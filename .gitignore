@@ -35,3 +35,4 @@ android/app/build/*
 
 # nano/vim saves
 *.save
+xd

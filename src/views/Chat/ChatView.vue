@@ -15,6 +15,7 @@
       @like="like"
     />
     <MessageForm
+      v-if="chatReady"
       :theme="theme?.bottom"
       :reply="storage.replyMessage"
       :canSendMessage="permission(Roles.SendMessage)"
@@ -39,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useChatStore } from '@/stores/chat'
 import { useAuthStore } from '@/stores/auth'
@@ -80,6 +81,7 @@ const theme = computed(() => chat.theme[chatID.value] || undefined)
 const isPM = computed(() => chat.profile[chatID.value]?.pm || false)
 const emoji = computed(() => chat.profile[chatID.value]?.emoji || '')
 const cursors = computed(() => chat.cursors[chatID.value] || { nextCursor: '', prevCursor: '' })
+const chatReady = ref(false)
 
 const send = (content: string, data_json: string = '{}') => {
   const data = { reply_id: storage.replyMessage?.id }
@@ -105,12 +107,9 @@ const like = async (id: number) => {
 const fetchChat = async (hard: boolean = false) => {
   if (!chat.shouldFetch(chatID.value) && !hard) return
 
-  loader.isLoaded = true
-
   const data = await fetchChatInfo(route.params.id as string)
   if (!data) {
     await router.push({ name: 'chat.contacts' })
-    loader.isLoaded = true
     return
   }
 
@@ -189,10 +188,12 @@ const ws = () => {
 
 const mount = async (hard: boolean = false) => {
   await fetchChat(hard)
+  chatReady.value = true
   if (theme.value) await setTheme(theme.value.top.bg || '', theme.value.bottom.bg || '')
 }
 
 onMounted(async () => {
+  loader.isLoaded = true
   await mount()
   initWebsocket()
 })
