@@ -15,12 +15,14 @@ import { isApp } from '@/scripts/mobile/isApp'
 import { onMounted, ref } from 'vue'
 import { addListeners, isNotificationsAllowed } from '@/scripts/mobile/notification'
 import request from '@/scripts/request/request'
+import { useRouter } from 'vue-router'
 
 const show = ref(true)
+const router = useRouter()
 
 const requestPermission = async () => {
   if(!isApp()) return
-  await addListeners(request)
+  await addListeners(request, router)
   show.value = !(await isNotificationsAllowed())
 }
 
