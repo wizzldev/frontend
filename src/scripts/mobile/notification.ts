@@ -16,7 +16,7 @@ export const addListeners = async (request: AxiosInstance, router: Router) => {
   })
 
   await PushNotifications.addListener('pushNotificationReceived', notification => {
-    console.log('Push notification received: ', notification);
+    console.log('Push notification received: ', notification)
   })
 
   await PushNotifications.addListener('pushNotificationActionPerformed', notification => {

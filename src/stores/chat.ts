@@ -2,9 +2,6 @@ import { defineStore } from 'pinia'
 import { reactive } from 'vue'
 import type { Like, Messages } from '@/types/message'
 import type { ThemeData } from '@/types/chat'
-import { Preferences } from '@capacitor/preferences'
-import { isApp } from '@/scripts/mobile/isApp'
-import { WizzlCachePiniaChat } from '@/scripts/consts'
 
 interface Storage {
   isPM: Record<string, boolean>
@@ -29,11 +26,6 @@ export const useChatStore = defineStore('chat', () => {
     theme: {},
     cursors: {},
   })
-
-  async function setup(dataStr: string) {
-    const data = JSON.parse(dataStr) as Storage
-    Object.assign(store, data)
-  }
 
   function push(
     chat: string,
@@ -66,8 +58,6 @@ export const useChatStore = defineStore('chat', () => {
 
     if (reverse) store.messages[chat] = [...sorted, ...store.messages[chat]]
     else store.messages[chat] = [...store.messages[chat], ...sorted]
-
-    writeChanges().then(() => console.log('Changes written'))
   }
 
   function setRoles(chat: string, roleList: Array<string>) {
@@ -75,8 +65,6 @@ export const useChatStore = defineStore('chat', () => {
       store.roles[chat] = []
     }
     store.roles[chat] = roleList
-
-    writeChanges().then(() => console.log('Changes written'))
   }
 
   function pushLike(chat: string, mId: number, l: Like) {
@@ -86,8 +74,6 @@ export const useChatStore = defineStore('chat', () => {
       if (!m.likes) m.likes = []
       if (!m.likes.includes(l)) m.likes.push(l)
     })
-
-    writeChanges().then(() => console.log('Changes written'))
   }
 
   function removeLike(chat: string, mId: number, l: Like) {
@@ -103,8 +89,6 @@ export const useChatStore = defineStore('chat', () => {
       })
       if (inx > -1) m.likes.splice(inx, 1)
     })
-
-    writeChanges().then(() => console.log('Changes written'))
   }
 
   function shouldFetch(chatID: string): boolean {
@@ -137,20 +121,9 @@ export const useChatStore = defineStore('chat', () => {
         break
       }
     }
-
-    writeChanges().then(() => console.log('Changes written'))
-  }
-
-  async function writeChanges() {
-    if(!isApp()) return
-    await Preferences.set({
-      key: WizzlCachePiniaChat,
-      value: JSON.stringify(store)
-    })
   }
 
   return {
-    setup,
     push,
     pushLike,
     removeLike,
