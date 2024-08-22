@@ -14,7 +14,10 @@
             class="my-2 bg-secondary px-4 py-2 w-full flex items-center justify-between rounded-xl"
         >
           <div class="flex items-center space-x-2 justify-start">
-            <LazyImage class="w-8 h-8 min-w-8 min-h-8 rounded-xl" :src="cdnImage(user.image_url)" alt="User image" />
+            <div class="relative">
+              <LazyImage class="w-8 h-8 min-w-8 min-h-8 rounded-xl" :src="cdnImage(user.image_url)" alt="User image" />
+              <span v-if="user.is_online" v-tippy="{content: $t('Active')}" class="w-3 h-3 right-0 -mt-2 -mr-0.5 bg-green-400 rounded-full absolute"></span>
+            </div>
             <div>
               <p>{{ user.first_name }} {{ user.last_name }}</p>
               <p class="text-xs text-gray-400">{{ user.email }}</p>
