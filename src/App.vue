@@ -6,18 +6,15 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
 import { onMounted, ref, watch } from 'vue'
 import TermsModal from '@/components/Modals/TermsModal.vue'
-import { WizzlCachePiniaChat, WizzlTermsAccepted } from '@/scripts/consts'
+import {  WizzlTermsAccepted } from '@/scripts/consts'
 import { isApp } from '@/scripts/mobile/isApp'
 import NetworkError from '@/components/Loaders/NetworkError.vue'
 import { useAuthStore } from '@/stores/auth'
-import { useChatStore } from '@/stores/chat'
-import { Preferences } from '@capacitor/preferences'
 
 const router = useRouter()
 const route = useRoute()
 const loader = useRouteLoaderStore()
 const auth = useAuthStore()
-const chat = useChatStore()
 
 watch(route, (r: RouteLocationNormalized) => {
   isTermsPage.value = ['service.terms', 'service.privacy'].includes(r.name as string)
@@ -40,8 +37,6 @@ setup(router)
 onMounted(async () => {
   if (!isApp()) return
   document.body.setAttribute('data-platform', 'mobile')
-  const chatData = await Preferences.get({key: WizzlCachePiniaChat})
-  if(chatData.value) await chat.setup(chatData.value)
 })
 </script>
 

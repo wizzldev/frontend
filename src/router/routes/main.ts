@@ -4,6 +4,7 @@ import SettingsView from '@/views/Settings/SettingsView.vue'
 import SessionsView from '@/views/Settings/SessionsView.vue'
 import IPView from '@/views/Settings/IPView.vue'
 import HomeView from '@/views/HomeView.vue'
+import GuardTypes from '@/router/guard'
 
 const needsAuth = {
   auth: Guard.ACCESS_LOGIN
@@ -42,5 +43,10 @@ export default [
     path: '/privacy',
     name: 'service.privacy',
     component: () => import('@/views/Terms/PrivacyPolicyView.vue')
+  },
+  {
+    path: '/__dev/logs',
+    name: 'devs.logs',
+    component: () => import('@/views/Dev/AppLogs.vue')
   }
 ] as Array<RouteRecordRaw>

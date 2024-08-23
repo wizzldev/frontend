@@ -59,7 +59,7 @@ const handleLogin = async (data: object) => {
   if ('session' in data && 'user' in data) {
     window.localStorage.setItem(WizzlAuthToken, data.session as string)
     await authStore.login(data.user as User, data.session as string)
-    addListeners(request).then(() => {
+    addListeners(request, router).then(() => {
       console.log('listeners attached')
     })
   }

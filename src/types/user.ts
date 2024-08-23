@@ -7,4 +7,5 @@ export interface User {
   is_bot: boolean
   is_verified: boolean
   enable_ip_check: boolean
+  is_online: boolean
 }
