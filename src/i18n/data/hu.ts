@@ -156,4 +156,6 @@ export default {
   'error.email': 'Hibás email cím',
   'error.min': 'Legalább {0} karakter kell, hogy legyen',
   'error.max': 'Maximum {0} karakter lehet',
+
+  'Developer settings': 'Fejlesztői beállítások',
 }

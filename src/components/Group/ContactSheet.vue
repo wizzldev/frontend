@@ -25,34 +25,16 @@
       <SheetButton @click="delStart = true" v-if="!contact.is_private_message && contact.creator_id == user?.id" :icon="Trash">
         {{ $t('Delete group') }}
       </SheetButton>
+      <SheetButton @click="devModal = true" :icon="CurlyBrackets">
+        {{ $t('Developer settings') }}
+      </SheetButton>
     </main>
   </BottomSheet>
 
-  <Modal :show="delStart" @close="delStart = false">
-    <h2 class="text-2xl fontTheme">{{ $t('Are you sure?') }}</h2>
-    <p class="text-left mt-2">
-      {{
-        $t('All messages, files will be lost and you may lose your community.')
-      }}
-    </p>
-    <div class="grid grid-cols-2 gap-2">
-      <PushButton
-        @click="delStart = false"
-        :is-link="false"
-        class="w-full bg-tertiary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
-      >
-        {{ $t('Retain') }}
-      </PushButton>
-      <PushButton
-        :is-link="false"
-        @click="del"
-        class="w-full bg-red-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
-      >
-        {{ $t('Delete') }}
-      </PushButton>
-    </div>
-  </Modal>
+  <ContactSheetDeleteModal v-if="delStart" @delete="del" @close="delStart = false"  />
+  <ContactSheetDevModal v-if="devModal" @close="devModal = false" :contact="contact" />
 </template>
+
 <script setup lang="ts">
 import BottomSheet from '@/components/BottomSheet.vue'
 import type { Contact } from '@/types/contact'
@@ -74,9 +56,10 @@ import { isApp } from '@/scripts/mobile/isApp'
 import { useAuthStore } from '@/stores/auth'
 import request from '@/scripts/request/request'
 import { useContactsStore } from '@/stores/contacts'
-import Modal from '@/components/Modals/Modal.vue'
-import PushButton from '@/components/Elements/PushButton.vue'
 import { getRealUserName } from '@/scripts/getRealUserName'
+import CurlyBrackets from '@/components/Icons/CurlyBrackets.vue'
+import ContactSheetDeleteModal from '@/components/Group/ContactSheetDeleteModal.vue'
+import ContactSheetDevModal from '@/components/Group/ContactSheetDevModal.vue'
 
 const props = defineProps<{
   visible: boolean
@@ -89,6 +72,8 @@ const { info, error } = useToast()
 const { user } = useAuthStore()
 const contacts = useContactsStore()
 const delStart = ref(false)
+const devModal = ref(false)
+
 const emit = defineEmits(['close'])
 
 const realTitle = computed(() => getRealUserName(props.contact.name))

@@ -20,7 +20,8 @@
             </div>
             <div>
               <p>{{ user.first_name }} {{ user.last_name }}</p>
-              <p class="text-xs text-gray-400">{{ user.email }}</p>
+              <p v-if="user.email" class="text-xs text-gray-400">{{ user.email }}</p>
+              <p v-tippy="{content: $t('This user is managed by a program.')}" v-else class="cursor-pointer text-xs text-gray-400">BOT</p>
             </div>
           </div>
           <button @click="userSheet = user" class="flex items-center justify-center transition-colors text-gray-300 hover:text-gray-400 focus:text-purple-400">
