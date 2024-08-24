@@ -4,6 +4,7 @@ import { WizzlDefaultChannel } from '@/scripts/consts'
 import { useChatStore } from '@/stores/chat'
 import type { Like, Message } from '@/types/message'
 import { useContactsStore } from '@/stores/contacts'
+import { useLogger } from '@/stores/logger'
 
 export const setup = async (auth: string, force: boolean = false) => {
   if (window.WS != undefined || force) return
@@ -21,6 +22,8 @@ export const setup = async (auth: string, force: boolean = false) => {
   base.use(ping, 2500)
   window.WS.push(WizzlDefaultChannel, base)
   window.WS.push('global', createGlobal())
+
+  useLogger().log('WS', `Connecting to our gateway ${window.GLOBAL_ENV.WS_ENDPOINT}`)
   await window.WS.connect()
 }
 

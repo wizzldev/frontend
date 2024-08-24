@@ -6,6 +6,7 @@ import request from '@/scripts/request/request'
 import { setup } from '@/scripts/ws/default'
 import { useRouteLoaderStore } from '@/stores/routeLoader'
 import { resetPinia } from '@/stores/helpers'
+import { useLogger } from '@/stores/logger'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null) as Ref<User | null>
@@ -13,6 +14,7 @@ export const useAuthStore = defineStore('auth', () => {
   const checkTime = ref(minuteAgoHelper(5))
 
   async function login(u: User, t: string) {
+    useLogger().log('Pinia.Auth', `Logging in with id: ${u.id}`)
     user.value = u
     token.value = tokenHelper(t)
     await setup(token.value.value, true)

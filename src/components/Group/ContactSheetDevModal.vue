@@ -5,14 +5,14 @@
       {{ $t('Be careful who you share data with!') }} ❗
     </p>
     <div class="mt-3">
-      <DevSettingsButton @click="copyText(contact.id.toString())" class="flex items-center justify-center space-x-2">
+      <DevSettingsButton @click="copyId" class="flex items-center justify-center space-x-2">
         <span>{{ $t('Copy group ID') }}</span>
-        <Clipboard/>
+        <ClipboardIcon/>
       </DevSettingsButton>
 
-      <DevSettingsButton @click="copyText(contact.image)" class="flex items-center justify-center space-x-2">
+      <DevSettingsButton @click="copyImage" class="flex items-center justify-center space-x-2">
         <span>{{ $t('Copy group image url') }}</span>
-        <Clipboard/>
+        <ClipboardIcon/>
       </DevSettingsButton>
 
       <DevSettingsButton @click="soon" class="flex items-center justify-center space-x-2">
@@ -32,14 +32,14 @@
 import Modal from '@/components/Modals/Modal.vue'
 import type { Contact } from '@/types/contact'
 import DevSettingsButton from '@/components/Group/DevSettingsButton.vue'
-import Clipboard from '@/components/Icons/Clipboard.vue'
+import { Clipboard } from '@capacitor/clipboard'
+import ClipboardIcon from '@/components/Icons/Clipboard.vue'
 import Bot from '@/components/Icons/Bot.vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
-import File from '@/components/Icons/File.vue'
 import LogFile from '@/components/Icons/LogFile.vue'
 
-defineProps<{
+const props = defineProps<{
   contact: Contact
 }>()
 
@@ -51,9 +51,17 @@ const soon = () => {
 }
 
 
-const copyText = async (text: string) => {
+const copyId = async () => {
   await Clipboard.write({
-    string: text,
+    string: props.contact.id.toString(),
+  })
+  info(t('Copied to clipboard'))
+}
+
+
+const copyImage = async () => {
+  await Clipboard.write({
+    string: props.contact.image,
   })
   info(t('Copied to clipboard'))
 }

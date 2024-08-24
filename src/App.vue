@@ -10,11 +10,15 @@ import {  WizzlTermsAccepted } from '@/scripts/consts'
 import { isApp } from '@/scripts/mobile/isApp'
 import NetworkError from '@/components/Loaders/NetworkError.vue'
 import { useAuthStore } from '@/stores/auth'
+import { useLogger } from '@/stores/logger'
+import { useContactsStore } from '@/stores/contacts'
 
 const router = useRouter()
 const route = useRoute()
 const loader = useRouteLoaderStore()
 const auth = useAuthStore()
+const { log } = useLogger()
+const contacts = useContactsStore()
 
 watch(route, (r: RouteLocationNormalized) => {
   isTermsPage.value = ['service.terms', 'service.privacy'].includes(r.name as string)
@@ -35,6 +39,12 @@ const accept = () => {
 setup(router)
 
 onMounted(async () => {
+  log('App.vue', 'Mounted successfully.')
+
+  window.addEventListener('focus', () => {
+    contacts.contacts = []
+  })
+
   if (!isApp()) return
   document.body.setAttribute('data-platform', 'mobile')
 })

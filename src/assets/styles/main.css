@@ -18,6 +18,13 @@
   font-family: 'Mitr', sans-serif;
 }
 
+.fontCode {
+  font-family: "Fira Code", monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
