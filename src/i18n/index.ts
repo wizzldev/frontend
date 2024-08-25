@@ -4,15 +4,9 @@ import hu from './data/hu'
 import useCookie from '@/composables/useCookie'
 import { WizzlLocale } from '@/scripts/consts'
 
-const getLocale = async () => {
-  const lang = await useCookie().get(WizzlLocale)
-  if(!lang) return navigator.language.substring(0, 2)
-  return lang
-}
-
 const i18n = createI18n({
   legacy: false,
-  locale: await getLocale(),
+  locale: navigator.language.substring(0, 2),
   fallbackLocale: 'en',
   messages: {
     en,
@@ -21,5 +15,13 @@ const i18n = createI18n({
   fallbackWarn: false,
   missingWarn: false
 })
+
+
+export const getLocale = async () => {
+  const lang = await useCookie().get(WizzlLocale)
+  if(!lang) return navigator.language.substring(0, 2)
+  return lang
+}
+
 
 export default i18n

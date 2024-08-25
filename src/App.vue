@@ -9,17 +9,20 @@ import { isApp } from '@/scripts/mobile/isApp'
 import { useAuth2Store } from '@/stores/auth2'
 import { useLogger } from '@/stores/logger'
 import { useLoader } from '@/stores/loader'
+import { useI18n } from 'vue-i18n'
+import { getLocale } from '@/i18n'
 
 const router = useRouter()
 const loader = useLoader()
 const { log } = useLogger()
 const { init } = useAuth2Store()
 init()
-
 setup(router)
 
 onMounted(async () => {
   log('App.vue', 'Mounted successfully.')
+
+  useI18n().locale.value = await getLocale()
 
   if (!isApp()) return
   document.body.setAttribute('data-platform', 'mobile')
