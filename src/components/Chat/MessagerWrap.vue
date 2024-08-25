@@ -34,7 +34,7 @@
 import type { User } from '@/types/user'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import { cdnImage } from '@/scripts/image'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 
 defineProps<{
   sentByMe: boolean

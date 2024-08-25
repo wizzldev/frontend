@@ -42,26 +42,22 @@
 <script setup lang="ts">
 import GuestLayout from '@/layouts/GuestLayout.vue'
 import AutoForm from '@/components/Auth/AutoForm.vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import type { User } from '@/types/user'
 import { useRoute, useRouter } from 'vue-router'
 import EmailAt from '@/components/Icons/EmailAt.vue'
 import Lock from '@/components/Icons/Lock.vue'
-import { WizzlAuthToken } from '@/scripts/consts'
 import { addListeners } from '@/scripts/mobile/notification'
 import request from '@/scripts/request/request'
 
-const authStore = useAuthStore()
+const auth = useAuth2Store()
 const route = useRoute()
 const router = useRouter()
 
 const handleLogin = async (data: object) => {
   if ('session' in data && 'user' in data) {
-    window.localStorage.setItem(WizzlAuthToken, data.session as string)
-    await authStore.login(data.user as User, data.session as string)
-    addListeners(request, router).then(() => {
-      console.log('listeners attached')
-    })
+    await auth.login(data.user as User, data.session as string)
+    await addListeners(request, router)
   }
   if ('to' in route.query) await router.push(route.query.to as string)
   else await router.push({ name: 'chat.contacts' })

@@ -44,14 +44,14 @@
 
 <script setup lang="ts">
 import PushButtonSecondary from '@/components/Elements/PushButtonSecondary.vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import AndroidHead from '@/components/Icons/AndroidHead.vue'
 import { ref } from 'vue'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import { cdnImage } from '@/scripts/image'
 import { isApp } from '@/scripts/mobile/isApp'
 
-const auth = useAuthStore()
+const auth = useAuth2Store()
 
 const downloadUri = ref(window.GLOBAL_ENV.STATIC + '/beta.apk')
 </script>

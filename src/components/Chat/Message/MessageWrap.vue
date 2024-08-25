@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import type { Like, Message } from '@/types/message'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 import MessageWrapNonSwipable from '@/components/Chat/Message/MessageWrapNonSwipable.vue'
 import { computed } from 'vue'
 import MessageWrapSwipable from '@/components/Chat/Message/MessageWrapSwipable.vue'

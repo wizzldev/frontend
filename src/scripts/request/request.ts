@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { WizzlAuthToken } from '@/scripts/consts'
 import { isApp } from '@/scripts/mobile/isApp'
 import { useLogger } from '@/stores/logger'
+import { useAuth2Store } from '@/stores/auth2'
 
 const instance = axios.create({
   baseURL: window.GLOBAL_ENV.API_ENDPOINT,
@@ -14,7 +14,7 @@ instance.interceptors.request.use(
     if (isApp())
       config.headers['X-Frontend-Client'] = 'Android/Vue@' + import.meta.env.VITE_BUILD_HASH_SHORT
     else config.headers['X-Frontend-Client'] = 'Web/Vue@' + import.meta.env.VITE_BUILD_HASH_SHORT
-    config.headers.Authorization = window.localStorage.getItem(WizzlAuthToken)
+    config.headers.Authorization = useAuth2Store().token
     return config
   },
   (error) => {

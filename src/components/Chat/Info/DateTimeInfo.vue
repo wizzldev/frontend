@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import type { Message } from '@/types/message'
 import { computed } from 'vue'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 
 const props = defineProps<{
   message: Message

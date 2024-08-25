@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import type { Message } from '@/types/message'
-import type { ThemeDataBottom } from '@/types/chat'
+import type { ThemeDataBottom } from '@/types/theme'
 import MessagePermissionDenied from '@/components/Chat/Form/MessagePermissionDenied.vue'
 import HasReply from '@/components/Chat/Form/HasReply.vue'
 import SendForm from '@/components/Chat/Form/SendForm.vue'

@@ -33,11 +33,12 @@ const app = createApp(App)
 const pinia = createPinia()
 pinia.use(resetStore)
 
+
+app.use(pinia)
 app.use(Toast, {})
 app.use(i18n)
 app.use(VueTippy)
 app.use(VueHighlightJS)
-app.use(pinia)
 app.use(createBottomSheet())
 app.use(router)
 

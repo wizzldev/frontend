@@ -56,10 +56,10 @@
 import PushButton from '@/components/Elements/PushButton.vue'
 import Modal from '@/components/Modals/Modal.vue'
 import type { Message } from '@/types/message'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import { onMounted, ref } from 'vue'
 
-const auth = useAuthStore()
+const auth = useAuth2Store()
 
 defineProps<{
   show: boolean

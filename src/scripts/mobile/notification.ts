@@ -2,13 +2,14 @@ import { PushNotifications } from '@capacitor/push-notifications'
 import type { AxiosInstance } from 'axios'
 import { isApp } from '@/scripts/mobile/isApp'
 import type { Router } from 'vue-router'
+import { Capacitor } from '@capacitor/core'
 
-export const addListeners = async (request: AxiosInstance, router: Router) => {
-  if(!isApp()) return
+export const addListeners = async (request: AxiosInstance, router: Router): Promise<boolean> => {
+  if(!isApp()) return false
 
   await PushNotifications.addListener('registration', token => {
     console.info('Registration token: ', token.value)
-    request.post('/mobile/register-push-notification', { token: token.value })
+    request.post('/mobile/register-push-notification', { token: token.value, platform: Capacitor.getPlatform() })
   })
 
   await PushNotifications.addListener('registrationError', error => {

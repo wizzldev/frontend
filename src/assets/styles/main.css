@@ -58,8 +58,12 @@ body {
   display: none;
 }
 
-.w-icon {
+.svg-icon {
   @apply w-5 h-5 inline-block;
+}
+
+.svg-icon-sm {
+  @apply w-4 h-4 inline-block;
 }
 
 ::-moz-selection {

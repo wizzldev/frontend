@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import Send from '@/components/Icons/Send.vue'
-import type { ThemeDataBottom } from '@/types/chat'
+import type { ThemeDataBottom } from '@/types/theme'
 
 defineProps<{
   input: string

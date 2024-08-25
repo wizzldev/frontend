@@ -37,11 +37,11 @@
 
 <script setup lang="ts">
 import type { Messages } from '@/types/message'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 import MessageGroup from '@/components/Chat/MessageGroup.vue'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { messageSorter } from '@/components/Chat/messageSorter'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import Spinner from '@/components/Icons/Spinner.vue'
 import { sleep } from '@/scripts/sleep'
 
@@ -54,7 +54,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['load', 'modal', 'like', 'reply'])
 
-const auth = useAuthStore()
+const auth = useAuth2Store()
 const loading = ref(false)
 const scrollContainer = ref()
 

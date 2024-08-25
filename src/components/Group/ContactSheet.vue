@@ -53,7 +53,7 @@ import ShareIcon from '@/components/Icons/Share.vue'
 import { Share } from '@capacitor/share'
 import { computed, ref } from 'vue'
 import { isApp } from '@/scripts/mobile/isApp'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import request from '@/scripts/request/request'
 import { useContactsStore } from '@/stores/contacts'
 import { getRealUserName } from '@/scripts/getRealUserName'
@@ -69,7 +69,7 @@ const props = defineProps<{
 const router = useRouter()
 const { t } = useI18n()
 const { info, error } = useToast()
-const { user } = useAuthStore()
+const { user } = useAuth2Store()
 const contacts = useContactsStore()
 const delStart = ref(false)
 const devModal = ref(false)

@@ -11,18 +11,13 @@
       </DevSettingsButton>
 
       <DevSettingsButton @click="copyImage" class="flex items-center justify-center space-x-2">
-        <span>{{ $t('Copy group image url') }}</span>
+        <span>{{ $t('Copy group image URL') }}</span>
         <ClipboardIcon/>
       </DevSettingsButton>
 
       <DevSettingsButton @click="soon" class="flex items-center justify-center space-x-2">
         <span>{{ $t('Invite a BOT') }}</span>
         <Bot/>
-      </DevSettingsButton>
-
-      <DevSettingsButton @click="$router.push('/__dev/logs')" class="flex items-center justify-center space-x-2">
-        <span>{{ $t('See application log') }}</span>
-        <LogFile/>
       </DevSettingsButton>
     </div>
   </Modal>
@@ -37,7 +32,6 @@ import ClipboardIcon from '@/components/Icons/Clipboard.vue'
 import Bot from '@/components/Icons/Bot.vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
-import LogFile from '@/components/Icons/LogFile.vue'
 
 const props = defineProps<{
   contact: Contact

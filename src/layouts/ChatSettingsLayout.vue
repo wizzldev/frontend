@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ThemeDataTop } from '@/types/chat'
+import type { ThemeDataTop } from '@/types/theme'
 import ChatLayout from '@/layouts/ChatLayout.vue'
 import type { RouteParamsRaw } from 'vue-router'
 

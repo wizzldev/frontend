@@ -1,8 +1,8 @@
 <template>
-  <img v-if="!src.endsWith('/')" :class="imgClass" v-show="loaded" :src="src" :alt="alt" @load="onLoad" @error="onError" />
+  <img v-if="src" :class="imgClass" v-show="loaded" :src="src" :alt="alt" @load="onLoad" @error="onError" />
   <div
     :class="imgClass"
-    v-if="!loaded || src.endsWith('/')"
+    v-else-if="!loaded"
     class="p-1 animate-pulse flex items-center justify-center bg-secondary"
   >
     <Error v-if="failed" class="text-red-300 cursor-not-allowed" />
@@ -18,7 +18,7 @@ import Spinner from '@/components/Icons/Spinner.vue'
 
 const props = defineProps<{
   sleep?: number
-  src: string
+  src?: string
   alt: string
   class?: string
 }>()
@@ -38,8 +38,4 @@ const onError = async () => {
   loaded.value = false
   failed.value = true
 }
-
-onMounted(async () => {
-  if (props.src.endsWith('/')) return
-})
 </script>

@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { computed, ref } from 'vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import VerifiedBadge from '@/components/Icons/VerifiedBadge.vue'
 import { onLongPress } from '@vueuse/core'
@@ -49,7 +49,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { isApp } from '@/scripts/mobile/isApp'
 
 const props = defineProps<{
-  image: string
+  image?: string
   title: string
   verified: boolean
   id: number
@@ -65,7 +65,7 @@ const props = defineProps<{
 }>()
 
 const i18n = useI18n()
-const auth = useAuthStore()
+const auth = useAuth2Store()
 const contacts = useContactsStore()
 const wrap = ref<HTMLElement | null>(null)
 const showSheet = ref(false)

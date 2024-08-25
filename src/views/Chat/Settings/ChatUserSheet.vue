@@ -25,9 +25,9 @@ import SheetButton from '@/components/SheetButton.vue'
 import Judge from '@/components/Icons/Judge.vue'
 import { Roles } from '@/scripts/roles'
 import Pen from '@/components/Icons/Pen.vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 
-const auth = useAuthStore()
+const auth = useAuth2Store()
 
 defineProps<{
   show: boolean

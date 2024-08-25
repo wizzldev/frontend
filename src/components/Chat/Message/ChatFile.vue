@@ -51,7 +51,7 @@ import prettyBytes from 'pretty-bytes'
 import { Buffer } from 'buffer'
 import { chatImage } from '@/scripts/image'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 import { fileCache } from '@/components/Chat/Message/fileCache'
 
 const props = defineProps<{

@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="w-icon"
+    class="svg-icon"
     viewBox="0 0 24 24"
     xml:space="preserve"
     xmlns="http://www.w3.org/2000/svg"

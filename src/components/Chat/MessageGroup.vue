@@ -80,7 +80,7 @@
 
 <script setup lang="ts">
 import type { Message, MessageGroup as MessageGroupType } from '@/types/message'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import { computed, ref } from 'vue'
 import DateTimeInfo from '@/components/Chat/Info/DateTimeInfo.vue'
 import MessageWrap from '@/components/Chat/Message/MessageWrap.vue'
@@ -88,7 +88,7 @@ import ChatMessage from '@/components/Chat/Message/ChatMessage.vue'
 import ChatEmoji from '@/components/Chat/Message/ChatEmoji.vue'
 import MessagerWrap from '@/components/Chat/MessagerWrap.vue'
 import ChatFile from '@/components/Chat/Message/ChatFile.vue'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 import ChatReply from '@/components/Chat/Message/ChatReply.vue'
 import InfoMessage from '@/components/Chat/Info/InfoMessage.vue'
 import DeletedMessage from '@/components/Chat/Message/DeletedMessage.vue'
@@ -101,7 +101,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['modal', 'like', 'reply', 'showImage'])
-const auth = useAuthStore()
+const auth = useAuth2Store()
 const showAllInfo = ref(false)
 const i18n = useI18n()
 

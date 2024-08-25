@@ -1,23 +1,12 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
 import type { Like, Messages } from '@/types/message'
-import type { ThemeData } from '@/types/chat'
+import type { ChatStorage } from '@/types/chat'
 
-interface Storage {
-  isPM: Record<string, boolean>
-  messages: Record<string, Messages>
-  roles: Record<string, Array<string> | null>
-  profile: Record<
-    string,
-    { name: string; pm: boolean; image: string; loading: boolean; is_verified: boolean; emoji: string }
-  >
-  lastFetch: Record<string, Date>
-  theme: Record<string, ThemeData | undefined>
-  cursors: Record<string, { nextCursor: string; prevCursor: string }>
-}
+
 
 export const useChatStore = defineStore('chat', () => {
-  const store = reactive<Storage>({
+  const store = reactive<ChatStorage>({
     isPM: {},
     messages: {},
     roles: {},
@@ -123,6 +112,10 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
+  function shouldFetchAll() {
+    store.lastFetch = {}
+  }
+
   return {
     push,
     pushLike,
@@ -130,6 +123,7 @@ export const useChatStore = defineStore('chat', () => {
     setRoles,
     shouldFetch,
     rmMessageID,
+    shouldFetchAll,
     roles: store.roles,
     messages: store.messages,
     profile: store.profile,

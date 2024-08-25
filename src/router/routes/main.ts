@@ -46,7 +46,7 @@ export default [
   },
   {
     path: '/__dev/logs',
-    name: 'devs.logs',
+    name: 'dev.logs',
     component: () => import('@/views/Dev/AppLogs.vue')
   }
 ] as Array<RouteRecordRaw>

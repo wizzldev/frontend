@@ -93,4 +93,9 @@ export default class Server {
     }
     return null
   }
+
+  public disconnect() {
+    this.conn?.close()
+    this.connected = false
+  }
 }

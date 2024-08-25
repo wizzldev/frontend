@@ -23,9 +23,10 @@
       <PushButton
         class="bg-secondary text-gray-400 p-1.5 rounded-xl flex items-center justify-center"
         :is-link="false"
-        @click="auth.logout()"
+        @click="logout"
       >
-        <Logout />
+        <Logout v-if="!processing" />
+        <Spinner v-else />
       </PushButton>
     </div>
   </header>
@@ -35,11 +36,23 @@
 import PushButton from '@/components/Elements/PushButton.vue'
 import BackArrow from '@/components/Icons/BackArrow.vue'
 import Logout from '@/components/Icons/Logout.vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import Spinner from '@/components/Icons/Spinner.vue'
 
 defineProps<{
   backTo?: string
 }>()
 
-const auth = useAuthStore()
+const router = useRouter()
+const auth = useAuth2Store()
+const processing = ref(false)
+
+const logout = async () => {
+  processing.value = true
+  await auth.logout()
+  await router.push('/login')
+  processing.value = false
+}
 </script>

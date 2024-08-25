@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="w-icon"
+    class="svg-icon"
     fill="none"
     stroke-width="1.5"
     viewBox="0 0 24 24"

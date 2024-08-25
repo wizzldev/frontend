@@ -72,7 +72,7 @@ import Desktop from '@/components/Icons/Desktop.vue'
 import Times from '@/components/Icons/Times.vue'
 import Modal from '@/components/Modals/Modal.vue'
 import FormButtonSecondary from '@/components/Auth/FormButtonSecondary.vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 
 interface Session {
   id: number
@@ -94,7 +94,7 @@ interface RawSession {
 }
 
 const router = useRouter()
-const auth = useAuthStore()
+const auth = useAuth2Store()
 
 const loading = ref(true)
 const sessions = ref<Array<Session>>([])

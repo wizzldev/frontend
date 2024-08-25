@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 import tlds from 'tlds'
 import { useRoute } from 'vue-router'
 

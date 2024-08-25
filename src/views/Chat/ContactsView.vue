@@ -67,11 +67,11 @@ import request from '@/scripts/request/request'
 import ChatNav from '@/components/ChatV1/ChatNav.vue'
 import Magnifier from '@/components/Icons/Magnifier.vue'
 import { useContactsStore } from '@/stores/contacts'
-import { useRouteLoaderStore } from '@/stores/routeLoader'
 import { cdnImage } from '@/scripts/image'
 import PremiumAd from '@/components/PremiumAd.vue'
+import { useLoader } from '@/stores/loader'
 
-const loader = useRouteLoaderStore()
+const loader = useLoader()
 const contacts = useContactsStore()
 const hasContact = computed(() => contacts.contacts.length)
 
@@ -81,7 +81,7 @@ const fetchContacts = async (page: number = 0) => {
   if (!res.data.$error && !res.data?.nullValue) {
     contacts.push(res.data)
   }
-  loader.isLoaded = true
+  loader.loading = false
 }
 
 const searchInput = ref('')
