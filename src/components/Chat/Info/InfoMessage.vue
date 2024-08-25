@@ -6,10 +6,10 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import { computed } from 'vue'
 import type { Message } from '@/types/message'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 
 const props = defineProps<{
   message: Message
@@ -17,7 +17,7 @@ const props = defineProps<{
 }>()
 
 const i18n = useI18n()
-const auth = useAuthStore()
+const auth = useAuth2Store()
 
 const info = computed(() =>
   i18n.t(props.message.type + (props.message.sender.id == auth?.user?.id ? '.you' : ''), {

@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { useTextareaAutosize } from '@vueuse/core'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import type { ThemeDataBottom } from '@/types/chat'
+import type { ThemeDataBottom } from '@/types/theme'
 import SendButton from '@/components/Chat/Form/SendButton.vue'
 
 const props = defineProps<{

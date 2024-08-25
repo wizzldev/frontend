@@ -37,14 +37,14 @@
 
 <script setup lang="ts">
 import FormButtonSecondary from '@/components/Auth/FormButtonSecondary.vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import request from '@/scripts/request/request'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 import PushButton from '@/components/Elements/PushButton.vue'
 
-const auth = useAuthStore()
+const auth = useAuth2Store()
 const i18n = useI18n()
 const toast = useToast()
 const newPassProcessing = ref(false)

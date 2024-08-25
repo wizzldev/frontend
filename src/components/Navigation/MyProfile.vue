@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import { computed } from 'vue'
 import PushButton from '@/components/Elements/PushButton.vue'
 import Settings from '@/components/Icons/Settings.vue'
@@ -53,7 +53,7 @@ defineProps<{
   backButton?: { route: string; params?: RouteParamsRaw }
 }>()
 
-const auth = useAuthStore()
+const auth = useAuth2Store()
 
 const userImageAlt = computed(() => `${auth.user?.first_name}'s profile image`)
 </script>

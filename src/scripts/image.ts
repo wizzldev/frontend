@@ -1,4 +1,5 @@
-export const cdnImage = (url: string, size: number | undefined = undefined) => {
+export const cdnImage = (url: string, size: number | undefined = undefined): string|undefined => {
+  if(url == '') return undefined
   if (url.includes('://')) return url
   let img = ''
   if (size == undefined) img = url

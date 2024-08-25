@@ -43,7 +43,7 @@
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useChatStore } from '@/stores/chat'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
 import ChatLayout from '@/layouts/ChatLayout.vue'
@@ -64,10 +64,10 @@ import { isApp } from '@/scripts/mobile/isApp'
 import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import request from '@/scripts/request/request'
 import { resetTheme, setTheme } from '@/scripts/mobile/theme'
-import { useRouteLoaderStore } from '@/stores/routeLoader'
+import { useLoader } from '@/stores/loader'
 
-const loader = useRouteLoaderStore()
-const auth = useAuthStore()
+const loader = useLoader()
+const auth = useAuth2Store()
 const router = useRouter()
 const route = useRoute()
 const chat = useChatStore()
@@ -193,7 +193,7 @@ const mount = async (hard: boolean = false) => {
 }
 
 onMounted(async () => {
-  loader.isLoaded = true
+  loader.loading = false
   await mount()
   initWebsocket()
 })

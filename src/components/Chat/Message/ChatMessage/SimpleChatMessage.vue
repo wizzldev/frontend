@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import type { Message } from '@/types/message'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 import MessageContentParagraph from '@/components/Chat/Message/ChatMessage/MessageContentParagraph.vue'
 
 defineProps<{

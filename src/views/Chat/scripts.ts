@@ -3,7 +3,7 @@ import type { Message, Messages } from '@/types/message'
 import { useChatStore } from '@/stores/chat'
 import request from '@/scripts/request/request'
 import type { User } from '@/types/user'
-import type { ThemeData } from '@/types/chat'
+import type { ThemeData } from '@/types/theme'
 import { reactive } from 'vue'
 
 export interface ChatData {

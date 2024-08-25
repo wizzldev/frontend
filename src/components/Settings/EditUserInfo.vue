@@ -34,11 +34,13 @@
 
       <p class="text-red-400" v-if="error != ''">{{ $t(error) }}</p>
     </form>
+
+    <LanguagePicker/>
   </section>
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import FormButton from '@/components/Auth/FormButton.vue'
 import { reactive, type Ref, ref } from 'vue'
 import request from '@/scripts/request/request'
@@ -46,8 +48,9 @@ import translateError, { type Errors } from '@/scripts/translator/errors'
 import type { User } from '@/types/user'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
+import LanguagePicker from '@/components/Settings/LanguagePicker.vue'
 
-const auth = useAuthStore()
+const auth = useAuth2Store()
 const processing = ref(false)
 const i18n = useI18n()
 const toast = useToast()
@@ -74,7 +77,7 @@ const update = async () => {
     if (res.data?.$network) error.value = 'error.network'
   } else {
     // do the actual thing in the view
-    auth.user = res.data as User
+    auth.updateUser(res.data as User)
     toast.success(i18n.t('Successfully updated'))
   }
 }

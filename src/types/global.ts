@@ -14,6 +14,7 @@ declare global {
       MODE: string
       STATIC: string
       LINK_HOST: string
+      DEVS_HOST: string
     }
     WS: Server
   }

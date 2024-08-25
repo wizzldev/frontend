@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue'
 import ChatProfile from '@/components/Navigation/ChatProfile.vue'
-import type { ThemeDataTop } from '@/types/chat'
+import type { ThemeDataTop } from '@/types/theme'
 import type { RouteParamsRaw } from 'vue-router'
 
 defineProps<{

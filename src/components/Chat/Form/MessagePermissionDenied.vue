@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ThemeDataBottom } from '@/types/chat'
+import type { ThemeDataBottom } from '@/types/theme'
 
 defineProps<{
   theme: ThemeDataBottom | undefined

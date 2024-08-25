@@ -59,7 +59,7 @@
 import PushButton from '@/components/Elements/PushButton.vue'
 import Settings from '@/components/Icons/Settings.vue'
 import BackArrow from '@/components/Icons/BackArrow.vue'
-import type { ThemeDataTop } from '@/types/chat'
+import type { ThemeDataTop } from '@/types/theme'
 import type { RouteParamsRaw } from 'vue-router'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import { cdnImage } from '@/scripts/image'
@@ -71,7 +71,9 @@ import { useI18n } from 'vue-i18n'
 const i18n = useI18n()
 const connected = ref(window.WS.connected)
 
-watch(window.WS, (w) => {
+const ws = computed(() => window.WS)
+
+watch(ws, (w) => {
   connected.value = w.connected
 })
 

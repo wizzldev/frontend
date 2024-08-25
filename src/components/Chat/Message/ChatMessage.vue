@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import type { Message } from '@/types/message'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 import { computed, onMounted, ref } from 'vue'
 import { stringBetween } from '@/scripts/stringBetween'
 import SimpleChatMessage from '@/components/Chat/Message/ChatMessage/SimpleChatMessage.vue'

@@ -4,9 +4,14 @@ import { WizzlDefaultChannel } from '@/scripts/consts'
 import { useChatStore } from '@/stores/chat'
 import type { Like, Message } from '@/types/message'
 import { useContactsStore } from '@/stores/contacts'
+import { useLogger } from '@/stores/logger'
+
+const log = (msg: string) => useLogger().log('WS', msg)
 
 export const setup = async (auth: string, force: boolean = false) => {
-  if (window.WS != undefined || force) return
+  if (window.WS !== undefined && !force) return
+  log('Initializing WebSocket connection...')
+
   window.WS = new Server(`${window.GLOBAL_ENV.WS_ENDPOINT}?authorization=${auth}`)
 
   const base = new Channel(WizzlDefaultChannel)
@@ -21,6 +26,8 @@ export const setup = async (auth: string, force: boolean = false) => {
   base.use(ping, 2500)
   window.WS.push(WizzlDefaultChannel, base)
   window.WS.push('global', createGlobal())
+
+  log(`Connecting to our gateway ${window.GLOBAL_ENV.WS_ENDPOINT}`)
   await window.WS.connect()
 }
 

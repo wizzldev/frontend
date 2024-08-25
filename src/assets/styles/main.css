@@ -18,6 +18,13 @@
   font-family: 'Mitr', sans-serif;
 }
 
+.fontCode {
+  font-family: "Fira Code", monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
@@ -51,8 +58,12 @@ body {
   display: none;
 }
 
-.w-icon {
+.svg-icon {
   @apply w-5 h-5 inline-block;
+}
+
+.svg-icon-sm {
+  @apply w-4 h-4 inline-block;
 }
 
 ::-moz-selection {

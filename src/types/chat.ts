@@ -1,52 +1,15 @@
-export interface ThemeData {
-  top: ThemeDataTop
-  main: ThemeDataMain
-  bottom: ThemeDataBottom
-}
+import type { Messages } from '@/types/message'
+import type { ThemeData } from '@/types/theme'
 
-export interface ThemeDataTop {
-  bg: string
-  text: string
-  border: string
-  button: ThemeDataButton
-}
-
-export interface ThemeDataMain {
-  bg: string
-  bgImage: string
-  is_pattern: boolean
-  text: string
-  message: {
-    you: ThemeDataMessage
-    other: ThemeDataMessage
-  }
-}
-
-export interface ThemeDataBottom {
-  bg: string
-  text: string
-  icons: string
-  border: string
-  emoji: string
-  button: ThemeDataButton
-  input: ThemeDataButton
-}
-
-// components
-export interface ThemeDataButton {
-  bg: {
-    default: string
-    hover: string
-    focus: string
-  }
-  text: {
-    default: string
-    hover: string
-    focus: string
-  }
-}
-
-export interface ThemeDataMessage {
-  bg: string
-  text: string
+export interface ChatStorage {
+  isPM: Record<string, boolean>
+  messages: Record<string, Messages>
+  roles: Record<string, Array<string> | null>
+  profile: Record<
+    string,
+    { name: string; pm: boolean; image: string; loading: boolean; is_verified: boolean; emoji: string }
+  >
+  lastFetch: Record<string, Date>
+  theme: Record<string, ThemeData | undefined>
+  cursors: Record<string, { nextCursor: string; prevCursor: string }>
 }

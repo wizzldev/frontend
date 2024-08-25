@@ -4,6 +4,11 @@
 // your native language ;)
 // Hu: Hungarian
 export default {
+  // MUST ADD THIS TO ANY LANGUAGE
+  hu: 'Magyar',
+  flag: '🇭🇺',
+  // END
+
   Hi: 'Szia',
   Chats: 'Chatek',
   Messages: 'Üzenetek',
@@ -158,4 +163,11 @@ export default {
   'error.max': 'Maximum {0} karakter lehet',
 
   'Developer settings': 'Fejlesztői beállítások',
+  'Be careful who you share data with!': 'Légy óvatos, hogy kivel osztasz meg adatokat!',
+  'Copy group ID': 'Csoport ID másolása',
+  'Copy group image URL': 'Csoportkép URL-jének másolása',
+  'Invite a BOT': 'BOT meghívása',
+  'Language preference': 'Nyelvi beállítások',
+  'Developer interface': 'Fejlesztői felület',
+  'Application log': 'Alkalmazás napló',
 }

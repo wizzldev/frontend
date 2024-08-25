@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import SettingsLayout from '@/layouts/SettingsLayout.vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuth2Store } from '@/stores/auth2'
 import { cdnImage } from '@/scripts/image'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import Modal from '@/components/Modals/Modal.vue'
@@ -43,7 +43,7 @@ import DangerZone from '@/components/Settings/DangerZone.vue'
 import Notifications from '@/views/Settings/Notifications.vue'
 import DeveloperSettings from '@/components/Settings/DeveloperSettings.vue'
 
-const auth = useAuthStore()
+const auth = useAuth2Store()
 const editProfileImage = ref(false)
 
 const updateImage = (key: string) => {

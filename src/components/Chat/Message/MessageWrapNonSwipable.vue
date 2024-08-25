@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import type { Like, Message } from '@/types/message'
-import type { ThemeDataMain } from '@/types/chat'
+import type { ThemeDataMain } from '@/types/theme'
 import { computed, ref } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import { isApp } from '@/scripts/mobile/isApp'

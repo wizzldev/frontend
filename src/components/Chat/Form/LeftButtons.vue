@@ -30,7 +30,7 @@ import { uploadFileToServer } from '@/components/Chat/Form/uploadFile'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
-import type { ThemeDataBottom } from '@/types/chat'
+import type { ThemeDataBottom } from '@/types/theme'
 
 defineProps<{
   canAttachFile: boolean

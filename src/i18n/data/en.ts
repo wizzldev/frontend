@@ -1,4 +1,9 @@
 export default {
+  // MUST ADD THIS TO ANY LANGUAGE
+  en: 'English',
+  flag: '🇺🇸',
+  // END
+
   Hi: 'Hi',
   Chats: 'Chats',
   Messages: 'Messages',
