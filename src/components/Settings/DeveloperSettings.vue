@@ -27,5 +27,5 @@ import PushButton from '@/components/Elements/PushButton.vue'
 import { computed } from 'vue'
 import LogFile from '@/components/Icons/LogFile.vue'
 
-const devURL = computed(() => window.GLOBAL_ENV.DEVS_HOST)
+const devURL = computed(() => `https://${window.GLOBAL_ENV.DEVS_HOST}?utm_source=wizzl.app&utm_medium=developer-settings`)
 </script>

@@ -32,6 +32,7 @@ import ClipboardIcon from '@/components/Icons/Clipboard.vue'
 import Bot from '@/components/Icons/Bot.vue'
 import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
+import { cdnImage } from '@/scripts/image'
 
 const props = defineProps<{
   contact: Contact
@@ -55,7 +56,7 @@ const copyId = async () => {
 
 const copyImage = async () => {
   await Clipboard.write({
-    string: props.contact.image,
+    string: cdnImage(props.contact.image) as string,
   })
   info(t('Copied to clipboard'))
 }

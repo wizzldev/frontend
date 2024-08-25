@@ -13,6 +13,7 @@
       @load="loadMore"
       @modal="handleModal"
       @like="like"
+      :canSendMessage="permission(Roles.SendMessage)"
     />
     <MessageForm
       v-if="chatReady"
@@ -28,6 +29,7 @@
     />
   </ChatLayout>
   <MessageActionModal
+    :canSendMessage="permission(Roles.SendMessage)"
     :canDeleteMessage="permission(Roles.DeleteMessage)"
     :canDeleteOtherMessage="permission(Roles.DeleteOtherMemberMessage)"
     :show="storage.modalMessage !== null"
