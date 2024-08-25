@@ -28,8 +28,12 @@ const setup = async (router: Router) => {
   })
 
   await App.addListener('appStateChange', (state) => {
-    if(state.isActive) useContactsStore().contacts = []
-    useChatStore().shouldFetchAll()
+    if(state.isActive) {
+      useContactsStore().contacts = []
+      useChatStore().shouldFetchAll()
+      return
+    }
+    useChatStore().storeChatData()
   })
 
   await addListeners(request, router)

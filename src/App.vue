@@ -15,8 +15,9 @@ import { getLocale } from '@/i18n'
 const router = useRouter()
 const loader = useLoader()
 const { log } = useLogger()
-const { init } = useAuth2Store()
-init()
+// init the auth system
+useAuth2Store().init()
+// setup mobile
 setup(router)
 
 onMounted(async () => {

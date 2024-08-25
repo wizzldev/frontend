@@ -1,7 +1,7 @@
 <template>
   <Modal :show="show" :disable-close="true">
     <div>
-      <PushButton class="btnList bg-tertiary-all" :is-link="false" @click="d('reply', msg)">
+      <PushButton v-if="canSendMessage" class="btnList bg-tertiary-all" :is-link="false" @click="d('reply', msg)">
         {{ $t('Reply') }}
       </PushButton>
       <PushButton
@@ -66,6 +66,7 @@ defineProps<{
   msg: Message
   canDeleteMessage: boolean
   canDeleteOtherMessage: boolean
+  canSendMessage: boolean
 }>()
 
 const emit = defineEmits(['reply', 'delete', 'close', 'edit'])

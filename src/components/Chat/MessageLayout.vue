@@ -21,6 +21,7 @@
           :messages="msg"
           :isPM="isPM"
           @showImage="showImage"
+          :canSendMessage="canSendMessage"
         />
       </li>
       <li class="w-full text-center text-xl my-3" v-if="loading">
@@ -50,6 +51,7 @@ const props = defineProps<{
   theme: ThemeDataMain | undefined
   hasNext: boolean
   isPM: boolean
+  canSendMessage: boolean
 }>()
 
 const emit = defineEmits(['load', 'modal', 'like', 'reply'])

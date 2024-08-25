@@ -2,8 +2,7 @@ import { defineStore } from 'pinia'
 import { reactive } from 'vue'
 import type { Like, Messages } from '@/types/message'
 import type { ChatStorage } from '@/types/chat'
-
-
+import { Preferences } from '@capacitor/preferences'
 
 export const useChatStore = defineStore('chat', () => {
   const store = reactive<ChatStorage>({
@@ -116,6 +115,14 @@ export const useChatStore = defineStore('chat', () => {
     store.lastFetch = {}
   }
 
+  async function storeChatData() {
+    const messages = store.messages
+    await Preferences.set({
+      key: 'wizzl.message-data',
+      value: JSON.stringify(messages)
+    })
+  }
+
   return {
     push,
     pushLike,
@@ -131,5 +138,6 @@ export const useChatStore = defineStore('chat', () => {
     lastFetch: store.lastFetch,
     theme: store.theme,
     cursors: store.cursors,
+    storeChatData,
   }
 })

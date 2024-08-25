@@ -26,6 +26,7 @@
           ref="msgWrap"
           @modal="emitModal"
           @reply="$emit('reply', msg)"
+          :canSendMessage="canSendMessage"
         >
           <ChatReply
             v-if="msg.reply"
@@ -98,6 +99,7 @@ const props = defineProps<{
   messages: MessageGroupType
   theme: ThemeDataMain | undefined
   isPM: boolean
+  canSendMessage: boolean
 }>()
 
 const emit = defineEmits(['modal', 'like', 'reply', 'showImage'])

@@ -1,6 +1,6 @@
 <template>
   <MessageWrapNonSwipable
-    v-if="!isSwipable"
+    v-if="!isSwipable || !canSendMessage"
     :sent-by-me="sentByMe"
     :is-emoji="isEmoji"
     :theme="theme"
@@ -34,6 +34,7 @@ const props = defineProps<{
   likes: Array<Like>
   theme: ThemeDataMain | undefined
   message: Message
+  canSendMessage: boolean
 }>()
 
 const isSwipable = computed(

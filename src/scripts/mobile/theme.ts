@@ -6,7 +6,7 @@ import { useLogger } from '@/stores/logger'
 export const setTheme = async (top: string, bottom: string) => {
   if (!isApp()) return
 
-  useLogger().log('Theme', `Mobile theme change: top ${top} bottom ${bottom}`)
+  useLogger().log('Theme.Mobile', `Mobile theme change: top ${top} bottom ${bottom}`)
 
   await NavigationBar.setNavigationBarColor({ color: bottom })
 
@@ -17,7 +17,7 @@ export const setTheme = async (top: string, bottom: string) => {
 export const setBottomTheme = async (bottom: string) => {
   if (!isApp()) return
 
-  useLogger().log('Theme', `Mobile theme change: bottom ${bottom}`)
+  useLogger().log('Theme.Mobile', `Mobile theme change: bottom ${bottom}`)
 
   await NavigationBar.setNavigationBarColor({ color: bottom })
 }
@@ -25,7 +25,7 @@ export const setBottomTheme = async (bottom: string) => {
 export const setTopTheme = async (top: string) => {
   if(!isApp()) return
 
-  useLogger().log('Theme', `Mobile theme change: top ${top}`)
+  useLogger().log('Theme.Mobile', `Mobile theme change: top ${top}`)
 
   await StatusBar.setOverlaysWebView({ overlay: false })
   await StatusBar.setBackgroundColor({ color: top })
