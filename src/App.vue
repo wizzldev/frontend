@@ -16,7 +16,7 @@ const router = useRouter()
 const loader = useLoader()
 const { log } = useLogger()
 // init the auth system
-await useAuth2Store().init()
+useAuth2Store().init()
 // setup mobile
 setup(router)
 
