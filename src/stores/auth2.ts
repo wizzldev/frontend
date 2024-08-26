@@ -79,7 +79,14 @@ export const useAuth2Store = defineStore('auth2', () => {
 
     log(`FreshCheck for user with id: ${store.user?.id || 'unknown'}`)
 
-    if(!store.token) return false
+    if(!store.token) {
+      log('FreshCheck: Getting token from cookies.')
+      store.token = await getToken()
+    }
+    if(!store.token) {
+      log('FreshCheck: Token not found in cookies.')
+      return false
+    }
 
     const res = await request.get('/me')
 

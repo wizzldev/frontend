@@ -81,6 +81,22 @@ export default {
   'Reset password expired': 'Lejárt jelszó visszaállítási kérés',
   'Email verification': 'Email hitelesítés',
   'Set password': 'Jelszó beállítása',
+  'John': 'Pista',
+  'Doe': 'Jóska',
+  // IP
+  'IP Verification': 'IP Hitelesítés',
+  'Whoops! Seems to be logging in from a new device.': 'Hoppá! Úgy tűnik, hogy egy új eszközről jelentkezik be.',
+  'Check your mailbox to authenticate this IP address.': 'Ellenőrizze a e-mail fiókját, hogy hitelesítse ezt az IP-címet.',
+  Okay: 'Oké',
+  // New register
+  'Successfully registered': 'Sikeres regisztráció',
+  'Just a few more steps, we have sent a verification email, follow the instructions, and we\'ll meet.': 'Már csak néhány lépés, küldtünk egy ellenőrző e-mailt, kövesse az utasításokat, és máris találkozunk.',
+  'Don\'t forget to check the spam folder as well.': 'Ne felejtsd el ellenőrizni a spam mappát is.',
+  // Form errors
+  'Invalid email or password': 'Érvénytelen e-mail vagy jelszó',
+  // Terms
+  Terms: 'Feltételek',
+  Privacy: 'Adatvédelem',
 
   // Settings
   'General information': 'Általános információk',
@@ -99,6 +115,8 @@ export default {
   'Edit image': 'Kép szerkesztése',
   'Settings': 'Beállítások',
   'Delete': 'Törlés',
+  'If you delete your account, all your data will be deleted and you will not be able to restore it.': 'Ha törli a fiókját, minden adata törlődik, és nem tudja visszaállítani azokat.',
+  'Enter your password to begin the deletion.': 'Adja meg jelszavát a törlés megkezdéséhez.',
 
   // Form errors
   'error.required': 'Ezt a mezőt nem hagyhatja üresen',
@@ -170,4 +188,16 @@ export default {
   'Language preference': 'Nyelvi beállítások',
   'Developer interface': 'Fejlesztői felület',
   'Application log': 'Alkalmazás napló',
+
+  'Never share this data with anyone': 'Soha ne ossza meg ezeket az adatokat senkivel',
+
+  'Cookies': 'Sütik',
+  'This cookie contains sensitive data': 'Ez a süti érzékeny adatokat tartalmaz',
+
+
+  // Toasts
+  'Soon': 'Hamarosan',
+  'Successfully updated': 'Sikeresen frissítve',
+  'Invalid invite code': 'Hibás meghívó kód',
+  'V2 Feature\nCurrently unavailable': 'V2 funkció\nJelenleg nem elérhető'
 }
