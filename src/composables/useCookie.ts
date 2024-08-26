@@ -1,42 +1,71 @@
 import { isApp } from '@/scripts/mobile/isApp'
 import Cookies from 'js-cookie'
-import { Preferences } from '@capacitor/preferences'
+import { addMonths } from 'date-fns'
+import { CapacitorCookies } from '@capacitor/core'
+
+const getCookieExpirationData = () => {
+  return addMonths(new Date(), 1)
+}
+
+const getCookieConfig = () => {
+  const domain = ['localhost', '127.0.0.1'].includes(window.location.hostname) ? undefined : `.${window.location.hostname}`
+  const sameSite = 'Lax' as "Strict" | "Lax" | "None" | undefined
+  const expires = getCookieExpirationData()
+
+  return { domain, sameSite, expires }
+}
 
 export default function useCookie() {
-  const cookieOpts = { sameSite: 'Lax', domain: undefined } as  { sameSite: 'Lax', domain?: string }
-  const domain = window.location.hostname
-  if(!['127.0.0.1', 'localhost'].includes(domain)) cookieOpts.domain = domain
 
-  const set = async (name: string, value: string): Promise<void> => {
-    if(!isApp()) Cookies.set(name, value, cookieOpts)
-    else await Preferences.set({
-      key: name,
-      value: value,
+  const set = async (key: string, value: string) => {
+    if(isApp()) return await setAppCookie(key, value)
+    Cookies.set(key, value, getCookieConfig())
+  }
+
+  const setAppCookie = async (key: string, value: string) => {
+    await CapacitorCookies.setCookie({
+      key,
+      value,
+      expires: getCookieExpirationData().toUTCString(),
     })
   }
 
-  const get = async (name: string): Promise<string|undefined> => {
-    if(!isApp()) return Cookies.get(name) as string | undefined
-    const { value } = await Preferences.get({key: name})
-    return value || undefined
+  const get = async (key: string): Promise<string | undefined> => {
+    if(isApp()) return await getAppCookie(key)
+    return Cookies.get(key)
   }
 
-  const remove = async (name: string): Promise<void> => {
-    if(!isApp()) return Cookies.remove(name, cookieOpts)
-    await Preferences.remove({
-      key: name,
-    })
+  const getAppCookie = async (key: string): Promise<string | undefined> => {
+    const data = await CapacitorCookies.getCookies()
+    return data?.[key] || undefined
   }
 
-  const removeAll = async () => {
-    let cookies
-    if(isApp()) {
-      const { keys } = await Preferences.keys()
-      cookies = keys
-    }
-    else cookies = Object.keys(Cookies.get())
-    cookies.forEach(cookie => remove(cookie))
+  const remove = async (key: string): Promise<void> => {
+    if(isApp()) return await removeAppCookie(key)
+    Cookies.remove(key, getCookieConfig())
   }
 
-  return { set, get, remove, removeAll }
+  const removeAppCookie = async (key: string): Promise<void> => {
+    await CapacitorCookies.deleteCookie({ key })
+  }
+
+  const removeAll = async (): Promise<void> => {
+    if(isApp()) return await removeAllAppCookie()
+    Object.keys(Cookies.get()).forEach(key => remove(key))
+  }
+
+  const removeAllAppCookie = async (): Promise<void> => {
+    await CapacitorCookies.clearAllCookies()
+  }
+
+  const getAll = async (): Promise<Record<string, string>> => {
+    if(isApp()) return getAllAppCookie()
+    return Cookies.get()
+  }
+
+  const getAllAppCookie = async () => {
+    return await CapacitorCookies.getCookies()
+  }
+
+  return { set, get, getAll, remove, removeAll }
 }

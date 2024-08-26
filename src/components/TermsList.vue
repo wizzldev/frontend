@@ -1,17 +1,17 @@
 <template>
   <div v-if="!isLoading" class="overflow-y-scroll">
     <template v-for="sect in terms" :key="sect">
-      <div v-if="sect[0] == 'heading'" class="my-3 bg-secondary px-4 py-3 rounded-lg">
-        <h2 class="text-2xl fontMitr">{{ sect[1] }}</h2>
+      <div v-if="sect[0] == 'heading'" class="my-3 rounded-lg">
+        <h2 class="text-2xl fontMitr font-bold">{{ sect[1] }}</h2>
       </div>
-      <p class="my-3" v-if="sect[0] == 'paragraph'">{{ sect[1] }}</p>
-      <div v-if="sect[0] == 'secondary_heading'" class="my-2 bg-secondary px-4 py-3 rounded-lg">
+      <p class="my-3 text-gray-400" v-if="sect[0] == 'paragraph'">{{ sect[1] }}</p>
+      <div v-if="sect[0] == 'secondary_heading'" class="my-2">
         <h2 class="text-xl fontMitr">{{ sect[1] }}</h2>
       </div>
-      <div v-if="sect[0] == 'list'" class="px-5">
-        <ol class="list-decimal">
-          <li class="pb-3 md:text-lg" v-for="item in sect[1]" :key="item">{{ item }}</li>
-        </ol>
+      <div v-if="sect[0] == 'list'">
+        <ul>
+          <li class="bg-secondary first:rounded-t-lg last:rounded-b-lg px-2 py-3 flex items-center border-b border-tertiary last:border-b-0" v-for="item in sect[1]" :key="item">{{ item }}</li>
+        </ul>
       </div>
     </template>
     <PushButton

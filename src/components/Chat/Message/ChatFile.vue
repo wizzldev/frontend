@@ -53,12 +53,23 @@ import { chatImage } from '@/scripts/image'
 import LazyImage from '@/components/Loaders/LazyImage.vue'
 import type { ThemeDataMain } from '@/types/theme'
 import { fileCache } from '@/components/Chat/Message/fileCache'
+import { isApp } from '@/scripts/mobile/isApp'
+import { Directory, Filesystem } from '@capacitor/filesystem'
+import { useToast } from 'vue-toastification'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
+import { useLogger } from '@/stores/logger'
 
 const props = defineProps<{
   message: Message
   sentByMe: boolean
   theme: ThemeDataMain | undefined
 }>()
+
+const route = useRoute()
+const { info, warning } = useToast()
+const { t } = useI18n()
+const log = (msg: string) => useLogger().log('Chat.File', msg)
 
 const fileInfo = ref({}) as Ref<FileDataJSON>
 const file = ref(null) as Ref<FileInfo | null>
@@ -84,13 +95,44 @@ const download = async () => {
   downloading.value = false
   if (res.data?.$error) return
 
-  const base64 = Buffer.from(await res.data.arrayBuffer(), 'binary').toString('base64')
+  const buffer = Buffer.from(await res.data.arrayBuffer(), 'binary')
+  if(isApp()) return saveApp(buffer)
+
+  const base64 = buffer.toString('base64')
   const a = document.createElement('a')
   a.setAttribute('href', `data:${file.value?.content_type};base64,${base64}`)
   a.setAttribute('download', file.value?.name || 'unknown')
   a.setAttribute('wizzl-download', fileInfo.value.fetchFrom)
   a.click()
   a.remove()
+}
+
+const saveApp = async (buffer: Buffer) => {
+  if(!await checkPermission()) {
+    warning(t('Permission denied'))
+    return
+  }
+
+  const dir = `chat_${route.params.id as string}`
+  try {
+    await Filesystem.mkdir({
+      path: dir,
+      directory: Directory.Documents,
+    })
+  } catch (e: unknown) {
+    log(`Directory exists: ${e}`)
+  }
+  await Filesystem.writeFile({
+    path: `${dir}/${file.value?.name}`,
+    data: buffer.toString(),
+    directory: Directory.Documents,
+  })
+  info(t('Successfully downloaded'))
+}
+
+const checkPermission = async () => {
+  const status = await Filesystem.requestPermissions()
+  return status.publicStorage == 'granted'
 }
 
 onMounted(mount)
