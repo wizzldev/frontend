@@ -27,7 +27,7 @@
     </section>
   </SettingsLayout>
 
-  <Modal :show="safeCopyData" @close="safeCopyData = undefined">
+  <Modal :show="safeCopyData != undefined" @close="safeCopyData = undefined">
     <h2 class="text-2xl fontTheme" v-emoji>{{ $t('This cookie contains sensitive data') }} 🫣</h2>
     <div class="w-full bg-gray-700 rounded-lg text-center py-1 px-2 my-2 fontCode">
       {{ safeCopyData?.key }}
