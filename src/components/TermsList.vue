@@ -15,7 +15,7 @@
       </div>
     </template>
     <PushButton
-      to="/"
+      to-name="home"
       :isLink="true"
       class="my-5 transition-colors w-full bg-purple-500 hover:bg-purple-400 focus:bg-purple-400 py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
       >{{ $t('Back') }}</PushButton

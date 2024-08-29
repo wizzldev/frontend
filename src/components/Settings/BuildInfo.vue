@@ -11,9 +11,18 @@
       :src="cdnImage('wizzl.webp', 64)"
     />
     <div class="flex items-center space-x-2 justify-center mt-4">
-      <InAppLink v-for="link in links" :key="link.url" :title="ucFirst(link.title)" :href="link.url" target="_blank" class="transition-colors text-gray-400 hover:text-gray-500 focus:text-gray-600 visited:text-purple-400">
+      <InAppLink v-for="link in links" :key="link.url" :title="ucFirst(link.title)" :href="link.url" target="_blank" class="transition-colors text-gray-400 hover:text-gray-500 focus:text-gray-600">
         <component :is="link.icon" :class="{'!w-4 !h-4': link.title != 'x', '!w-3 !h-3': link.title == 'x'}" />
       </InAppLink>
+    </div>
+    <div class="mt-2">
+      <PushButton :is-link="true" to-name="service.terms" class="inline-block">
+        {{ $t('Terms') }}
+      </PushButton>
+      &#x2022;
+      <PushButton :is-link="true" to-name="service.privacy" class="inline-block">
+        {{ $t('Privacy') }}
+      </PushButton>
     </div>
   </section>
 </template>
@@ -27,6 +36,7 @@ import Discord from '@/components/Icons/Brands/Discord.vue'
 import InAppLink from '@/components/InAppLink.vue'
 import Instagram from '@/components/Icons/Brands/Instagram.vue'
 import X from '@/components/Icons/Brands/X.vue'
+import PushButton from '@/components/Elements/PushButton.vue'
 
 const shortHash = ref(import.meta.env.VITE_BUILD_HASH_SHORT)
 const mode = ref(import.meta.env.MODE)

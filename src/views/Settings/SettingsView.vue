@@ -18,6 +18,7 @@
     <DangerZone />
     <BuildInfo />
   </SettingsLayout>
+
   <Modal :show="editProfileImage" @close="editProfileImage = false">
     <ProfileImageCropper
       @uploaded="updateImage"

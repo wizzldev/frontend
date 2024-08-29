@@ -1,6 +1,10 @@
 <template>
   <p class="px-4 py-1.5" :class="{ customText: theme !== undefined }" v-emoji>
-    <template v-for="(t, i) in text" :key="i">
+    <template v-if="content == '#fail.decrypt'">
+      <span class="text-purple-400">Wizzl:&nbsp;</span>
+      <span class="text-red-400">{{ $t('Error: Failed to decrypt message.') }}</span>
+    </template>
+    <template v-else v-for="(t, i) in text" :key="i">
       <a
         rel="nofollow"
         target="_blank"
