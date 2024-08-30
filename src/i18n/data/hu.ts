@@ -46,6 +46,9 @@ export default {
   'All good?': 'Minden jó?',
   Create: 'Létrehozás',
 
+  'join.you': 'Csatlakoztál a chathez',
+  'join': '{sender} csatlakozott a chathez',
+
   'message.reply': '{who} válaszolt neki: {to}',
   'message.reply.you': 'Válaszoltál neki: {to}',
   'deleted.you': 'Töröltél egy üzenetet',
@@ -199,5 +202,6 @@ export default {
   'Soon': 'Hamarosan',
   'Successfully updated': 'Sikeresen frissítve',
   'Invalid invite code': 'Hibás meghívó kód',
-  'V2 Feature\nCurrently unavailable': 'V2 funkció\nJelenleg nem elérhető'
+  'V2 Feature\nCurrently unavailable': 'V2 funkció\nJelenleg nem elérhető',
+
 }

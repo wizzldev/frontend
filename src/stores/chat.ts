@@ -3,6 +3,7 @@ import { reactive } from 'vue'
 import type { Like, Messages } from '@/types/message'
 import type { ChatStorage } from '@/types/chat'
 import { Preferences } from '@capacitor/preferences'
+import { createUnsentMessage } from '@/views/Chat/scripts'
 
 export const useChatStore = defineStore('chat', () => {
   const store = reactive<ChatStorage>({
@@ -29,14 +30,17 @@ export const useChatStore = defineStore('chat', () => {
 
     for (let i = 0; i < msg.length; i++) {
       const m = msg[i]
+
       const existingIndex = store.messages[chat].findIndex(
-        (k) => k.id === m.id || (hookID != null && k.hookId === hookID)
+        (k) => k.id === m.id || (hookID != null && k.hookId == hookID)
       )
       if (existingIndex !== -1) {
         const existingMessage = store.messages[chat][existingIndex]
         if (existingMessage.underSending) {
+          if(!m.underSending) m.underSending = false
           store.messages[chat][existingIndex] = m
         } else {
+          m.underSending = false
           store.messages[chat][existingIndex] = { ...existingMessage, ...m }
         }
       } else {
