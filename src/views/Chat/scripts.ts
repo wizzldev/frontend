@@ -43,7 +43,8 @@ export const createUnsentMessage = (
     data_json: data_json,
     underSending: true,
     hookId: hookID,
-    reply: reply
+    reply: reply,
+    created_at: new Date().toString(),
   } as Message
 }
 

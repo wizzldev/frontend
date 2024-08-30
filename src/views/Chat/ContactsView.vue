@@ -40,7 +40,7 @@
           </PushButton>
         </template>
 
-        <div class="text-center px-2 mt-3 mb-2" v-if="hasContact">
+        <div class="text-center px-2 mt-3 mb-2" v-if="hasContact && noMoreContact">
           <p class="text-sm text-gray-600 fontTheme">
             {{ $t('No more active conversations') }}
           </p>
@@ -50,6 +50,16 @@
             class="w-1/3 m-auto p-1 bg-secondary-all rounded-full text-xs mt-2"
           >
             {{ $t('New chat') }}
+          </PushButton>
+        </div>
+
+        <div class="text-center px-2 mt-3 mb-2" v-else-if="!noMoreContact">
+          <PushButton
+            @click="fetchContacts(true)"
+            class="w-1/3 m-auto p-1 bg-secondary-all rounded-full text-xs mt-2"
+          >
+            <span v-if="!loading">{{ $t('Load more') }}</span>
+            <Spinner class="!w-2.5 !h-2.5" v-else />
           </PushButton>
         </div>
       </div>
@@ -69,19 +79,25 @@ import Magnifier from '@/components/Icons/Magnifier.vue'
 import { useContactsStore } from '@/stores/contacts'
 import { cdnImage } from '@/scripts/image'
 import PremiumAd from '@/components/PremiumAd.vue'
-import { useLoader } from '@/stores/loader'
+import Spinner from '@/components/Icons/Spinner.vue'
 
-const loader = useLoader()
+const loading = ref(false)
 const contacts = useContactsStore()
+const noMoreContact = ref(false)
 const hasContact = computed(() => contacts.contacts.length)
+const page = ref(1)
 
-const fetchContacts = async (page: number = 0) => {
-  if(hasContact.value) return
-  const res = await request.get('/chat/contacts' + (page ? `?page=${page}` : ''))
+const fetchContacts = async (hard: boolean = false) => {
+  if(hasContact.value && !hard) return
+  loading.value = true
+  const res = await request.get('/chat/contacts' + (page.value ? `?page=${page.value}` : ''))
   if (!res.data.$error && !res.data?.nullValue) {
     contacts.push(res.data)
+  } else if(res.data?.nullValue || res.data.length == 0) {
+    noMoreContact.value = true
   }
-  loader.loading = false
+  page.value++
+  loading.value = false
 }
 
 const searchInput = ref('')
