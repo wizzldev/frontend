@@ -76,6 +76,7 @@ const submit = async () => {
   const id = getID(invite.value)
   if (!id) {
     toast.error(i18n.t('Invalid invite code'))
+    processing.value = false
     return
   }
   await router.push({ name: 'chat.invite', params: { code: id } })
@@ -83,19 +84,14 @@ const submit = async () => {
 }
 
 const getID = (uri: string): string | false => {
-  if (!uri.startsWith('https://')) return uri
+  const domain = 'wizzl.app'
+  const regex = new RegExp(`^(https?:\\/\\/)?(join\\.${domain}\\/|${domain}\\/join\\/)?([A-Za-z0-9]{10})$`)
+  const match = uri.match(regex)
 
-  const url = new URL(uri)
-  if (![window.GLOBAL_ENV.INVITE_HOST, window.GLOBAL_ENV.DOMAIN].includes(url.host)) return false
+  if (match && match[3]) {
+    return match[3]
+  }
 
-  const path = url.pathname.substring(1)
-  if (url.host == window.GLOBAL_ENV.INVITE_HOST && path.split('/').length === 1) return path
-
-  if (url.host != window.GLOBAL_ENV.DOMAIN) return false
-  const parts = path.split('/')
-  if (parts.length != 2) return false
-
-  if (parts[0] == 'join') return parts[1]
   return false
 }
 

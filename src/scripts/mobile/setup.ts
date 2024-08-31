@@ -29,7 +29,7 @@ const setup = async (router: Router) => {
 
   await App.addListener('appStateChange', (state) => {
     if(state.isActive) {
-      useContactsStore().contacts = []
+      useContactsStore().reload()
       useChatStore().shouldFetchAll()
       return
     }

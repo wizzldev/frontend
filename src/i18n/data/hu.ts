@@ -34,6 +34,7 @@ export default {
   'update.roles.you': 'Módosítottad a rangokat',
   'update.roles': '{who} módosította a rangokat',
 
+  Loading: 'Betöltés',
   Message: 'Üzenet',
   'Enter email': 'Email cím megadása',
   'Start chatting': 'Chatelés megkezdése',
@@ -145,6 +146,12 @@ export default {
   'Are you sure?': 'Biztos vagy benne?',
   Discard: 'Elvetés',
 
+  'Group roles': 'Csoport szerepekörei',
+  'These roles will apply to you': 'Ezek a szerepkörök lesznek rád érvényesek',
+  'View roles': 'Szerepkörök megtekintése',
+
+  Verified: 'Hitelesített',
+
   // Contact sheet
   'Open chat': 'Beszélgetés megnyitása',
   Block: 'Tiltás',
@@ -197,11 +204,15 @@ export default {
   'Cookies': 'Sütik',
   'This cookie contains sensitive data': 'Ez a süti érzékeny adatokat tartalmaz',
 
+  'It\'s possible that some emoji are not in our list and may not be available': 'Lehetséges, hogy egyes emojik nem szerepelnek a listánkon, és nem állnak rendelkezésre.',
+  'Fast reaction emoji': 'Gyors reakció emoji',
+
+  'Load more': 'Több betöltése',
+
 
   // Toasts
   'Soon': 'Hamarosan',
   'Successfully updated': 'Sikeresen frissítve',
   'Invalid invite code': 'Hibás meghívó kód',
   'V2 Feature\nCurrently unavailable': 'V2 funkció\nJelenleg nem elérhető',
-
 }
