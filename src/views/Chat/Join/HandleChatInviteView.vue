@@ -11,7 +11,7 @@
       </div>
       <div class="my-auto text-center mx-5" v-if="err">
         <h1 class="text-xl fontTheme">{{ $t('Invalid invite code') }}</h1>
-        <PushButtonSecondary :is-link="true" to-name="chat.new" class="w-1/2 mx-auto !p-1">
+        <PushButtonSecondary :is-link="true" to-name="chat.new" class="w-1/2 mx-auto !p-1.5">
           {{ $t('Back') }}
         </PushButtonSecondary>
       </div>
@@ -24,13 +24,13 @@
           {{ $t('Fast reaction emoji') }}:
           <span v-emoji>{{ info.emoji }}</span>
         </p>
-        <PushButtonSecondary :loading="joining" @click="useCoupon" class="w-1/2 mx-auto !p-1">
+        <PushButtonSecondary :loading="joining" @click="useCoupon" class="w-1/2 mx-auto !p-1.5">
           {{ $t('Join') }}
         </PushButtonSecondary>
-        <PushButtonSecondary @click="rolesModal = true" class="w-1/2 mx-auto !p-1">
+        <PushButtonSecondary @click="rolesModal = true" class="w-1/2 mx-auto !p-1.5">
           {{ $t('View roles') }}
         </PushButtonSecondary>
-        <PushButtonSecondary :is-link="true" to-name="chat.new" class="w-1/2 mx-auto !p-1">
+        <PushButtonSecondary :is-link="true" to-name="chat.new" class="w-1/2 mx-auto !p-1.5">
           {{ $t('Back') }}
         </PushButtonSecondary>
       </div>

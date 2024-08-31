@@ -66,7 +66,7 @@ import FormButton from '@/components/Auth/FormButton.vue'
 
 const verifyModal = ref(false)
 
-const handleRegister = (data: object) => {
+const handleRegister = () => {
   verifyModal.value = true
 }
 
