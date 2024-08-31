@@ -85,18 +85,12 @@ const loading = ref(false)
 const contacts = useContactsStore()
 const noMoreContact = ref(false)
 const hasContact = computed(() => contacts.contacts.length)
-const page = ref(1)
 
 const fetchContacts = async (hard: boolean = false) => {
+  noMoreContact.value = false
   if(hasContact.value && !hard) return
   loading.value = true
-  const res = await request.get('/chat/contacts' + (page.value ? `?page=${page.value}` : ''))
-  if (!res.data.$error && !res.data?.nullValue) {
-    contacts.push(res.data)
-  } else if(res.data?.nullValue || res.data.length == 0) {
-    noMoreContact.value = true
-  }
-  page.value++
+  noMoreContact.value = !await contacts.fetch()
   loading.value = false
 }
 

@@ -1,6 +1,7 @@
 <template>
   <svg
-    class="inline-block w-4 h-4"
+    v-tippy="{content: $t('Verified')}"
+    class="inline-block w-4 h-4 cursor-pointer"
     fill="none"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"

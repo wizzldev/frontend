@@ -19,3 +19,16 @@ export interface LastMessage {
 }
 
 export type Contacts = Array<Contact>
+
+export interface Group {
+  id: number
+  name: string
+  image_url: string
+  is_verified: boolean
+  last_message: LastMessage
+  is_private_message: boolean
+  custom_invite: string | null
+  roles: Array<string>
+  emoji: string
+}
+

@@ -8,7 +8,7 @@ import 'bottom-sheet-vue3/style.css'
 import './assets/styles/customization/toast.css'
 import './assets/styles/customization/tippy.css'
 
-import { createApp } from 'vue'
+import { createSSRApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -28,7 +28,7 @@ TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en-US')
 const emitter = mitt()
 
-const app = createApp(App)
+const app = createSSRApp(App)
 
 const pinia = createPinia()
 pinia.use(resetStore)

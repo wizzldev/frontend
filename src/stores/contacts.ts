@@ -2,9 +2,11 @@ import { defineStore } from 'pinia'
 import { type Ref, ref } from 'vue'
 import type { Contact, Contacts } from '@/types/contact'
 import type { Message } from '@/types/message'
+import request from '@/scripts/request/request'
 
 export const useContactsStore = defineStore('contacts', () => {
   const contacts = ref([]) as Ref<Contacts>
+  const page = ref(1)
 
   function push(c: Contacts) {
     for(let i = 0; i < c.length; i++) {
@@ -23,7 +25,7 @@ export const useContactsStore = defineStore('contacts', () => {
           content: message.content,
           type: message.type,
           date: message.created_at,
-          nick_name: '',
+          nick_name: message.sender?.nick_name || '',
         }
         break
       }
@@ -55,5 +57,20 @@ export const useContactsStore = defineStore('contacts', () => {
     }
   }
 
-  return { contacts, push, update, findByID, removeByID }
+  async function fetch(): Promise<boolean> {
+    const res = await request.get('/chat/contacts' + (page.value ? `?page=${page.value}` : ''))
+    page.value++
+    if (!res.data.$error && !res.data?.nullValue && res.data.length > 0) {
+      push(res.data)
+      return true
+    }
+    return false
+  }
+
+  function reload() {
+    contacts.value = []
+    page.value = 1
+  }
+
+  return { contacts, fetch, push, update, findByID, removeByID, reload }
 })
