@@ -14,7 +14,7 @@ export default [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
+    component: HomeView
   },
   {
     path: '/settings',

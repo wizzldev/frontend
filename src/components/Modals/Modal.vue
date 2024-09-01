@@ -1,9 +1,9 @@
 <template>
   <Teleport to="body">
-    <div v-if="show" class="fixed top-0 left-0 w-full h-screen bg-main opacity-80"></div>
+    <div v-if="show" class="fixed top-0 left-0 w-full h-screen bg-main opacity-80 z-[999]"></div>
     <transition name="pop" appear>
-      <div v-if="show" class="h-screen w-full flex fixed top-0 left-0">
-        <div class="my-auto w-full px-2 z-50">
+      <div v-if="show" class="h-screen w-full flex fixed top-0 left-0 z-[9999]">
+        <div class="my-auto w-full px-2">
           <div class="relative bg-secondary rounded-xl shadow max-w-sm mx-auto">
             <button
               v-if="!disableClose"

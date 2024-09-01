@@ -9,8 +9,8 @@ export const useContactsStore = defineStore('contacts', () => {
   const page = ref(1)
 
   function push(c: Contacts) {
-    for(let i = 0; i < c.length; i++) {
-      if(contacts.value.filter(con => con.id == c[i].id).length > 0) continue
+    for (let i = 0; i < c.length; i++) {
+      if (contacts.value.filter((con) => con.id == c[i].id).length > 0) continue
       contacts.value.push(c[i])
     }
     sort()
@@ -25,7 +25,7 @@ export const useContactsStore = defineStore('contacts', () => {
           content: message.content,
           type: message.type,
           date: message.created_at,
-          nick_name: message.sender?.nick_name || '',
+          nick_name: message.sender?.nick_name || ''
         }
         break
       }
@@ -40,8 +40,8 @@ export const useContactsStore = defineStore('contacts', () => {
   }
 
   function findByID(id: number): Contact | null {
-    for(let i = 0; i < contacts.value.length; i++) {
-      if(contacts.value[i].id == id) {
+    for (let i = 0; i < contacts.value.length; i++) {
+      if (contacts.value[i].id == id) {
         return contacts.value[i]
       }
     }
@@ -49,8 +49,8 @@ export const useContactsStore = defineStore('contacts', () => {
   }
 
   function removeByID(id: number) {
-    for(let i = 0; i < contacts.value.length; i++) {
-      if(contacts.value[i].id == id) {
+    for (let i = 0; i < contacts.value.length; i++) {
+      if (contacts.value[i].id == id) {
         contacts.value.splice(i, 1)
         break
       }

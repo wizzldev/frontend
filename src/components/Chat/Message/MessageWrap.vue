@@ -35,9 +35,13 @@ const props = defineProps<{
   theme: ThemeDataMain | undefined
   message: Message
   canSendMessage: boolean
+  disableSwipe?: boolean
 }>()
 
 const isSwipable = computed(
-  () => ['message', 'emoji'].includes(props.message.type) && !props.message.content.includes('```')
+  () =>
+    ['message', 'emoji'].includes(props.message.type) &&
+    !props.message.content.includes('```') &&
+    !props.disableSwipe
 )
 </script>

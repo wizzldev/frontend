@@ -1,5 +1,11 @@
 <template>
-  <ChatLayout :chat-profile="chatProfile" :is-you="isYou" :theme="theme" :to-params="toParams" :to-name="toName">
+  <ChatLayout
+    :chat-profile="chatProfile"
+    :is-you="isYou"
+    :theme="theme"
+    :to-params="toParams"
+    :to-name="toName"
+  >
     <main class="h-full flex flex-col space-y-3 overflow-y-scroll overflow-x-hidden">
       <slot />
     </main>

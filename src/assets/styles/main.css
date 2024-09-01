@@ -20,7 +20,7 @@
 }
 
 .fontCode {
-  font-family: "Fira Code", monospace;
+  font-family: 'Fira Code', monospace;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
@@ -57,6 +57,7 @@ body {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+  -webkit-appearance: none;
 }
 
 .svg-icon {
@@ -70,7 +71,7 @@ body {
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
+input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px #272733 inset !important;
 }
 

@@ -17,7 +17,7 @@
       <span>
         {{ $t('Application log') }}
       </span>
-      <LogFile/>
+      <LogFile />
     </PushButton>
 
     <PushButton
@@ -39,5 +39,7 @@ import { computed } from 'vue'
 import LogFile from '@/components/Icons/LogFile.vue'
 import Cookie from '@/components/Icons/Cookie.vue'
 
-const devURL = computed(() => `https://${window.GLOBAL_ENV.DEVS_HOST}?utm_source=wizzl.app&utm_medium=developer-settings`)
+const devURL = computed(
+  () => `https://${window.GLOBAL_ENV.DEVS_HOST}?utm_source=wizzl.app&utm_medium=developer-settings`
+)
 </script>

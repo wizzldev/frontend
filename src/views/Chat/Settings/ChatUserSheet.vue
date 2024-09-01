@@ -10,7 +10,11 @@
       <SheetButton :icon="Judge" v-if="!isPM && roles.includes(Roles.KickUser)">
         {{ $t('Ban or Kick') }}
       </SheetButton>
-      <SheetButton :smallIcon="true" :icon="Pen" v-if="isPM || roles.includes(Roles.Admin) || user.id == auth.user?.id">
+      <SheetButton
+        :smallIcon="true"
+        :icon="Pen"
+        v-if="isPM || roles.includes(Roles.Admin) || user.id == auth.user?.id"
+      >
         {{ $t('Edit nickname') }}
       </SheetButton>
     </main>

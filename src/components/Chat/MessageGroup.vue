@@ -3,8 +3,7 @@
     <div
       class="no-scrollbar h-full w-full max-w-full flex space-y-1 overflow-y-scroll flex-col-reverse !text-white overflow-hidden text-ellipsis"
       :class="{
-        'col-span-4': sentByMe,
-        customTheme: theme
+        'col-span-4': sentByMe
       }"
     >
       <MessagerWrap

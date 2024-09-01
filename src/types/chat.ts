@@ -7,7 +7,14 @@ export interface ChatStorage {
   roles: Record<string, Array<string> | null>
   profile: Record<
     string,
-    { name: string; pm: boolean; image: string; loading: boolean; is_verified: boolean; emoji: string }
+    {
+      name: string
+      pm: boolean
+      image: string
+      loading: boolean
+      is_verified: boolean
+      emoji: string
+    }
   >
   lastFetch: Record<string, Date>
   theme: Record<string, ThemeData | undefined>

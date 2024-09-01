@@ -4,10 +4,10 @@
     <ChatNav class="!py-0" />
     <main class="h-full flex flex-col space-y-3">
       <div class="my-auto text-center mx-5" v-if="!info && !err">
-          <h1 class="text-xl fontTheme">Processing invite code <Spinner /></h1>
-          <div class="bg-secondary w-min px-5 py-1 rounded-lg mx-auto mt-3">
-            <p class="text-center text-gray-400">{{ route.params.code as string }}</p>
-          </div>
+        <h1 class="text-xl fontTheme">Processing invite code <Spinner /></h1>
+        <div class="bg-secondary w-min px-5 py-1 rounded-lg mx-auto mt-3">
+          <p class="text-center text-gray-400">{{ route.params.code as string }}</p>
+        </div>
       </div>
       <div class="my-auto text-center mx-5" v-if="err">
         <h1 class="text-xl fontTheme">{{ $t('Invalid invite code') }}</h1>
@@ -16,7 +16,11 @@
         </PushButtonSecondary>
       </div>
       <div class="my-auto text-center mx-5" v-if="info != undefined && !err">
-        <LazyImage alt="Group image" :src="cdnImage(info?.image_url, 64)" class="w-10 h-10 rounded-lg mx-auto" />
+        <LazyImage
+          alt="Group image"
+          :src="cdnImage(info?.image_url, 64)"
+          class="w-10 h-10 rounded-lg mx-auto"
+        />
         <h1 class="text-xl fontTheme mt-1" v-emoji>
           {{ info.name }} <VerifiedBadge v-if="info.is_verified" class="text-yellow-400" />
         </h1>
@@ -43,7 +47,11 @@
       {{ $t('These roles will apply to you') }}
     </p>
     <ul class="mt-2 max-h-52 overflow-y-scroll py-2">
-      <li class="bg-violet-500 w-full px-2 py-1 rounded-lg my-2" v-for="role in info?.roles" :key="role">
+      <li
+        class="bg-violet-500 w-full px-2 py-1 rounded-lg my-2"
+        v-for="role in info?.roles"
+        :key="role"
+      >
         {{ role }}
       </li>
     </ul>
@@ -73,7 +81,7 @@ const router = useRouter()
 const i18n = useI18n()
 const toast = useToast()
 const err = ref(false)
-const info = ref<Group|undefined>(undefined)
+const info = ref<Group | undefined>(undefined)
 const joining = ref(false)
 const contacts = useContactsStore()
 const rolesModal = ref(false)
@@ -82,7 +90,7 @@ const fetchInfo = async () => {
   const code = route.params.code as string
   const res = await request.get(`/invite/${code}`)
   const data = res.data
-  if(!res.data.$error && data && !data.nullValue) info.value = data
+  if (!res.data.$error && data && !data.nullValue) info.value = data
   else err.value = true
 }
 
@@ -93,7 +101,7 @@ const useCoupon = async () => {
   const data = res.data as { group_id?: number | undefined }
   if (res.data.$error || !data.group_id) {
     toast.error(i18n.t('Invalid invite code'))
-    await router.push({name: 'chat.new'})
+    await router.push({ name: 'chat.new' })
     return
   }
   contacts.reload()

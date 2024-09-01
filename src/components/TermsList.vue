@@ -10,7 +10,13 @@
       </div>
       <div v-if="sect[0] == 'list'">
         <ul>
-          <li class="bg-secondary first:rounded-t-lg last:rounded-b-lg px-2 py-3 flex items-center border-b border-tertiary last:border-b-0" v-for="item in sect[1]" :key="item">{{ item }}</li>
+          <li
+            class="bg-secondary first:rounded-t-lg last:rounded-b-lg px-2 py-3 flex items-center border-b border-tertiary last:border-b-0"
+            v-for="item in sect[1]"
+            :key="item"
+          >
+            {{ item }}
+          </li>
         </ul>
       </div>
     </template>

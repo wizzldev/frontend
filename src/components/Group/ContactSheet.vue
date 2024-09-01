@@ -22,7 +22,11 @@
       <SheetButton @click="leave" :icon="Leave" v-else-if="contact.creator_id != user?.id">
         {{ $t('Leave group') }}
       </SheetButton>
-      <SheetButton @click="delStart = true" v-if="!contact.is_private_message && contact.creator_id == user?.id" :icon="Trash">
+      <SheetButton
+        @click="delStart = true"
+        v-if="!contact.is_private_message && contact.creator_id == user?.id"
+        :icon="Trash"
+      >
         {{ $t('Delete group') }}
       </SheetButton>
       <SheetButton @click="devModal = true" :icon="CurlyBrackets">
@@ -31,7 +35,7 @@
     </main>
   </BottomSheet>
 
-  <ContactSheetDeleteModal v-if="delStart" @delete="del" @close="delStart = false"  />
+  <ContactSheetDeleteModal v-if="delStart" @delete="del" @close="delStart = false" />
   <ContactSheetDevModal v-if="devModal" @close="devModal = false" :contact="contact" />
 </template>
 
@@ -82,13 +86,15 @@ const goTo = () => {
   router.push({ name: 'chat.message', params: { id: props.contact.id.toString() } })
 }
 
-const customInvite = computed(() => `https://${window.GLOBAL_ENV.INVITE_HOST}/${props.contact.custom_invite}`)
+const customInvite = computed(
+  () => `https://${window.GLOBAL_ENV.INVITE_HOST}/${props.contact.custom_invite}`
+)
 const shareData = computed(() => {
   return {
     title: `Join ${props.contact.name} on Wizzl`,
     text: `You've been invited to join an awesome group on Wizzl. Join now chat about anything you like!`,
     url: customInvite.value,
-    dialogTitle: 'Share with friends',
+    dialogTitle: 'Share with friends'
   }
 })
 
@@ -100,25 +106,25 @@ const copyInvite = async () => {
 }
 
 const share = async () => {
-  if(isApp()) {
+  if (isApp()) {
     await Share.share(shareData.value)
     return
   }
 
-  if(canShare()) await navigator.share(shareData.value)
+  if (canShare()) await navigator.share(shareData.value)
 }
 
 const canShare = (): boolean => {
-  if(isApp()) return true
+  if (isApp()) return true
 
-  if(!navigator.canShare) return false
+  if (!navigator.canShare) return false
 
-  return navigator.canShare(shareData.value);
+  return navigator.canShare(shareData.value)
 }
 
 const leave = async () => {
   const res = await request.get(`/chat/${props.contact.id}/leave`)
-  if(res.data.$error) error(t('Failed to leave the group'))
+  if (res.data.$error) error(t('Failed to leave the group'))
   else {
     info(t('Successfully left the group'))
     contacts.removeByID(props.contact.id)
@@ -127,7 +133,7 @@ const leave = async () => {
 
 const del = async () => {
   const res = await request.delete(`/chat/${props.contact.id}`)
-  if(res.data.$error) error(t('Failed to delete the group'))
+  if (res.data.$error) error(t('Failed to delete the group'))
   else {
     info(t('Successfully deleted'))
     contacts.removeByID(props.contact.id)

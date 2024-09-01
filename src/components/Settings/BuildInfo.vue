@@ -11,8 +11,18 @@
       :src="cdnImage('wizzl.webp', 64)"
     />
     <div class="flex items-center space-x-2 justify-center mt-4">
-      <InAppLink v-for="link in links" :key="link.url" :title="ucFirst(link.title)" :href="link.url" target="_blank" class="transition-colors text-gray-400 hover:text-gray-500 focus:text-gray-600">
-        <component :is="link.icon" :class="{'!w-4 !h-4': link.title != 'x', '!w-3 !h-3': link.title == 'x'}" />
+      <InAppLink
+        v-for="link in links"
+        :key="link.url"
+        :title="ucFirst(link.title)"
+        :href="link.url"
+        target="_blank"
+        class="transition-colors text-gray-400 hover:text-gray-500 focus:text-gray-600"
+      >
+        <component
+          :is="link.icon"
+          :class="{ '!w-4 !h-4': link.title != 'x', '!w-3 !h-3': link.title == 'x' }"
+        />
       </InAppLink>
     </div>
     <div class="mt-2">
@@ -43,11 +53,12 @@ const mode = ref(import.meta.env.MODE)
 const date = ref(new Date(import.meta.env.VITE_BUILD_DATE))
 const branch = ref(import.meta.env.VITE_BRANCH)
 
-const uri = (s: string): string => `https://${window.GLOBAL_ENV.LINK_HOST}/${s}?utm_source=wizzl.app&utm_medium=settings`
+const uri = (s: string): string =>
+  `https://${window.GLOBAL_ENV.LINK_HOST}/${s}?utm_source=wizzl.app&utm_medium=settings`
 
 const links = ref([
   { icon: Discord, url: uri('discord'), title: 'discord' },
   { icon: Instagram, url: uri('instagram'), title: 'instagram' },
-  { icon: X, url: uri('x'), title: 'x' },
+  { icon: X, url: uri('x'), title: 'x' }
 ])
 </script>

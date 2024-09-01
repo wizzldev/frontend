@@ -10,9 +10,10 @@ export const fetchInfo = async (id: string) => {
       image_url: string
       is_private_message: boolean
       roles: Array<string>
-      your_roles: Array<string>,
+      your_roles: Array<string>
       custom_invite: string | null
       emoji: string | null
+      theme_id: number
     }
     return {
       user: {
@@ -26,7 +27,8 @@ export const fetchInfo = async (id: string) => {
         emoji: data.emoji || '✨'
       },
       roles: data.roles,
-      your_roles: data.your_roles
+      your_roles: data.your_roles,
+      theme_id: data.theme_id || 0
     }
   }
   return { user: null, roles: null }
@@ -41,6 +43,6 @@ export const getChatProfileRef = () => {
     loading: true,
     is_verified: false,
     custom_invite: null as string | null,
-    emoji: '✨',
+    emoji: '✨'
   })
 }

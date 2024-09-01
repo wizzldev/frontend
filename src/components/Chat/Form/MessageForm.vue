@@ -11,6 +11,7 @@
     >
       <Slide :duration="0.3">
         <LeftButtons
+          :demo="demo"
           v-if="showIcons || compactView"
           :theme="theme"
           :canAttachFile="canAttachFile"
@@ -30,7 +31,11 @@
         @showIcons="(s: boolean) => (showIcons = s)"
         @click="compactView = false"
       />
-      <EmojiButton :emoji="emoji ? emoji : undefined" @send="send" v-if="showIcons || compactView" />
+      <EmojiButton
+        :emoji="emoji ? emoji : undefined"
+        @send="send"
+        v-if="showIcons || compactView"
+      />
     </div>
   </section>
   <MessagePermissionDenied :theme="theme" v-else />
@@ -63,6 +68,7 @@ const props = defineProps<{
   canAttachFile: boolean
   edit: Message | null
   emoji: string
+  demo?: boolean
 }>()
 
 const emit = defineEmits(['send', 'detachReply', 'detachEdit'])

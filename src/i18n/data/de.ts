@@ -52,7 +52,7 @@ export default {
 
   'You are not allowed to send a message': 'Du darfst keine Nachricht senden',
 
-  'Retain': 'Behalten',
+  Retain: 'Behalten',
   'Report message': 'Nachricht melden',
   'Deleted message': 'Gelöschte Nachricht',
   'No more messages': 'Keine weiteren Nachrichten',
@@ -92,15 +92,16 @@ export default {
   'Edit profile image': 'Profilbild bearbeiten',
   'Upload an image': 'Bild hochladen',
   'Edit image': 'Bild bearbeiten',
-  'Settings': 'Einstellungen',
-  'Delete': 'Löschen',
+  Settings: 'Einstellungen',
+  Delete: 'Löschen',
 
   // Form errors
   'error.required': 'Dieses Feld darf nicht leer sein',
   'error.network': 'Netzwerkfehler',
 
   // Home
-  'Elevate your conversations with a platform that combines style, ease, and community.': 'Hebe deine Gespräche mit einer Plattform hervor, die Stil, Einfachheit und Gemeinschaft vereint.',
+  'Elevate your conversations with a platform that combines style, ease, and community.':
+    'Hebe deine Gespräche mit einer Plattform hervor, die Stil, Einfachheit und Gemeinschaft vereint.',
 
   // Toast
   'User could not be found': 'Benutzer konnte nicht gefunden werden',
@@ -109,9 +110,11 @@ export default {
   'Create a new chat': 'Neuen Chat erstellen',
   'Use an invite': 'Einladung verwenden',
   'Global chats': 'Globale Chats',
-  'Enter a friend\'s email address and start chatting.': 'Gib die E-Mail-Adresse eines Freundes ein und beginne zu chatten.',
+  "Enter a friend's email address and start chatting.":
+    'Gib die E-Mail-Adresse eines Freundes ein und beginne zu chatten.',
   Hint: 'Tipp',
-  'Add at least 2 friends to create a group.': 'Füge mindestens 2 Freunde hinzu, um eine Gruppe zu erstellen.',
+  'Add at least 2 friends to create a group.':
+    'Füge mindestens 2 Freunde hinzu, um eine Gruppe zu erstellen.',
   'The invitations should look like this': 'Die Einladungen sollten so aussehen',
   or: 'oder',
   Join: 'Beitreten',
@@ -132,15 +135,15 @@ export default {
   'Setup a custom invite': 'Benutzerdefinierte Einladung einrichten',
   'Max usage': 'Maximale Nutzung',
   'empty/0 for no limit': 'leer/0 für keine Begrenzung',
-  'Expiration': 'Ablauf',
+  Expiration: 'Ablauf',
   'empty for no expiry': 'leer für kein Ablaufdatum',
   'Clear date': 'Datum löschen',
-  'Remove': 'Entfernen',
-  'Update': 'Aktualisieren',
+  Remove: 'Entfernen',
+  Update: 'Aktualisieren',
   'Edit emoji': 'Emoji bearbeiten',
 
-  'General': 'Allgemein',
-  'Developers': 'Entwickler',
+  General: 'Allgemein',
+  Developers: 'Entwickler',
   'Create a poll': 'Umfrage erstellen',
 
   'Roles & Permissions': 'Rollen & Berechtigungen',
@@ -164,5 +167,5 @@ export default {
   'Invite a BOT': 'BOT einladen',
   'Language preference': 'Spracheinstellungen',
   'Developer interface': 'Entwickleroberfläche',
-  'Application log': 'Anwendungsprotokoll',
+  'Application log': 'Anwendungsprotokoll'
 }

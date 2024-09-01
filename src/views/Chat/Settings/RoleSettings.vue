@@ -5,7 +5,7 @@
     :theme="undefined"
     :isYou="false"
     to-name="chat.settings"
-    :to-params="{id: route.params.id}"
+    :to-params="{ id: route.params.id }"
   >
     <main class="px-4 my-2 text-gray-500">
       <RolePicker :yourRoles="yourRoles" :roles="allRole" :active="usedRoles" @toggle="toggle" />

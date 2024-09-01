@@ -47,8 +47,12 @@
   <Modal :show="verifyModal" @close="verifyModal = false">
     <h2 class="text-2xl fontTheme">{{ $t('Successfully registered') }}</h2>
     <p class="text-gray-400 mt-3 text-left">
-      {{ $t('Just a few more steps, we have sent a verification email, follow the instructions, and we\'ll meet.') }}
-      {{ $t('Don\'t forget to check the spam folder as well.') }}
+      {{
+        $t(
+          "Just a few more steps, we have sent a verification email, follow the instructions, and we'll meet."
+        )
+      }}
+      {{ $t("Don't forget to check the spam folder as well.") }}
     </p>
     <FormButton title="Okay" :processing="false" @click="verifyModal = false" />
   </Modal>
@@ -70,5 +74,5 @@ const handleRegister = () => {
   verifyModal.value = true
 }
 
-onMounted(() => verifyModal.value = false)
+onMounted(() => (verifyModal.value = false))
 </script>

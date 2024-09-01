@@ -9,12 +9,12 @@
   <Modal :show="editStart" @close="editStart = false">
     <h2 class="text-2xl fontTheme">{{ $t('Edit emoji') }}</h2>
     <p class="my-2 text-sm text-gray-400 text-left">
-      {{ $t('It\'s possible that some emoji are not in our list and may not be available') }}
+      {{ $t("It's possible that some emoji are not in our list and may not be available") }}
     </p>
     <form v-on:submit.prevent>
       <div class="text-left mt-2">
         <label for="m-emoji" class="text-sm text-gray-400 ml-2"
-        ><b>{{ $t('Fast reaction emoji') }}</b></label
+          ><b>{{ $t('Fast reaction emoji') }}</b></label
         >
         <IconInput
           id="m-emoji"
@@ -55,8 +55,10 @@ const emit = defineEmits(['reload'])
 
 const save = async () => {
   loading.value = true
-  const res = await request.put(`/chat/${route.params.id as string}/emoji`, { emoji: emojiNew.value })
-  if(res.data.$error) {
+  const res = await request.put(`/chat/${route.params.id as string}/emoji`, {
+    emoji: emojiNew.value
+  })
+  if (res.data.$error) {
     error(translate('Failed to update emoji'))
   } else {
     success(translate('Emoji successfully updated.'))

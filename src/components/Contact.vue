@@ -70,14 +70,22 @@ const contacts = useContactsStore()
 const wrap = ref<HTMLElement | null>(null)
 const showSheet = ref(false)
 
-onLongPress(wrap, () => {
-  if(isApp()) Haptics.impact({ style: ImpactStyle.Light })
-  showSheet.value = true
-}, { delay: 300 })
+onLongPress(
+  wrap,
+  () => {
+    if (isApp()) Haptics.impact({ style: ImpactStyle.Light })
+    showSheet.value = true
+  },
+  { delay: 300 }
+)
 
 const realMessage = computed(() => {
   const isSentByYou = props.message.sender_id == auth.user?.id
-  const sender = isSentByYou ? i18n.t('You') : props.message.nick_name ? props.message.nick_name : props.message.sender_name
+  const sender = isSentByYou
+    ? i18n.t('You')
+    : props.message.nick_name
+      ? props.message.nick_name
+      : props.message.sender_name
   let build = sender + ': '
 
   if (props.message.content != null && props.message.type == 'message')

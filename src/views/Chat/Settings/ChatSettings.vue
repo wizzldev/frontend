@@ -4,6 +4,8 @@
     :connection="{ connected: true, error: false }"
     :theme="undefined"
     :isYou="false"
+    to-name="chat.message"
+    :to-params="{ id: $route.params.id }"
   >
     <header class="px-4 my-4 text-center">
       <LazyImage
@@ -21,13 +23,33 @@
       </SettingsButton>
     </header>
     <main class="px-4 my-2" v-if="loaded">
-      <EditName v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.EditGroupName)" :name="chatProfile.name" />
+      <EditName
+        v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.EditGroupName)"
+        :name="chatProfile.name"
+      />
       <div>
-        <Invite v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)" @reload="fetchProfile" :is-private-message="chatProfile.isPrivateMessage" :special-invite="chatProfile.custom_invite" :your-roles="yourRoles" />
-        <EmojiSetting v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Admin)" :emoji="chatProfile.emoji" @reload="fetchProfile" />
-        <ChatGroup
-          title="Roles & Permissions"
+        <Invite
+          v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Creator)"
+          @reload="fetchProfile"
+          :is-private-message="chatProfile.isPrivateMessage"
+          :special-invite="chatProfile.custom_invite"
+          :your-roles="yourRoles"
+        />
+        <EmojiSetting
+          v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.Admin)"
+          :emoji="chatProfile.emoji"
+          @reload="fetchProfile"
+        />
+        <PushButton
+          :is-link="true"
+          to-name="chat.theme"
+          :to-params="{ id: $route.params.id }"
+          v-if="chatProfile.isPrivateMessage || yourRoles.includes(Roles.EditGroupTheme)"
+          class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
         >
+          {{ $t('Edit theme') }}
+        </PushButton>
+        <ChatGroup title="Roles & Permissions">
           <PushButton
             v-if="!chatProfile.isPrivateMessage && yourRoles.includes(Roles.Admin)"
             toName="chat.roles"
@@ -41,7 +63,7 @@
           <PushButton
             :is-link="true"
             to-name="chat.members"
-            :to-params="{id: route.params.id as string}"
+            :to-params="{ id: route.params.id as string }"
             class="transition-colors w-full text-white bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
           >
             {{ $t('Members') }}

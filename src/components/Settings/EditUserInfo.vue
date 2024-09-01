@@ -35,7 +35,7 @@
       <p class="text-red-400" v-if="error != ''">{{ $t(error) }}</p>
     </form>
 
-    <LanguagePicker/>
+    <LanguagePicker />
   </section>
 </template>
 

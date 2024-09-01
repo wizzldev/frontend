@@ -4,9 +4,20 @@
       <div class="m-auto z-2 w-full px-2 sm:px-0 sm:w-auto text-center">
         <div class="max-w-md mx-auto">
           <h1>
-            <img src="../assets/vectors/wizzl-white-full.svg" alt="Wizzl" class="w-36 md:w-52 mx-auto" />
+            <img
+              src="../assets/vectors/wizzl-white-full.svg"
+              alt="Wizzl"
+              class="w-36 md:w-52 mx-auto"
+            />
           </h1>
-          <p class="mt-4 text-gray-400 text-lg" v-html="$t('Elevate your conversations with a platform that combines style, ease, and community.')"></p>
+          <p
+            class="mt-4 text-gray-400 text-lg"
+            v-html="
+              $t(
+                'Elevate your conversations with a platform that combines style, ease, and community.'
+              )
+            "
+          ></p>
           <div class="md:grid md:grid-cols-7 md:gap-2 mt-3 md:px-5">
             <template v-if="!auth.isLoggedIn">
               <PushButtonSecondary class="col-span-3" :is-link="true" to-name="auth.login">
@@ -17,19 +28,33 @@
               </PushButtonSecondary>
             </template>
             <template v-else>
-              <PushButtonSecondary class="col-span-6 flex items-center px-3" :is-link="true" to-name="chat.contacts">
-                <LazyImage class="w-5 h-5 rounded-lg" :src="cdnImage(auth.user?.image_url || '')" alt="Your profile image" />
+              <PushButtonSecondary
+                class="col-span-6 flex items-center px-3"
+                :is-link="true"
+                to-name="chat.contacts"
+              >
+                <LazyImage
+                  class="w-5 h-5 rounded-lg"
+                  :src="cdnImage(auth.user?.image_url || '')"
+                  alt="Your profile image"
+                />
                 <span>{{ $t('Chat now') }}</span>
               </PushButtonSecondary>
             </template>
             <template v-if="!isApp()">
-              <a target="_blank" rel="nofollow" :href="downloadUri"
-                 class="hidden transition-colors text-white w-full bg-secondary-all py-2.5 rounded-xl mt-3 fontTheme sm:flex items-center space-x-2 justify-center"
+              <a
+                target="_blank"
+                rel="nofollow"
+                :href="downloadUri"
+                class="hidden transition-colors text-white w-full bg-secondary-all py-2.5 rounded-xl mt-3 fontTheme sm:flex items-center space-x-2 justify-center"
               >
                 <AndroidHead class="text-green-400" />
               </a>
-              <a target="_blank" rel="nofollow" :href="downloadUri"
-                 class="sm:hidden transition-colors text-white w-full bg-secondary-all py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+              <a
+                target="_blank"
+                rel="nofollow"
+                :href="downloadUri"
+                class="sm:hidden transition-colors text-white w-full bg-secondary-all py-2.5 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
               >
                 <span class="mr-2">Download</span>
                 <AndroidHead class="text-green-400" />

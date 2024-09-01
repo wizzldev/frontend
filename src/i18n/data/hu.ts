@@ -34,6 +34,15 @@ export default {
   'update.roles.you': 'Módosítottad a rangokat',
   'update.roles': '{who} módosította a rangokat',
 
+  'theme.update': '{who} módosította a témát',
+  'theme.update.you': 'Módosítottad a témát',
+
+  'emoji.update': '{who} módosította az emojit',
+  'emoji.update.you': 'Módosítottad az emojit',
+  Collapse: 'Összecsuk',
+
+  'Show {count} more': 'Még {count} további megjelenítése',
+
   Loading: 'Betöltés',
   Message: 'Üzenet',
   'Enter email': 'Email cím megadása',
@@ -48,7 +57,7 @@ export default {
   Create: 'Létrehozás',
 
   'join.you': 'Csatlakoztál a chathez',
-  'join': '{sender} csatlakozott a chathez',
+  join: '{sender} csatlakozott a chathez',
 
   'message.reply': '{who} válaszolt neki: {to}',
   'message.reply.you': 'Válaszoltál neki: {to}',
@@ -61,7 +70,7 @@ export default {
 
   'You are not allowed to send a message': 'Nincs engedélyed üzenet küldésére',
 
-  'Retain': 'Mégsem',
+  Retain: 'Mégsem',
   'Report message': 'Üzenet jelentése',
   'Deleted message': 'Törölt üzenet',
   'No more messages': 'Nincs több üzenet',
@@ -85,17 +94,20 @@ export default {
   'Reset password expired': 'Lejárt jelszó visszaállítási kérés',
   'Email verification': 'Email hitelesítés',
   'Set password': 'Jelszó beállítása',
-  'John': 'Pista',
-  'Doe': 'Jóska',
+  John: 'Pista',
+  Doe: 'Jóska',
   // IP
   'IP Verification': 'IP Hitelesítés',
-  'Whoops! Seems to be logging in from a new device.': 'Hoppá! Úgy tűnik, hogy egy új eszközről jelentkezik be.',
-  'Check your mailbox to authenticate this IP address.': 'Ellenőrizze a e-mail fiókját, hogy hitelesítse ezt az IP-címet.',
+  'Whoops! Seems to be logging in from a new device.':
+    'Hoppá! Úgy tűnik, hogy egy új eszközről jelentkezik be.',
+  'Check your mailbox to authenticate this IP address.':
+    'Ellenőrizze a e-mail fiókját, hogy hitelesítse ezt az IP-címet.',
   Okay: 'Oké',
   // New register
   'Successfully registered': 'Sikeres regisztráció',
-  'Just a few more steps, we have sent a verification email, follow the instructions, and we\'ll meet.': 'Már csak néhány lépés, küldtünk egy ellenőrző e-mailt, kövesse az utasításokat, és máris találkozunk.',
-  'Don\'t forget to check the spam folder as well.': 'Ne felejtsd el ellenőrizni a spam mappát is.',
+  "Just a few more steps, we have sent a verification email, follow the instructions, and we'll meet.":
+    'Már csak néhány lépés, küldtünk egy ellenőrző e-mailt, kövesse az utasításokat, és máris találkozunk.',
+  "Don't forget to check the spam folder as well.": 'Ne felejtsd el ellenőrizni a spam mappát is.',
   // Form errors
   'Invalid email or password': 'Érvénytelen e-mail vagy jelszó',
   // Terms
@@ -117,9 +129,10 @@ export default {
   'Edit profile image': 'Profilkép szerkesztése',
   'Upload an image': 'Kép feltöltése',
   'Edit image': 'Kép szerkesztése',
-  'Settings': 'Beállítások',
-  'Delete': 'Törlés',
-  'If you delete your account, all your data will be deleted and you will not be able to restore it.': 'Ha törli a fiókját, minden adata törlődik, és nem tudja visszaállítani azokat.',
+  Settings: 'Beállítások',
+  Delete: 'Törlés',
+  'If you delete your account, all your data will be deleted and you will not be able to restore it.':
+    'Ha törli a fiókját, minden adata törlődik, és nem tudja visszaállítani azokat.',
   'Enter your password to begin the deletion.': 'Adja meg jelszavát a törlés megkezdéséhez.',
 
   // Form errors
@@ -127,7 +140,8 @@ export default {
   'error.network': 'Hálózati hiba',
 
   // Home
-  'Elevate your conversations with a platform that combines style, ease, and community.': 'Dobja fel beszélgetéseit egy olyan platformmal, amely egyesíti a stílust, az egyszerűséget és a közösséget. ',
+  'Elevate your conversations with a platform that combines style, ease, and community.':
+    'Dobja fel beszélgetéseit egy olyan platformmal, amely egyesíti a stílust, az egyszerűséget és a közösséget. ',
 
   // Toast
   'User could not be found': 'A felhasználó nem található',
@@ -136,9 +150,11 @@ export default {
   'Create a new chat': 'Új beszélgetés létrehozása',
   'Use an invite': 'Meghívó használata',
   'Global chats': 'Globális csevegések',
-  'Enter a friend\'s email address and start chatting.': 'Add meg egy barátod e-mail címét, és kezdj el csevegni.',
+  "Enter a friend's email address and start chatting.":
+    'Add meg egy barátod e-mail címét, és kezdj el csevegni.',
   Hint: 'Tipp',
-  'Add at least 2 friends to create a group.': 'Adj hozzá legalább 2 barátot egy csoport létrehozásához.',
+  'Add at least 2 friends to create a group.':
+    'Adj hozzá legalább 2 barátot egy csoport létrehozásához.',
   'The invitations should look like this': 'A meghívóknak így kell kinézniük',
   or: 'vagy',
   Join: 'Csatlakozás',
@@ -151,6 +167,8 @@ export default {
   'View roles': 'Szerepkörök megtekintése',
 
   Verified: 'Hitelesített',
+  'Edit theme': 'Téma módosítása',
+  'Use default': 'Alapértelmezett használata',
 
   // Contact sheet
   'Open chat': 'Beszélgetés megnyitása',
@@ -165,15 +183,15 @@ export default {
   'Setup a custom invite': 'Egyedi meghívó beállítása',
   'Max usage': 'Maximális használat',
   'empty/0 for no limit': 'üres/0: korlátozás nélkül',
-  'Expiration': 'Lejárat',
+  Expiration: 'Lejárat',
   'empty for no expiry': 'üres: lejárat nélkül',
   'Clear date': 'Dátum törlése',
-  'Remove': 'Törlés',
-  'Update': 'Frissítés',
+  Remove: 'Törlés',
+  Update: 'Frissítés',
   'Edit emoji': 'Emoji módosítása',
 
-  'General': 'Általános',
-  'Developers': 'Fejlesztők',
+  General: 'Általános',
+  Developers: 'Fejlesztők',
   'Create a poll': 'Szavazás létrehozása',
 
   'Roles & Permissions': 'Szerepkörök és Jogosultságok',
@@ -201,18 +219,25 @@ export default {
 
   'Never share this data with anyone': 'Soha ne ossza meg ezeket az adatokat senkivel',
 
-  'Cookies': 'Sütik',
+  Cookies: 'Sütik',
   'This cookie contains sensitive data': 'Ez a süti érzékeny adatokat tartalmaz',
 
-  'It\'s possible that some emoji are not in our list and may not be available': 'Lehetséges, hogy egyes emojik nem szerepelnek a listánkon, és nem állnak rendelkezésre.',
+  "It's possible that some emoji are not in our list and may not be available":
+    'Lehetséges, hogy egyes emojik nem szerepelnek a listánkon, és nem állnak rendelkezésre.',
   'Fast reaction emoji': 'Gyors reakció emoji',
 
   'Load more': 'Több betöltése',
 
-
   // Toasts
-  'Soon': 'Hamarosan',
+  Soon: 'Hamarosan',
   'Successfully updated': 'Sikeresen frissítve',
   'Invalid invite code': 'Hibás meghívó kód',
   'V2 Feature\nCurrently unavailable': 'V2 funkció\nJelenleg nem elérhető',
+
+  'theme.Space': 'Űr',
+  'theme.Love': 'Szerelem',
+  'theme.Night': 'Éjszaka',
+  'theme.Hi': 'Szia',
+  'theme.How are you?': 'Hogy vagy?',
+  "theme.I'm fine, wbu?": 'Én jól, veled mizu?'
 }

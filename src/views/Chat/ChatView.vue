@@ -67,6 +67,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import request from '@/scripts/request/request'
 import { resetTheme, setTheme } from '@/scripts/mobile/theme'
 import { useLoader } from '@/stores/loader'
+import { useLogger } from '@/stores/logger'
 
 const loader = useLoader()
 const auth = useAuth2Store()
@@ -75,6 +76,11 @@ const route = useRoute()
 const chat = useChatStore()
 const toast = useToast()
 const i18n = useI18n()
+const { log: logger } = useLogger()
+
+const log = (content: string) => {
+  logger(`Chat[${route.params.id as string}]`, content)
+}
 
 const storage = newReactiveStore()
 
@@ -90,7 +96,15 @@ const send = (content: string, data_json: string = '{}') => {
   const hookID = ws()?.send('message', content, data)
   chat.push(
     chatID.value,
-    [createUnsentMessage(auth.user as User, content, data_json, storage.replyMessage, hookID as string)],
+    [
+      createUnsentMessage(
+        auth.user as User,
+        content,
+        data_json,
+        storage.replyMessage,
+        hookID as string
+      )
+    ],
     null,
     true
   )
@@ -98,7 +112,7 @@ const send = (content: string, data_json: string = '{}') => {
 }
 
 const permission = (role: string) => {
-  return isPM.value || (chat.roles[chatID.value]?.includes(role) || false)
+  return isPM.value || chat.roles[chatID.value]?.includes(role) || false
 }
 
 const like = async (id: number) => {
@@ -136,14 +150,14 @@ const initWebsocket = () => {
   const chan = createChannel(route.params.id as string)
   chan.on<null>('reload', () => {
     mount(true)
-    toast.info(i18n.t('Chat successfully reloaded'))
+    log('Reload event received')
   })
   window.WS.push(route.params.id as string, chan)
 }
 
 const loadMore = async () => {
   const next = cursors.value.nextCursor
-  if(!next) return
+  if (!next) return
   const res = await request.get(`/chat/${route.params.id as string}/paginate?cursor=${next}`)
   if (res.data.$error) {
     toast.error(i18n.t('Failed to load more messages'))
@@ -152,7 +166,7 @@ const loadMore = async () => {
 
   const data = res.data as { next_cursor: string; previous_cursor: string; data: Messages }
   if (next !== '') chat.push(chatID.value, data.data)
-  chat.cursors[chatID.value] = {nextCursor: data.next_cursor, prevCursor: data.previous_cursor}
+  chat.cursors[chatID.value] = { nextCursor: data.next_cursor, prevCursor: data.previous_cursor }
 }
 
 const handleReply = (msg: WSMessage) => {

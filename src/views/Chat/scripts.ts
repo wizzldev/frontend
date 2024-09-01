@@ -44,7 +44,7 @@ export const createUnsentMessage = (
     underSending: true,
     hookId: hookID,
     reply: reply,
-    created_at: new Date().toString(),
+    created_at: new Date().toString()
   } as Message
 }
 
@@ -57,7 +57,7 @@ export const initChatStore = (
   is_verified: boolean,
   emoji: string,
   nextCursor: string,
-  prevCursor: string,
+  prevCursor: string
 ) => {
   const chat = useChatStore()
 
@@ -75,14 +75,14 @@ export const initChatStore = (
   if (group.theme) chat.theme[id] = JSON.parse(group.theme.data) as ThemeData
   chat.push(id, messages)
   chat.setRoles(id, roles)
-  chat.cursors[id] = {nextCursor, prevCursor}
+  chat.cursors[id] = { nextCursor, prevCursor }
 }
 
 export const newReactiveStore = () => {
   return reactive({
-  modalMessage: null as Message | null,
-  replyMessage: undefined as Message | undefined,
-  isYou: false,
-  editMessage: null as Message | null,
-})
+    modalMessage: null as Message | null,
+    replyMessage: undefined as Message | undefined,
+    isYou: false,
+    editMessage: null as Message | null
+  })
 }

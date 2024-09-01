@@ -8,17 +8,18 @@ const getCookieExpirationData = () => {
 }
 
 const getCookieConfig = () => {
-  const domain = ['localhost', '127.0.0.1'].includes(window.location.hostname) ? undefined : `.${window.location.hostname}`
-  const sameSite = 'Lax' as "Strict" | "Lax" | "None" | undefined
+  const domain = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+    ? undefined
+    : `.${window.location.hostname}`
+  const sameSite = 'Lax' as 'Strict' | 'Lax' | 'None' | undefined
   const expires = getCookieExpirationData()
 
   return { domain, sameSite, expires }
 }
 
 export default function useCookie() {
-
   const set = async (key: string, value: string) => {
-    if(isApp()) return await setAppCookie(key, value)
+    if (isApp()) return await setAppCookie(key, value)
     Cookies.set(key, value, getCookieConfig())
   }
 
@@ -26,12 +27,12 @@ export default function useCookie() {
     await CapacitorCookies.setCookie({
       key,
       value,
-      expires: getCookieExpirationData().toUTCString(),
+      expires: getCookieExpirationData().toUTCString()
     })
   }
 
   const get = async (key: string): Promise<string | undefined> => {
-    if(isApp()) return await getAppCookie(key)
+    if (isApp()) return await getAppCookie(key)
     return Cookies.get(key)
   }
 
@@ -41,7 +42,7 @@ export default function useCookie() {
   }
 
   const remove = async (key: string): Promise<void> => {
-    if(isApp()) return await removeAppCookie(key)
+    if (isApp()) return await removeAppCookie(key)
     Cookies.remove(key, getCookieConfig())
   }
 
@@ -50,8 +51,8 @@ export default function useCookie() {
   }
 
   const removeAll = async (): Promise<void> => {
-    if(isApp()) return await removeAllAppCookie()
-    Object.keys(Cookies.get()).forEach(key => remove(key))
+    if (isApp()) return await removeAllAppCookie()
+    Object.keys(Cookies.get()).forEach((key) => remove(key))
   }
 
   const removeAllAppCookie = async (): Promise<void> => {
@@ -59,7 +60,7 @@ export default function useCookie() {
   }
 
   const getAll = async (): Promise<Record<string, string>> => {
-    if(isApp()) return getAllAppCookie()
+    if (isApp()) return getAllAppCookie()
     return Cookies.get()
   }
 

@@ -23,7 +23,7 @@ export const setBottomTheme = async (bottom: string) => {
 }
 
 export const setTopTheme = async (top: string) => {
-  if(!isApp()) return
+  if (!isApp()) return
 
   useLogger().log('Theme.Mobile', `Mobile theme change: top ${top}`)
 

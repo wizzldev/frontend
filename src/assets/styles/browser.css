@@ -1,31 +1,30 @@
-
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-    width: 4px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #121318;
+  background: #121318;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1d1d27;
-    border-radius: 10px;
+  background: #1d1d27;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #272733;
+  background: #272733;
 }
 
 ::-moz-selection {
-    color: #b26bf4;
-    background: #ffffffcf;
+  color: #b26bf4;
+  background: #ffffffcf;
 }
 ::selection {
-    color: #b26bf4;
-    background: #ffffffcf;
+  color: #b26bf4;
+  background: #ffffffcf;
 }

@@ -1,116 +1,197 @@
 {
   "hu": [
     ["heading", "Adatvédelmi Irányelvek"],
-    ["paragraph", "A Wizzl alkalmazás használatával elfogadja adatvédelmi irányelveinket. Ezek az irányelvek a wizzl.app domainre és annak aldomainjeire érvényesek. Az Ön adatainak biztonsága és védelme kiemelt fontosságú számunkra. Az alábbiakban részletesen ismertetjük, hogy milyen adatokat gyűjtünk, hogyan használjuk fel azokat, és milyen jogokkal rendelkezik a felhasználó adatainak kezelésével kapcsolatban."],
+    [
+      "paragraph",
+      "A Wizzl alkalmazás használatával elfogadja adatvédelmi irányelveinket. Ezek az irányelvek a wizzl.app domainre és annak aldomainjeire érvényesek. Az Ön adatainak biztonsága és védelme kiemelt fontosságú számunkra. Az alábbiakban részletesen ismertetjük, hogy milyen adatokat gyűjtünk, hogyan használjuk fel azokat, és milyen jogokkal rendelkezik a felhasználó adatainak kezelésével kapcsolatban."
+    ],
 
     ["secondary_heading", "Adatgyűjtés és felhasználás"],
     ["paragraph", "A Wizzl alkalmazás használata során a következő adatokat gyűjtjük és tároljuk:"],
-    ["list", [
-      "Felhasználónév, Email, Jelszó: Ezeket az adatokat a felhasználói fiók létrehozásához és azonosításához használjuk. A jelszavakat biztonságosan, Bcrypt titkosítással (14x-es erősségű) tároljuk.",
-      "Android Push Notification tokenek: Ezeket az értesítések küldésére használjuk. A tokeneket csak addig tároljuk, amíg a felhasználó értesítéseket szeretne kapni.",
-      "Hibák naplózása: Az alkalmazás működése közben előforduló hibák naplózásra kerülnek, hogy javíthassuk a szolgáltatás minőségét."
-    ]],
-    ["paragraph", "A felhasználóknak joguk van kérvényezni fiókjuk törlését. A törlési kérelmet követően, ha a fiók 15 napig inaktív marad, véglegesen töröljük azt. A törlés nem visszafordítható, és az összes kapcsolódó adat is törlésre kerül."],
-    ["paragraph", "A felhasználó hozzáférhet személyes adataihoz, kérheti azok módosítását vagy törlését emailben a support@wizzl.app címen, vagy a Wizzl Discord szerverén keresztül."],
+    [
+      "list",
+      [
+        "Felhasználónév, Email, Jelszó: Ezeket az adatokat a felhasználói fiók létrehozásához és azonosításához használjuk. A jelszavakat biztonságosan, Bcrypt titkosítással (14x-es erősségű) tároljuk.",
+        "Android Push Notification tokenek: Ezeket az értesítések küldésére használjuk. A tokeneket csak addig tároljuk, amíg a felhasználó értesítéseket szeretne kapni.",
+        "Hibák naplózása: Az alkalmazás működése közben előforduló hibák naplózásra kerülnek, hogy javíthassuk a szolgáltatás minőségét."
+      ]
+    ],
+    [
+      "paragraph",
+      "A felhasználóknak joguk van kérvényezni fiókjuk törlését. A törlési kérelmet követően, ha a fiók 15 napig inaktív marad, véglegesen töröljük azt. A törlés nem visszafordítható, és az összes kapcsolódó adat is törlésre kerül."
+    ],
+    [
+      "paragraph",
+      "A felhasználó hozzáférhet személyes adataihoz, kérheti azok módosítását vagy törlését emailben a support@wizzl.app címen, vagy a Wizzl Discord szerverén keresztül."
+    ],
 
     ["secondary_heading", "Lokális adatok tárolása"],
-    ["paragraph", "Az alkalmazás helyi tárhelyeket használ a felhasználói élmény javítása érdekében. Az alábbi adatokat tároljuk lokálisan:"],
-    ["list", [
-      "Sütik:",
-      "Munkamenet: Ezek elengedhetetlenek az alkalmazás megfelelő működéséhez, és a felhasználó bejelentkezését követően tárolják az azonosítást.",
-      "Nyelvi beállítások: A nyelvi beállításokat akkor tároljuk, ha a felhasználó módosítja az alapértelmezett nyelvet.",
-      "Általános feltételek elfogadása: Ezt a sütit annak nyilvántartására használjuk, hogy a felhasználó elfogadta a felhasználási feltételeket.",
-      "LocalStorage: Cache adatok (pl.: fájlok): Ezeket az adatokat az alkalmazás gyorsítótárazására használjuk, hogy gyorsabbá tegyük a böngészési élményt.",
-      "Pinia (alkalmazás futás alatti tároló):",
-      "Munkamenet: A felhasználói munkamenet adatait tárolja.",
-      "Kapcsolatok: A felhasználó által hozzáadott kontaktok adatait tárolja.",
-      "Üzenetek: A felhasználó által küldött és fogadott üzeneteket ideiglenesen tárolja.",
-      "Lokális debug naplók: A hibák felderítése érdekében tároljuk az alkalmazás működésének ideiglenes naplóit.",
-      "Beszélgetés létrehozásának állapotmentése: Az alkalmazás beszélgetés funkciójának állapotadatait tárolja a zökkenőmentes felhasználói élmény érdekében."
-    ]],
+    [
+      "paragraph",
+      "Az alkalmazás helyi tárhelyeket használ a felhasználói élmény javítása érdekében. Az alábbi adatokat tároljuk lokálisan:"
+    ],
+    [
+      "list",
+      [
+        "Sütik:",
+        "Munkamenet: Ezek elengedhetetlenek az alkalmazás megfelelő működéséhez, és a felhasználó bejelentkezését követően tárolják az azonosítást.",
+        "Nyelvi beállítások: A nyelvi beállításokat akkor tároljuk, ha a felhasználó módosítja az alapértelmezett nyelvet.",
+        "Általános feltételek elfogadása: Ezt a sütit annak nyilvántartására használjuk, hogy a felhasználó elfogadta a felhasználási feltételeket.",
+        "LocalStorage: Cache adatok (pl.: fájlok): Ezeket az adatokat az alkalmazás gyorsítótárazására használjuk, hogy gyorsabbá tegyük a böngészési élményt.",
+        "Pinia (alkalmazás futás alatti tároló):",
+        "Munkamenet: A felhasználói munkamenet adatait tárolja.",
+        "Kapcsolatok: A felhasználó által hozzáadott kontaktok adatait tárolja.",
+        "Üzenetek: A felhasználó által küldött és fogadott üzeneteket ideiglenesen tárolja.",
+        "Lokális debug naplók: A hibák felderítése érdekében tároljuk az alkalmazás működésének ideiglenes naplóit.",
+        "Beszélgetés létrehozásának állapotmentése: Az alkalmazás beszélgetés funkciójának állapotadatait tárolja a zökkenőmentes felhasználói élmény érdekében."
+      ]
+    ],
 
     ["secondary_heading", "Adatbiztonság"],
-    ["paragraph", "Az Ön adatainak biztonsága kiemelt fontosságú számunkra. Az alábbi intézkedéseket alkalmazzuk az adatok védelme érdekében:"],
-    ["list", [
-      "Jelszavak: A felhasználói jelszavakat BCrypt titkosítással tároljuk, amely 14x-es erősségű védelmet biztosít.",
-      "MySQL Adatbázis: Az adatokhoz sem külső, sem belső személyek nem férhetnek hozzá. Az adatbázis biztonsági szintje biztosítja, hogy az adatok csak az alkalmazás által hozzáférhetőek legyenek.",
-      "IP Címek: A bejelentkezés során ellenőrizzük, hogy az adott IP cím már használatban volt-e. Ha nem, további email hitelesítés szükséges a bejelentkezéshez. Ezt a funkciót a felhasználók kikapcsolhatják a biztonsági beállítások között.",
-      "Adatok harmadik féllel való megosztása: Nem osztunk meg semmilyen adatot harmadik féllel, kivéve, ha azt törvény írja elő. Az alkalmazásban használt egyetlen harmadik fél szolgáltatás a Google Analytics, amelyet az alkalmazás használati statisztikáinak gyűjtésére használunk."
-    ]],
+    [
+      "paragraph",
+      "Az Ön adatainak biztonsága kiemelt fontosságú számunkra. Az alábbi intézkedéseket alkalmazzuk az adatok védelme érdekében:"
+    ],
+    [
+      "list",
+      [
+        "Jelszavak: A felhasználói jelszavakat BCrypt titkosítással tároljuk, amely 14x-es erősségű védelmet biztosít.",
+        "MySQL Adatbázis: Az adatokhoz sem külső, sem belső személyek nem férhetnek hozzá. Az adatbázis biztonsági szintje biztosítja, hogy az adatok csak az alkalmazás által hozzáférhetőek legyenek.",
+        "IP Címek: A bejelentkezés során ellenőrizzük, hogy az adott IP cím már használatban volt-e. Ha nem, további email hitelesítés szükséges a bejelentkezéshez. Ezt a funkciót a felhasználók kikapcsolhatják a biztonsági beállítások között.",
+        "Adatok harmadik féllel való megosztása: Nem osztunk meg semmilyen adatot harmadik féllel, kivéve, ha azt törvény írja elő. Az alkalmazásban használt egyetlen harmadik fél szolgáltatás a Google Analytics, amelyet az alkalmazás használati statisztikáinak gyűjtésére használunk."
+      ]
+    ],
 
     ["secondary_heading", "Biztonság fenntartása"],
-    ["paragraph", "Az alkalmazás biztonságának fenntartása érdekében a következő szabályokat és ajánlásokat kell betartani:"],
-    ["list", [
-      "Az alkalmazás csak a wizzl.app domainről és annak aldomainjeiről használható. Az alkalmazás más domaineken történő használata biztonsági kockázatokat hordozhat.",
-      "Tilos a Wizzl privát API-jának engedély nélküli használata, különösen más kliensekkel vagy scriptekkel. Az ilyen használat a felhasználói fiók azonnali törlését eredményezheti.",
-      "Botok létrehozásakor a felhasználónak gondosan követnie kell a biztonsági útmutatókat. Ha a biztonsági előírásokat nem tartják be, a botok létrehozása a felhasználói fiók törléséhez vezethet.",
-      "Győződjön meg róla, hogy csak megbízható botokat hív meg az alkalmazásba. Ha nem biztonságos botokat használ, azok hozzáférhetnek az Ön email címéhez és üzenetelőzményeihez, ami komoly adatbiztonsági kockázatot jelenthet."
-    ]],
+    [
+      "paragraph",
+      "Az alkalmazás biztonságának fenntartása érdekében a következő szabályokat és ajánlásokat kell betartani:"
+    ],
+    [
+      "list",
+      [
+        "Az alkalmazás csak a wizzl.app domainről és annak aldomainjeiről használható. Az alkalmazás más domaineken történő használata biztonsági kockázatokat hordozhat.",
+        "Tilos a Wizzl privát API-jának engedély nélküli használata, különösen más kliensekkel vagy scriptekkel. Az ilyen használat a felhasználói fiók azonnali törlését eredményezheti.",
+        "Botok létrehozásakor a felhasználónak gondosan követnie kell a biztonsági útmutatókat. Ha a biztonsági előírásokat nem tartják be, a botok létrehozása a felhasználói fiók törléséhez vezethet.",
+        "Győződjön meg róla, hogy csak megbízható botokat hív meg az alkalmazásba. Ha nem biztonságos botokat használ, azok hozzáférhetnek az Ön email címéhez és üzenetelőzményeihez, ami komoly adatbiztonsági kockázatot jelenthet."
+      ]
+    ],
 
     ["secondary_heading", "Adatmegőrzés"],
-    ["paragraph", "A Wizzl az Ön adatait legfeljebb egy évig őrzi meg, ha a fiókja inaktív. Egy év inaktivitás után az összes adatot törölhetjük, előzetes értesítés nélkül. A felhasználóknak lehetőségük van adataik törlését kérni a support@wizzl.app címen, vagy a Wizzl Discord szerverén keresztül."],
+    [
+      "paragraph",
+      "A Wizzl az Ön adatait legfeljebb egy évig őrzi meg, ha a fiókja inaktív. Egy év inaktivitás után az összes adatot törölhetjük, előzetes értesítés nélkül. A felhasználóknak lehetőségük van adataik törlését kérni a support@wizzl.app címen, vagy a Wizzl Discord szerverén keresztül."
+    ],
 
     ["secondary_heading", "Jogosultságok"],
-    ["paragraph", "A felhasználóknak joguk van hozzáférni a személyes adataikhoz, kérhetik azok módosítását vagy törlését. Ezt a kérést emailben a support@wizzl.app címen, vagy a Wizzl Discord szerverén tehetik meg. A felhasználók jogában áll tiltakozni adataik felhasználása ellen, és kérhetik azok korlátozását."],
+    [
+      "paragraph",
+      "A felhasználóknak joguk van hozzáférni a személyes adataikhoz, kérhetik azok módosítását vagy törlését. Ezt a kérést emailben a support@wizzl.app címen, vagy a Wizzl Discord szerverén tehetik meg. A felhasználók jogában áll tiltakozni adataik felhasználása ellen, és kérhetik azok korlátozását."
+    ],
 
     ["secondary_heading", "Kapcsolatfelvétel"],
-    ["paragraph", "Ha bármilyen kérdése vagy aggálya van az adatvédelmi irányelveinkkel kapcsolatban, kérjük, vegye fel velünk a kapcsolatot a support@wizzl.app email címen, vagy látogasson el a Wizzl Discord szerverére, ahol további támogatást nyújtunk."]
+    [
+      "paragraph",
+      "Ha bármilyen kérdése vagy aggálya van az adatvédelmi irányelveinkkel kapcsolatban, kérjük, vegye fel velünk a kapcsolatot a support@wizzl.app email címen, vagy látogasson el a Wizzl Discord szerverére, ahol további támogatást nyújtunk."
+    ]
   ],
   "en": [
     ["heading", "Privacy Policy"],
-    ["paragraph", "By using the Wizzl application, you agree to our privacy policy. These policies apply to the wizzl.app domain and its subdomains. The security and protection of your data is of utmost importance to us. Below, we detail what data we collect, how we use it, and what rights you have regarding the handling of your data."],
+    [
+      "paragraph",
+      "By using the Wizzl application, you agree to our privacy policy. These policies apply to the wizzl.app domain and its subdomains. The security and protection of your data is of utmost importance to us. Below, we detail what data we collect, how we use it, and what rights you have regarding the handling of your data."
+    ],
 
     ["secondary_heading", "Data Collection and Usage"],
-    ["paragraph", "During the use of the Wizzl application, we collect and store the following data:"],
-    ["list", [
-      "Username, Email, Password: These are used to create and authenticate your user account. Passwords are securely stored using BCrypt encryption (14x strength).",
-      "Android Push Notification tokens: Used to send notifications. Tokens are stored only as long as you wish to receive notifications.",
-      "Error Logging: Errors encountered during the application's operation are logged to help improve service quality."
-    ]],
-    ["paragraph", "Users have the right to request the deletion of their account. After a deletion request, if the account remains inactive for 15 days, it will be permanently deleted. Data deletion is irreversible, and all associated data will be removed."],
-    ["paragraph", "Users can access their personal data, request modifications, or deletion by contacting us via email at support@wizzl.app or through the Wizzl Discord server."],
+    [
+      "paragraph",
+      "During the use of the Wizzl application, we collect and store the following data:"
+    ],
+    [
+      "list",
+      [
+        "Username, Email, Password: These are used to create and authenticate your user account. Passwords are securely stored using BCrypt encryption (14x strength).",
+        "Android Push Notification tokens: Used to send notifications. Tokens are stored only as long as you wish to receive notifications.",
+        "Error Logging: Errors encountered during the application's operation are logged to help improve service quality."
+      ]
+    ],
+    [
+      "paragraph",
+      "Users have the right to request the deletion of their account. After a deletion request, if the account remains inactive for 15 days, it will be permanently deleted. Data deletion is irreversible, and all associated data will be removed."
+    ],
+    [
+      "paragraph",
+      "Users can access their personal data, request modifications, or deletion by contacting us via email at support@wizzl.app or through the Wizzl Discord server."
+    ],
 
     ["secondary_heading", "Local Data Storage"],
-    ["paragraph", "The application uses local storage to enhance user experience. We store the following data locally:"],
-    ["list", [
-      "Cookies:",
-      "Session: Essential for the proper functioning of the application, storing user authentication after login.",
-      "Language Preferences: Stored when the user changes the default language.",
-      "Acceptance of Terms: Used to record that the user has accepted the terms of service.",
-      "LocalStorage: Cache data (e.g., files): Used for caching to speed up browsing experience.",
-      "Pinia (application runtime storage):",
-      "Session: Stores user session data.",
-      "Contacts: Stores contacts added by the user.",
-      "Messages: Temporarily stores messages sent and received by the user.",
-      "Local debug logs: Stores temporary logs of the application's operation for debugging purposes.",
-      "Conversation creation state: Saves the state of conversation creation for a seamless user experience."
-    ]],
+    [
+      "paragraph",
+      "The application uses local storage to enhance user experience. We store the following data locally:"
+    ],
+    [
+      "list",
+      [
+        "Cookies:",
+        "Session: Essential for the proper functioning of the application, storing user authentication after login.",
+        "Language Preferences: Stored when the user changes the default language.",
+        "Acceptance of Terms: Used to record that the user has accepted the terms of service.",
+        "LocalStorage: Cache data (e.g., files): Used for caching to speed up browsing experience.",
+        "Pinia (application runtime storage):",
+        "Session: Stores user session data.",
+        "Contacts: Stores contacts added by the user.",
+        "Messages: Temporarily stores messages sent and received by the user.",
+        "Local debug logs: Stores temporary logs of the application's operation for debugging purposes.",
+        "Conversation creation state: Saves the state of conversation creation for a seamless user experience."
+      ]
+    ],
 
     ["secondary_heading", "Data Security"],
-    ["paragraph", "The security of your data is of paramount importance to us. We implement the following measures to protect your data:"],
-    ["list", [
-      "Passwords: User passwords are stored with BCrypt encryption, providing 14x strength protection.",
-      "MySQL Database: Data access is restricted to internal personnel only, with no external or internal individuals having access to the data.",
-      "IP Addresses: When logging in, we check if the IP address has been previously used. If not, additional email verification is required (this can be turned off).",
-      "Sharing Data with Third Parties: We do not share any data with third parties except as required by law. The only third-party service used is Google Analytics for collecting application usage statistics."
-    ]],
+    [
+      "paragraph",
+      "The security of your data is of paramount importance to us. We implement the following measures to protect your data:"
+    ],
+    [
+      "list",
+      [
+        "Passwords: User passwords are stored with BCrypt encryption, providing 14x strength protection.",
+        "MySQL Database: Data access is restricted to internal personnel only, with no external or internal individuals having access to the data.",
+        "IP Addresses: When logging in, we check if the IP address has been previously used. If not, additional email verification is required (this can be turned off).",
+        "Sharing Data with Third Parties: We do not share any data with third parties except as required by law. The only third-party service used is Google Analytics for collecting application usage statistics."
+      ]
+    ],
 
     ["secondary_heading", "Maintaining Security"],
-    ["paragraph", "To maintain the security of the application, the following rules and recommendations must be followed:"],
-    ["list", [
-      "The application may only be used from the wizzl.app domain and its subdomains. Using the application from other domains may pose security risks.",
-      "Unauthorized use of the Wizzl private API with other clients or scripts is prohibited. Such use may result in immediate deletion of the user account.",
-      "When creating bots, users must carefully follow the security guidelines. Failure to adhere to these guidelines may result in account deletion.",
-      "Ensure that you only use secure bots within the application. Using insecure bots may allow access to your email address and message history, which poses significant data security risks."
-    ]],
+    [
+      "paragraph",
+      "To maintain the security of the application, the following rules and recommendations must be followed:"
+    ],
+    [
+      "list",
+      [
+        "The application may only be used from the wizzl.app domain and its subdomains. Using the application from other domains may pose security risks.",
+        "Unauthorized use of the Wizzl private API with other clients or scripts is prohibited. Such use may result in immediate deletion of the user account.",
+        "When creating bots, users must carefully follow the security guidelines. Failure to adhere to these guidelines may result in account deletion.",
+        "Ensure that you only use secure bots within the application. Using insecure bots may allow access to your email address and message history, which poses significant data security risks."
+      ]
+    ],
 
     ["secondary_heading", "Data Retention"],
-    ["paragraph", "Wizzl retains your data for up to one year if your account is inactive. After one year of inactivity, all data may be deleted without prior notice. Users may request data deletion via email at support@wizzl.app or through the Wizzl Discord server."],
+    [
+      "paragraph",
+      "Wizzl retains your data for up to one year if your account is inactive. After one year of inactivity, all data may be deleted without prior notice. Users may request data deletion via email at support@wizzl.app or through the Wizzl Discord server."
+    ],
 
     ["secondary_heading", "User Rights"],
-    ["paragraph", "Users have the right to access their personal data, request modifications, or deletion. Such requests can be made via email to support@wizzl.app or through the Wizzl Discord server. Users also have the right to object to the use of their data and request limitations on its processing."],
+    [
+      "paragraph",
+      "Users have the right to access their personal data, request modifications, or deletion. Such requests can be made via email to support@wizzl.app or through the Wizzl Discord server. Users also have the right to object to the use of their data and request limitations on its processing."
+    ],
 
     ["secondary_heading", "Contact Us"],
-    ["paragraph", "If you have any questions or concerns about our privacy policy, please contact us at support@wizzl.app or visit the Wizzl Discord server for further assistance."]
+    [
+      "paragraph",
+      "If you have any questions or concerns about our privacy policy, please contact us at support@wizzl.app or visit the Wizzl Discord server for further assistance."
+    ]
   ]
 }

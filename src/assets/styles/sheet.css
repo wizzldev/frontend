@@ -1,5 +1,5 @@
 :root {
-    --bottom-sheet-max-height: 100%;
-    --bottom-sheet-bakground-color: #1d1d27;
-    --bottom-sheet-backdrop-background-color: rgba(18, 19, 24, 0.8);
+  --bottom-sheet-max-height: 100%;
+  --bottom-sheet-bakground-color: #1d1d27;
+  --bottom-sheet-backdrop-background-color: rgba(18, 19, 24, 0.8);
 }

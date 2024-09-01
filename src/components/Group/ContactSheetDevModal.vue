@@ -7,17 +7,17 @@
     <div class="mt-3">
       <DevSettingsButton @click="copyId" class="flex items-center justify-center space-x-2">
         <span>{{ $t('Copy group ID') }}</span>
-        <ClipboardIcon/>
+        <ClipboardIcon />
       </DevSettingsButton>
 
       <DevSettingsButton @click="copyImage" class="flex items-center justify-center space-x-2">
         <span>{{ $t('Copy group image URL') }}</span>
-        <ClipboardIcon/>
+        <ClipboardIcon />
       </DevSettingsButton>
 
       <DevSettingsButton @click="soon" class="flex items-center justify-center space-x-2">
         <span>{{ $t('Invite a BOT') }}</span>
-        <Bot/>
+        <Bot />
       </DevSettingsButton>
     </div>
   </Modal>
@@ -45,18 +45,16 @@ const soon = () => {
   info(t('Soon...'))
 }
 
-
 const copyId = async () => {
   await Clipboard.write({
-    string: props.contact.id.toString(),
+    string: props.contact.id.toString()
   })
   info(t('Copied to clipboard'))
 }
 
-
 const copyImage = async () => {
   await Clipboard.write({
-    string: cdnImage(props.contact.image) as string,
+    string: cdnImage(props.contact.image) as string
   })
   info(t('Copied to clipboard'))
 }

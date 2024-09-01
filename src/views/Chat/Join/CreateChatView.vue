@@ -19,7 +19,7 @@
         <ul>
           <li class="my-2 bg-secondary px-4 py-2 w-full rounded-xl">
             <h2 class="fontTheme">
-              {{ $t('Enter a friend\'s email address and start chatting.') }}
+              {{ $t("Enter a friend's email address and start chatting.") }}
               <span v-emoji>🔥</span>
             </h2>
             <p class="text-gray-400 text-sm mt-2">
@@ -32,13 +32,17 @@
             v-for="user in groupMake.users"
             :key="user.id"
           >
-           <div class="flex items-center space-x-2 justify-start">
-             <LazyImage class="w-8 h-8 min-w-8 min-h-8 rounded-xl" :src="cdnImage(user.image_url)" alt="User image" />
-             <div>
-               <p>{{ user.first_name }} {{ user.last_name }}</p>
-               <p class="text-xs text-gray-400">{{ user.email }}</p>
-             </div>
-           </div>
+            <div class="flex items-center space-x-2 justify-start">
+              <LazyImage
+                class="w-8 h-8 min-w-8 min-h-8 rounded-xl"
+                :src="cdnImage(user.image_url)"
+                alt="User image"
+              />
+              <div>
+                <p>{{ user.first_name }} {{ user.last_name }}</p>
+                <p class="text-xs text-gray-400">{{ user.email }}</p>
+              </div>
+            </div>
             <button @click="rm(user)" class="flex items-center justify-center">
               <Times class="!w-3 !h-3" />
             </button>
@@ -87,7 +91,8 @@ const add = async () => {
   const res = await request.post('/users/findByEmail', { email: input.value })
   if (!res.data.$error) {
     const userData = res.data as User
-    if (groupMake.users.filter(u => u.id == userData.id).length == 0) groupMake.users.push(userData)
+    if (groupMake.users.filter((u) => u.id == userData.id).length == 0)
+      groupMake.users.push(userData)
   } else {
     toast.error(i18n.t('User could not be found'))
   }

@@ -1,7 +1,12 @@
 <template>
   <ContactsLayout>
     <section class="px-5">
-      <IconInput v-model="searchInput" :value="searchInput" :icon="Magnifier as Component" placeholder="Search" />
+      <IconInput
+        v-model="searchInput"
+        :value="searchInput"
+        :icon="Magnifier as Component"
+        placeholder="Search"
+      />
     </section>
     <ChatNav />
     <div class="mx-5 pb-2 hidden">
@@ -25,7 +30,9 @@
         <template v-for="(con, i) in contacts.contacts" :key="i">
           <PushButton
             class="w-full"
-            v-if="searchInput == '' || con.name.toLowerCase().indexOf(searchInput.toLowerCase()) > -1"
+            v-if="
+              searchInput == '' || con.name.toLowerCase().indexOf(searchInput.toLowerCase()) > -1
+            "
             :is-link="true"
             to-name="chat.message"
             :to-params="{ id: con?.id }"
@@ -88,9 +95,9 @@ const hasContact = computed(() => contacts.contacts.length)
 
 const fetchContacts = async (hard: boolean = false) => {
   noMoreContact.value = false
-  if(hasContact.value && !hard) return
+  if (hasContact.value && !hard) return
   loading.value = true
-  noMoreContact.value = !await contacts.fetch()
+  noMoreContact.value = !(await contacts.fetch())
   loading.value = false
 }
 
@@ -99,6 +106,6 @@ const searchInput = ref('')
 onMounted(fetchContacts)
 
 watch(contacts, (c) => {
-  if(c.contacts.length == 0) fetchContacts()
+  if (c.contacts.length == 0) fetchContacts()
 })
 </script>

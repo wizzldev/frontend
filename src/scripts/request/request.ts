@@ -24,13 +24,19 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (res) => {
-    useLogger().log('Http', `Resolving request [RESOLVE] - Status: ${res.status} - Data: ${res.data ? JSON.stringify(res.data) : '-'}`)
+    useLogger().log(
+      'Http',
+      `Resolving request [RESOLVE] - Status: ${res.status} - Data: ${res.data ? JSON.stringify(res.data) : '-'}`
+    )
     if (res.data == null) res.data = { nullValue: true }
     return Promise.resolve(res)
   },
   (err) => {
     console.error('Request error', err.message)
-    useLogger().log('Http', `Resolving request [REJECT] - Status: ${err.status} - Data: ${err.response.data ? JSON.stringify(err.response.data) : '-'}`)
+    useLogger().log(
+      'Http',
+      `Resolving request [REJECT] - Status: ${err.status} - Data: ${err.response.data ? JSON.stringify(err.response.data) : '-'}`
+    )
 
     if (!err?.response) {
       err.response = { code: 520, data: {} }

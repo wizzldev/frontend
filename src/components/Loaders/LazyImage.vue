@@ -1,5 +1,13 @@
 <template>
-  <img v-if="src" :class="imgClass" v-show="loaded" :src="src" :alt="alt" @load="onLoad" @error="onError" />
+  <img
+    v-if="src"
+    :class="imgClass"
+    v-show="loaded"
+    :src="src"
+    :alt="alt"
+    @load="onLoad"
+    @error="onError"
+  />
   <div
     :class="imgClass"
     v-else-if="!loaded"

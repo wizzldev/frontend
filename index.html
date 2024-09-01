@@ -1,33 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wizzl - A Realtime Chat Application</title>
-    <meta name="description" content="Modern, real-time chat application for web and mobile platforms. Interactive interface, multiple theme options, and mobile-friendly design.">
-    <meta name="keywords" content="Wizzl,Chat,Communication,Free Application,Free Chat Application">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#cb99fa">
+    <meta
+      name="description"
+      content="Modern, real-time chat application for web and mobile platforms. Interactive interface, multiple theme options, and mobile-friendly design."
+    />
+    <meta
+      name="keywords"
+      content="Wizzl,Chat,Communication,Free Application,Free Chat Application"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#cb99fa" />
     <!--<link rel="manifest" id="MANIFEST_LINK" href="/data/manifest/" crossorigin="use-credentials" />-->
     <!-- Facebook Meta Tags -->
-    <meta name="og:site_name" content="Wizzl">
-    <meta name="og:title" content="Wizzl - Fast, secure and reliable chat">
-    <meta name="og:type" content="website">
-    <meta name="og:url" content="https://%VITE_SITE_DOMAIN%">
-    <meta name="og:description" content="Modern, real-time chat application for web and mobile platforms. Interactive interface, multiple theme options, and mobile-friendly design.">
-    <meta name="og:image" content="https://%VITE_SITE_DOMAIN%/static/thumbnail.jpg">
+    <meta name="og:site_name" content="Wizzl" />
+    <meta name="og:title" content="Wizzl - Fast, secure and reliable chat" />
+    <meta name="og:type" content="website" />
+    <meta name="og:url" content="https://%VITE_SITE_DOMAIN%" />
+    <meta
+      name="og:description"
+      content="Modern, real-time chat application for web and mobile platforms. Interactive interface, multiple theme options, and mobile-friendly design."
+    />
+    <meta name="og:image" content="https://%VITE_SITE_DOMAIN%/static/thumbnail.jpg" />
     <!-- Twitter Meta Tags -->
-    <meta name="twitter:domain" content="%VITE_SITE_DOMAIN%">
-    <meta name="twitter:url" content="https://%VITE_SITE_DOMAIN%">
-    <meta name="twitter:title" content="Wizzl - Fast, secure and reliable chat">
-    <meta name="twitter:description" content="Modern, real-time chat application for web and mobile platforms. Interactive interface, multiple theme options, and mobile-friendly design.">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://%VITE_SITE_DOMAIN%/static/thumbnail.jpg">
-    <!-- Temporary No Cache -->
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="pragma" content="no-cache">
+    <meta name="twitter:domain" content="%VITE_SITE_DOMAIN%" />
+    <meta name="twitter:url" content="https://%VITE_SITE_DOMAIN%" />
+    <meta name="twitter:title" content="Wizzl - Fast, secure and reliable chat" />
+    <meta
+      name="twitter:description"
+      content="Modern, real-time chat application for web and mobile platforms. Interactive interface, multiple theme options, and mobile-friendly design."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://%VITE_SITE_DOMAIN%/static/thumbnail.jpg" />
     <!---->
     <script>
       window.GLOBAL_ENV = {
@@ -40,28 +48,36 @@
         MODE: '%MODE%',
         STATIC: '%VITE_STATIC_HOST%',
         LINK_HOST: '%VITE_LINK_HOST%',
-        DEVS_HOST: '%VITE_DEV_HOST%',
+        DEVS_HOST: '%VITE_DEV_HOST%'
       }
     </script>
     <!-- Console attention -->
     <script src="/attention.js" defer></script>
     <style>
-        [data-platform="mobile"] {
-          -webkit-touch-callout: none;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
+      [data-platform='mobile'] {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      [data-platform='mobile']::-webkit-scrollbar {
+        display: none;
+        -webkit-appearance: none;
       }
     </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RKJ8XM5PZ5"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
 
-      gtag('config', 'G-RKJ8XM5PZ5');
+      gtag('config', 'G-RKJ8XM5PZ5')
     </script>
   </head>
   <body class="bg-main text-white">

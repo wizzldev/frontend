@@ -1,5 +1,11 @@
 <template>
-  <ChatSettingsLayout :chat-profile="chatProfile" :is-you="false" :theme="undefined" to-name="chat.settings" :to-params="{id: route.params.id}">
+  <ChatSettingsLayout
+    :chat-profile="chatProfile"
+    :is-you="false"
+    :theme="undefined"
+    to-name="chat.settings"
+    :to-params="{ id: route.params.id }"
+  >
     <main class="px-4 my-2" v-if="loaded">
       <h1 class="text-xl fontTheme text-center">{{ $t('Members') }}</h1>
       <p class="text-center text-gray-400 flex items-center justify-center space-x-1">
@@ -10,26 +16,48 @@
         <span v-else>10 000</span>
       </p>
       <ul class="mt-5">
-        <li v-for="user in users" :key="user.id"
-            class="my-2 bg-secondary px-4 py-2 w-full flex items-center justify-between rounded-xl"
+        <li
+          v-for="user in users"
+          :key="user.id"
+          class="my-2 bg-secondary px-4 py-2 w-full flex items-center justify-between rounded-xl"
         >
           <div class="flex items-center space-x-2 justify-start">
             <div class="relative">
-              <LazyImage class="w-8 h-8 min-w-8 min-h-8 rounded-xl" :src="cdnImage(user.image_url)" alt="User image" />
-              <span v-if="user.is_online" v-tippy="{content: $t('Active')}" class="w-3 h-3 right-0 -mt-2 -mr-0.5 bg-green-400 rounded-full absolute"></span>
+              <LazyImage
+                class="w-8 h-8 min-w-8 min-h-8 rounded-xl"
+                :src="cdnImage(user.image_url)"
+                alt="User image"
+              />
+              <span
+                v-if="user.is_online"
+                v-tippy="{ content: $t('Active') }"
+                class="w-3 h-3 right-0 -mt-2 -mr-0.5 bg-green-400 rounded-full absolute"
+              ></span>
             </div>
             <div>
               <p>{{ user.first_name }} {{ user.last_name }}</p>
               <p v-if="user.email" class="text-xs text-gray-400">{{ user.email }}</p>
-              <p v-tippy="{content: $t('This user is managed by a program.')}" v-else class="cursor-pointer text-xs text-gray-400">BOT</p>
+              <p
+                v-tippy="{ content: $t('This user is managed by a program.') }"
+                v-else
+                class="cursor-pointer text-xs text-gray-400"
+              >
+                BOT
+              </p>
             </div>
           </div>
-          <button @click="userSheet = user" class="flex items-center justify-center transition-colors text-gray-300 hover:text-gray-400 focus:text-purple-400">
+          <button
+            @click="userSheet = user"
+            class="flex items-center justify-center transition-colors text-gray-300 hover:text-gray-400 focus:text-purple-400"
+          >
             <SettingBars />
           </button>
         </li>
         <li v-if="nextCursor">
-          <button @click="fetchUsers" class="text-center text-lg fontTheme my-2 bg-secondary px-4 py-2 w-full flex items-center space-x-2 rounded-xl">
+          <button
+            @click="fetchUsers"
+            class="text-center text-lg fontTheme my-2 bg-secondary px-4 py-2 w-full flex items-center space-x-2 rounded-xl"
+          >
             <span>Load more</span>
             <Spinner v-if="userLoading" />
           </button>
@@ -37,7 +65,13 @@
       </ul>
     </main>
   </ChatSettingsLayout>
-  <ChatUserSheet :user="userSheet as User" :show="userSheet != null" @close="userSheet = null" :isPM="chatProfile.isPrivateMessage" :roles="yourRoles" />
+  <ChatUserSheet
+    :user="userSheet as User"
+    :show="userSheet != null"
+    @close="userSheet = null"
+    :isPM="chatProfile.isPrivateMessage"
+    :roles="yourRoles"
+  />
 </template>
 
 <script setup lang="ts">
@@ -78,7 +112,7 @@ const fetchUsers = async () => {
   userLoading.value = true
   const res = await request.get(`/chat/${route.params.id}/users?cursor=${nextCursor.value}`)
   userLoading.value = false
-  if(res.data.$error) return error('Failed to load members')
+  if (res.data.$error) return error('Failed to load members')
   const data = res.data as { data: Array<User>; next_cursor: string }
   nextCursor.value = data.next_cursor
   users.value.push(...data.data)
@@ -86,7 +120,7 @@ const fetchUsers = async () => {
 
 const fetchUserCount = async () => {
   const res = await request.get(`/chat/${route.params.id}/user_count`)
-  if(res.data.$error) return
+  if (res.data.$error) return
   const data = res.data as { count: number }
   userCount.value = data.count
 }
