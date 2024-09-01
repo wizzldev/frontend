@@ -36,7 +36,7 @@ const cookie = useCookie()
 
 watch(route, (r: RouteLocationNormalized) => {
   isTermsPage.value = ['service.terms', 'service.privacy'].includes(r.name as string)
-  if(isApp() && r.name == 'home') router.push({name: 'chat.contacts'})
+  if (isApp() && r.name == 'home') router.push({ name: 'chat.contacts' })
 })
 
 const mounted = ref(false)

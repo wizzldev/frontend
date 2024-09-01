@@ -5,6 +5,7 @@ import ChatSettings from '@/views/Chat/Settings/ChatSettings.vue'
 import ChatViewNew from '@/views/Chat/ChatView.vue'
 import JoinNewChatView from '@/views/Chat/Join/JoinNewChatView.vue'
 import HandleChatInviteView from '@/views/Chat/Join/HandleChatInviteView.vue'
+import ChatTheme from '@/views/Chat/Settings/ChatTheme.vue'
 
 const needsAuth = {
   auth: Guard.ACCESS_LOGIN
@@ -45,6 +46,12 @@ export default [
     path: '/chat/:id/settings',
     name: 'chat.settings',
     component: ChatSettings,
+    meta: needsAuth
+  },
+  {
+    path: '/chat/:id/theme',
+    name: 'chat.theme',
+    component: ChatTheme,
     meta: needsAuth
   },
   {

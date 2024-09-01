@@ -32,9 +32,10 @@ import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 import type { ThemeDataBottom } from '@/types/theme'
 
-defineProps<{
+const props = defineProps<{
   canAttachFile: boolean
   theme: ThemeDataBottom | undefined
+  demo?: boolean
 }>()
 
 const emit = defineEmits(['tools', 'file', 'audio'])
@@ -45,11 +46,13 @@ const toast = useToast()
 const fileInput = ref<HTMLInputElement | null>(null)
 
 const uploadFile = async (e: Event) => {
+  if (props.demo) return
   const res = await uploadFileToServer(e, route.params.id as string)
   if (res?.data.$error) toast.error(i18n.t(`Failed to upload file: ${res.status}`))
 }
 
 const tools = (e: Event) => {
+  if (props.demo) return
   const target = e.target as HTMLElement
   target.blur()
   emit('tools')

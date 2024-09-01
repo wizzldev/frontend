@@ -31,4 +31,3 @@ export interface Group {
   roles: Array<string>
   emoji: string
 }
-

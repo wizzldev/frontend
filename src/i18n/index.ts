@@ -18,10 +18,9 @@ const i18n = createI18n({
   missingWarn: false
 })
 
-
 export const getLocale = async () => {
   const lang = await useCookie().get(WizzlLocale)
-  if(!lang) return navigator.language.substring(0, 2)
+  if (!lang) return navigator.language.substring(0, 2)
   return lang
 }
 

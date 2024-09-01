@@ -33,7 +33,6 @@ const app = createSSRApp(App)
 const pinia = createPinia()
 pinia.use(resetStore)
 
-
 app.use(pinia)
 app.use(Toast, {})
 app.use(i18n)

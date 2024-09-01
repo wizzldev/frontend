@@ -13,7 +13,7 @@ export const useChatStore = defineStore('chat', () => {
     profile: {},
     lastFetch: {},
     theme: {},
-    cursors: {},
+    cursors: {}
   })
 
   function push(
@@ -37,7 +37,7 @@ export const useChatStore = defineStore('chat', () => {
       if (existingIndex !== -1) {
         const existingMessage = store.messages[chat][existingIndex]
         if (existingMessage.underSending) {
-          if(!m.underSending) m.underSending = false
+          if (!m.underSending) m.underSending = false
           store.messages[chat][existingIndex] = m
         } else {
           m.underSending = false
@@ -142,6 +142,6 @@ export const useChatStore = defineStore('chat', () => {
     lastFetch: store.lastFetch,
     theme: store.theme,
     cursors: store.cursors,
-    storeChatData,
+    storeChatData
   }
 })

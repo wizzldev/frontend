@@ -38,7 +38,10 @@ const props = defineProps<{
 const router = useRouter()
 
 const linkData = computed(() => {
-  return ({ name: props.toName as string, params: props.toParams as RouteParamsRaw }) as RouteLocationRaw
+  return {
+    name: props.toName as string,
+    params: props.toParams as RouteParamsRaw
+  } as RouteLocationRaw
 })
 
 const handle = () => {

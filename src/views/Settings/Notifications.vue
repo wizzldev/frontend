@@ -21,13 +21,13 @@ const show = ref(true)
 const router = useRouter()
 
 const requestPermission = async () => {
-  if(!isApp()) return
+  if (!isApp()) return
   await addListeners(request, router)
   show.value = !(await isNotificationsAllowed())
 }
 
 onMounted(async () => {
-  if(!isApp()) return
+  if (!isApp()) return
   show.value = !(await isNotificationsAllowed())
 })
 </script>

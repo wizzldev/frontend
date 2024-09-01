@@ -12,9 +12,9 @@
       </SettingsButton>
     </section>
     <EditUserInfo />
-    <Notifications/>
+    <Notifications />
     <AccountSecurity />
-    <DeveloperSettings/>
+    <DeveloperSettings />
     <DangerZone />
     <BuildInfo />
   </SettingsLayout>

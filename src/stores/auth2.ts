@@ -26,7 +26,7 @@ const removeToken = async () => {
 
 const initWebSocket = async (token: string, force: boolean = false) => {
   const parts = token.split(' ')
-  if(parts.length > 0) await startWS(parts[parts.length - 1], force)
+  if (parts.length > 0) await startWS(parts[parts.length - 1], force)
 }
 
 const log = (message: string) => {
@@ -37,7 +37,7 @@ export const useAuth2Store = defineStore('auth2', () => {
   const store = reactive<AuthStore>({
     user: undefined,
     token: undefined,
-    checkTime: new Date(),
+    checkTime: new Date()
   })
 
   const isLoggedIn = computed(() => !!store.user)
@@ -72,25 +72,25 @@ export const useAuth2Store = defineStore('auth2', () => {
   }
 
   const freshCheck = async (): Promise<boolean> => {
-    if(!needsFresh.value) {
+    if (!needsFresh.value) {
       log(`FreshCheck (Cached) for user with id: ${store.user?.id || 'unknown'}`)
       return isLoggedIn.value
     }
 
     log(`FreshCheck for user with id: ${store.user?.id || 'unknown'}`)
 
-    if(!store.token) {
+    if (!store.token) {
       log('FreshCheck: Getting token from cookies.')
       store.token = await getToken()
     }
-    if(!store.token) {
+    if (!store.token) {
       log('FreshCheck: Token not found in cookies.')
       return false
     }
 
     const res = await request.get('/me')
 
-    if((res.data.$error && !res.data.$network) || !res.data?.user) {
+    if ((res.data.$error && !res.data.$network) || !res.data?.user) {
       await logout()
       return false
     }
@@ -107,12 +107,16 @@ export const useAuth2Store = defineStore('auth2', () => {
   return {
     init, // initialization method
     // variables
-    user: user, token: token,
+    user: user,
+    token: token,
     // computed
-    isLoggedIn, needsFresh,
+    isLoggedIn,
+    needsFresh,
     // setters
     updateUser,
     // methods
-    login, logout, freshCheck,
+    login,
+    logout,
+    freshCheck
   }
 })

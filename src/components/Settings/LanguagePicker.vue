@@ -1,6 +1,9 @@
 <template>
-  <PushButton @click="showModal = true" class="transition-colors w-full bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center">
-      {{ $t('Language preference') }}
+  <PushButton
+    @click="showModal = true"
+    class="transition-colors w-full bg-secondary-all py-2 rounded-xl mt-3 fontTheme flex items-center space-x-2 justify-center"
+  >
+    {{ $t('Language preference') }}
   </PushButton>
 
   <Modal :show="showModal" @close="showModal = false">
@@ -12,16 +15,18 @@
           class="transition-colors px-5 py-1.5 bg-gray-700 w-full my-1 rounded-lg"
           :class="{
             'bg-gray-700': i18n.locale.value != locale,
-            'bg-purple-600': i18n.locale.value == locale,
+            'bg-purple-600': i18n.locale.value == locale
           }"
         >
-          {{ i18n.t(locale, 1, { locale }) }} <span v-emoji>{{ i18n.t('flag', 1, { locale }) }}</span>
+          {{ i18n.t(locale, 1, { locale }) }}
+          <span v-emoji>{{ i18n.t('flag', 1, { locale }) }}</span>
         </button>
       </template>
     </div>
     <p class="text-sm text-left text-gray-400 mt-2">
-      Can't find your language? Help us add it.
-      Join our <a class="text-purple-400 font-bold" :href="uri('discord')" target="_blank">Discord</a> community for more information.
+      Can't find your language? Help us add it. Join our
+      <a class="text-purple-400 font-bold" :href="uri('discord')" target="_blank">Discord</a>
+      community for more information.
     </p>
   </Modal>
 </template>
@@ -43,5 +48,6 @@ const setLocale = async (locale: string) => {
   await cookie.set(WizzlLocale, locale)
 }
 
-const uri = (s: string): string => `https://${window.GLOBAL_ENV.LINK_HOST}/${s}?utm_source=wizzl.app&utm_medium=language-picker`
+const uri = (s: string): string =>
+  `https://${window.GLOBAL_ENV.LINK_HOST}/${s}?utm_source=wizzl.app&utm_medium=language-picker`
 </script>

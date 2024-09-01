@@ -85,7 +85,9 @@ const submit = async () => {
 
 const getID = (uri: string): string | false => {
   const domain = 'wizzl.app'
-  const regex = new RegExp(`^(https?:\\/\\/)?(join\\.${domain}\\/|${domain}\\/join\\/)?([A-Za-z0-9]{3,15})$`)
+  const regex = new RegExp(
+    `^(https?:\\/\\/)?(join\\.${domain}\\/|${domain}\\/join\\/)?([A-Za-z0-9]{3,15})$`
+  )
   const match = uri.match(regex)
 
   if (match && match[3]) {

@@ -96,7 +96,7 @@ const download = async () => {
   if (res.data?.$error) return
 
   const buffer = Buffer.from(await res.data.arrayBuffer(), 'binary')
-  if(isApp()) return saveApp(buffer)
+  if (isApp()) return saveApp(buffer)
 
   const base64 = buffer.toString('base64')
   const a = document.createElement('a')
@@ -108,7 +108,7 @@ const download = async () => {
 }
 
 const saveApp = async (buffer: Buffer) => {
-  if(!await checkPermission()) {
+  if (!(await checkPermission())) {
     warning(t('Permission denied'))
     return
   }
@@ -117,7 +117,7 @@ const saveApp = async (buffer: Buffer) => {
   try {
     await Filesystem.mkdir({
       path: dir,
-      directory: Directory.Documents,
+      directory: Directory.Documents
     })
   } catch (e: unknown) {
     log(`Directory exists: ${e}`)
@@ -125,7 +125,7 @@ const saveApp = async (buffer: Buffer) => {
   await Filesystem.writeFile({
     path: `${dir}/${file.value?.name}`,
     data: buffer.toString(),
-    directory: Directory.Documents,
+    directory: Directory.Documents
   })
   info(t('Successfully downloaded'))
 }

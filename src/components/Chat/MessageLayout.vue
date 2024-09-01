@@ -12,7 +12,7 @@
       :class="{ customTheme: theme }"
       :data-theme-pattern="theme?.is_pattern ? 'true' : 'false'"
     >
-      <li class="w-full" v-for="(msg, inx) in messageList" :key="inx">
+      <li class="w-full z-10" v-for="(msg, inx) in messageList" :key="inx">
         <MessageGroup
           @reply="(msg) => $emit('reply', msg)"
           @modal="(msg) => $emit('modal', msg)"
@@ -27,7 +27,7 @@
       <li class="w-full text-center text-xl my-3" v-if="loading">
         <Spinner class="text-gray-400" :class="{ customText: theme }" />
       </li>
-      <li class="w-full text-center my-3" v-if="!hasNext">
+      <li class="w-full text-center my-3 z-10" v-if="!hasNext">
         <p class="text-center text-gray-400 fontTheme" :class="{ customText: theme }">
           {{ $t('No more messages') }}
         </p>
@@ -100,7 +100,6 @@ onBeforeUnmount(() => {
 }
 
 .customTheme-bg {
-  opacity: 0.8;
   position: absolute;
   left: 0;
   top: 0;

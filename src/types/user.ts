@@ -6,7 +6,7 @@ export interface User {
   email: string
   is_bot: boolean
   is_verified: boolean
-  enable_ip_check: boolean
+  enable_ip_check?: boolean
   is_online: boolean
   nick_name?: string
 }

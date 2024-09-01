@@ -2,9 +2,7 @@
   <Modal :show="true" @close="$emit('close')">
     <h2 class="text-2xl fontTheme">{{ $t('Are you sure?') }}</h2>
     <p class="text-left mt-2">
-      {{
-        $t('All messages, files will be lost and you may lose your community.')
-      }}
+      {{ $t('All messages, files will be lost and you may lose your community.') }}
     </p>
     <div class="grid grid-cols-2 gap-2">
       <PushButton

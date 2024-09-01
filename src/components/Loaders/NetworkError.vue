@@ -4,8 +4,12 @@
     <h1 class="text-xl mb-2 fontTheme">{{ $t('Network error') }}</h1>
     <p class="text-gray-400 text-sm">Restart the application when connected to internet.</p>
     <p>or</p>
-    <p class="text-gray-400 text-sm">Select an other API gateway and also restart the application</p>
-    <select class="mt-3 text-lg w-full text-center p-2 px-5 flex items-center justify-center rounded-xl bg-secondary-all">
+    <p class="text-gray-400 text-sm">
+      Select an other API gateway and also restart the application
+    </p>
+    <select
+      class="mt-3 text-lg w-full text-center p-2 px-5 flex items-center justify-center rounded-xl bg-secondary-all"
+    >
       <option>api.wizzl.app</option>
     </select>
   </div>

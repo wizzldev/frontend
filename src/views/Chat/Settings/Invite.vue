@@ -68,7 +68,7 @@
     <form v-on:submit.prevent class="mt-3" v-if="!createdCode">
       <div class="text-left mt-2">
         <label for="m-name" class="text-sm text-gray-400 ml-2"
-        ><b>{{ inviteHost }}/{{ specInvite || '...' }}</b></label
+          ><b>{{ inviteHost }}/{{ specInvite || '...' }}</b></label
         >
         <IconInput
           id="m-name"
@@ -78,8 +78,19 @@
           :has-border="true"
         />
       </div>
-      <FormButtonSecondary type="button" @click="updateCustom(null)" :processing="removeCustomProgress" class="bg-tertiary-all !py-2" title="Remove" />
-      <FormButton type="submit" @click="updateCustom(specInvite)" :title="!specialInvite ? 'Create' : 'Update'" :processing="updateCustomProgress" />
+      <FormButtonSecondary
+        type="button"
+        @click="updateCustom(null)"
+        :processing="removeCustomProgress"
+        class="bg-tertiary-all !py-2"
+        title="Remove"
+      />
+      <FormButton
+        type="submit"
+        @click="updateCustom(specInvite)"
+        :title="!specialInvite ? 'Create' : 'Update'"
+        :processing="updateCustomProgress"
+      />
     </form>
   </Modal>
 </template>
@@ -144,16 +155,16 @@ const create = async () => {
 
 const updateCustom = async (inv: string | null) => {
   const data = { invite: inv || '' }
-  if(inv) updateCustomProgress.value = true
+  if (inv) updateCustomProgress.value = true
   else removeCustomProgress.value = false
 
   const res = await request.put(`/chat/${route.params.id as string}/invite`, data)
   const resData = res.data as { status?: string }
-  if(res.data.$error && !resData.status) {
+  if (res.data.$error && !resData.status) {
     toast.error(i18n.t('Something went wrong'))
-  } else if(resData.status == 'already-exists') {
+  } else if (resData.status == 'already-exists') {
     toast.warning(i18n.t('This invite is already exists'))
-  } else if(!res.data.$error) {
+  } else if (!res.data.$error) {
     inv ? toast.success(i18n.t('Successfully updated')) : toast.info(i18n.t('Successfully removed'))
     emit('reload')
   }

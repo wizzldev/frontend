@@ -1,45 +1,80 @@
 {
   "hu": [
     ["heading", "Felhasználási feltételek"],
-    ["paragraph", "A Wizzl webalkalmazás használatával elfogadod az alábbi felhasználási feltételeket. Ezek a feltételek a wizzl.app domainre és annak aldomainjeire érvényesek. A szolgáltatás használata során minden felhasználónak kötelessége a jelen feltételek betartása."],
+    [
+      "paragraph",
+      "A Wizzl webalkalmazás használatával elfogadod az alábbi felhasználási feltételeket. Ezek a feltételek a wizzl.app domainre és annak aldomainjeire érvényesek. A szolgáltatás használata során minden felhasználónak kötelessége a jelen feltételek betartása."
+    ],
     ["secondary_heading", "Tiltott tevékenységek"],
-    ["list", [
-      "Mások zaklatása vagy megfélemlítése szigorúan tilos. Ez magában foglal mindenféle verbális, írásbeli vagy egyéb módon történő visszaélést, amely másokat sérthet vagy megalázhat.",
-      "Tilos a bullying, azaz a mások szándékos bántalmazása, beleértve a szóbeli sértéseket, fenyegetéseket vagy bármilyen más viselkedést, amely célja mások megszégyenítése vagy megfélemlítése.",
-      "Az alkalmazás illegális tevékenységekre történő használata szigorúan tilos. Ez magában foglalja, de nem korlátozódik a jogellenes cselekedetek elősegítésére, támogatására vagy végrehajtására.",
-      "A Wizzl privát API-jának használata más kliensekkel, vagy ismeretlen, nem engedélyezett integrációkkal tilos. Ez a szabály azért van érvényben, hogy biztosítsuk a rendszerünk biztonságát és stabilitását.",
-      "Az alkalmazás használata kizárólag a megadott domaineken, azaz a wizzl.app oldalon és aldomainjein engedélyezett. Az alkalmazás más platformokon vagy nem engedélyezett környezetekben történő használata tilos."
-    ]],
-    ["paragraph", "A fenti szabályok megsértése esetén a Wizzl fenntartja a jogot, hogy korlátozza a felhasználói hozzáférést, figyelmeztetéseket küldjön, vagy végső esetben törölje a felhasználó profilját. Az alkalmazás nem vállal felelősséget az esetleges következményekért, beleértve a felhasználó által elvesztett adatokat vagy hozzáféréseket."],
+    [
+      "list",
+      [
+        "Mások zaklatása vagy megfélemlítése szigorúan tilos. Ez magában foglal mindenféle verbális, írásbeli vagy egyéb módon történő visszaélést, amely másokat sérthet vagy megalázhat.",
+        "Tilos a bullying, azaz a mások szándékos bántalmazása, beleértve a szóbeli sértéseket, fenyegetéseket vagy bármilyen más viselkedést, amely célja mások megszégyenítése vagy megfélemlítése.",
+        "Az alkalmazás illegális tevékenységekre történő használata szigorúan tilos. Ez magában foglalja, de nem korlátozódik a jogellenes cselekedetek elősegítésére, támogatására vagy végrehajtására.",
+        "A Wizzl privát API-jának használata más kliensekkel, vagy ismeretlen, nem engedélyezett integrációkkal tilos. Ez a szabály azért van érvényben, hogy biztosítsuk a rendszerünk biztonságát és stabilitását.",
+        "Az alkalmazás használata kizárólag a megadott domaineken, azaz a wizzl.app oldalon és aldomainjein engedélyezett. Az alkalmazás más platformokon vagy nem engedélyezett környezetekben történő használata tilos."
+      ]
+    ],
+    [
+      "paragraph",
+      "A fenti szabályok megsértése esetén a Wizzl fenntartja a jogot, hogy korlátozza a felhasználói hozzáférést, figyelmeztetéseket küldjön, vagy végső esetben törölje a felhasználó profilját. Az alkalmazás nem vállal felelősséget az esetleges következményekért, beleértve a felhasználó által elvesztett adatokat vagy hozzáféréseket."
+    ],
     ["secondary_heading", "Jogok és kötelezettségek"],
-    ["list", [
-      "A Wizzl fenntartja a jogot arra, hogy a szolgáltatásokat bármikor módosítsa, megszüntesse vagy leállítsa, előzetes értesítés nélkül. Bár minden tőlünk telhetőt megteszünk, hogy előre értesítsük felhasználóinkat, bizonyos esetekben előfordulhat, hogy az értesítés nem lehetséges.",
-      "A felhasználási feltételeket időről időre módosíthatjuk. Ha jelentős változtatásokat hajtunk végre, értesítést küldünk e-mailben a regisztrált felhasználók számára, de a felhasználóknak is felelősségük, hogy időről időre átnézzék a feltételeket.",
-      "Fenntartjuk a jogot, hogy töröljük azon felhasználók profilját, akik huzamosabb ideig inaktívak, vagy akik megsértik a védjegy- és szerzői jogokra vonatkozó szabályokat. Ezen felhasználói fiókok törlésére előzetes értesítés nélkül kerülhet sor."
-    ]],
-    ["paragraph", "Az adatbiztonságra és a személyes adatok védelmére a Wizzl alkalmazás adatvédelmi irányelvei vonatkoznak, amelyek a wizzl.app oldalon érhetők el. A felhasználóknak ajánlott megismerkedni ezekkel az irányelvekkel, hogy megértsék, hogyan kezeljük és védjük az adataikat."],
-    ["paragraph", "A Wizzl csevegőfunkciói lehetővé teszik a felhasználók számára, hogy egymással kommunikáljanak. Ha egy felhasználó olyan tartalmat jelent, amelyet szabálysértőnek tart, a Wizzl csapata megvizsgálja az esetet. Ha a tartalmat problémásnak találjuk, eltávolítjuk azt, és a felhasználót figyelmeztetésben részesítjük. Többszöri szabálysértés esetén a felhasználó profilját véglegesen is törölhetjük."]
+    [
+      "list",
+      [
+        "A Wizzl fenntartja a jogot arra, hogy a szolgáltatásokat bármikor módosítsa, megszüntesse vagy leállítsa, előzetes értesítés nélkül. Bár minden tőlünk telhetőt megteszünk, hogy előre értesítsük felhasználóinkat, bizonyos esetekben előfordulhat, hogy az értesítés nem lehetséges.",
+        "A felhasználási feltételeket időről időre módosíthatjuk. Ha jelentős változtatásokat hajtunk végre, értesítést küldünk e-mailben a regisztrált felhasználók számára, de a felhasználóknak is felelősségük, hogy időről időre átnézzék a feltételeket.",
+        "Fenntartjuk a jogot, hogy töröljük azon felhasználók profilját, akik huzamosabb ideig inaktívak, vagy akik megsértik a védjegy- és szerzői jogokra vonatkozó szabályokat. Ezen felhasználói fiókok törlésére előzetes értesítés nélkül kerülhet sor."
+      ]
+    ],
+    [
+      "paragraph",
+      "Az adatbiztonságra és a személyes adatok védelmére a Wizzl alkalmazás adatvédelmi irányelvei vonatkoznak, amelyek a wizzl.app oldalon érhetők el. A felhasználóknak ajánlott megismerkedni ezekkel az irányelvekkel, hogy megértsék, hogyan kezeljük és védjük az adataikat."
+    ],
+    [
+      "paragraph",
+      "A Wizzl csevegőfunkciói lehetővé teszik a felhasználók számára, hogy egymással kommunikáljanak. Ha egy felhasználó olyan tartalmat jelent, amelyet szabálysértőnek tart, a Wizzl csapata megvizsgálja az esetet. Ha a tartalmat problémásnak találjuk, eltávolítjuk azt, és a felhasználót figyelmeztetésben részesítjük. Többszöri szabálysértés esetén a felhasználó profilját véglegesen is törölhetjük."
+    ]
   ],
   "en": [
     ["heading", "Terms of Service"],
-    ["paragraph", "By using the Wizzl web application, you agree to the following terms of service. These terms apply to the wizzl.app domain and its subdomains. All users are required to comply with these terms while using the service."],
+    [
+      "paragraph",
+      "By using the Wizzl web application, you agree to the following terms of service. These terms apply to the wizzl.app domain and its subdomains. All users are required to comply with these terms while using the service."
+    ],
     ["secondary_heading", "Prohibited Activities"],
-    ["list", [
-      "Harassment or intimidation of others is strictly prohibited. This includes any form of verbal, written, or other types of abuse that may harm or humiliate others.",
-      "Bullying, meaning the deliberate harm or targeting of others, is forbidden. This includes verbal insults, threats, or any other behavior intended to shame or intimidate others.",
-      "Using the application for illegal activities is strictly prohibited. This includes but is not limited to facilitating, supporting, or engaging in unlawful actions.",
-      "Using Wizzl's private API with other clients or unauthorized integrations is prohibited. This rule ensures the security and stability of our system.",
-      "The application must only be used on the specified domains, namely wizzl.app and its subdomains. Using the application on other platforms or unauthorized environments is forbidden."
-    ]],
-    ["paragraph", "In the event of a violation of the above rules, Wizzl reserves the right to restrict user access, issue warnings, or, in severe cases, delete the user's profile. The application is not responsible for any consequences, including data loss or loss of access resulting from such actions."],
+    [
+      "list",
+      [
+        "Harassment or intimidation of others is strictly prohibited. This includes any form of verbal, written, or other types of abuse that may harm or humiliate others.",
+        "Bullying, meaning the deliberate harm or targeting of others, is forbidden. This includes verbal insults, threats, or any other behavior intended to shame or intimidate others.",
+        "Using the application for illegal activities is strictly prohibited. This includes but is not limited to facilitating, supporting, or engaging in unlawful actions.",
+        "Using Wizzl's private API with other clients or unauthorized integrations is prohibited. This rule ensures the security and stability of our system.",
+        "The application must only be used on the specified domains, namely wizzl.app and its subdomains. Using the application on other platforms or unauthorized environments is forbidden."
+      ]
+    ],
+    [
+      "paragraph",
+      "In the event of a violation of the above rules, Wizzl reserves the right to restrict user access, issue warnings, or, in severe cases, delete the user's profile. The application is not responsible for any consequences, including data loss or loss of access resulting from such actions."
+    ],
     ["secondary_heading", "Rights and Responsibilities"],
-    ["list", [
-      "Wizzl reserves the right to modify, discontinue, or terminate services at any time without prior notice. While we will make every effort to notify users in advance, in some cases, notice may not be possible.",
-      "We may modify these terms of service from time to time. If significant changes are made, we will notify registered users via email, but users are also responsible for reviewing the terms periodically.",
-      "We reserve the right to delete the profiles of users who are inactive for extended periods or who violate trademark and copyright rules. These user accounts may be deleted without prior notice."
-    ]],
-    ["paragraph", "Data security and the protection of personal information are governed by Wizzl's Privacy Policy, which is available on the wizzl.app website. Users are encouraged to familiarize themselves with these policies to understand how we manage and protect their data."],
-    ["paragraph", "Wizzl's chat functions allow users to communicate with each other. If a user reports content they find inappropriate, the Wizzl team will review the case. If the content is found to be problematic, it will be removed, and the user will receive a warning. Repeated violations may result in the permanent deletion of the user's profile."]
+    [
+      "list",
+      [
+        "Wizzl reserves the right to modify, discontinue, or terminate services at any time without prior notice. While we will make every effort to notify users in advance, in some cases, notice may not be possible.",
+        "We may modify these terms of service from time to time. If significant changes are made, we will notify registered users via email, but users are also responsible for reviewing the terms periodically.",
+        "We reserve the right to delete the profiles of users who are inactive for extended periods or who violate trademark and copyright rules. These user accounts may be deleted without prior notice."
+      ]
+    ],
+    [
+      "paragraph",
+      "Data security and the protection of personal information are governed by Wizzl's Privacy Policy, which is available on the wizzl.app website. Users are encouraged to familiarize themselves with these policies to understand how we manage and protect their data."
+    ],
+    [
+      "paragraph",
+      "Wizzl's chat functions allow users to communicate with each other. If a user reports content they find inappropriate, the Wizzl team will review the case. If the content is found to be problematic, it will be removed, and the user will receive a warning. Repeated violations may result in the permanent deletion of the user's profile."
+    ]
   ]
 }
-

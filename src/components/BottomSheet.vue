@@ -6,7 +6,7 @@
           <div class="bg-gray-500 h-[4.5px] w-[50px] rounded-lg mx-auto"></div>
         </div>
       </template>
-      <slot/>
+      <slot />
     </Sheet>
   </teleport>
 </template>
@@ -26,6 +26,6 @@ watch(props, (p) => {
 })
 
 watch(show, (s) => {
-  if(!s) emit('close')
+  if (!s) emit('close')
 })
 </script>

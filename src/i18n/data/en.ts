@@ -28,10 +28,16 @@ export default {
   'message.reply.you': 'You replied to: {to}',
 
   'join.you': 'You have joined the chat',
-  'join': '{sender} joined the chat',
+  join: '{sender} joined the chat',
 
   'deleted.you': 'Deleted a message',
   deleted: '{who} deleted a message',
+
+  'theme.update': '{who} has changed the theme',
+  'theme.update.you': "You've changed the theme",
+
+  'emoji.update': '{who} has changed the emoji',
+  'emoji.update.you': "You've changed the emoji",
 
   'Show {count} more': 'Show {count} more',
 
@@ -48,4 +54,11 @@ export default {
   'error.email': 'Invalid email address',
   'error.min': 'Must be at least {0} characters',
   'error.max': 'Maximum {0} characters',
+
+  'theme.Space': 'Space',
+  'theme.Love': 'Love',
+  'theme.Night': 'Night',
+  'theme.Hi': 'Hi',
+  'theme.How are you?': 'How are you?',
+  "theme.I'm fine, wbu?": "I'm fine, wbu?"
 }
